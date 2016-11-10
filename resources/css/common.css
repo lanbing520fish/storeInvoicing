@@ -20,7 +20,7 @@ body {
     font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;
     margin: 0px;
     padding: 0px;
-    background-color: #fff;
+    background-color: #f5f0fa;
     color: #333;
     font-size: 12px;
 }
@@ -47,26 +47,28 @@ body {
 }
 
 .btn-query {
+    width: 80px;
+    height: 25px;
     padding: 0;
-    background-color: #ff9f19;
-    border-color: #ff9f19;
+    background-color: #a870e0;
+    border-color: #a870e0;
+    border-radius: 15px;
+    line-height: 25px;
     color: #fff;
     font-size: 12px;
-    width: 60px;
-    line-height: 24px;
     text-align: center;
 }
 
 .btn-query:focus,
 .btn-query.focus {
-    background-color: #d1800e;
-    border-color: #d1800e;
+    background-color: #9249db;
+    border-color: #9249db;
     color: #fff;
 }
 
 .btn-query:hover {
-    background-color: #d1800e;
-    border-color: #d1800e;
+    background-color: #9249db;
+    border-color: #9249db;
     color: #fff;
 }
 
@@ -120,7 +122,6 @@ body {
 
 
 /* 分页 */
-
 .pagination {
     margin: 0;
 }
@@ -141,8 +142,8 @@ body {
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-    background-color: #ff9f19;
-    border-color: #ff9f19;
+    background-color: #b17ce6;
+    border-color: #b17ce6;
 }
 
 .table {
