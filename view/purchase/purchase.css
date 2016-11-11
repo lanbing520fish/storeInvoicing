@@ -140,15 +140,15 @@
 
 .btn-edit:focus,
 .btn-edit.focus {
-    background-color: #f7f7f7;
     border-color: #c899f7;
-    color: #333;
+    background-color: #e0c2ff;
+    color: #a870e0;
 }
 
 .btn-edit:hover {
-    background-color: #f7f7f7;
     border-color: #c899f7;
-    color: #333;
+    background-color: #e0c2ff;
+    color: #a870e0;
 }
 
 .btn-edit .iconfont {
