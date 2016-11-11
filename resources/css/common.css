@@ -2,10 +2,8 @@
  * Auth 丁少华
  * Date 2016-09-06
  */
-
 @font-face {
-    font-family: 'iconfont';
-    /* project id："144758" */
+    font-family: 'iconfont';    /* project id："144758" */
     src: url('http://at.alicdn.com/t/font_pmi1ob406aqt1emi.eot');
     src: url('http://at.alicdn.com/t/font_pmi1ob406aqt1emi.eot') format('embedded-opentype'), url('http://at.alicdn.com/t/font_pmi1ob406aqt1emi.woff') format('woff'), url('http://at.alicdn.com/t/font_pmi1ob406aqt1emi.ttf') format('truetype'), url('http://at.alicdn.com/t/font_pmi1ob406aqt1emi.svg#iconfont') format('svg');
 }
@@ -20,7 +18,7 @@ body {
     font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;
     margin: 0px;
     padding: 0px;
-    background-color: #fff;
+    background-color: #f5f0fa;
     color: #333;
     font-size: 12px;
 }
@@ -47,26 +45,28 @@ body {
 }
 
 .btn-query {
+    width: 80px;
+    height: 25px;
     padding: 0;
-    background-color: #ff9f19;
-    border-color: #ff9f19;
+    background-color: #a870e0;
+    border-color: #a870e0;
+    border-radius: 15px;
+    line-height: 25px;
     color: #fff;
     font-size: 12px;
-    width: 60px;
-    line-height: 24px;
     text-align: center;
 }
 
 .btn-query:focus,
 .btn-query.focus {
-    background-color: #d1800e;
-    border-color: #d1800e;
+    background-color: #9249db;
+    border-color: #9249db;
     color: #fff;
 }
 
 .btn-query:hover {
-    background-color: #d1800e;
-    border-color: #d1800e;
+    background-color: #9249db;
+    border-color: #9249db;
     color: #fff;
 }
 
@@ -102,7 +102,7 @@ body {
 .btn-cancel {
     background-color: #ffefce;
     color: #ff7f00;
-    border:1px solid #ffcc00;
+    border: 1px solid #ffcc00;
     box-shadow: none;
     padding: 4px 19px;
 }
@@ -118,9 +118,7 @@ body {
     color: #ff7f00;
 }
 
-
 /* 分页 */
-
 .pagination {
     margin: 0;
 }
@@ -141,17 +139,15 @@ body {
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-    background-color: #ff9f19;
-    border-color: #ff9f19;
+    background-color: #b17ce6;
+    border-color: #b17ce6;
 }
 
 .table {
     margin-bottom: 10px;
 }
 
-
 /* 弹出框 */
-
 .modal-content {
     border-radius: 0;
 }
@@ -237,19 +233,12 @@ body {
     background-color: #ffaa00 !important;
 }
 
-.form-control {
-    /*padding-top: 2px !important;*/
-    /*padding-bottom: 2px !important;*/
-}
-
 .form-group {
     width: 100% !important;
     margin: 0 !important;
 }
 
-
 /* 表格固定百分比宽度,不会被内容撑开 */
-
 .table {
     table-layout: fixed;
 }
@@ -279,7 +268,103 @@ body {
 
 .asterisk {
     position: absolute;
-    right: -16px;
+    right: -10px;
     top: 6px;
     color: #ff0000;
+}
+
+.top-line {
+    position: relative;
+}
+
+.top-line::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: -2px;
+    width: calc(100% + 8px);
+    height: 0;
+    border-top: 3px solid #a870e0;
+}
+
+.wavy-line {
+    position: relative;
+}
+
+.wavy-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    height: 6px;
+    background: url('../../resources/images/wavy-line.png') repeat-x 0 0;
+}
+
+.dashed-line {
+    position: relative;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+.dashed-line::after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    bottom: 0;
+    display: block;
+    width: calc(100% - 30px);
+    border-bottom: 1px dashed #ccc;
+}
+
+.form-group {
+    position: relative;
+    width: 100% !important;
+    padding-left: 90px;
+}
+
+.form-group label {
+    position: absolute;
+    left: 0;
+    width: 90px !important;
+    line-height: 25px;
+    text-align: right;
+}
+
+.form-group label .iconfont {
+    color: #ff0000;
+}
+
+.form-group input[type="text"] {
+    width: 100% !important;
+    height: 25px;
+    padding: 0 12px;
+    line-height: 25px;
+    border-radius: 14px;
+}
+
+.form-group .detail-input {
+    width: 100% !important;
+    height: 25px;
+    line-height: 25px;
+}
+
+.form-group select {
+    width: 100% !important;
+    height: 25px;
+    padding: 0 12px;
+    line-height: 25px;
+    border-radius: 14px;
+    background: url(../../resources/images/select_bg.png) no-repeat calc(100% - 10px) center;
+    background-color: #fff;
+    cursor: pointer;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+.form-group textarea {
+    width: 100% !important;
+    border-radius: 14px;
 }

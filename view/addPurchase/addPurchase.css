@@ -1,63 +1,19 @@
-.purchase {
+.addPurchase {
     min-height: 20px;
     margin: 10px;
     border-left: 1px solid #d5d4dc;
     border-right: 1px solid #d5d4dc;
     background-color: #fff;
 }
-
-.condition-query {
-    height: 80px;
-    padding: 10px 10px 10px 0;
-    background: url('../../resources/images/query-bg.png') no-repeat 0 0;
+.purchase-infomation {
+    padding: 5px 5px 10px;
     background-color: #f8f8f8;
     border-bottom: 1px dashed #d2d2d2;
 }
-
-.condition-query-title {
-    width: 20px;
-    height: 50px;
-    margin: 5px 0 5px 8px;
-    line-height: 25px;
-    color: #333;
-    font-size: 14px;
-    font-weight: 800;
+.infomation-form {
+    margin-top: 8px;
+    padding: 0 5px;
 }
-
-.condition-query-box {
-    width: calc(100% - 40px);
-}
-
-.datepicker-input {
-    position: relative;
-    width: 45%;
-}
-
-.datepicker-text {
-    width: 10%;
-    height: 25px;
-    line-height: 25px;
-    text-align: center;
-}
-
-.icon_time {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    color: #cfa9f5;
-    cursor: pointer;
-}
-
-.form-group .reduce-width {
-    width: calc(100% - 90px) !important;
-}
-
-.btn-query {
-    position: absolute;
-    top: -1px;
-    right: 0;
-}
-
 .result-list {
     padding: 5px 5px 20px;
 }
