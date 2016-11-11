@@ -157,8 +157,9 @@
                 <h3 class="modal-title" id="new-line-title"><img class="icon" src="../../resources/images/icon-list1.png">选择商品</h3>
             </div>
             <div id="new-line-body">
+                <!-- 查询 -->
                 <div class="queries-box">
-                    <div class="row mb10">
+                    <div class="row">
                         <div class="col-xs-5">
                             <div class="form-keyword">
                                 <label class="control-label">关键词：</label>
@@ -167,36 +168,67 @@
                             </div>
                         </div>
                         <div class="col-xs-3">
-                            <a class="btn-queries" ng-click="expression">更多查询条件</a>
+                            <a class="btn-queries" ng-click="$ctrl.toggle('$ctrl.isHidden')">更多查询条件</a>
                         </div>
                         <div class="col-xs-4 text-right">
                             <button type="submit" class="btn btn-sm btn-query btn-goods"><i class="iconfont">&#xe60e;</i> 添加商品</button>
                         </div>
                     </div>
                     <!-- 条件列表 -->
-                    <div class="queries-list">
+                    <div class="queries-list" ng-show="!$ctrl.isHidden">
                         <p class="queries-title">所有分类 ></p>
-                        <div class="queries-category">
-                            <span class="category-label">类别：</span>
-                            <span class="category-item">手机</span>
-                            <span class="category-item">配件</span>
-                            <span class="category-item">其他数码产品</span>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">类别：</span>
+                            <div class="category-list fn-left">
+                                <span class="category-item">手机</span>
+                                <span class="category-item">配件</span>
+                                <span class="category-item">其他数码产品</span>
+                            </div>
                         </div>
-                        <div class="queries-category">
-                            <span class="category-label">品牌：</span>
-                            <span class="category-item">苹果</span>
-                            <span class="category-item">三星</span>
-                            <span class="category-item">华为</span>
-                            <span class="category-item">酷派</span>
-                            <span class="category-item">中兴</span>
-                            <span class="category-item">黑莓</span>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">品牌：</span>
+                            <div class="category-list fn-left" ng-class="{fold: $ctrl.isFoldBrand}">
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                            </div>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="$ctrl.isFoldBrand" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="!$ctrl.isFoldBrand" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
                         </div>
-                        <div class="queries-category">
-                            <span class="category-label">型号：</span>
-                            <span class="category-item">手机</span>
-                            <span class="category-item">配件</span>
-                            <span class="category-item">其他数码产品</span>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">型号：</span>
+                            <div class="category-list fn-left" ng-class="{fold: $ctrl.isFoldModel}">
+                                <span class="category-item">Iphone 5s</span>
+                                <span class="category-item">Iphone 6</span>
+                                <span class="category-item">Iphone 6s</span>
+                                <span class="category-item">Iphone 6plus</span>
+                                <span class="category-item">Iphone 7s</span>
+                            </div>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldModel')" ng-show="$ctrl.isFoldModel" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldModel')" ng-show="!$ctrl.isFoldModel" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
                         </div>
+                    </div>
+                </div>
+                <!-- 结果 -->
+                <p class="goods-list-title">商品列表</p>
+                <div class="goods-list-box">
+                    <div class="goods-list">
+
                     </div>
                 </div>
             </div>

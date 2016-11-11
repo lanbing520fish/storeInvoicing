@@ -115,6 +115,25 @@ angular
     })
     .controller('addNewLineCtrl', function($uibModalInstance, $scope, items) {
         var $ctrl = this;
+        $ctrl.isHidden = true; // 更多查询条件列表是否隐藏
+        $ctrl.isFoldBrand = true; // 品牌列表是否折叠
+        $ctrl.isFoldModel = true; // 型号列表是否折叠
+
+        // 切换展示
+        $ctrl.toggle = function(name) {
+            switch (name) {
+                case '$ctrl.isHidden':
+                    $ctrl.isHidden = !$ctrl.isHidden;
+                    break;
+                case '$ctrl.isFoldBrand':
+                    $ctrl.isFoldBrand = !$ctrl.isFoldBrand;
+                    break;
+                case '$ctrl.isFoldModel':
+                    $ctrl.isFoldModel = !$ctrl.isFoldModel;
+                    break;
+            }
+        }
+
         $ctrl.ok = function() {
             $scope.$broadcast('submitPowerListModal');
             $uibModalInstance.close();

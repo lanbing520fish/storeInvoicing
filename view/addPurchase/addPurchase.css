@@ -229,13 +229,13 @@
 }
 
 .queries-box {
-    padding: 15px;
+    padding: 10px 15px;
     background-color: #f8f8f8;
     border-bottom: 1px dashed #bfbfbf;
 }
 
 .queries-list {
-    /*margin-bottom: 10px;*/
+    margin-top: 10px;
 }
 
 .queries-title {
@@ -262,8 +262,39 @@
     font-weight: 800;
 }
 
+.category-list {
+    display: inline-block;
+    width: 80%;
+    overflow: hidden;
+}
+
+.fold {
+    height: 28px;
+}
+
 .category-item {
     display: inline-block;
     margin-right: 12px;
     white-space: nowrap;
+    cursor: pointer;
+}
+
+.category-more {
+    display: inline-block;
+    height: 22px;
+    margin-top: 4px;
+    padding: 0 5px;
+    line-height: 22px;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+ .category-more:active, .category-more:hover, .category-more:focus {
+    background-color: #f2efef;
+    text-decoration: none;
+}
+
+.category-more .iconfont {
+    font-size: 12px;
 }
