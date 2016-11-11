@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>采购管理</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="returnedPurchase.css">
+</head>
+
+<body ng-app="returnedPurchaseModule">
+    <div class="returned-type">
+        <!-- 查询 -->
+        <span class="line"></span>
+        <div class="returned-type-query">
+            <div class="searcher"><p>搜</p><p>索</p></div>
+            <form name="queryTypeForm" ng-submit="queryTypeFormSubmit()" class="form-inline" role="form">
+                <div class="row ">
+                    <div class="col-xs-5">
+                        <div class="form-group">
+                            <label class="control-label" for="operationSpecTypeCd1">权限类型编码：</label>
+                            <input type="text" id="operationSpecTypeCd1" class="form-control query-input"
+                                   ng-model="queryTypeForm.operationSpecTypeCd">
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="form-group">
+                            <label class="control-label" for="name1">权限类型名称：</label>
+                            <input type="text" id="name1" class="form-control query-input"
+                                   ng-model="queryTypeForm.operationSpecTypeName">
+                        </div>
+                    </div>
+                    <div class="col-xs-2 text-right">
+                        <button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="returnedPurchase.js"></script>
+</body>
+</html>

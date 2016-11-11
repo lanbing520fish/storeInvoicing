@@ -1,0 +1,167 @@
+body{
+	background: #f5f0fa;
+}
+.returned-type{
+	position:relative;width:98%;border:1px solid #d5d4dc;border-top:0;margin:13px auto 0;
+}
+.line{
+	position:absolute;left:-0.5%;top:-3px;width:101%;height:3px;background: #a870e0;
+}
+.returned-type-query{
+	margin:0 auto;background:#f8f8f8;border-bottom: 1px dashed #d5d4dc; overflow: hidden;
+}
+.searcher{
+	float:left;width:40px;height:80px;text-align: center;background: #fff url(../../resources/images/search.png) right 0 no-repeat;
+}
+.searcher p:first-child{
+	margin-top:20px;line-height: 25px;
+}
+/* 查询 */
+.privilege-type-query {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+}
+
+.query-input {
+    height: 25px;
+    padding: 0 12px;
+    line-height: 25px;
+}
+
+/* 结果 */
+.privilege-type-result {
+    margin-top: 10px;
+}
+
+.result-header {
+    height: 37px;
+    margin: 0;
+    line-height: 32px;
+    border: 1px solid #ddd;
+    border-bottom: none;
+}
+
+.result-header .title {
+    position: relative;
+    padding-top: 4px;
+    padding-left: 32px;
+    line-height: 16px;
+}
+
+.result-header .title img {
+    position: absolute;
+    top: 4px;
+    left: 0;
+}
+
+.result-header .title .title-cn {
+    color: #4c9ef5;
+    font-size: 14px;
+}
+
+.result-header .title .title-en {
+    color: #ddd;
+    font-size: 12px;
+}
+
+.btn-set {
+    margin-left: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #ffc619;
+    border-color: #ffc619;
+    color: #fff;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.btn-set:focus, .btn-set.focus {
+    background-color: #e4ae0c;
+    border-color: #e4ae0c;
+    color: #fff;
+}
+
+.btn-set:hover {
+    background-color: #e4ae0c;
+    border-color: #e4ae0c;
+    color: #fff;
+}
+
+.result-table table th {
+    background-color: #f5fafa;
+    border-bottom-width: 1px !important;
+    color: #333;
+    font-weight: 800;
+    text-align: center;
+}
+
+.result-table table td {
+    padding: 2px !important;
+    text-align: center;
+}
+
+.result-table table td p {
+    height: 25px;
+    line-height: 25px;
+}
+
+.btn-edit {
+    background-color: #b1cc00;
+    color: #fff;
+    margin-top: 2px;
+}
+
+.btn-edit i {
+    font-size: 12px;
+}
+
+.btn-edit:focus, .btn-edit.focus {
+    background-color: #a4bc04;
+    color: #fff;
+}
+
+.btn-edit:hover {
+    background-color: #a4bc04;
+    color: #fff;
+}
+
+.edit-label {
+    width: 120px !important;
+    text-align: right;
+}
+
+.form-group .edit-txt {
+    width: 648px;
+    height: 250px;
+    resize: none;
+}
+
+.table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+    padding: 5px 0;
+}
+
+.form-inline{
+	width:95% !important;
+	float: left;
+}
+/* input 百分比 */
+.form-group {
+    position: relative;
+    width: 100% !important;
+    padding-left: 120px;
+}
+.form-group label {
+    position: absolute;
+    left: 0;
+    width: 120px !important;
+    line-height: 25px;
+    text-align: right;
+}
+
+.form-group input[type="text"] {
+    width: 100% !important;
+}
+
+.form-group textarea {
+    width: 100% !important;
+}
