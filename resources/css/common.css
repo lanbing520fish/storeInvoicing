@@ -368,3 +368,14 @@ body {
     width: 100% !important;
     border-radius: 14px;
 }
+
+/* 表格边线 */
+.table-bordered {
+    border: 1px solid #8257ad;
+}
+
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th{
+  border: 1px solid #8257ad;
+}
