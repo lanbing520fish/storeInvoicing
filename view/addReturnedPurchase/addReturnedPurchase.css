@@ -263,6 +263,30 @@
 .queries-category:last-of-type {
     border-bottom: none;
 }
+.checked-query {
+    display: inline-block;
+    height: 22px;
+    margin-left: 10px;
+    padding: 0 5px;
+    line-height: 20px;
+    border: 1px solid #d2d2d2;
+    color: #333;
+    cursor: pointer;
+}
+
+.checked-query .iconfont {
+    margin-left: 4px;
+    color: #d2d2d2;
+    font-size: 12px;
+}
+
+.checked-query:hover {
+    border-color: #a870e0;
+}
+
+.checked-query:hover .iconfont {
+    color: #a870e0;
+}
 
 .category-label {
     padding-left: 20px;
