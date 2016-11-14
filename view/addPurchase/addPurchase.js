@@ -2,10 +2,8 @@ angular
     .module('addPurchaseModule', ['ui.bootstrap'])
     .controller('resultCtrl', ['$scope', '$rootScope', '$log', '$timeout', function($scope, $rootScope, $log, $timeout) {
         // 串号录入
-        $scope.editQueryType = function(index, item) {
-            var obj = _.clone(item);
-            _.set(obj, '$$hashKey', null);
-            $scope.$emit('openSerialNumberModal', index, obj);
+        $scope.editQueryType = function() {
+            $scope.$emit('openSerialNumberModal');
         };
 
         // 新增一行
@@ -13,49 +11,17 @@ angular
             $scope.$emit('openEditQueryTypeModal');
         };
 
-        // 删除
-        $scope.delQueryType = function(index) {
-            _.pullAt(_.get($rootScope, 'modifiedCardPur.itemList'), [index]);
-        };
-
         // 暂存
         $scope.saveProcureOrder = function() {
-            httpMethod.saveProcureOrder(_.get($rootScope, 'modifiedCardPur')).then(function(rsp) {
-                $log.log('调用保存采购单接口成功.');
-                if (rsp.success) {
-                    swal({
-                        title: '操作成功!',
-                        text: '保存采购单成功！',
-                        type: 'success'
-                    }, function() {
-                        $timeout(function() {
-                            parent.angular.element(parent.$('#tabs')).scope().removeTab();
-                        });
-                    });
-                } else {
-                    swal("OMG", "保存采购单失败!", "error");
-                }
-            })
-        }
-
-        // 提交
-        $scope.submitProcureOrder = function() {
-            httpMethod.submitProcureOrder(_.get($rootScope, 'modifiedCardPur')).then(function(rsp) {
-                $log.log('调用提交采购单接口成功.');
-                if (rsp.success) {
-                    swal({
-                        title: '操作成功!',
-                        text: '提交采购单成功！',
-                        type: 'success'
-                    }, function() {
-                        $timeout(function() {
-                            parent.angular.element(parent.$('#tabs')).scope().removeTab();
-                        });
-                    });
-                } else {
-                    swal("OMG", "提交采购单失败!", "error");
-                }
-            })
+            swal({
+                title: '操作成功!',
+                text: '更新采购入库成功～',
+                type: 'success'
+            }, function() {
+                $timeout(function() {
+                    parent.angular.element(parent.$('#tabs')).scope().removeTab();
+                });
+            });
         }
     }])
     // 弹出框
@@ -71,8 +37,8 @@ angular
         });
 
         // 串号录入
-        $scope.$on('openSerialNumberModal', function(d, index, item) {
-            $ctrl.openSerialNumberModal(index, item);
+        $scope.$on('openSerialNumberModal', function(d, data) {
+            $ctrl.openSerialNumberModal(data);
         });
 
         $ctrl.open = function(data) {

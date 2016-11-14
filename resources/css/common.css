@@ -229,7 +229,9 @@ body {
 }
 
 .sweet-alert button {
-    padding: 5px 20px;
+    margin: 25px 0 0;
+    padding: 8px 20px;
+    border-radius: 15px;
     font-size: 14px;
     font-weight: normal !important;
 }
@@ -245,7 +247,7 @@ body {
 }
 
 .confirm {
-    background-color: #ffaa00 !important;
+    background-color: #3ac0d9 !important;
 }
 
 .form-group {
