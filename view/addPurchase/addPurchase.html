@@ -226,15 +226,33 @@
                 </div>
                 <!-- 结果 -->
                 <p class="goods-list-title">商品列表</p>
-                <div class="goods-list-box">
-                    <div class="goods-list">
-
+                <div class="goods-list-box fn-clear" ng-controller="goodsListModalCtrl">
+                    <div class="goods-list fn-left">
+                        <li class="goods-item" ng-class="{current: $index===checkIndex, hover: hoverIndex===$index}" ng-repeat="item in goodsListResult" ng-mouseover="hoverGoods($index)" ng-click="checkedGoods($index)">
+                            <p class="goods-title">商品：<span class="goods-name" ng-bind="item.name"></span></p>
+                        </li>
                     </div>
+                    <div class="goods-detail fn-left">
+                        <p class="detail-title">商品详情：</p>
+                        <div class="detail-content fn-clear">
+                            <p class="detail-item fn-left">类别：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].type"></span></p>
+                            <p class="detail-item fn-left">品牌：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].brand"></span></p>
+                            <p class="detail-item fn-left">型号：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].model"></span></p>
+                            <p class="detail-item fn-left">配置：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].configuration"></span></p>
+                            <p class="detail-item fn-left">颜色：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].color"></span></p>
+                            <p class="detail-item fn-left">RAM：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].RAM"></span></p>
+                            <p class="detail-item fn-left">尺寸：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].size"></span></p>
+                            <p class="detail-item fn-left">OS：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].OS"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div ng-controller="paginationCtrl" class="text-center">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
-                <button class="btn btn-submit" type="button" ng-disabled="!checkedPrivilegeType.length" ng-click="$ctrl.ok()">确定</button>
+                <button class="btn btn-submit" type="button" ng-click="$ctrl.ok()">确定</button>
             </div>
         </script>
         <!-- 串号录入弹框 -->
