@@ -16,10 +16,11 @@ angular
             swal({
                 title: '操作成功!',
                 text: '更新采购入库成功～',
-                type: 'success'
+                type: 'success',
+                confirmButtonText: '确定'
             }, function() {
                 $timeout(function() {
-                    parent.angular.element(parent.$('#tabs')).scope().removeTab();
+                    // parent.angular.element(parent.$('#tabs')).scope().removeTab();
                 });
             });
         }

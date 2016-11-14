@@ -2,13 +2,12 @@
  * Auth 丁少华
  * Date 2016-09-06
  */
+
 @font-face {
-  font-family: 'iconfont';  /* project id："144758" */
-  src: url('http://at.alicdn.com/t/font_7m77n0g3d4h1tt9.eot');
-  src: url('http://at.alicdn.com/t/font_7m77n0g3d4h1tt9.eot') format('embedded-opentype'),
-  url('http://at.alicdn.com/t/font_7m77n0g3d4h1tt9.woff') format('woff'),
-  url('http://at.alicdn.com/t/font_7m77n0g3d4h1tt9.ttf') format('truetype'),
-  url('http://at.alicdn.com/t/font_7m77n0g3d4h1tt9.svg#iconfont') format('svg');
+    font-family: 'iconfont';
+    /* project id："144758" */
+    src: url('http://at.alicdn.com/t/font_7m77n0g3d4h1tt9.eot');
+    src: url('http://at.alicdn.com/t/font_7m77n0g3d4h1tt9.eot') format('embedded-opentype'), url('http://at.alicdn.com/t/font_7m77n0g3d4h1tt9.woff') format('woff'), url('http://at.alicdn.com/t/font_7m77n0g3d4h1tt9.ttf') format('truetype'), url('http://at.alicdn.com/t/font_7m77n0g3d4h1tt9.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -119,7 +118,9 @@ body {
     color: #a870e0;
 }
 
+
 /* 分页 */
+
 .pagination {
     margin: 0;
 }
@@ -144,11 +145,39 @@ body {
     border-color: #b17ce6;
 }
 
+.page {
+    position: relative;
+    height: 26px;
+    margin-bottom: 10px;
+}
+
+.page-num {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    height: 16px;
+    color: #4c4c4c;
+    line-height: 16px;
+}
+
+.page-num .number {
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
+    margin: 0 3px;
+    padding: 0 4px;
+    background-color: #a870e0;
+    border-radius: 5px;
+    color: #fff;
+}
+
 .table {
     margin-bottom: 10px;
 }
 
+
 /* 弹出框 */
+
 .modal-content {
     border-radius: 0;
 }
@@ -255,7 +284,9 @@ body {
     margin: 0 !important;
 }
 
+
 /* 表格固定百分比宽度,不会被内容撑开 */
+
 .table {
     table-layout: fixed;
 }
@@ -387,17 +418,20 @@ body {
     border-radius: 14px;
 }
 
-.btn-xs, .btn-group-xs > .btn {
+.btn-xs,
+.btn-group-xs > .btn {
     height: 23px;
 }
 
+
 /* 表格边线 */
+
 .table-bordered {
     border: 1px solid #8257ad;
 }
 
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
-.table-bordered > tfoot > tr > th{
-  border: 1px solid #8257ad;
+.table-bordered > tfoot > tr > th {
+    border: 1px solid #8257ad;
 }
