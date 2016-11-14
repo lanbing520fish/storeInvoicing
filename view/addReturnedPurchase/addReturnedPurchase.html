@@ -13,8 +13,8 @@
 
 <body ng-app="addReturnedModule">
     <!-- DOM结构开始 -->
-    <div class="addReturned top-line wavy-line">
-        <!-- 入库单基本信息 -->
+    <div class="addReturned top-line wavy-line" ng-controller="addReturnedModalCtrl as $ctrl">
+        <!-- 出库单基本信息 -->
         <div class="purchase-infomation">
             <div class="model-header">
                 <img class="model-img" src="../../resources/images/icon-list.png">
@@ -65,8 +65,8 @@
                 </form>
             </div>
         </div>
-        <!-- 入库商品明细信息 -->
-        <div class="result-list">
+        <!-- 出库商品明细信息 -->
+        <div class="result-list" ng-controller="resultCtrl">
             <div class="result-head">
                 <div class="row">
                     <div class="col-xs-4">
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <button class="btn btn-xs btn-set"><i class="iconfont">
+                        <button class="btn btn-xs btn-set" ng-click="addQueryType()"><i class="iconfont">
                         &#xe60e;</i> 增加一行
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                                     <p>1</p>
                                 </td>
                                  <td>
-                                    <button class="btn btn-xs btn-edit" >录入串号
+                                    <button class="btn btn-xs btn-edit" ng-click="editQueryType($index, item)">录入串号
                                     </button>
                                 </td>
                                 <td>                                   
@@ -147,12 +147,226 @@
 	            <label class="control-label">备注：</label>
 	            <textarea col="" row="20" id="remarks" class="form-control edit-txt" ng-model="modifiedQueryType.remarks"></textarea>
 	        </div>
-	        <div class="btns">
-	        	<button class="btn btn-xs btn-save">暂存</button>
-	        	<button class="btn btn-xs btn-save">提交</button>
-	        	<button class="btn btn-xs btn-edit">取消</button>
-	        </div>
+	        <div class="text-center">
+                <button ng-click="saveReturnedOrder()" ng-disabled="isForbid" class="btn btn-submit">暂存</button>
+                <button ng-click="submitReturnedOrder()" ng-disabled="isForbid" class="btn btn-submit">提交</button>
+                <button ng-click="" ng-disabled="isForbid" class="btn btn-cancel">取消</button>
+            </div>
         </div>
+
+        <!-- 新增一行弹框 -->
+        <script type="text/ng-template" id="addNewLine.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="new-line-title"><img class="icon" src="../../resources/images/icon-list1.png">选择商品</h3>
+            </div>
+            <div id="new-line-body">
+                <!-- 查询 -->
+                <div class="queries-box">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-keyword">
+                                <label class="control-label">关键词：</label>
+                                <input type="text" class="form-control reduce-width">
+                                <button type="submit" class="btn btn-sm btn-keyword"><i class="iconfont">&#xe600;</i> 查询</button>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <a class="btn-queries" ng-click="$ctrl.toggle('$ctrl.isHidden')">更多查询条件</a>
+                        </div>
+                        <div class="col-xs-4 text-right">
+                            <button type="submit" class="btn btn-sm btn-query btn-goods"><i class="iconfont">&#xe60e;</i> 添加商品</button>
+                        </div>
+                    </div>
+                    <!-- 条件列表 -->
+                    <div class="queries-list" ng-show="!$ctrl.isHidden">
+                        <p class="queries-title">所有分类 ></p>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">类别：</span>
+                            <div class="category-list fn-left">
+                                <span class="category-item">手机</span>
+                                <span class="category-item">配件</span>
+                                <span class="category-item">其他数码产品</span>
+                            </div>
+                        </div>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">品牌：</span>
+                            <div class="category-list fn-left" ng-class="{fold: $ctrl.isFoldBrand}">
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                            </div>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="$ctrl.isFoldBrand" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="!$ctrl.isFoldBrand" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
+                        </div>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">型号：</span>
+                            <div class="category-list fn-left" ng-class="{fold: $ctrl.isFoldModel}">
+                                <span class="category-item">Iphone 5s</span>
+                                <span class="category-item">Iphone 6</span>
+                                <span class="category-item">Iphone 6s</span>
+                                <span class="category-item">Iphone 6plus</span>
+                                <span class="category-item">Iphone 7s</span>
+                            </div>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldModel')" ng-show="$ctrl.isFoldModel" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldModel')" ng-show="!$ctrl.isFoldModel" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 结果 -->
+                <p class="goods-list-title">商品列表</p>
+                <div class="goods-list-box">
+                    <div class="goods-list">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-disabled="!checkedPrivilegeType.length" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
+        <!-- 串号录入弹框 -->
+        <script type="text/ng-template" id="serialNumberModal.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-list1.png">商品串号导入</h3>
+            </div>
+            <div class="modal-body pr50" id="serial-number-body">
+	            <div class="info-form">
+	             	<p class="model-title info-list">商品列表</p>
+	                <form name="infomationForm" class="form-inline" role="form">
+	                    <div class="row dashed-line">
+	                        <div class="col-xs-3">
+	                            <div class="form-group">
+	                                <label class="control-label grey-color">商品ID：</label>
+	                                <p class="detail-input purple-color">470000037</p>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-3">
+	                            <div class="form-group">
+	                                <label class="control-label grey-color">商品名称：</label>
+	                                <p class="detail-input">U9-金鹏</p>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-3">
+	                            <div class="form-group">
+	                                <label class="control-label grey-color">商品品牌：</label>
+	                                <p class="detail-input">营销资源类型</p>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-3">
+	                            <div class="form-group">
+	                                <label class="control-label grey-color">商品型号：</label>
+	                                <p class="detail-input">营销资源物品</p>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </form>
+	            </div>
+	            <div class="numInfo-form">
+	            	<p class="model-title info-list">串号信息</p>
+	            	<!-- 查询 -->
+	                <div class="query-box">
+	                    <div class="row">
+	                        <div class="col-xs-6">	                            
+                                <input type="text" class="form-control get-width">
+                                <button type="submit" class="btn btn-sm btn-submit">添加</button>
+                                </div>	                        
+	                        <div class="col-xs-6 text-right">
+			                   <button type="submit" class="btn btn-sm btn-query btn-submit">模板下载</button>
+			                   <button type="submit" class="btn btn-sm btn-query btn-submit">模板下载</button>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="table-list">
+	            	<p class="model-title info-list">商品串号列表</p>
+	                <div class="result-table">
+	                    <table class="table table-hover table-bordered">
+	                        <tbody>
+	                            <tr>
+	                                <td>
+	                                    <p><i>1</i>20161101</p>
+	                                </td>
+	                                <td>
+	                                    <p><i>2</i>20161102</p>
+	                                </td>
+	                                <td>
+	                                    <p><i>3</i>20161103</p>
+	                                </td>
+	                                 <td>
+	                                    <p><i>4</i>20161104</p>
+	                                </td>
+	                                <td>
+	                                    <p><i>5</i>20161105</p>
+	                                </td>        
+	                            </tr>
+	                            <tr>
+	                                <td>
+	                                    <p><i>6</i>20161106</p>
+	                                </td>
+	                                <td>
+	                                    <p><i>7</i>20161107</p>
+	                                </td>
+	                                <td>
+	                                    <p><i>8</i>20161108</p>
+	                                </td>
+	                                 <td>
+	                                    <p><i>9</i>20161109</p>
+	                                </td>
+	                                <td>
+	                                    <p><i>10</i>20161110</p>
+	                                </td>        
+	                            </tr>
+	                            <tr>
+	                                <td>
+	                                    <p><i>11</i>20161111</p>
+	                                </td>
+	                                <td>
+	                                    <p><i>12</i>20161112</p>
+	                                </td>
+	                                <td>
+	                                    <p><i>13</i>20161113</p>
+	                                </td>
+	                                 <td>
+	                                    <p><i>14</i>20161114</p>
+	                                </td>
+	                                <td>
+	                                    <p><i>15</i>20161115</p>
+	                                </td>        
+	                            </tr>
+	                        </tbody>
+	                    </table>
+	                    <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
+	                        没有数据
+	                    </p>
+	                </div>
+	                <div ng-controller="paginationCtrl" class="text-center">
+	                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+	                </div>
+           		</div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-disabled="isDisabled" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
         <script src="../../resources/js/angular.min.js"></script>
         <script src="../../resources/js/angular-touch.min.js"></script>
         <script src="../../resources/js/angular-animate.min.js"></script>
