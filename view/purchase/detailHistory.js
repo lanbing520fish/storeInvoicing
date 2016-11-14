@@ -1,10 +1,6 @@
 angular
-    .module('detailPurchaseModule', ['ui.bootstrap'])
+    .module('detailHistoryModule', ['ui.bootstrap'])
     .controller('resultCtrl', ['$scope', '$rootScope', '$log', '$timeout', function($scope, $rootScope, $log, $timeout) {
-        // 串码信息
-        $scope.editQueryType = function() {
-            $scope.$emit('openSerialNumberModal');
-        };
 
         $rootScope.serialNubList = [
             {nub: 20161101},
@@ -39,17 +35,41 @@ angular
             {nub: 20161130}
         ];
 
+        // 详情
+        $scope.serialDetail = function(index, item) {
+            var obj = _.clone(item);
+            _.set(obj, '$$hashKey', null);
+            $scope.$emit('openSerialNumberModal', index, obj);
+        }
+
     }])
     // 弹出框
-    .controller('detailPurchaseModalCtrl', function($scope, $rootScope, $uibModal) {
+    .controller('historyDetailModalCtrl', function($scope, $rootScope, $uibModal) {
         var $ctrl = this,
             modalInstance;
         $ctrl.animationsEnabled = true;
 
-        // 串码信息
-        $scope.$on('openSerialNumberModal', function(d, data) {
-            $ctrl.openSerialNumberModal(data);
+        // 串号详情
+        $scope.$on('openSerialNumberModal', function(d, index, item) {
+            $ctrl.openSerialNumberModal(index, item);
         });
+
+        $ctrl.open = function(data) {
+            modalInstance = $uibModal.open({
+                animation: $ctrl.animationsEnabled,
+                ariaLabelledBy: 'new-line-title',
+                ariaDescribedBy: 'new-line-body',
+                templateUrl: 'addNewLine.html',
+                controller: 'addNewLineCtrl',
+                controllerAs: '$ctrl',
+                size: 'lg',
+                resolve: {
+                    items: function() {
+                        return data;
+                    }
+                }
+            });
+        };
 
         $ctrl.openSerialNumberModal = function(data) {
             modalInstance = $uibModal.open({
@@ -72,6 +92,7 @@ angular
             $ctrl.animationsEnabled = !$ctrl.animationsEnabled;
         };
     })
+
     .controller('serialNumberModalCtrl', function($uibModalInstance, $scope, items) {
         var $ctrl = this;
 
@@ -83,6 +104,7 @@ angular
             $uibModalInstance.dismiss('cancel');
         };
     })
+
     // 分页控制器
     .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
         $scope.$on('pageChange', function() {
