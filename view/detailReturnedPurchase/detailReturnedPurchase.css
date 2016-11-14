@@ -1,4 +1,4 @@
-.addPurchase {
+.detailPurchase {
     min-height: 20px;
     margin: 10px;
     border-left: 1px solid #d5d4dc;
@@ -18,7 +18,7 @@
 }
 
 .form-group .edit-txt {
-    height: 54px;
+    height: 80px;
 }
 
 .result-list {
@@ -444,83 +444,3 @@
     color: #333;
     font-weight: 800;
 }
-
-.modal-body{
-    padding:0;
-}
-.info-form{
-    background: #f8f8f8;
-}
-.info-list{
-    font-size:12px;
-    margin-left:27px;
-    line-height:30px;
-}
-.grey-color{
-    color:#999;
-}
-.purple-color{
-    color:#a870e0;
-}
-.query-box{
-    padding:8px;
-    border:1px solid #ddd;
-    background: #f8f8f8;
-    margin:0 8px;
-    border-radius:5px;
-}
-.get-width{
-    width:236px;
-    height:26px;
-    border-radius: 26px;
-    border:1px solid #ddd;
-    display: inline-block;
-}
-.result-table{
-    margin:0 8px;
-}
-.num-list{
-    border:1px solid #ddd;
-    border-right:0;
-    border-bottom:0;
-    overflow: hidden;
-    margin-bottom: 10px;
-}
-.num-list li{
-    position:relative;
-    float: left;
-    line-height:28px;
-    width:20%;
-    border:1px solid #ddd;
-    border-top:0;
-    border-left:0;
-    text-align: center;
-    color:#333;
-    font-size: 12px;
-}
-.num-list li span{
-    display:inline-block;  
-    padding:0 5px;
-    border-radius: 3px;
-    background: #eddbff;
-    color:#a870e0;
-    margin-right: 8px;
-    line-height: 16px;
-}
-.num-list li .small-delete{
-    display:none;
-    position:absolute;
-    color:#a870e0;
-    top:2px;
-    right:10px;
-}
-.num-list li .small-delete:hover{
-    text-decoration: none;
-}
-.num-list li:hover .small-delete{
-    display:block;
-}
-.modal-footer{
-    margin-top: 10px;
-}
-

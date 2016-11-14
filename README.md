@@ -9,6 +9,7 @@
 	* 新增入库单/修改 **editPurchase**
 	* 采购退货 **returnedPurchase**
 	* 新增退货单 **addReturnedPurchase**
+	* 采购退货单详情 **detailReturnedPurchase**
 	* 采购历史查询 **history**
 	* 采购历史详情 **detailHistory**
 

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>采购退货详情</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="detailReturnedPurchase.css">
+</head>
+
+<body ng-app="detailReturnedModule">
+    <!-- DOM结构开始 -->
+    <div class="detailPurchase top-line wavy-line" ng-controller="detailPurchaseModalCtrl as $ctrl">
+        <!-- 入库单基本信息 -->
+        <div class="purchase-infomation">
+            <div class="model-header">
+                <img class="model-img" src="../../resources/images/icon-list.png">
+                <p class="model-title">采购退货单基本信息</p>
+            </div>
+            <div class="infomation-form">
+                <form name="infomationForm" class="form-inline" role="form">
+                    <div class="row dashed-line">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">单据号：</label>
+                                <p class="detail-input">1000000000013641</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">制单人：</label>
+                                <p class="detail-input">韩晓辉</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">制单日期：</label>
+                                <p class="detail-input">2016-11-02 14:23:45</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row dashed-line">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">退货门店：</label>
+                                <p class="detail-input">中国电信@平庄镇北街区营业厅</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label"><i class="iconfont red-star">&#xe692;</i>入库仓库：</label>
+                                <p class="detail-input">社采礼品库（中国电信@平庄镇北街区营业厅）</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label"><i class="iconfont red-star">&#xe692;</i>供应商：</label>
+                                <p class="detail-input">第一供应商</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row dashed-line">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">状态：</label>
+                                <p class="detail-input">生效</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">备注：</label>
+                                <p class="detail-input"></p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 入库商品明细信息 -->
+        <div class="result-list" ng-controller="resultCtrl">
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">采购退货商品明细信息</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="result-table">
+                <div class="result-table">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="10%">商品名称</th>
+                                <th width="10%">商品类别</th>
+                                <th width="10%">商品品牌</th>
+                                <th>商品型号</th>
+                                <th width="10%">配置</th>
+                                <th width="10%">采购单价</th>
+                                <th width="8%">实到数量</th>
+                                <th width="8%">串号</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>iphone6s</p>
+                                </td>
+                                <td>
+                                    <p>手机</p>
+                                </td>
+                                <td>
+                                    <p>苹果</p>
+                                </td>
+                                <td>
+                                    <p class="overflow-handle" title="">iphone6s</p>
+                                </td>
+                                <td>
+                                    <p>128G</p>
+                                </td>
+                                <td>
+                                    <p>256</p>
+                                </td>
+                                <td>
+                                    <p>1</p>
+                                </td>
+                                <td>
+                                    <button ng-click="editQueryType($index, item)" class="btn btn-xs btn-edit">串码信息</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- 串号录入弹框 -->
+        <script type="text/ng-template" id="serialNumberModal.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-list1.png">商品串号导入</h3>
+            </div>
+            <div id="serial-number-body">
+                <div class="queries-box">
+                    <p class="goods-list-title">商品列表</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-disabled="isDisabled" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="detailReturnedPurchase.js"></script>
+</body>
+
+</html>
