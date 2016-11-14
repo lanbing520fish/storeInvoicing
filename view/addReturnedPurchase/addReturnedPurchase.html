@@ -61,7 +61,7 @@
                                 <p class="detail-input">电信</p>
                             </div>
                         </div>
-                    </div>   
+                    </div>
                 </form>
             </div>
         </div>
@@ -91,8 +91,8 @@
                                 <th width="13%">商品品牌</th>
                                 <th width="12%">商品型号</th>
                                 <th width="12%">配置</th>
-                                <th width="8%">采购单价</th>                             
-                                <th width="8%">实到数量</th>                              
+                                <th width="8%">采购单价</th>
+                                <th width="8%">实到数量</th>
                                 <th width="11%">串号</th>
                                 <th>操作</th>
                             </tr>
@@ -116,15 +116,15 @@
                                 </td>
                                 <td>
                                     <p>2000</p>
-                                </td>               
+                                </td>
                                 <td>
                                     <p>1</p>
                                 </td>
-                                 <td>
+                                <td>
                                     <button class="btn btn-xs btn-edit" ng-click="editQueryType($index, item)">录入串号
                                     </button>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <button class="btn btn-xs btn-disabled" disabled><i class="iconfont">&#xe610;</i> 删除
                                     </button>
                                 </td>
@@ -137,23 +137,22 @@
                 </div>
             </div>
         </div>
-		<!-- 出库原因 -->
-		<div class="reason">
-			<div class="model-header">
-	            <img class="model-img" src="../../resources/images/icon-list.png">
-	            <p class="model-title">出库原因</p>
-	        </div>
-	        <div class="form-group another">
-	            <label class="control-label">备注：</label>
-	            <textarea col="" row="20" id="remarks" class="form-control edit-txt" ng-model="modifiedQueryType.remarks"></textarea>
-	        </div>
-	        <div class="text-center">
+        <!-- 出库原因 -->
+        <div class="reason">
+            <div class="model-header">
+                <img class="model-img" src="../../resources/images/icon-list.png">
+                <p class="model-title">出库原因</p>
+            </div>
+            <div class="form-group another">
+                <label class="control-label">备注：</label>
+                <textarea col="" row="20" id="remarks" class="form-control edit-txt" ng-model="modifiedQueryType.remarks"></textarea>
+            </div>
+            <div class="text-center">
                 <button ng-click="saveReturnedOrder()" ng-disabled="isForbid" class="btn btn-submit">暂存</button>
                 <button ng-click="submitReturnedOrder()" ng-disabled="isForbid" class="btn btn-submit">提交</button>
                 <button ng-click="" ng-disabled="isForbid" class="btn btn-cancel">取消</button>
             </div>
         </div>
-
         <!-- 新增一行弹框 -->
         <script type="text/ng-template" id="addNewLine.html">
             <div class="modal-header">
@@ -250,8 +249,9 @@
                         </div>
                     </div>
                 </div>
-                <div ng-controller="paginationCtrl" class="text-center">
+                <div ng-controller="paginationCtrl" class="text-center page">
                     <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -266,77 +266,77 @@
                 <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-list1.png">商品串号导入</h3>
             </div>
             <div class="modal-body pr50" id="serial-number-body">
-	            <div class="info-form">
-	             	<p class="model-title info-list">商品列表</p>
-	                <form name="infomationForm" class="form-inline" role="form">
-	                    <div class="row dashed-line">
-	                        <div class="col-xs-3">
-	                            <div class="form-group">
-	                                <label class="control-label grey-color">商品ID：</label>
-	                                <p class="detail-input purple-color">470000037</p>
-	                            </div>
-	                        </div>
-	                        <div class="col-xs-3">
-	                            <div class="form-group">
-	                                <label class="control-label grey-color">商品名称：</label>
-	                                <p class="detail-input">U9-金鹏</p>
-	                            </div>
-	                        </div>
-	                        <div class="col-xs-3">
-	                            <div class="form-group">
-	                                <label class="control-label grey-color">商品品牌：</label>
-	                                <p class="detail-input">营销资源类型</p>
-	                            </div>
-	                        </div>
-	                        <div class="col-xs-3">
-	                            <div class="form-group">
-	                                <label class="control-label grey-color">商品型号：</label>
-	                                <p class="detail-input">营销资源物品</p>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </form>
-	            </div>
-	            <div class="numInfo-form">
-	            	<p class="model-title info-list">串号信息</p>
-	            	<!-- 查询 -->
-	                <div class="query-box">
-	                    <div class="row">
-	                        <div class="col-xs-6">	                            
+                <div class="info-form">
+                    <p class="model-title info-list">商品列表</p>
+                    <form name="infomationForm" class="form-inline" role="form">
+                        <div class="row dashed-line">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品ID：</label>
+                                    <p class="detail-input purple-color">470000037</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品名称：</label>
+                                    <p class="detail-input">U9-金鹏</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品品牌：</label>
+                                    <p class="detail-input">营销资源类型</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品型号：</label>
+                                    <p class="detail-input">营销资源物品</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="numInfo-form">
+                    <p class="model-title info-list">串号信息</p>
+                    <!-- 查询 -->
+                    <div class="query-box">
+                        <div class="row">
+                            <div class="col-xs-6">
                                 <input type="text" class="form-control get-width" placeholder="输入串号添加">
                                 <button type="submit" class="btn btn-sm btn-submit">添加</button>
                                 <button type="submit" class="btn btn-sm btn-query btn-submit">批量导入</button>
-                                </div>	                        
-	                        <div class="col-xs-6 text-right">  
-			                   <button type="submit" class="btn btn-sm btn-query btn-submit">模板下载</button>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="table-list">
-	            	<p class="model-title info-list">商品串号列表</p>
-	                <div class="result-table">
-	                    <ul class="num-list">
-	                    	<li><span>1</span>20161101<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
-	                    	<li><span>2</span>20161102<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
-	                    	<li><span>3</span>20161103<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
-	                    	<li><span>4</span>20161104<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
-	                    	<li><span>5</span>20161105<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
-
-	                    	<li><span>6</span>20161106<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
-	                    	<li><span>7</span>20161107<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
-	                    	<li><span>8</span>20161108<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
-	                    	<li><span>9</span>20161109<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
-	                    	<li><span>10</span>20161110<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
-	                    </ul>
-	                    <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
-                        没有数据
-                       </p>
-	                </div>
-	                <div ng-controller="paginationCtrl" class="text-center">
-	                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
-	                </div>
-           		</div>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <button type="submit" class="btn btn-sm btn-query btn-submit">模板下载</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-list">
+                    <p class="model-title info-list">商品串号列表</p>
+                    <div class="result-table">
+                        <ul class="num-list">
+                            <li><span>1</span>20161101<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+                            <li><span>2</span>20161102<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+                            <li><span>3</span>20161103<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+                            <li><span>4</span>20161104<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+                            <li><span>5</span>20161105<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+                            <li><span>6</span>20161106<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+                            <li><span>7</span>20161107<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+                            <li><span>8</span>20161108<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+                            <li><span>9</span>20161109<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+                            <li><span>10</span>20161110<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+                        </ul>
+                        <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
+                            没有数据
+                        </p>
+                    </div>
+                    <div ng-controller="paginationCtrl" class="text-center page">
+                        <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                        <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
