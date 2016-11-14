@@ -13,7 +13,7 @@
 
 <body ng-app="addPurchaseModule">
     <!-- DOM结构开始 -->
-    <div class="addPurchase top-line wavy-line">
+    <div class="addPurchase top-line wavy-line" ng-controller="addPurchaseModalCtrl as $ctrl">
         <!-- 入库单基本信息 -->
         <div class="purchase-infomation">
             <div class="model-header">
@@ -45,7 +45,13 @@
                     <div class="row dashed-line">
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label class="control-label">入库渠道单元：</label>
+                                <label class="control-label">入库门店：</label>
+                                <p class="detail-input">中国电信@平庄镇北街区营业厅</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label"><i class="iconfont red-star">&#xe692;</i>入库仓库：</label>
                                 <select class="form-control">
                                     <option value="">全部</option>
                                 </select>
@@ -53,15 +59,7 @@
                         </div>
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label class="control-label"><i class="iconfont">&#xe692;</i>入库仓库：</label>
-                                <select class="form-control">
-                                    <option value="">全部</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="form-group">
-                                <label class="control-label"><i class="iconfont">&#xe692;</i>供应商：</label>
+                                <label class="control-label"><i class="iconfont red-star">&#xe692;</i>供应商：</label>
                                 <select class="form-control">
                                     <option value="">全部</option>
                                 </select>
@@ -80,7 +78,7 @@
             </div>
         </div>
         <!-- 入库商品明细信息 -->
-        <div class="result-list">
+        <div class="result-list" ng-controller="resultCtrl">
             <div class="result-head">
                 <div class="row">
                     <div class="col-xs-4">
@@ -90,8 +88,8 @@
                         </div>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <button class="btn btn-xs btn-set"><i class="iconfont">
-                        &#xe60e;</i> 新增入库单
+                        <button ng-click="addQueryType()" class="btn btn-xs btn-set"><i class="iconfont">
+                        &#xe60e;</i> 增加一行
                     </div>
                 </div>
             </div>
@@ -100,66 +98,170 @@
                     <table class="table table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th width="12%">单据号</th>
-                                <th width="18%">入库渠道单元</th>
-                                <th>仓库</th>
-                                <th width="8%">制单人</th>
-                                <th width="10%">制单日期</th>
-                                <th width="6%">状态</th>
-                                <th width="18%">操作</th>
+                                <th width="10%">商品名称</th>
+                                <th width="10%">商品类别</th>
+                                <th width="10%">商品品牌</th>
+                                <th>商品型号</th>
+                                <th width="10%">配置</th>
+                                <th width="10%">采购单价</th>
+                                <th width="8%"><i class="iconfont red-star">&#xe692;</i>实际数量</th>
+                                <th width="8%"><i class="iconfont red-star">&#xe692;</i>串号</th>
+                                <th width="8%">操作</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <p>1000000000013586</p>
+                                    <p>U9-金鹏</p>
                                 </td>
                                 <td>
-                                    <p>中国电信@平庄镇北街区营业厅</p>
+                                    <p>手机</p>
                                 </td>
                                 <td>
-                                    <p class="overflow-handle" title="">社采礼品库（中国电信@平庄镇北街区营业厅</p>
+                                    <p>营销资源类型</p>
                                 </td>
                                 <td>
-                                    <p>韩晓辉</p>
+                                    <p class="overflow-handle" title="">营销资源物品</p>
                                 </td>
                                 <td>
-                                    <p>2106-11-02</p>
+                                    <p>U9-金鹏</p>
                                 </td>
                                 <td>
-                                    <p>生效</p>
+                                    <input type="number" class="enter-input">
                                 </td>
                                 <td>
-                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe60b;</i> 详情
-                                    </button>
-                                    <button class="btn btn-xs btn-disabled" disabled><i class="iconfont">&#xe60d;</i> 修改
-                                    </button>
-                                    <button class="btn btn-xs btn-disabled" disabled><i class="iconfont">&#xe610;</i> 删除
+                                    <p>1</p>
+                                </td>
+                                <td>
+                                    <button ng-click="editQueryType($index, item)" class="btn btn-xs btn-edit">录入串号</button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
                                     </button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
-                        没有数据
-                    </p>
-                </div>
-                <div ng-controller="paginationCtrl" class="text-center">
-                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
                 </div>
             </div>
+            <div class="text-center">
+                <button ng-click="saveProcureOrder()" ng-disabled="isForbid" class="btn btn-submit">暂存</button>
+                <button ng-click="saveProcureOrder()" ng-disabled="isForbid" class="btn btn-submit">提交</button>
+                <button ng-click="submitProcureOrder()" ng-disabled="isForbid" class="btn btn-cancel">取消</button>
+            </div>
         </div>
-        <script src="../../resources/js/angular.min.js"></script>
-        <script src="../../resources/js/angular-touch.min.js"></script>
-        <script src="../../resources/js/angular-animate.min.js"></script>
-        <script src="../../resources/js/angular-aria.min.js"></script>
-        <script src="../../resources/js/jquery.min.js"></script>
-        <script src="../../resources/js/bootstrap.min.js"></script>
-        <script src="../../resources/js/ui-bootstrap.js"></script>
-        <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
-        <script src="../../resources/js/lodash.js"></script>
-        <script src="../../resources/js/sweetalert.min.js"></script>
-        <script src="addPurchase.js"></script>
+        <!-- 新增一行弹框 -->
+        <script type="text/ng-template" id="addNewLine.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="new-line-title"><img class="icon" src="../../resources/images/icon-list1.png">选择商品</h3>
+            </div>
+            <div id="new-line-body">
+                <!-- 查询 -->
+                <div class="queries-box">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-keyword">
+                                <label class="control-label">关键词：</label>
+                                <input type="text" class="form-control reduce-width">
+                                <button type="submit" class="btn btn-sm btn-keyword"><i class="iconfont">&#xe600;</i> 查询</button>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <a class="btn-queries" ng-click="$ctrl.toggle('$ctrl.isHidden')">更多查询条件</a>
+                        </div>
+                        <div class="col-xs-4 text-right">
+                            <button type="submit" class="btn btn-sm btn-query btn-goods"><i class="iconfont">&#xe60e;</i> 添加商品</button>
+                        </div>
+                    </div>
+                    <!-- 条件列表 -->
+                    <div class="queries-list" ng-show="!$ctrl.isHidden">
+                        <p class="queries-title">所有分类 ></p>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">类别：</span>
+                            <div class="category-list fn-left">
+                                <span class="category-item">手机</span>
+                                <span class="category-item">配件</span>
+                                <span class="category-item">其他数码产品</span>
+                            </div>
+                        </div>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">品牌：</span>
+                            <div class="category-list fn-left" ng-class="{fold: $ctrl.isFoldBrand}">
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                            </div>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="$ctrl.isFoldBrand" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="!$ctrl.isFoldBrand" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
+                        </div>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">型号：</span>
+                            <div class="category-list fn-left" ng-class="{fold: $ctrl.isFoldModel}">
+                                <span class="category-item">Iphone 5s</span>
+                                <span class="category-item">Iphone 6</span>
+                                <span class="category-item">Iphone 6s</span>
+                                <span class="category-item">Iphone 6plus</span>
+                                <span class="category-item">Iphone 7s</span>
+                            </div>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldModel')" ng-show="$ctrl.isFoldModel" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldModel')" ng-show="!$ctrl.isFoldModel" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 结果 -->
+                <p class="goods-list-title">商品列表</p>
+                <div class="goods-list-box">
+                    <div class="goods-list">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-disabled="!checkedPrivilegeType.length" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
+        <!-- 串号录入弹框 -->
+        <script type="text/ng-template" id="serialNumberModal.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-list1.png">商品串号导入</h3>
+            </div>
+            <div class="modal-body pr50" id="serial-number-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-disabled="isDisabled" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="addPurchase.js"></script>
 </body>
 
 </html>

@@ -67,6 +67,7 @@
 }
 
 .result-table table th {
+    padding: 5px !important;
     background-color: #a870e0;
     border-bottom-width: 1px !important;
     color: #fff;
