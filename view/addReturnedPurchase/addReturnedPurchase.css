@@ -306,6 +306,119 @@
 .category-more .iconfont {
     font-size: 12px;
 }
+.btn-submit{
+    width:auto;
+    padding:5px 15px;
+}
+.goods-list-title {
+    height: 22px;
+    margin-top: 5px;
+    padding-left: 14px;
+    line-height: 22px;
+    color: #333;
+    font-weight: 800;
+}
+
+.goods-list-box {
+    height: 182px;
+    margin: 0 10px 6px;
+    border: 1px solid #bfbfbf;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.goods-list {
+    width: 250px;
+    margin-top: -1px;
+    border-right: 1px solid #bfbfbf;
+}
+
+.goods-item {
+    height: 26px;
+    line-height: 26px;
+    background-color: #fbfbfb;
+    cursor: pointer;
+}
+
+.goods-item {
+    position: relative;
+    height: 26px;
+    padding-left: 20px;
+    border-left: 2px solid #fbfbfb;
+    border-top: 1px solid #fbfbfb;
+    border-bottom: 1px solid #fbfbfb;
+    background-color: #fbfbfb;
+}
+
+.goods-item::before {
+    content: '\e62b';
+    position: absolute;
+    left: 4px;
+    top: 0;
+    font-family: 'iconfont';
+}
+
+.goods-item:hover,
+.goods-item.hover,
+.goods-item.current {
+    background-color: #fff;
+    width: calc(100% + 1px);
+    border-left: 2px solid #a870e0;
+    border-top: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d2d2d2;
+}
+
+.goods-item:hover .goods-title,
+.goods-item:hover .goods-name,
+.goods-item.hover .goods-title,
+.goods-item.hover .goods-name,
+.goods-item.current .goods-title,
+.goods-item.current .goods-name {
+    color: #651faa;
+}
+
+.goods-item.ng-scope.current::before {
+    content: '\e62c';
+    color: #651faa;
+}
+
+.goods-item .goods-title {
+    height: 24px;
+    line-height: 24px;
+    color: #999;
+}
+
+.goods-item .goods-name {
+    color: #333;
+    font-weight: 800;
+}
+
+.goods-detail {
+    width: 626px;
+    height: 180px;
+    padding: 0 20px;
+}
+
+.detail-title {
+    height: 30px;
+    line-height: 30px;
+    color: #030202;
+    font-weight: 800;
+}
+
+.detail-item {
+    width: 250px;
+    height: 30px;
+    line-height: 30px;
+    color: #999;
+    font-weight: 800;
+}
+
+.detail-name {
+    color: #333;
+    font-weight: 800;
+}
+
 
 .modal-body{
     padding:0;
@@ -341,7 +454,26 @@
 .result-table{
     margin:0 8px;
 }
-.result-table td p i{
+.num-list{
+    border:1px solid #ddd;
+    border-right:0;
+    border-bottom:0;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.num-list li{
+    position:relative;
+    float: left;
+    line-height:28px;
+    width:20%;
+    border:1px solid #ddd;
+    border-top:0;
+    border-left:0;
+    text-align: center;
+    color:#333;
+    font-size: 12px;
+}
+.num-list li span{
     display:inline-block;  
     padding:0 5px;
     border-radius: 3px;
@@ -349,7 +481,19 @@
     color:#a870e0;
     margin-right: 8px;
     line-height: 16px;
-    font-style: normal;
+}
+.num-list li .small-delete{
+    display:none;
+    position:absolute;
+    color:#a870e0;
+    top:2px;
+    right:10px;
+}
+.num-list li .small-delete:hover{
+    text-decoration: none;
+}
+.num-list li:hover .small-delete{
+    display:block;
 }
 .modal-footer{
     margin-top: 10px;

@@ -230,15 +230,33 @@
                 </div>
                 <!-- 结果 -->
                 <p class="goods-list-title">商品列表</p>
-                <div class="goods-list-box">
-                    <div class="goods-list">
-
+                <div class="goods-list-box fn-clear" ng-controller="goodsListModalCtrl">
+                    <div class="goods-list fn-left">
+                        <li class="goods-item" ng-class="{current: $index===checkIndex, hover: hoverIndex===$index}" ng-repeat="item in goodsListResult" ng-mouseover="hoverGoods($index)" ng-click="checkedGoods($index)">
+                            <p class="goods-title">商品：<span class="goods-name" ng-bind="item.name"></span></p>
+                        </li>
                     </div>
+                    <div class="goods-detail fn-left">
+                        <p class="detail-title">商品详情：</p>
+                        <div class="detail-content fn-clear">
+                            <p class="detail-item fn-left">类别：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].type"></span></p>
+                            <p class="detail-item fn-left">品牌：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].brand"></span></p>
+                            <p class="detail-item fn-left">型号：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].model"></span></p>
+                            <p class="detail-item fn-left">配置：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].configuration"></span></p>
+                            <p class="detail-item fn-left">颜色：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].color"></span></p>
+                            <p class="detail-item fn-left">RAM：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].RAM"></span></p>
+                            <p class="detail-item fn-left">尺寸：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].size"></span></p>
+                            <p class="detail-item fn-left">OS：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].OS"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div ng-controller="paginationCtrl" class="text-center">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
-                <button class="btn btn-submit" type="button" ng-disabled="!checkedPrivilegeType.length" ng-click="$ctrl.ok()">确定</button>
+                <button class="btn btn-submit" type="button" ng-click="$ctrl.ok()">确定</button>
             </div>
         </script>
         <!-- 串号录入弹框 -->
@@ -285,11 +303,11 @@
 	                <div class="query-box">
 	                    <div class="row">
 	                        <div class="col-xs-6">	                            
-                                <input type="text" class="form-control get-width">
+                                <input type="text" class="form-control get-width" placeholder="输入串号添加">
                                 <button type="submit" class="btn btn-sm btn-submit">添加</button>
+                                <button type="submit" class="btn btn-sm btn-query btn-submit">批量导入</button>
                                 </div>	                        
-	                        <div class="col-xs-6 text-right">
-			                   <button type="submit" class="btn btn-sm btn-query btn-submit">模板下载</button>
+	                        <div class="col-xs-6 text-right">  
 			                   <button type="submit" class="btn btn-sm btn-query btn-submit">模板下载</button>
 	                        </div>
 	                    </div>
@@ -298,64 +316,22 @@
 	            <div class="table-list">
 	            	<p class="model-title info-list">商品串号列表</p>
 	                <div class="result-table">
-	                    <table class="table table-hover table-bordered">
-	                        <tbody>
-	                            <tr>
-	                                <td>
-	                                    <p><i>1</i>20161101</p>
-	                                </td>
-	                                <td>
-	                                    <p><i>2</i>20161102</p>
-	                                </td>
-	                                <td>
-	                                    <p><i>3</i>20161103</p>
-	                                </td>
-	                                 <td>
-	                                    <p><i>4</i>20161104</p>
-	                                </td>
-	                                <td>
-	                                    <p><i>5</i>20161105</p>
-	                                </td>        
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <p><i>6</i>20161106</p>
-	                                </td>
-	                                <td>
-	                                    <p><i>7</i>20161107</p>
-	                                </td>
-	                                <td>
-	                                    <p><i>8</i>20161108</p>
-	                                </td>
-	                                 <td>
-	                                    <p><i>9</i>20161109</p>
-	                                </td>
-	                                <td>
-	                                    <p><i>10</i>20161110</p>
-	                                </td>        
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <p><i>11</i>20161111</p>
-	                                </td>
-	                                <td>
-	                                    <p><i>12</i>20161112</p>
-	                                </td>
-	                                <td>
-	                                    <p><i>13</i>20161113</p>
-	                                </td>
-	                                 <td>
-	                                    <p><i>14</i>20161114</p>
-	                                </td>
-	                                <td>
-	                                    <p><i>15</i>20161115</p>
-	                                </td>        
-	                            </tr>
-	                        </tbody>
-	                    </table>
+	                    <ul class="num-list">
+	                    	<li><span>1</span>20161101<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+	                    	<li><span>2</span>20161102<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+	                    	<li><span>3</span>20161103<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+	                    	<li><span>4</span>20161104<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+	                    	<li><span>5</span>20161105<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+
+	                    	<li><span>6</span>20161106<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+	                    	<li><span>7</span>20161107<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+	                    	<li><span>8</span>20161108<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+	                    	<li><span>9</span>20161109<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+	                    	<li><span>10</span>20161110<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a></li>
+	                    </ul>
 	                    <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
-	                        没有数据
-	                    </p>
+                        没有数据
+                       </p>
 	                </div>
 	                <div ng-controller="paginationCtrl" class="text-center">
 	                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>

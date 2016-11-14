@@ -142,6 +142,87 @@ angular
             $uibModalInstance.dismiss('cancel');
         };
     })
+    .controller('goodsListModalCtrl', ['$scope', function($scope) {
+        $scope.goodsListResult = [{
+            name: '测试配件 A',
+            type: '手机',
+            brand: '中兴',
+            model: 'nubia Z9 Max（全网通）',
+            configuration: '单电单充',
+            color: '黑色',
+            RAM: '3072',
+            size: '154.8*76.6*7.9（mm）',
+            OS: 'nubia UI 2.8（基于Android L/5.0）'
+        }, {
+            name: '测试配件 B',
+            type: '手机',
+            brand: '华为',
+            model: 'nubia Z9 Max（全网通）',
+            configuration: '单电单充',
+            color: '黑色',
+            RAM: '3072',
+            size: '154.8*76.6*7.9（mm）',
+            OS: 'nubia UI 2.8（基于Android L/5.0）'
+        }, {
+            name: '测试配件 C',
+            type: '手机',
+            brand: '苹果',
+            model: 'nubia Z9 Max（全网通）',
+            configuration: '单电单充',
+            color: '黑色',
+            RAM: '3072',
+            size: '154.8*76.6*7.9（mm）',
+            OS: 'nubia UI 2.8（基于Android L/5.0）'
+        }, {
+            name: '测试配件 D',
+            type: '手机',
+            brand: '酷派',
+            model: 'nubia Z9 Max（全网通）',
+            configuration: '单电单充',
+            color: '黑色',
+            RAM: '3072',
+            size: '154.8*76.6*7.9（mm）',
+            OS: 'nubia UI 2.8（基于Android L/5.0）'
+        }, {
+            name: '测试配件 E',
+            type: '手机',
+            brand: '三星',
+            model: 'nubia Z9 Max（全网通）',
+            configuration: '单电单充',
+            color: '黑色',
+            RAM: '3072',
+            size: '154.8*76.6*7.9（mm）',
+            OS: 'nubia UI 2.8（基于Android L/5.0）'
+        }, {
+            name: '测试配件 F',
+            type: '手机',
+            brand: '黑莓',
+            model: 'nubia Z9 Max（全网通）',
+            configuration: '单电单充',
+            color: '黑色',
+            RAM: '3072',
+            size: '154.8*76.6*7.9（mm）',
+            OS: 'nubia UI 2.8（基于Android L/5.0）'
+        }, {
+            name: '测试配件 G',
+            type: '手机',
+            brand: 'OPPO',
+            model: 'nubia Z9 Max（全网通）',
+            configuration: '单电单充',
+            color: '黑色',
+            RAM: '3072',
+            size: '154.8*76.6*7.9（mm）',
+            OS: 'nubia UI 2.8（基于Android L/5.0）'
+        }];
+        $scope.hoverIndex = 0; // 鼠标Hover的索引
+        $scope.checkIndex = ''; // 鼠标Checked的索引
+        $scope.hoverGoods = function(index) {
+            $scope.hoverIndex = index;
+        }
+        $scope.checkedGoods = function(index) {
+            $scope.checkIndex = index;
+        }
+    }])
     .controller('serialNumberModalCtrl', function($uibModalInstance, $scope, items) {
         var $ctrl = this;
 
