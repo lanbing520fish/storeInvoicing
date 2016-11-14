@@ -10,8 +10,8 @@
 	* 采购退货 **returnedPurchase**
 	* 新增退货单 **addReturnedPurchase**
 	* 采购退货单详情 **detailReturnedPurchase**
-	* 采购历史查询
-	* 采购历史详情
+	* 采购历史查询 **history**
+	* 采购历史详情 **detailHistory**
 
 * **价格管理**
 
