@@ -18,7 +18,11 @@
         <div class="purchase-infomation">
             <div class="model-header">
                 <img class="model-img" src="../../resources/images/icon-list.png">
-                <p class="model-title">采购入库单基本信息</p>
+                <span class="model-title">采购入库单基本信息</span>
+                <span class="self-buy">
+                    <input id="isSelfBuy" type="checkbox">
+                    <label for="isSelfBuy">是否自采</label>
+                </span>
             </div>
             <div class="infomation-form">
                 <form name="infomationForm" class="form-inline" role="form">
@@ -112,19 +116,19 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <p>U9-金鹏</p>
+                                    <p>iphone6s</p>
                                 </td>
                                 <td>
                                     <p>手机</p>
                                 </td>
                                 <td>
-                                    <p>营销资源类型</p>
+                                    <p>苹果</p>
                                 </td>
                                 <td>
-                                    <p class="overflow-handle" title="">营销资源物品</p>
+                                    <p class="overflow-handle" title="">iphone6s</p>
                                 </td>
                                 <td>
-                                    <p>U9-金鹏</p>
+                                    <p>128G</p>
                                 </td>
                                 <td>
                                     <input type="number" class="enter-input">
@@ -140,14 +144,44 @@
                                     </button>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <p>小米电源</p>
+                                </td>
+                                <td>
+                                    <p>配件</p>
+                                </td>
+                                <td>
+                                    <p>小米</p>
+                                </td>
+                                <td>
+                                    <p class="overflow-handle" title="">小米电源</p>
+                                </td>
+                                <td>
+                                    <p>2000毫安</p>
+                                </td>
+                                <td>
+                                    <input type="number" class="enter-input">
+                                </td>
+                                <td>
+                                    <input type="number" class="enter-input">
+                                </td>
+                                <td>
+                                    -
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                                    </button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="text-center">
-                <button ng-click="saveProcureOrder()" ng-disabled="isForbid" class="btn btn-submit">暂存</button>
-                <button ng-click="saveProcureOrder()" ng-disabled="isForbid" class="btn btn-submit">提交</button>
-                <button ng-click="submitProcureOrder()" ng-disabled="isForbid" class="btn btn-cancel">取消</button>
+                <button ng-click="saveProcureOrder()" class="btn btn-submit">暂存</button>
+                <button class="btn btn-submit">提交</button>
+                <button class="btn btn-cancel">取消</button>
             </div>
         </div>
         <!-- 新增一行弹框 -->
@@ -176,7 +210,7 @@
                     </div>
                     <!-- 条件列表 -->
                     <div class="queries-list" ng-show="!$ctrl.isHidden">
-                        <p class="queries-title">所有分类 ></p>
+                        <p class="queries-title">所有分类 > <span class="checked-query">类别：手机<i class="iconfont">&#xe611;</i></span><span class="checked-query">品牌：中兴<i class="iconfont">&#xe611;</i></span></p>
                         <div class="queries-category fn-clear">
                             <span class="category-label fn-left">类别：</span>
                             <div class="category-list fn-left">
@@ -228,7 +262,7 @@
                 <p class="goods-list-title">商品列表</p>
                 <div class="goods-list-box fn-clear" ng-controller="goodsListModalCtrl">
                     <div class="goods-list fn-left">
-                        <li class="goods-item" ng-class="{current: $index===checkIndex, hover: hoverIndex===$index}" ng-repeat="item in goodsListResult" ng-mouseover="hoverGoods($index)" ng-click="checkedGoods($index)">
+                        <li class="goods-item" ng-class="{current: $index===checkIndex, hover: $index===hoverIndex || hoverIndex===''}" ng-repeat="item in goodsListResult" ng-mouseover="hoverGoods($index)" ng-click="checkedGoods($index)">
                             <p class="goods-title">商品：<span class="goods-name" ng-bind="item.name"></span></p>
                         </li>
                     </div>
@@ -261,7 +295,10 @@
                 <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
                 <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-list1.png">商品串号导入</h3>
             </div>
-            <div class="modal-body pr50" id="serial-number-body">
+            <div id="serial-number-body">
+                <div class="queries-box">
+                    <p class="goods-list-title">商品列表</p>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
