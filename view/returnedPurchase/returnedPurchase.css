@@ -72,6 +72,7 @@
     color: #fff;
     font-weight: 800;
     text-align: center;
+    padding: 5px !important;
 }
 
 .result-table table td {
