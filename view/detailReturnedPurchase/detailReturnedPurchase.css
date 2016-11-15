@@ -444,3 +444,75 @@
     color: #333;
     font-weight: 800;
 }
+
+/*弹窗内容*/
+.high30{
+    height: 30px;
+}
+.mt10 {
+    margin-top: 10px;
+}
+.mt20{
+    margin-top: 20px;
+}
+.history-detail-infomation {
+    padding: 5px 20px 0px 20px;
+    background-color: #f8f8f8;
+    border-bottom: 1px dashed #bfbfbf;
+}
+.model-detail-title{
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
+}
+.serial-number-list{
+    padding:0 6px;
+}
+.model-detailnumber-title{
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 14px;
+    margin-top: 2px;
+    height: 25px;
+}
+.detail-number-list{
+    width: 100%;
+    text-align: center;
+    border-left: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+}
+.detail-number-list li{
+    width: 20%;
+    float: left;
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: #333;
+    font-size: 12px;
+}
+.detail-number-list li span{
+    display: inline-block;
+    padding: 0 5px;
+    border-radius: 3px;
+    background: #eddbff;
+    color: #a870e0;
+    margin-right: 8px;
+    line-height: 16px;
+}
+.form-group .detail-msg{
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    text-align: left;
+}
+.form-group .detail-msg span{
+    color: #999999;
+}
+.info-detail-form{
+    margin-top: 8px;
+}
+/*弹窗内容*/
