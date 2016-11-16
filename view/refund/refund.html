@@ -132,7 +132,7 @@
                         <thead>
                             <tr>
                                 <th width="5%">
-                                    <input type="checkbox" ng-click="checkAll(isCheckedAll)" ng-model="isCheckedAll" disabled>
+                                    <input type="checkbox" ng-click="checkAll(isCheckedAll)" ng-model="isCheckedAll">
                                 </th>
                                 <th width="12%">商品编码</th>
                                 <th width="12%">商品名称</th>
@@ -148,7 +148,7 @@
                         <tbody>
                             <tr ng-repeat="item in queryTypeResultList">
                                 <td>
-                                    <input type="checkbox" name="checkbox{{$index}}" ng-click="check(item, isChecked)" ng-model="isChecked">
+                                    <input type="checkbox" name="checkbox{{$index}}" ng-checked="isCheckedAll" ng-click="check(item, isChecked, isCheckedAll)" ng-model="isChecked">
                                 </td>
                                 <td>
                                     <p>10000000234</p>

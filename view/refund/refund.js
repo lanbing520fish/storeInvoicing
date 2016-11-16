@@ -25,7 +25,7 @@ angular
     })
     .controller('resultCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
         // 原销售单销售商品列表
-        $scope.queryTypeResultList = [{
+        $rootScope.queryTypeResultList = [{
             "offerId": "420000199002061851",
             "offerName": "iphone6s",
             "price": "99"
@@ -37,7 +37,21 @@ angular
 
         // TODO 全选
         $scope.checkAll = function(chk) {
-            // chk ? $scope.isChecked = true : $scope.isChecked = false;
+            if (chk) {
+                $scope.isChecked = true;
+                $rootScope.checkedGoods = _.clone($rootScope.queryTypeResultList);
+                _.map($rootScope.checkedGoods, function(item, index) {
+                    item.$$hashKey = null;
+                });
+                $rootScope.checkedGoodsPrice = 0; // 置0
+                _.map($rootScope.checkedGoods, function(item, index) {
+                    $rootScope.checkedGoodsPrice += _.toNumber(item.price);
+                });
+            } else {
+                $scope.isChecked = false;
+                $rootScope.checkedGoods = [];
+                $rootScope.checkedGoodsPrice = 0; // 置0
+            }
         }
 
         // 单选
@@ -53,7 +67,7 @@ angular
             $rootScope.checkedGoodsPrice = 0; // 置0
             _.map($rootScope.checkedGoods, function(item, index) {
                 $rootScope.checkedGoodsPrice += _.toNumber(item.price);
-            })
+            });
         };
 
         // 单个退货
