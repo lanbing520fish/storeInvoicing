@@ -99,58 +99,56 @@
                 </div>
             </div>
             <div class="result-table">
-                <div class="result-table">
-                    <table class="table table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th width="12%">单据号</th>
-                                <th width="18%">入库门店</th>
-                                <th>仓库</th>
-                                <th width="8%">制单人</th>
-                                <th width="10%">制单日期</th>
-                                <th width="6%">状态</th>
-                                <th width="18%">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <p>1000000000013586</p>
-                                </td>
-                                <td>
-                                    <p>中国电信@平庄镇北街区营业厅</p>
-                                </td>
-                                <td>
-                                    <p class="overflow-handle" title="">社采礼品库（中国电信@平庄镇北街区营业厅</p>
-                                </td>
-                                <td>
-                                    <p>韩晓辉</p>
-                                </td>
-                                <td>
-                                    <p>2106-11-02</p>
-                                </td>
-                                <td>
-                                    <p>生效</p>
-                                </td>
-                                <td>
-                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe60b;</i> 详情
-                                    </button>
-                                    <button class="btn btn-xs btn-disabled" disabled><i class="iconfont">&#xe60d;</i> 修改
-                                    </button>
-                                    <button class="btn btn-xs btn-disabled" disabled><i class="iconfont">&#xe610;</i> 删除
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
-                        没有数据
-                    </p>
-                </div>
-                <div ng-controller="paginationCtrl" class="text-center page">
-                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
-                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
-                </div>
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="12%">单据号</th>
+                            <th width="18%">入库门店</th>
+                            <th>仓库</th>
+                            <th width="8%">制单人</th>
+                            <th width="10%">制单日期</th>
+                            <th width="6%">状态</th>
+                            <th width="18%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>1000000000013586</p>
+                            </td>
+                            <td>
+                                <p>中国电信@平庄镇北街区营业厅</p>
+                            </td>
+                            <td>
+                                <p class="overflow-handle" title="">社采礼品库（中国电信@平庄镇北街区营业厅</p>
+                            </td>
+                            <td>
+                                <p>韩晓辉</p>
+                            </td>
+                            <td>
+                                <p>2106-11-02</p>
+                            </td>
+                            <td>
+                                <p>生效</p>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe60b;</i> 详情
+                                </button>
+                                <button class="btn btn-xs btn-disabled" disabled><i class="iconfont">&#xe60d;</i> 修改
+                                </button>
+                                <button class="btn btn-xs btn-disabled" disabled><i class="iconfont">&#xe610;</i> 删除
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length" ng-cloak>
+                    没有数据
+                </p>
+            </div>
+            <div ng-controller="paginationCtrl" class="text-center page">
+                <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
             </div>
         </div>
     </div>
