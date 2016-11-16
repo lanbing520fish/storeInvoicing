@@ -1,17 +1,28 @@
 angular
     .module('refundModule', ['ui.bootstrap'])
     .run(['$rootScope', function($rootScope) {
-        $rootScope.checkedGoods = []; // 已选择待退换商品
+        $rootScope.checkedGoods = []; // 已选择待退换商品（批量退货）
         $rootScope.checkedGoodsPrice = 0; // 已选择待退换商品总价
+        $rootScope.submitGoods = []; // 已确定的退换商品列表
+        $rootScope.submitGoodsPrice = 0; // 已确定退换商品总价
+        $rootScope.stepNum = 0; // 当前显示的step索引值（Number类型）
+        $rootScope.goBack = function(num) { // 返回（num-1）
+            $rootScope.stepNum = num - 1;
+        };
+        $rootScope.forward = function(num) { // 返回（num+1）
+            $rootScope.stepNum = num + 1;
+        };
     }])
     .filter('priceFilter', function() {
         return function(stateValue) {
             return '¥' + stateValue;
         }
     })
-    .controller('stepCtrl', ['$scope', '$timeout', function($scope, $timeout) {
-        $scope.stepNum = 0; // 当前显示的step索引
-    }])
+    .filter('priceReturnFilter', function() {
+        return function(stateValue) {
+            return '-¥' + stateValue + '(退)';
+        }
+    })
     .controller('resultCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
         // 原销售单销售商品列表
         $scope.queryTypeResultList = [{
@@ -44,4 +55,22 @@ angular
                 $rootScope.checkedGoodsPrice += _.toNumber(item.price);
             })
         };
+
+        // 单个退货
+        $scope.singleReturn = function(item) {
+            $rootScope.submitGoods = [item];
+            $rootScope.submitGoodsPrice = 0; // 置0
+            $rootScope.submitGoodsPrice = item.price;
+            $rootScope.stepNum = 1;
+        }
+
+        // 批量退货
+        $scope.batchReturn = function() {
+            $rootScope.submitGoods = $rootScope.checkedGoods;
+            $rootScope.submitGoodsPrice = 0; // 置0
+            _.map($rootScope.submitGoods, function(item, index) {
+                $rootScope.submitGoodsPrice += _.toNumber(item.price);
+            })
+            $rootScope.stepNum = 1;
+        }
     }])
