@@ -12,6 +12,8 @@
 	* 采购退货单详情 **detailReturnedPurchase**
 	* 采购历史查询 **history**
 	* 采购历史详情 **detailHistory**
+	* 零售销售 **sell**
+	* 销售单详情 **detailSell**
 
 * **价格管理**
 

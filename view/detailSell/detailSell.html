@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>销售单详情</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="detailSell.css">
+</head>
+
+<body ng-app="detailSellModule">
+
+<div class="refund top-line wavy-line">
+
+    <div class="step-content">
+        <!-- 基本信息 -->
+        <div class="order-detail">
+            <div class="row dashed-line">
+                <div class="col-xs-6">
+                    <p class="order-title">基本信息：</p>
+                </div>
+            </div>
+            <div class="row dashed-line">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label class="control-label">单据号：</label>
+                        <p class="detail-input">1000000000013641</p>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label class="control-label">手工单号：</label>
+                        <p class="detail-input">-</p>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label class="control-label">客户姓名：</label>
+                        <p class="detail-input">刘强</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row dashed-line">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label class="control-label">单据类型：</label>
+                        <p class="detail-input">销售退货</p>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label class="control-label">单据时间：</label>
+                        <p class="detail-input">2016-11-10 11:12:20</p>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label class="control-label">单据状态：</label>
+                        <p class="detail-input">退款完成</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row dashed-line">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label class="control-label">收银员：</label>
+                        <p class="detail-input">韩晓辉</p>
+                    </div>
+                </div>
+                <div class="col-xs-8">
+                    <div class="form-group">
+                        <label class="control-label">销售人员：</label>
+                        <p class="detail-input">韩晓辉</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">订单备注：</label>
+                        <p class="detail-input"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 商品列表 -->
+        <div class="result-list">
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">商品列表</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="result-table table－bottom0">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="6%">序号</th>
+                            <th width="15%">商品编码</th>
+                            <th width="15%">商品名称</th>
+                            <th width="15%">销售单价</th>
+                            <th width="10%">件数</th>
+                            <th>串码</th>
+                            <th width="15%">商品金额</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>1</p>
+                            </td>
+                            <td>
+                                <p>235065</p>
+                            </td>
+                            <td>
+                                <p>iPhone6S</p>
+                            </td>
+                            <td>
+                                <p>¥1234.00</p>
+                            </td>
+                            <td>
+                                <p>1</p>
+                            </td>
+                            <td>
+                                <p>-</p>
+                            </td>
+                            <td>
+                                <p>¥1234.00</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>2</p>
+                            </td>
+                            <td>
+                                <p>235065</p>
+                            </td>
+                            <td>
+                                <p>iPhone6S</p>
+                            </td>
+                            <td>
+                                <p>¥1234.00</p>
+                            </td>
+                            <td>
+                                <p>1</p>
+                            </td>
+                            <td>
+                                <p>-</p>
+                            </td>
+                            <td>
+                                <p>¥1234.00</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="total">
+                商品总件数：<span class="number">2</span><span class="ml20">商品总金额：</span><span class="number">¥222.00</span>
+            </div>
+            <div class="text-center mt10">
+                <button class="btn btn-cancel">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="detailSell.js"></script>
+</body>
+
+</html>
