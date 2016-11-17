@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>销售收银</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="sellCash.css">
+</head>
+
+<body ng-app="sellCashModule">
+	<!-- DOM -->
+	<div class="sellCash top-line wavy-line">
+		<div id="new-line-body">
+            <!-- 查询 -->
+            <div class="queries-box" ng-controller="sellCashQuery">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <div class="form-keyword">    
+                            <input type="text" class="form-control reduce-width" placeholder="输入单据号进行搜索">
+                            <button type="submit" class="btn btn-sm btn-keyword"><i class="iconfont">&#xe600;</i> 查询</button>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <a class="btn-queries" ng-click="toggle('isHidden')">更多查询条件</a>
+                    </div>          
+                </div>
+                <!-- 条件列表 -->
+                <div class="queries-list" ng-show="!isHidden">
+                    <p class="queries-title">所有分类 > <span class="checked-query">类别：手机<i class="iconfont">&#xe611;</i></span><span class="checked-query">品牌：中兴<i class="iconfont">&#xe611;</i></span></p>
+                    <div class="queries-category fn-clear">
+                        <span class="category-label fn-left">类别：</span>
+                        <div class="category-list fn-left">
+                            <span class="category-item">手机</span>
+                            <span class="category-item">配件</span>
+                            <span class="category-item">其他数码产品</span>
+                        </div>
+                    </div>
+                    <div class="queries-category fn-clear">
+                        <span class="category-label fn-left">品牌：</span>
+                        <div class="category-list fn-left" ng-class="{fold:isFoldBrand}">
+                            <span class="category-item">苹果</span>
+                            <span class="category-item">三星</span>
+                            <span class="category-item">华为</span>
+                            <span class="category-item">酷派</span>
+                            <span class="category-item">中兴</span>
+                            <span class="category-item">黑莓</span>
+                            <span class="category-item">苹果</span>
+                            <span class="category-item">三星</span>
+                            <span class="category-item">华为</span>
+                            <span class="category-item">酷派</span>
+                            <span class="category-item">中兴</span>
+                            <span class="category-item">黑莓</span>
+                            <span class="category-item">苹果</span>
+                            <span class="category-item">三星</span>
+                            <span class="category-item">华为</span>
+                            <span class="category-item">酷派</span>
+                            <span class="category-item">中兴</span>
+                            <span class="category-item">黑莓</span>
+                            <span class="category-item">苹果</span>
+                            <span class="category-item">三星</span>
+                            <span class="category-item">华为</span>
+                            <span class="category-item">酷派</span>
+                            <span class="category-item">中兴</span>
+                            <span class="category-item">黑莓</span>
+                            <span class="category-item">苹果</span>
+                            <span class="category-item">三星</span>
+                            <span class="category-item">华为</span>
+                            <span class="category-item">酷派</span>
+                            <span class="category-item">中兴</span>
+                            <span class="category-item">黑莓</span>
+                            <span class="category-item">苹果</span>
+                            <span class="category-item">三星</span>
+                            <span class="category-item">华为</span>
+                            <span class="category-item">酷派</span>
+                            <span class="category-item">中兴</span>
+                            <span class="category-item">黑莓</span>
+                        </div>
+                        <a href="javascript:;" ng-click="toggle('isFoldBrand')" ng-show="isFoldBrand" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
+                        <a href="javascript:;" ng-click="toggle('isFoldBrand')" ng-show="!isFoldBrand" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
+                    </div>
+                    <div class="queries-category fn-clear">
+                        <span class="category-label fn-left">型号：</span>
+                        <div class="category-list fn-left" ng-class="{fold: isFoldModel}">
+                            <span class="category-item">Iphone 5s</span>
+                            <span class="category-item">Iphone 6</span>
+                            <span class="category-item">Iphone 6s</span>
+                            <span class="category-item">Iphone 6plus</span>
+                            <span class="category-item">Iphone 7s</span>
+                        </div>
+                        <a href="javascript:;" ng-click="toggle('isFoldModel')" ng-show="isFoldModel" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
+                        <a href="javascript:;" ng-click="toggle('isFoldModel')" ng-show="!isFoldModel" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
+                    </div>
+                </div>
+            </div>  
+            <!-- 搜索 -->            
+	        <div class="condition-query fn-clear" ng-controller="conditionQuery">
+	            <p class="condition-query-title fn-left">搜
+	                <br/>索</p>
+	            <div class="condition-query-box fn-right">
+	                <form name="conditionQueryForm" class="form-inline" role="form">
+	                    <div class="row mb10">
+	                        <div class="col-xs-4">
+	                            <div class="form-group">
+	                                <label class="control-label">单据类型：</label>
+	                                <select class="form-control">
+	                                    <option value="">全部</option>
+	                                </select>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-4">
+	                            <div class="form-group">
+	                                <label class="control-label">单据状态：</label>
+	                                <select class="form-control">
+	                                    <option value="">全部</option>
+	                                </select>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-4">
+	                            <div class="form-group">
+	                                <label class="control-label">单据日期：</label>
+	                                <div class="datepicker-input fn-left">
+	                                    <input type="text" id="createStartDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createStartDt" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" />
+	                                    <span class="icon_time" ng-click="startOpen()">
+	                                        <i class="glyphicon glyphicon-calendar"></i>
+	                                    </span>
+	                                </div>
+	                                <div class="datepicker-text fn-left">至</div>
+	                                <div class="datepicker-input fn-left">
+	                                    <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" />
+	                                    <span class="icon_time" ng-click="endOpen()">
+	                                        <i class="glyphicon glyphicon-calendar"></i>
+	                                    </span>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="row mb10">
+	                        <div class="col-xs-4">
+	                            <div class="form-group">
+	                                <label class="control-label">商品名称：</label>
+	                                <input type="text" class="form-control">
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-4">
+	                            <div class="form-group">
+	                                <label class="control-label">商品串码：</label>
+	                                <input type="text" class="form-control">
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-4">
+	                            <div class="form-group">
+	                                <label class="control-label">销售人员：</label>
+	                                <select class="form-control">
+	                                    <option value="">全部</option>
+	                                </select>            
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="row">
+	                        <div class="col-xs-4">
+	                            <div class="form-group">
+	                                <label class="control-label">收银员：</label>
+	                                <select class="form-control">
+	                                    <option value="">全部</option>
+	                                </select>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-8 text-right">
+	                        	 <button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+	                        </div>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+	        <!-- 历史销售单据列表 -->
+	        <div class="result-list">
+	            <div class="result-head">
+	                <div class="row">
+	                    <div class="col-xs-4">
+	                        <div class="model-header">
+	                            <img class="model-img" src="../../resources/images/icon-list.png">
+	                            <p class="model-title">历史销售单据列表</p>
+	                        </div>
+	                    </div>
+	                    <div class="col-xs-8 text-right">
+	                        <button class="btn btn-xs btn-set"><i class="iconfont">
+	                        &#xe60e;</i> 新开销售单
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="result-table">
+	                <div class="result-table">
+			            <table class="table table-bordered mb8">
+		                    <thead>
+		                        <tr>
+		                            <th width="20%">单据号</th>
+		                            <th width="11%">商品名称</th>
+		                            <th width="11%">商品串码</th>
+		                            <th width="8%">件数</th>
+		                            <th width="11%">订单类型</th> 
+		                            <th>订单总金额</th>
+		                            <th width="8%">销售员</th>
+		                            <th width="10%">订单状态</th>
+		                            <th width="10%">收费</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <tr>
+		                            <td>
+		                                <p class="purple-color">12543240000003424242511</p>
+		                                <p class="grey-color">单据时间：2016-11-01 23:43:11</p>
+		                            </td>
+		                            <td>
+		                                <table class="tabover">
+		                                	<tr>
+		                                		<td><p>iphone6s</p></td>
+		                                	</tr>
+		                                	<tr>
+		                                		<td><p>小米电源</p></td>
+		                                	</tr>
+		                                	<tr>
+		                                		<td><p>小米电源</p></td>
+		                                	</tr>                      	
+		                                </table> 
+		                            </td>
+		                            <td>
+		                                <table class="tabover">
+		                                	<tr>
+		                                		<td><p>A10000ADEDF6</p></td>
+		                                	</tr>
+		                                	<tr>
+		                                		<td><p>-</p></td>
+		                                	</tr>
+		                                	<tr>
+		                                		<td><p>-</p></td>
+		                                	</tr>                           
+		                                </table> 
+		                            </td>
+		                            <td>
+		                                <table class="tabover">
+		                                	<tr>
+		                                		<td><p>1</p></td>
+		                                	</tr>
+		                                	<tr>
+		                                		<td><p>1</p></td>
+		                                	</tr>
+		                                	<tr>
+		                                		<td><p>1</p></td>
+		                                	</tr>
+		                                </table> 
+		                            </td>
+		                            <td>
+		                                <p>零售换货</p>
+		                            </td>
+		                            <td>
+		                                <p class="purple-color font14">¥122134.00</p>
+		                            </td>
+		                            <td>
+		                                <p>韩晓辉</p>
+		                            </td>
+		                            <td>
+		                                <p>已付款</p>
+		                            </td>
+		                            <td>
+		                                <p>现金:122134</p>
+		                            </td>
+		                        </tr>                      
+		                        <tr>
+		                            <td>
+		                                <p class="purple-color">12543240000003424242511</p>
+		                                <p class="grey-color">单据时间：2016-11-01 23:43:11</p>
+		                            </td>
+		                            <td>
+		                                <p>iphone6s plus</p>
+		                            </td>
+		                            <td>
+		                                <p>A10000KJBFFA2</p>
+		                            </td>
+		                            <td>
+		                                <p>1</p>
+		                            </td>
+		                            <td>
+		                                <p>零售换货</p>
+		                            </td>	                           
+		                            <td>
+		                                <p class="purple-color font14">¥989.00</p>
+		                            </td>
+		                            <td>
+		                                <p>韩晓辉</p>
+		                            </td>
+		                            <td>
+		                                <p>已付款</p>
+		                            </td>
+		                            <td>
+		                                <p>现金:989</p>
+		                            </td>
+		                        </tr>                      
+		                        <tr>
+		                            <td>
+		                                <p class="purple-color">12543240000003424242511</p>
+		                                <p class="grey-color">单据时间：2016-11-01 23:43:11</p>
+		                            </td>
+		                            <td>
+		                                <p>iphone6s plus</p>
+		                            </td>
+		                            <td>
+		                                <p>A10000KJBFFA2</p>
+		                            </td>
+		                            <td>
+		                                <p>1</p>
+		                            </td>
+		                            <td>
+		                                <p>零售换货</p>
+		                            </td>		                            
+		                            <td>
+		                                <p class="purple-color font14">¥989.00</p>
+		                            </td>
+		                            <td>
+		                                <p>韩晓辉</p>
+		                            </td>
+		                            <td>
+		                                <p>已付款</p>
+		                            </td>
+		                            <td>
+		                                <p>现金:989</p>
+		                            </td>
+		                        </tr>
+		                    </tbody>
+		                </table>
+	                    <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
+	                        没有数据
+	                    </p>
+	                </div>
+	                <div ng-controller="paginationCtrl" class="text-center page">
+	                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+	                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+	                </div>
+	            </div>
+	        </div>
+        </div>
+	</div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="sellCash.js"></script>
+    </body>
+</html>
