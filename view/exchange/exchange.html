@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>换货管理</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="exchange.css">
+</head>
+
+<body ng-app="exchangeModule">
+    <!-- DOM结构开始 -->
+    <div class="exchange top-line wavy-line">
+        <!-- step -->
+        <div class="step fn-clear" ng-show="stepNum !== 3">
+            <li class="step-item fn-left" ng-class="{current: stepNum === 0}">
+                <div class="step-icon"></div>
+                <div class="step-line"></div>
+                <p class="step-title">1.查找原销售单</p>
+            </li>
+            <li class="step-item fn-left" ng-class="{current: stepNum === 1}">
+                <div class="step-icon"></div>
+                <div class="step-line"></div>
+                <p class="step-title">2.换货处理</p>
+            </li>
+            <li class="step-item fn-left" ng-class="{current: stepNum === 2}">
+                <div class="step-icon"></div>
+                <div class="step-line"></div>
+                <p class="step-title">3.收银</p>
+            </li>
+        </div>
+        <!-- step0 -->
+        <div class="step-content" ng-show="stepNum === 0">
+            <!-- 查询 -->
+            <div class="query-box">
+                <div class="form-keyword">
+                    <input type="text" class="form-control" placeholder="请输入原销售单号或串码进行查询">
+                    <button type="submit" class="btn btn-sm btn-keyword"><i class="iconfont">&#xe600;</i> 查询</button>
+                </div>
+            </div>
+            <!-- 换货单详情 -->
+            <div class="order-detail">
+                <div class="row dashed-line">
+                    <div class="col-xs-6">
+                        <p class="order-title">需要换货的销售单详情：</p>
+                    </div>
+                </div>
+                <div class="row dashed-line">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">销售单号：</label>
+                            <p class="detail-input">1000000000013641</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">手工单号：</label>
+                            <p class="detail-input"></p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">客户姓名：</label>
+                            <p class="detail-input"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row dashed-line">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">单据类型：</label>
+                            <p class="detail-input">零售销售</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">单据时间：</label>
+                            <p class="detail-input">2016-11-10 11:12:20</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">单据状态：</label>
+                            <p class="detail-input">已付款</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row dashed-line">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">收银员：</label>
+                            <p class="detail-input">韩晓辉</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="form-group">
+                            <label class="control-label">销售人员：</label>
+                            <p class="detail-input">韩晓辉</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">订单备注：</label>
+                            <p class="detail-input"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 结果列表 -->
+            <div class="result-list" ng-controller="resultCtrl">
+                <div class="result-head">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="model-header">
+                                <img class="model-img" src="../../resources/images/icon-list.png">
+                                <p class="model-title">原销售单销售商品列表</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <button class="btn btn-xs btn-set" ng-click="batchReturn()" ng-disabled="!checkedGoods.length"><i class="iconfont">&#xe62d;</i> 批量换货
+                        </div>
+                    </div>
+                </div>
+                <div class="result-table">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="5%">
+                                    <input type="checkbox" ng-click="checkAll(isCheckedAll)" ng-model="isCheckedAll">
+                                </th>
+                                <th width="12%">商品编码</th>
+                                <th width="12%">商品名称</th>
+                                <th width="10%">销售单价</th>
+                                <th width="8%">件数</th>
+                                <th>串码</th>
+                                <th width="10%">实收金额</th>
+                                <th width="8%">商品状态</th>
+                                <th width="8%">破损标识</th>
+                                <th width="10%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in queryTypeResultList">
+                                <td>
+                                    <input type="checkbox" name="checkbox{{$index}}" ng-checked="isCheckedAll" ng-click="check(item, isChecked)" ng-model="isChecked">
+                                </td>
+                                <td>
+                                    <p>10000000234</p>
+                                </td>
+                                <td>
+                                    <p>iPhone6S</p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.price | priceFilter"></p>
+                                </td>
+                                <td>
+                                    <p>1</p>
+                                </td>
+                                <td>
+                                    <p class="overflow-handle" title="item.offerId" ng-bind="item.offerId"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.price | priceFilter"></p>
+                                </td>
+                                <td>
+                                    <p>新</p>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="checkbox{{$index}}" ng-click="check(item, isDamaged)" ng-model="isDamaged">
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-edit" ng-click="singleReturn(item)"><i class="iconfont">&#xe662;</i> 换货
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="result-count">总金额：<span class="amount" ng-bind="checkedGoodsPrice | priceFilter"></span>总件数：<span class="amount" ng-bind="checkedGoods.length"></span></div>
+            </div>
+        </div>
+        <!-- step1 -->
+        <div class="step-content" ng-show="stepNum === 1">
+            <!-- 换货单详情 -->
+            <div class="order-detail">
+                <div class="row dashed-line">
+                    <div class="col-xs-6">
+                        <p class="order-title">需要换货的销售单详情：</p>
+                    </div>
+                </div>
+                <div class="row dashed-line">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">原销售单号：</label>
+                            <p class="detail-input">1000000000013641</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">原销售门店：</label>
+                            <p class="detail-input">原销门店：中国电信@平庄镇北街营业厅</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">原单据时间：</label>
+                            <p class="detail-input">2016-11-07 11:20:10</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">原销售人员：</label>
+                            <p class="detail-input">韩晓辉</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">原客户：</label>
+                            <p class="detail-input">韩晓辉</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 原商品信息 -->
+            <div class="result-list">
+                <div class="result-head">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="model-header">
+                                <img class="model-img" src="../../resources/images/icon-list.png">
+                                <p class="model-title">原商品信息</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-table">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="5%">序号</th>
+                                <th width="12%">商品名称</th>
+                                <th width="12%">单价(元)</th>
+                                <th width="8%">件数</th>
+                                <th>串码</th>
+                                <th width="8%">售卖方式</th>
+                                <th width="10%">抵用券面额</th>
+                                <th width="8%">金额</th>
+                                <th width="8%">破损标识</th>
+                                <th width="8%">商品状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in submitGoods">
+                                <td>
+                                    <p ng-bind="$index+1"></p>
+                                </td>
+                                <td>
+                                    <p>iPhone6S</p>
+                                </td>
+                                <td>
+                                    <p>5999</p>
+                                </td>
+                                <td>
+                                    <p>1</p>
+                                </td>
+                                <td>
+                                    <p class="overflow-handle" title="item.offerId" ng-bind="item.offerId"></p>
+                                </td>
+                                <td>
+                                    <p>非赠品</p>
+                                </td>
+                                <td>
+                                    <p>¥0.00</p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.price | priceReturnFilter"></p>
+                                </td>
+                                <td>
+                                    <p>未破损</p>
+                                </td>
+                                <td>
+                                    <p>换</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- 新换商品信息 -->
+            <div class="result-list mt-30">
+                <div class="result-head">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="model-header">
+                                <img class="model-img" src="../../resources/images/icon-list.png">
+                                <p class="model-title">新换商品信息</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <button class="btn btn-xs btn-set" ng-click=""><i class="iconfont">&#xe60e;</i> 选择新换商品
+                        </div>
+                    </div>
+                </div>
+                <div class="result-table">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="5%">序号</th>
+                                <th width="12%">商品名称</th>
+                                <th width="12%">单价(元)</th>
+                                <th width="8%">件数</th>
+                                <th>串码</th>
+                                <th width="8%">售卖方式</th>
+                                <th width="10%">抵用券面额</th>
+                                <th width="8%">金额</th>
+                                <th width="8%">破损标识</th>
+                                <th width="8%">商品状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in exchangeGoods">
+                                <td>
+                                    <p ng-bind="$index+1"></p>
+                                </td>
+                                <td>
+                                    <p>iPhone6S</p>
+                                </td>
+                                <td>
+                                    <p>5999</p>
+                                </td>
+                                <td>
+                                    <p>1</p>
+                                </td>
+                                <td>
+                                    <p class="overflow-handle" title="item.offerId" ng-bind="item.offerId"></p>
+                                </td>
+                                <td>
+                                    <p>非赠品</p>
+                                </td>
+                                <td>
+                                    <p>¥0.00</p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.price | priceReturnFilter"></p>
+                                </td>
+                                <td>
+                                    <p>未破损</p>
+                                </td>
+                                <td>
+                                    <p>换</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center">
+                    <button ng-click="goBack(stepNum)" class="btn btn-submit">返回</button>
+                    <button ng-click="forward(stepNum)" class="btn btn-submit">提交收银</button>
+                    <button class="btn btn-cancel">取消</button>
+                </div>
+            </div>
+        </div>
+        <!-- step2 -->
+        <div class="step-content" ng-show="stepNum === 2">
+            <div class="cashier-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p class="sys-number">系统单号：<span class="number">12016110701100000013657</span></p>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">手工单号：</label>
+                            <input type="text" class="form-control query-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cashier-count">商品总件数：<span class="number">2</span>商品总金额：<span class="number">¥1333.00</span></div>
+            <div class="curtain">收银台</div>
+            <div class="result-table">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="10%">序号</th>
+                            <th width="25%"><i class="iconfont red-star">&#xe692;</i>收款方式</th>
+                            <th width="20%">原付款金额</th>
+                            <th width="25%"><i class="iconfont red-star">&#xe692;</i>实收金额(元)</th>
+                            <th width="20%">单据号</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in submitGoods">
+                            <td>
+                                <p ng-bind="$index+1"></p>
+                            </td>
+                            <td>
+                                <p>现金</p>
+                            </td>
+                            <td>
+                                <p>¥0.00</p>
+                            </td>
+                            <td>
+                                <input type="number" class="enter-input" ng-value="item.price">
+                            </td>
+                            <td>
+                                <input type="number" class="enter-input" ng-value="item.offerId">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="cashier-footer">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <p class="cashier-person">收银员：韩晓辉</p>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">销售人员：</label>
+                                <select class="form-control">
+                                    <option value="">请选择销售人员</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <div class="cashier-sum">订单金额：<span class="number">-¥1333.00</span>实退金额：<span class="number">-¥1333.00</span>还需退款：<span class="number">¥0.00</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-list">
+                    <div class="cashier-remarks">
+                        <p class="cashier-remarks-title">备注</p>
+                        <textarea class="form-control cashier-remarks-textarea"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button ng-click="goBack(stepNum)" class="btn btn-submit">返回</button>
+                        <button ng-click="forward(stepNum)" class="btn btn-submit">完成</button>
+                        <button class="btn btn-cancel">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- step3 -->
+        <div class="step-content" ng-show="stepNum === 3">
+            <p class="final-head">完成换货，换货单详情如下</p>
+            <!-- 基本信息 -->
+            <div class="order-detail">
+                <div class="row dashed-line">
+                    <div class="col-xs-6">
+                        <p class="order-title">基本信息：</p>
+                    </div>
+                </div>
+                <div class="row dashed-line">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">单据号：</label>
+                            <p class="detail-input">1000000000013641</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">手工单号：</label>
+                            <p class="detail-input">-</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">客户姓名：</label>
+                            <p class="detail-input">刘强</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row dashed-line">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">单据类型：</label>
+                            <p class="detail-input">销售换货</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">单据时间：</label>
+                            <p class="detail-input">2016-11-10 11:12:20</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">单据状态：</label>
+                            <p class="detail-input">退款完成</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row dashed-line">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">收银员：</label>
+                            <p class="detail-input">韩晓辉</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="form-group">
+                            <label class="control-label">销售人员：</label>
+                            <p class="detail-input">韩晓辉</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">订单备注：</label>
+                            <p class="detail-input"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 商品列表 -->
+            <div class="result-list" ng-controller="resultCtrl">
+                <div class="result-head">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="model-header">
+                                <img class="model-img" src="../../resources/images/icon-list.png">
+                                <p class="model-title">商品列表</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-table">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="6%">序号</th>
+                                <th width="12%">商品编码</th>
+                                <th width="12%">商品名称</th>
+                                <th width="12%">销售单价</th>
+                                <th width="10%">件数</th>
+                                <th>串码</th>
+                                <th width="12%">售卖方式</th>
+                                <th width="12%">商品金额</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in submitGoods">
+                                <td>
+                                    <p ng-bind="$index+1"></p>
+                                </td>
+                                <td>
+                                    <p>10000000234</p>
+                                </td>
+                                <td>
+                                    <p>iPhone6S</p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.price | priceFilter"></p>
+                                </td>
+                                <td>
+                                    <p>1</p>
+                                </td>
+                                <td>
+                                    <p class="overflow-handle" title="item.offerId" ng-bind="item.offerId"></p>
+                                </td>
+                                <td>
+                                    <p>裸机销售</p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.price | priceFilter"></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="result-count">总金额：<span class="amount" ng-bind="submitGoodsPrice | priceFilter"></span>总件数：<span class="amount" ng-bind="submitGoods.length"></span></div>
+            </div>
+            <!-- 关联销售单信息 -->
+            <div class="result-list mt-30">
+                <div class="result-head">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="model-header">
+                                <img class="model-img" src="../../resources/images/icon-list.png">
+                                <p class="model-title">关联销售单信息</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-table">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="50%">关联单号</th>
+                                <th width="50%">关联类型</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>100000000122228（被修改）</p>
+                                </td>
+                                <td>
+                                    <p>换货关联</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-cancel">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="exchange.js"></script>
+</body>
+
+</html>
