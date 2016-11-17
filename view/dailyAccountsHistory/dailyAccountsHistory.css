@@ -1,0 +1,201 @@
+.dailyAccountsHistory {
+    min-height: 20px;
+    margin: 10px;
+    border-left: 1px solid #d5d4dc;
+    border-right: 1px solid #d5d4dc;
+    background-color: #fff;
+}
+/* 日结完成 */
+.daily-store{
+	width:100%;
+	height:40px;
+	background: #f8f8f8;
+	border-bottom:1px dotted #ddd;	
+}
+.daily-store .wrds{
+	display:inline-block;
+	width:303px;
+	text-indent: 20px;
+	font-size:12px;
+	font-weight: bold;
+	line-height:40px;
+}
+.form-group input[type="text"] {
+    margin-top: 7px;
+}
+.datepicker-input {
+    position: relative;
+    width: 45%;
+}
+.datepicker-text {
+    width: 10%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.icon_time {
+    position: absolute;
+    top: 13px;
+    right: 10px;
+    color: #cfa9f5;
+    cursor: pointer;
+}
+.form-group {
+    padding-left: 74px;
+}
+.form-group label {  
+    width: 72px !important;
+    line-height: 40px;
+}
+.form-group .reduce-width {
+    width: calc(100% - 90px) !important;
+}
+.btn-submit{
+	margin:7px 0 0 0;
+}
+
+/* table */
+.result-list {
+    padding: 5px 5px 20px;
+}
+
+.result-head {
+    margin-bottom: 5px;
+}
+
+.result-table table th {
+    padding: 5px !important;
+    background-color: #a870e0;
+    border-bottom-width: 1px !important;
+    color: #fff;
+    font-weight: 800;
+    text-align: center;
+}
+
+.result-table table td {
+    padding: 2px !important;
+    text-align: center;
+}
+
+.result-table table td p {
+    height: 25px;
+    line-height: 25px;
+}
+.model-header {
+    height: 25px;
+    line-height: 25px;
+}
+
+.model-img {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 2px 4px;
+}
+
+.model-title {
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+.btn-edit {
+    margin-left: 2px;
+    padding: 0 6px;
+    background-color: #eddbff;
+    border-color: #ceaaf2;
+    color: #a870e0;
+    font-size: 12px;
+}
+
+.btn-edit:focus,
+.btn-edit.focus {
+    border-color: #c899f7;
+    background-color: #e0c2ff;
+    color: #a870e0;
+}
+
+.btn-edit:hover {
+    border-color: #c899f7;
+    background-color: #e0c2ff;
+    color: #a870e0;
+}
+
+.btn-edit .iconfont {
+    color: #a870e0;
+}
+/* 日结完成 */
+
+/* 日结详情 */
+.mb5{
+	margin-bottom: 5px;
+}
+.mb8{
+	margin-bottom: 8px;
+}
+.purple-color{
+	color:#a870e0;
+}
+.font14{
+	font-size:14px;
+}
+.grey-color{
+	color:#999;
+}
+.result-list {
+    padding: 5px 5px 20px;
+}
+
+.result-head {
+    margin-bottom: 3px;
+}
+
+.model-header {
+    height: 25px;
+    line-height: 25px;
+}
+.model-title {
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+.model-img {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 2px 4px;
+}
+.result-table table th {
+    padding: 5px !important;
+    background-color: #a870e0;
+    border-bottom-width: 1px !important;
+    color: #fff;
+    font-weight: 800;
+    text-align: center;
+}
+.result-table table tr td {
+    padding: 0px !important;
+    text-align: center;
+    vertical-align: middle;
+}
+.result-table table tr:hover{
+	background: none;
+}
+.result-table table td p {
+    height: 29px;
+    line-height: 29px;
+}
+.tabover{
+	width:100%;	
+}
+.tabover td{
+	width:100%;	
+	border-bottom: 1px solid #d5d4dc;
+}
+.tabover tr:last-child td{
+	border-bottom: none; 
+}
+.tabover tr:nth-of-type(2n){
+	background: #faf7fc;
+}
+/* 日结详情 */
