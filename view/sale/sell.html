@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新销售单</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="sell.css">
+</head>
+
+<body ng-app="sellModule">
+    <!-- DOM结构开始 -->
+    <div class="sell top-line wavy-line" ng-controller="addPurchaseModalCtrl as $ctrl">
+
+        <div class="flow-list border-lr clearfix">
+            <div class="col-xs-6">
+                <div class="fn-right flow-line flow-line-violet">
+                    <img src="../../resources/images/flow-line1.png">
+                    <p class="color-violet">商品选购</p>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="fn-left flow-line flow-line-grey">
+                    <img src="../../resources/images/flow-line.png">
+                    <p class="color-grey">收银</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="customer-info clearfix">
+            <div class="customer fn-left">
+                <img class="customer-img" src="../../resources/images/customer-img.png" alt="">
+                <p>客户信息</p>
+                <img class="customer-right" src="../../resources/images/customer-right.jpg" alt="">
+            </div>
+            <div class="customer-search fn-left">
+                <label for="name">客户姓名：</label>
+                <input type="text">
+            </div>
+        </div>
+
+        <!-- 列表 -->
+        <div class="result-list-head border-lr" ng-controller="resultCtrl">
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/cart-img.png">
+                            <p class="model-title-16">我的购物车</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 pt3 text-right">
+                        <button ng-click="addQueryType()" class="btn btn-xs btn-set"><i class="iconfont">
+                        &#xe60e;</i> 选购商品
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="result-table">
+            <div class="result-table">
+                <table class="table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="8%">序号</th>
+                            <th width="12%">商品名称</th>
+                            <th width="12%">单价（元）</th>
+                            <th width="12%">件数</th>
+                            <th>串码</th>
+                            <th width="20%">售卖方式</th>
+                            <th width="8%">金额</th>
+                            <th width="8%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>1</p>
+                            </td>
+                            <td>
+                                <p>iphone 6s</p>
+                            </td>
+                            <td>
+                                <input type="number" value="123" class="enter-input">
+                            </td>
+                            <td>
+                                <input type="number" value="1" class="enter-input">
+                            </td>
+                            <td>
+                                <p>123123123</p>
+                            </td>
+                            <td>
+                                <div class="table-select-group">
+                                    <select name="" id="" class="enter-select">
+                                        <option value="0">裸机销售</option>
+                                        <option value="1">宽带绑定</option>
+                                        <option value="2">合约机</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="sum">¥123.00</p>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>2</p>
+                            </td>
+                            <td>
+                                <p>iphone 6s</p>
+                            </td>
+                            <td>
+                                <input type="number" value="99" class="enter-input">
+                            </td>
+                            <td>
+                                <input type="number" value="1" class="enter-input">
+                            </td>
+                            <td>
+                                <p>123123123</p>
+                            </td>
+                            <td>
+                                <div class="table-select-group">
+                                    <select name="" id="" class="enter-select">
+                                        <option value="0">裸机销售</option>
+                                        <option value="1">宽带绑定</option>
+                                        <option value="2">合约机</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="sum"> &yen;99.00</p>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="total border-lr">
+                商品总件数：<span class="number">2</span><span class="ml20">商品总金额：</span><span class="number">¥222.00</span>
+            </div>
+
+            <div class="text-center pd10 pb20 border-lr">
+                <button ng-click="saveProcureOrder()" class="btn btn-submit">提交并收款</button>
+                <button class="btn btn-cancel">取消</button>
+            </div>
+
+        </div>
+
+        <script type="text/ng-template" id="addNewLine.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="new-line-title"><img class="icon" src="../../resources/images/icon-list1.png">选购商品</h3>
+            </div>
+            <div id="new-line-body">
+
+                <div class="tab-cut">
+                  <uib-tabset>
+                    <uib-tab index="0">
+                        <uib-tab-heading>
+                            <i class="glyphicon glyphicon-img"></i> 手机终端选购
+                        </uib-tab-heading>
+                        <div>
+                            <div class="queries-box">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="form-keyword">
+                                            <label class="control-label">商品串码：</label>
+                                            <input type="text" class="form-control reduce-width">
+                                            <button type="submit" class="btn btn-sm btn-keyword">扫描并验证</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="choose-table pt20 pb20">
+                                <div class="choose-form">
+                                    <form name="infomationForm" class="form-inline" role="form">
+                                        <div class="row dashed-line mt5">
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                    <label class="control-label color-violet">商品串码：</label>
+                                                    <p class="detail-input color-violet">123123123</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row dashed-line">
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">类别：</label>
+                                                    <p class="detail-input">手机</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">品牌：</label>
+                                                    <p class="detail-input">中兴</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row dashed-line">
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">型号：</label>
+                                                    <p class="detail-input">努比亚 Z9 Max（全网通）</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">配置：</label>
+                                                    <p class="detail-input">单电单冲</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row dashed-line">
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">颜色：</label>
+                                                    <p class="detail-input">黑色</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">RAM：</label>
+                                                    <p class="detail-input">3072</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb5">
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">尺寸：</label>
+                                                    <p class="detail-input">154.8*76.6*7.9（mm</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">OS：</label>
+                                                    <p class="detail-input">nubia UI 2.8（基于androidL/5.0）</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </uib-tab>
+                    <uib-tab index="1">
+                        <uib-tab-heading>
+                            <i class="glyphicon glyphicon-img1"></i> 配件选购
+                        </uib-tab-heading>
+                        <div class="choose-table pt20">
+                            <div class="row">
+                                <div class="col-xs-2 isInstance text-right">
+                                    <input type="checkbox">
+                                    <label for="">是否实例化管理</label>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="form-choose">
+                                        <input type="text" class="form-control reduce-width">
+                                        <button type="submit" class="btn btn-sm btn-keyword"><i class="iconfont">&#xe600;</i> 查询</button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <a class="btn-queries" ng-click="$ctrl.toggle('$ctrl.isHidden')">更多查询条件</a>
+                                </div>
+                            </div>
+                            <!-- 条件列表 -->
+                            <div class="queries-list" ng-show="!$ctrl.isHidden">
+                                <p class="queries-title">所有分类 > <span class="checked-query">类别：手机<i class="iconfont">&#xe611;</i></span><span class="checked-query">品牌：中兴<i class="iconfont">&#xe611;</i></span></p>
+                                <div class="query-line fn-clear">
+                                    <span class="category-label fn-left">品牌：</span>
+                                    <div class="category-list fn-left" ng-class="{fold: $ctrl.isFoldBrand}">
+                                        <span class="category-item">苹果</span>
+                                        <span class="category-item">三星</span>
+                                        <span class="category-item">华为</span>
+                                        <span class="category-item">酷派</span>
+                                        <span class="category-item">中兴</span>
+                                        <span class="category-item">黑莓</span>
+                                        <span class="category-item">苹果</span>
+                                        <span class="category-item">三星</span>
+                                        <span class="category-item">华为</span>
+                                        <span class="category-item">酷派</span>
+                                        <span class="category-item">中兴</span>
+                                        <span class="category-item">黑莓</span>
+                                        <span class="category-item">苹果</span>
+                                        <span class="category-item">三星</span>
+                                        <span class="category-item">华为</span>
+                                        <span class="category-item">酷派</span>
+                                        <span class="category-item">中兴</span>
+                                        <span class="category-item">黑莓</span>
+                                    </div>
+                                    <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="$ctrl.isFoldBrand" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
+                                    <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="!$ctrl.isFoldBrand" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
+                                </div>
+                            </div>
+                            <div class="table-choose mt20">
+                                <table class="table-striped table-hover table-choose">
+                                    <thead>
+                                        <tr>
+                                            <th width="8%"><input type="checkbox"></th>
+                                            <th width="12%">商品名称</th>
+                                            <th width="12%">商品类别</th>
+                                            <th width="12%">商品品牌</th>
+                                            <th>商品型号</th>
+                                            <th width="20%">配置</th>
+                                            <th width="8%">库存量</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>
+                                                <p>测试配件F</p>
+                                            </td>
+                                            <td>
+                                                <p>配件</p>
+                                            </td>
+                                            <td>
+                                                <p>123</p>
+                                            </td>
+                                            <td>
+                                                <p>测试F</p>
+                                            </td>
+                                            <td>
+                                                <p>123</p>
+                                            </td>
+                                            <td>
+                                                <p>7</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div ng-controller="paginationCtrl" class="text-center page mt10">
+                            <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                            <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                        </div>
+                        </div>
+                        
+                    </uib-tab>
+                  </uib-tabset>
+                </div>
+
+                
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
+
+    </div>
+
+
+
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="sell.js"></script>
+</body>
+
+</html>
