@@ -38,6 +38,22 @@
 .mb5{
     margin-bottom: 5px;
 }
+.table－bottom0 table{
+    margin-bottom: 0px;
+}
+
+.order-detail {
+    padding: 0 15px;
+    background-color: #f8f8f8;
+    border-top: 1px dashed #d2d2d2;
+    border-bottom: 1px dashed #d2d2d2;
+}
+.order-title {
+    height: 30px;
+    line-height: 30px;
+    color: #8039c6;
+    font-weight: 800;
+}
 
 
 .refund {
@@ -448,9 +464,6 @@
     color: #a870e0;
 }
 
-.table－bottom0 table{
-    margin-bottom: 0px;
-}
 /*弹窗内tab切*/
 .tab-cut .glyphicon-img{
     background: url(../../resources/images/icon-phone1.png) no-repeat center left;

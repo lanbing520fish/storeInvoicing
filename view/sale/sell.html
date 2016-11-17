@@ -12,23 +12,24 @@
 </head>
 
 <body ng-app="sellModule">
-    <!-- DOM结构开始 -->
-    <div class="sell top-line wavy-line" ng-controller="addPurchaseModalCtrl as $ctrl">
 
-        <div class="flow-list border-lr clearfix">
-            <div class="col-xs-6">
-                <div class="fn-right flow-line flow-line-violet">
-                    <img src="../../resources/images/flow-line1.png">
-                    <p class="color-violet">商品选购</p>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="fn-left flow-line flow-line-grey">
-                    <img src="../../resources/images/flow-line.png">
-                    <p class="color-grey">收银</p>
-                </div>
-            </div>
+<div class="refund top-line wavy-line">
+        <!-- step -->
+        <div class="step fn-clear" ng-show="stepNum !== 2">
+            <li class="step-item fn-left" ng-class="{current: stepNum === 0}">
+                <div class="step-icon"></div>
+                <div class="step-line"></div>
+                <p class="step-title">商品选购</p>
+            </li>
+            <li class="step-item fn-left" ng-class="{current: stepNum === 1}">
+                <div class="step-icon"></div>
+                <div class="step-line"></div>
+                <p class="step-title">收银</p>
+            </li>
         </div>
+
+
+    <div ng-show="stepNum === 0" ng-controller="addPurchaseModalCtrl as $ctrl">
 
         <div class="customer-info clearfix">
             <div class="customer fn-left">
@@ -59,101 +60,97 @@
                 </div>
             </div>
         </div>
-        <div class="result-table">
-            <div class="result-table">
-                <table class="table-striped table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th width="8%">序号</th>
-                            <th width="12%">商品名称</th>
-                            <th width="12%">单价（元）</th>
-                            <th width="12%">件数</th>
-                            <th>串码</th>
-                            <th width="20%">售卖方式</th>
-                            <th width="8%">金额</th>
-                            <th width="8%">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <p>1</p>
-                            </td>
-                            <td>
-                                <p>iphone 6s</p>
-                            </td>
-                            <td>
-                                <input type="number" value="123" class="enter-input">
-                            </td>
-                            <td>
-                                <input type="number" value="1" class="enter-input">
-                            </td>
-                            <td>
-                                <p>123123123</p>
-                            </td>
-                            <td>
-                                <div class="table-select-group">
-                                    <select name="" id="" class="enter-select">
-                                        <option value="0">裸机销售</option>
-                                        <option value="1">宽带绑定</option>
-                                        <option value="2">合约机</option>
-                                    </select>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="sum">¥123.00</p>
-                            </td>
-                            <td>
-                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>2</p>
-                            </td>
-                            <td>
-                                <p>iphone 6s</p>
-                            </td>
-                            <td>
-                                <input type="number" value="99" class="enter-input">
-                            </td>
-                            <td>
-                                <input type="number" value="1" class="enter-input">
-                            </td>
-                            <td>
-                                <p>123123123</p>
-                            </td>
-                            <td>
-                                <div class="table-select-group">
-                                    <select name="" id="" class="enter-select">
-                                        <option value="0">裸机销售</option>
-                                        <option value="1">宽带绑定</option>
-                                        <option value="2">合约机</option>
-                                    </select>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="sum"> &yen;99.00</p>
-                            </td>
-                            <td>
-                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="total border-lr">
-                商品总件数：<span class="number">2</span><span class="ml20">商品总金额：</span><span class="number">¥222.00</span>
-            </div>
+        <div class="result-table table－bottom0">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th width="8%">序号</th>
+                        <th width="12%">商品名称</th>
+                        <th width="12%">单价（元）</th>
+                        <th width="12%">件数</th>
+                        <th>串码</th>
+                        <th width="20%">售卖方式</th>
+                        <th width="8%">金额</th>
+                        <th width="8%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>1</p>
+                        </td>
+                        <td>
+                            <p>iphone 6s</p>
+                        </td>
+                        <td>
+                            <input type="number" value="123" class="enter-input">
+                        </td>
+                        <td>
+                            <input type="number" value="1" class="enter-input">
+                        </td>
+                        <td>
+                            <p>123123123</p>
+                        </td>
+                        <td>
+                            <div class="table-select-group">
+                                <select name="" id="" class="enter-select">
+                                    <option value="0">裸机销售</option>
+                                    <option value="1">宽带绑定</option>
+                                    <option value="2">合约机</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="sum">¥123.00</p>
+                        </td>
+                        <td>
+                            <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>2</p>
+                        </td>
+                        <td>
+                            <p>iphone 6s</p>
+                        </td>
+                        <td>
+                            <input type="number" value="99" class="enter-input">
+                        </td>
+                        <td>
+                            <input type="number" value="1" class="enter-input">
+                        </td>
+                        <td>
+                            <p>123123123</p>
+                        </td>
+                        <td>
+                            <div class="table-select-group">
+                                <select name="" id="" class="enter-select">
+                                    <option value="0">裸机销售</option>
+                                    <option value="1">宽带绑定</option>
+                                    <option value="2">合约机</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="sum"> &yen;99.00</p>
+                        </td>
+                        <td>
+                            <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="total border-lr">
+            商品总件数：<span class="number">2</span><span class="ml20">商品总金额：</span><span class="number">¥222.00</span>
+        </div>
 
-            <div class="text-center pd10 pb20 border-lr">
-                <button ng-click="saveProcureOrder()" class="btn btn-submit">提交并收款</button>
-                <button class="btn btn-cancel">取消</button>
-            </div>
-
+        <div class="text-center pd10 pb20 border-lr">
+            <button ng-click="forward(stepNum)" class="btn btn-submit">提交并收款</button>
+            <button class="btn btn-cancel">取消</button>
         </div>
 
         <script type="text/ng-template" id="addNewLine.html">
@@ -363,6 +360,204 @@
         </script>
 
     </div>
+
+
+    <div  ng-show="stepNum === 1" ng-controller="addPurchaseModalCtrl as $ctrl">
+
+        <div class="number-msg clearfix">
+            <div class="row">
+                <div class="col-xs-5">
+                    <div class="form-group">
+                        <label class="number-msg-label">系统单号：</label>
+                        <p class="color-violet">12016110701100000013657</p>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label class="number-msg-label">手工单号：</label>
+                        <input type="text" class="form-control number-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 列表 -->
+        <div class="result-list-head border-lr" ng-controller="resultCtrl">
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/cart-img.png">
+                            <p class="model-title-16">我的购物车</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="result-table table－bottom0">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th width="8%">序号</th>
+                        <th width="12%">商品编码</th>
+                        <th width="12%">商品名称</th>
+                        <th width="12%">销售单价</th>
+                        <th width="12%">件数</th>
+                        <th>串码</th>
+                        <th width="20%">售卖方式</th>
+                        <th width="8%">商品金额</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>1</p>
+                        </td>
+                        <td>
+                            <p>235431</p>
+                        </td>
+                        <td>
+                            <p>iphone 6s</p>
+                        </td>
+                        <td>
+                            <p>¥1234.00</p>
+                        </td>
+                        <td>
+                            <p>1</p>
+                        </td>
+                        <td>
+                            <p>435232678</p>
+                        </td>
+                        <td>
+                            <p>裸机销售</p>
+                        </td>
+                        <td>
+                            <p class="sum">¥1234.00</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>1</p>
+                        </td>
+                        <td>
+                            <p>235431</p>
+                        </td>
+                        <td>
+                            <p>iphone 6s</p>
+                        </td>
+                        <td>
+                            <p>¥1234.00</p>
+                        </td>
+                        <td>
+                            <p>1</p>
+                        </td>
+                        <td>
+                            <p>435232678</p>
+                        </td>
+                        <td>
+                            <p>裸机销售</p>
+                        </td>
+                        <td>
+                            <p class="sum">¥99.00</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="total border-lr">
+            商品总件数：<span class="number">2</span><span class="ml20">商品总金额：</span><span class="number">¥222.00</span>
+        </div>
+        <div class="border-lr pt5 pb5">
+            <div class="curtain">收银台</div>
+        </div>
+        <div class="result-table table－bottom0">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th width="8%">序号</th>
+                        <th>收款方式</th>
+                        <th width="12%">原付款金额</th>
+                        <th width="12%">实收金额</th>
+                        <th width="20%">单据号</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>1</p>
+                        </td>
+                        <td>
+                            <p>现金</p>
+                        </td>
+                        <td>
+                            <p>¥0.00</p>
+                        </td>
+                        <td>
+                            <input type="number" value="1234.00" class="enter-input">
+                        </td>
+                        <td>
+                            <input type="text" value="" class="enter-input">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>2</p>
+                        </td>
+                        <td>
+                            <p>POS机</p>
+                        </td>
+                        <td>
+                            <p>¥0.00</p>
+                        </td>
+                        <td>
+                            <input type="number" value="99.00" class="enter-input">
+                        </td>
+                        <td>
+                            <input type="text" value="" class="enter-input">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="cashier-footer border-lr">
+            <div class="row">
+                <div class="col-xs-2">
+                    <p class="cashier-person">收银员：韩晓辉</p>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label class="control-label">销售人员：</label>
+                        <select class="form-control">
+                            <option value="">请选择销售人员</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-6 text-right">
+                    订单金额：<span class="number">-¥1333.00</span>实退金额：<span class="number">-¥1333.00</span>还需退款：<span class="number">¥0.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="result-list-head border-lr">
+            <div class="cashier-remarks">
+                <p class="cashier-remarks-title">备注</p>
+                <input type="text" class="remark_input" />
+            </div>
+        </div>
+        
+
+        <div class="text-center pd10 pb20 border-lr">
+            <button ng-click="goBack(stepNum)" class="btn btn-submit">返回</button>
+            <button class="btn btn-submit">完成</button>
+            <button class="btn btn-cancel">取消</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
 
 
 
