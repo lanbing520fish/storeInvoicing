@@ -13,5 +13,7 @@
 	* 采购历史查询 **history**
 	* 采购历史详情 **detailHistory**
 
-* **价格管理**
+* **销售管理**
+	* 零售退货 **refund**
+    * 零售换货 **exchange**
 
