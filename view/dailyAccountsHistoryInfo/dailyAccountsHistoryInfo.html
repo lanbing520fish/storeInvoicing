@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>日结历史</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="dailyAccountsHistoryInfo.css">
+</head>
+
+<body ng-app="dailyAccountsHistoryModule">
+	<!-- 日结详情 -->
+	<div class="dailyAccountsHistory top-line wavy-line" ng-show="!isHidden">
+		<div class="daily-store">
+			<span class="wrds">日结门店：中国电信@平庄镇北街区营业厅</span>			
+		</div>
+		
+        <div class="result-list" >
+        	<!-- 总计信息 -->
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">总计信息</p>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+            <div class="result-table">
+                <table class="table table-hover table-bordered mb5">
+                    <thead>
+                        <tr>
+                            <th width="14%">日结门店</th>
+                            <th width="10%">日结人员</th>
+                            <th width="13%">上次日结时间</th>
+                            <th>本次数据时间</th>
+                            <th width="14%">未完结单数</th>
+                            <th width="14%">日结金额</th>
+                            <th width="11%">收款方式</th>
+                            <th width="11%">收款金额</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>平庄镇北街区营业厅</p>
+                            </td>
+                            <td>
+                                <p>王磊</p>
+                            </td>
+                            <td>
+                                <p>2016-11-01</p>
+                            </td>
+                            <td>
+                                <p>2016-11-01</p>
+                            </td>
+                            <td>
+                                <p>0</p>
+                            </td>
+                            <td>
+                                <p class="purple-color font14">¥123163.00</p>
+                            </td>
+                            <td>
+                                <table class="tabover">
+                                	<tr>
+                                		<td><p>现金</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>现金</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>现金</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>现金</p></td>
+                                	</tr>                               	
+                                </table> 
+                            </td>
+                            <td>
+                                <table class="tabover">
+                                	<tr>
+                                		<td><p>¥442353.00</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>¥0.00</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>¥0.00</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>¥0.00</p></td>
+                                	</tr>                               	
+                                </table> 
+                            </td>
+                        </tr>                     
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 商品列表 -->
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">商品列表</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="result-table">
+                <table class="table table-hover table-bordered mb8">
+                    <thead>
+                        <tr>
+                            <th width="20%">单据号</th>
+                            <th width="11%">商品名称</th>
+                            <th width="11%">商品串码</th>
+                            <th width="8%">件数</th>
+                            <th width="11%">订单类型</th>
+                            <th width="8%">客户</th>
+                            <th>订单总金额</th>
+                            <th width="10%">订单状态</th>
+                            <th width="10%">收费</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p class="purple-color">12543240000003424242511</p>
+                                <p class="grey-color">单据时间：2016-11-01 23:43:11</p>
+                            </td>
+                            <td>
+                                <table class="tabover">
+                                	<tr>
+                                		<td><p>iphone6s</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>小米电源</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>小米电源</p></td>
+                                	</tr>                                                   	
+                                </table> 
+                            </td>
+                            <td>
+                                <table class="tabover">
+                                	<tr>
+                                		<td><p>A10000ADEDF6</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>-</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>-</p></td>
+                                	</tr>                                                   	
+                                </table> 
+                            </td>
+                            <td>
+                                <table class="tabover">
+                                	<tr>
+                                		<td><p>1</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>1</p></td>
+                                	</tr>
+                                	<tr>
+                                		<td><p>1</p></td>
+                                	</tr>                                                	
+                                </table> 
+                            </td>
+                            <td>
+                                <p>零售换货</p>
+                            </td>
+                            <td>
+                                <p></p>
+                            </td>
+                            <td>
+                                <p class="purple-color font14">¥122134.00</p>
+                            </td>
+                            <td>
+                                <p>已付款</p>
+                            </td>
+                            <td>
+                                <p>现金:122134</p>
+                            </td>
+                        </tr>                      
+                        <tr>
+                            <td>
+                                <p class="purple-color">12543240000003424242511</p>
+                                <p class="grey-color">单据时间：2016-11-01 23:43:11</p>
+                            </td>
+                            <td>
+                                <p>iphone6s plus</p>
+                            </td>
+                            <td>
+                                <p>A10000KJBFFA2</p>
+                            </td>
+                            <td>
+                                <p>1</p>
+                            </td>
+                            <td>
+                                <p>零售换货</p>
+                            </td>
+                            <td>
+                                <p></p>
+                            </td>
+                            <td>
+                                <p class="purple-color font14">¥989.00</p>
+                            </td>
+                            <td>
+                                <p>已付款</p>
+                            </td>
+                            <td>
+                                <p>现金:989</p>
+                            </td>
+                        </tr>                      
+                        <tr>
+                            <td>
+                                <p class="purple-color">12543240000003424242511</p>
+                                <p class="grey-color">单据时间：2016-11-01 23:43:11</p>
+                            </td>
+                            <td>
+                                <p>iphone6s plus</p>
+                            </td>
+                            <td>
+                                <p>A10000KJBFFA2</p>
+                            </td>
+                            <td>
+                                <p>1</p>
+                            </td>
+                            <td>
+                                <p>零售换货</p>
+                            </td>
+                            <td>
+                                <p></p>
+                            </td>
+                            <td>
+                                <p class="purple-color font14">¥989.00</p>
+                            </td>
+                            <td>
+                                <p>已付款</p>
+                            </td>
+                            <td>
+                                <p>现金:989</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-controller="paginationCtrl" class="text-center page">
+                <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+            </div>
+        </div>
+	</div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="dailyAccountsHistoryInfo.js"></script>
+    </body>
+</html>

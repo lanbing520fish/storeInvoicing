@@ -1,13 +1,25 @@
 angular
     .module('sellModule', ['ui.bootstrap'])
+    .run(['$rootScope', function($rootScope) {
+
+        $rootScope.stepNum = 0; // 当前显示的step索引值（Number类型）
+        $rootScope.goBack = function(num) { // 返回（num-1）
+            $rootScope.stepNum = num - 1;
+        };
+        $rootScope.forward = function(num) { // 返回（num+1）
+            $rootScope.stepNum = num + 1;
+        };
+    }])
     .controller('resultCtrl', ['$scope', '$rootScope', '$log', '$timeout', function($scope, $rootScope, $log, $timeout) {
 
         // 新增一行
         $scope.addQueryType = function() {
             $scope.$emit('openEditQueryTypeModal');
         }
-
     }])
+
+    //跳转
+    
 
     // 弹出框
     .controller('addPurchaseModalCtrl', function($scope, $rootScope, $uibModal) {
@@ -41,8 +53,6 @@ angular
     })
     .controller('addNewLineCtrl', function($uibModalInstance, $scope, items) {
         var $ctrl = this;
-
-
         $ctrl.ok = function() {
             $scope.$broadcast('submitPowerListModal');
             $uibModalInstance.close();
@@ -80,6 +90,8 @@ angular
             $uibModalInstance.dismiss('cancel');
         };
     })
+
+
 
     
 

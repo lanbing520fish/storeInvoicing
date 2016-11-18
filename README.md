@@ -15,5 +15,12 @@
 
 * **销售管理**
 	* 零售退货 **refund**
-    * 零售换货 **exchange**
+	* 零售换货 **exchange**
+	* 零售销售 **sell**
+	* 销售收银 **sellCash**
+	* 销售单详情 **detailSell**
+	* 日结 **dailyAccounts**
+	* 日结历史 **dailyAccountsHistory**
+	* 日结历史详情 **dailyAccountsHistoryInfo**
+
 
