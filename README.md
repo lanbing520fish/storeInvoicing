@@ -23,4 +23,6 @@
 	* 日结历史 **dailyAccountsHistory**
 	* 日结历史详情 **dailyAccountsHistoryInfo**
 
+* **库存管理**
+    * 库存查询 **stockCheck**
 
