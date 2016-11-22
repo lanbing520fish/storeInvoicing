@@ -53,7 +53,6 @@ angular
     })
     .controller('addNewLineCtrl', function($uibModalInstance, $scope, items) {
         var $ctrl = this;
-        console.log($ctrl);
         $ctrl.isHidden = true; // 更多查询条件列表是否隐藏
         $ctrl.isFoldBrand = true; // 品牌列表是否折叠
         $ctrl.isFoldModel = true; // 型号列表是否折叠
