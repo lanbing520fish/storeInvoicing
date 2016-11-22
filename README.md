@@ -23,4 +23,12 @@
 	* 日结历史 **dailyAccountsHistory**
 	* 日结历史详情 **dailyAccountsHistoryInfo**
 
+* **库存管理**
+	* 调整入库 **adjustIn**
+	* 调整出库 **adjustOut**
+	* 新调整入库单 **addAdjustIn**
+	* 新调整出库单 **addAdjustOut**
+	* 入库单详情 **detailAdjustIn**
+	* 出库单详情 **detailAdjustOut**
+
 
