@@ -385,7 +385,7 @@ body {
     font-size: 12px;
 }
 
-.form-group input[type="text"] {
+.form-group input[type="text"], .form-group input[type="number"] {
     width: 100% !important;
     height: 25px;
     padding: 0 12px;
@@ -425,7 +425,6 @@ body {
 
 
 /* 表格边线 */
-
 .table-bordered {
     border: 1px solid #8257ad;
 }
@@ -434,4 +433,9 @@ body {
 .table-bordered > tbody > tr > th,
 .table-bordered > tfoot > tr > th {
     border: 1px solid #8257ad;
+}
+
+.depict {
+    color: #823dc6;
+    font-weight: 800;
 }
