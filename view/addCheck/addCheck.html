@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>采购管理</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="addCheck.css">
+</head>
+
+<body ng-app="addCheckModule">
+    <!-- DOM结构开始 -->
+    <div class="addCheck top-line wavy-line" ng-controller="addCheckModalCtrl as $ctrl">
+        <!-- 入库单基本信息 -->
+        <div class="purchase-infomation">
+            <div class="model-header">
+                <img class="model-img" src="../../resources/images/icon-list.png">
+                <span class="model-title">盘点单基本信息</span>
+            </div>
+            <div class="infomation-form">
+                <form name="infomationForm" class="form-inline" role="form">
+                    <div class="row dashed-line">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">单据号：</label>
+                                <p class="detail-input">1000000000013641</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">制单人：</label>
+                                <p class="detail-input">韩晓辉</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">盘点时间：</label>
+                                <p class="detail-input">2016-11-02</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">盘点门店：</label>
+                                <p class="detail-input depict">中国电信@平庄镇北街区营业厅</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row high30">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">盘点仓库：</label>
+                                <select class="form-control">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">备注：</label>
+                                <textarea col="" row="10" id="remarks" class="form-control edit-txt" ng-model="modifiedQueryType.remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 入库商品明细信息 -->
+        <div class="result-list" ng-controller="resultCtrl">
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">待盘点单</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="result-table">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="10%">商品名称</th>
+                            <th width="10%">商品类别</th>
+                            <th width="10%">商品品牌</th>
+                            <th>商品型号</th>
+                            <th width="10%">配置</th>
+                            <th width="10%">系统库存</th>
+                            <th width="8%">实际库存</th>
+                            <th width="8%">盘点结果</th>
+                            <th width="8%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in arr">
+                            <td>
+                                <p>iphone6s</p>
+                            </td>
+                            <td>
+                                <p>手机</p>
+                            </td>
+                            <td>
+                                <p>苹果</p>
+                            </td>
+                            <td>
+                                <p class="overflow-handle" title="">iphone6s</p>
+                            </td>
+                            <td>
+                                <p>128G</p>
+                            </td>
+                            <td>
+                                <p>1</p>
+                            </td>
+                            <td>
+                                <p>1</p>
+                            </td>
+                            <td>
+                                <p>-</p>
+                            </td>
+                            <td class="check-num-box">
+                                <button class="btn btn-xs btn-edit" ng-click="editQueryType($index, item)">串码核对</button><br/>
+                                <input type="checkbox" id="checkbox{{$index}}" ng-model="isChecked" class="hide">
+                                <label for="checkbox{{$index}}" class="btn btn-xs btn-edit">数量核对</label><br/>
+                                <button class="btn btn-xs btn-edit">暂不盘点</button>
+                                <div class="check-num" ng-show="isChecked">
+                                    <div class="check-head">
+                                        <div class="form-group">
+                                            <label class="control-label">实际库存：</label>
+                                            <input type="number" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="check-footer">
+                                        <button class="btn btn-cancel" ng-click="close()" type="button">关闭</button>
+                                        <button class="btn btn-submit" ng-click="close()" type="button">确定</button>
+                                    </div>
+                                    <div class="angle"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <button ng-click="saveProcureOrder()" class="btn btn-submit">暂存</button>
+                <button class="btn btn-submit">提交</button>
+                <button class="btn btn-cancel">取消</button>
+            </div>
+        </div>
+        <!-- 串号录入弹框 -->
+        <script type="text/ng-template" id="serialNumberModal.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-list1.png">商品串号导入</h3>
+            </div>
+            <div class="modal-body pr50" id="serial-number-body">
+                <div class="info-form">
+                    <p class="model-title info-list">商品列表</p>
+                    <form name="infomationForm" class="form-inline" role="form">
+                        <div class="row dashed-line">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品ID：</label>
+                                    <p class="detail-input purple-color">470000037</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品名称：</label>
+                                    <p class="detail-input">U9-金鹏</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品品牌：</label>
+                                    <p class="detail-input">营销资源类型</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品型号：</label>
+                                    <p class="detail-input">营销资源物品</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="numInfo-form">
+                    <p class="model-title info-list">串号信息</p>
+                    <!-- 查询 -->
+                    <div class="query-box">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <input type="text" class="form-control get-width" placeholder="输入串号添加">
+                                <button type="submit" class="btn btn-sm btn-submit">添加</button>
+                                <button type="submit" class="btn btn-sm btn-query btn-submit">批量导入</button>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <button type="submit" class="btn btn-sm btn-query btn-submit">模板下载</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-list" ng-controller="serisListModalCtrl">
+                    <p class="model-title info-list">商品串号列表</p>
+                    <div class="serisTab-list">
+                        <ul class="num-list">
+                            <li ng-repeat="item in serisListResult">
+                                <span>{{ $index + 1 }}</span>{{item.nub}}<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div ng-controller="paginationCtrl" class="text-center page">
+                        <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                        <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-disabled="isDisabled" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="addCheck.js"></script>
+</body>
+
+</html>
