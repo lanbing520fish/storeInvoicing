@@ -32,6 +32,9 @@
 	* 填写出库单 **addTransferOutDepot**
 	* 调拨出库单详情 **transferOutDepotInfo**
 	* 调拨入库 **transferInDepot**
+	* 调拨入库详情 **transferInDepotInfo**
+	* 待确认接收的调拨入库详情 **confirmTransferInDepotInfo**
+	* 调拨入库历史单据 **transferInDepotHistory**
 	* 调整入库 **adjustIn**
 	* 调整出库 **adjustOut**
 	* 新调整入库单 **addAdjustIn**

@@ -1,5 +1,5 @@
 angular
-    .module('confirmTransferInDepotInfoModule', ['ui.bootstrap'])
+    .module('transferInDepotInfoModule', ['ui.bootstrap'])
     .controller('resultCtrl', ['$scope', '$rootScope', '$log', '$timeout', function($scope, $rootScope, $log, $timeout) {
         $rootScope.serialNubList = [
             {nub: 20161101},
