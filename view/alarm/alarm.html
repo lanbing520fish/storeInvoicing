@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>库存预警</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="alarm.css">
+</head>
+
+<body ng-app="alarmModule">
+    <!-- DOM结构开始 -->
+    <div class="history top-line wavy-line">
+        <!-- 条件查询 -->
+        <div class="alarm-query fn-clear" ng-controller="conditionQuery">
+            <p class="alarm-query-title fn-left">搜
+                <br/>索</p>
+            <div class="condition-query-box fn-right">
+                <form name="conditionQueryForm" class="form-inline" role="form">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">门店名称：</label>
+                                <p class="detail-input depict">中国电信@鼓楼营业厅</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">仓库名称：</label>
+                                <select class="form-control">
+                                    <option value="">鼓楼第一仓库</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 结果列表 -->
+        <div class="result-list">
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">预警商品信息</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="result-table">
+                <div class="result-table">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="10%">门店名称</th>
+                                <th width="10%">仓库名称</th>
+                                <th width="10%">商品编码</th>
+                                <th>商品名称</th>
+                                <th width="10%">商品类别</th>
+                                <th width="10%">商品型号</th>
+                                <th width="10%">标准库存</th>
+                                <th width="10%">最高库存</th>
+                                <th width="10%">当前库存</th>
+                                <th width="10%">预警信息</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>鼓楼营业厅</p>
+                                </td>
+                                <td>
+                                    <p>鼓楼第一仓库</p>
+                                </td>
+                                <td>
+                                    <p>10023111</p>
+                                </td>
+                                <td>
+                                    <p>小米 3 白色</p>
+                                </td>
+                                <td>
+                                    <p>手机</p>
+                                </td>
+                                <td>
+                                    <p>小米3电信版</p>
+                                </td>
+                                <td>
+                                    <p>250</p>
+                                </td>
+                                <td>
+                                    <p>400</p>
+                                </td>
+                                <td>
+                                    <p>100</p>
+                                </td>
+                                <td>
+                                    <p>
+                                        库存偏低
+                                        <img src="../../resources/images/icon-lack.png">
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>鼓楼营业厅</p>
+                                </td>
+                                <td>
+                                    <p>鼓楼第一仓库</p>
+                                </td>
+                                <td>
+                                    <p>10023111</p>
+                                </td>
+                                <td>
+                                    <p>小米 3 白色</p>
+                                </td>
+                                <td>
+                                    <p>手机</p>
+                                </td>
+                                <td>
+                                    <p>小米3电信版</p>
+                                </td>
+                                <td>
+                                    <p>400</p>
+                                </td>
+                                <td>
+                                    <p>600</p>
+                                </td>
+                                <td>
+                                    <p>650</p>
+                                </td>
+                                <td>
+                                    <p>
+                                        库存偏高
+                                        <img src="../../resources/images/icon-spilled.png">
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
+                        没有数据
+                    </p>
+                </div>
+                
+                <div ng-controller="paginationCtrl" class="text-center page">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="alarm.js"></script>
+</body>
+
+</html>

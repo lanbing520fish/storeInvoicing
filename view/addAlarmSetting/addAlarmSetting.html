@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新预警设置</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="addAlarmSetting.css">
+</head>
+
+<body ng-app="addAlarmSettingModule">
+    <!-- DOM结构开始 -->
+    <div class="addPurchase top-line wavy-line" ng-controller="addAlarmSettingModalCtrl as $ctrl">
+        <!-- 入库单基本信息 -->
+        <div class="purchase-infomation">
+            <div class="model-header">
+                <img class="model-img" src="../../resources/images/icon-list.png">
+                <span class="model-title">基本信息</span>
+            </div>
+            <div class="infomation-form">
+                <form name="infomationForm" class="form-inline" role="form">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">门店名称：</label>
+                                <p class="detail-input color-violet fwb">中国电信@鼓楼营业厅</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">仓库名称：</label>
+                                <select class="form-control">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 入库商品明细信息 -->
+        <div class="result-list" ng-controller="resultCtrl">
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">库存预警设置信息列表</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <button ng-click="addQueryType()" class="btn btn-xs btn-set"><i class="iconfont">
+                        &#xe60e;</i> 选择商品设置
+                    </div>
+                </div>
+            </div>
+            <div class="result-table">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="18%">门店名称</th>
+                            <th width="10%">仓库名称</th>
+                            <th width="10%">商品编码</th>
+                            <th width="15%">商品名称</th>
+                            <th>商品类别</th>
+                            <th width="10%">商品型号</th>
+                            <th width="8%">标准库存</th>
+                            <th width="8%">最高库存</th>
+                            <th width="8%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>鼓楼营业厅</p>
+                            </td>
+                            <td>
+                                <p>鼓楼第一仓库</p>
+                            </td>
+                            <td>
+                                <p>10023111</p>
+                            </td>
+                            <td>
+                                <p>小米3白色</p>
+                            </td>
+                            <td>
+                                <p>手机</p>
+                            </td>
+                            <td>
+                                <p>小米3 电信版</p>
+                            </td>
+                            <td>
+                                <input type="number" value="100" class="enter-input">
+                            </td>
+                            <td>
+                                <input type="number" value="200" class="enter-input">
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>鼓楼营业厅</p>
+                            </td>
+                            <td>
+                                <p>鼓楼第一仓库</p>
+                            </td>
+                            <td>
+                                <p>10023111</p>
+                            </td>
+                            <td>
+                                <p>小米3白色</p>
+                            </td>
+                            <td>
+                                <p>手机</p>
+                            </td>
+                            <td>
+                                <p>小米3 电信版</p>
+                            </td>
+                            <td>
+                                <input type="number" value="100" class="enter-input">
+                            </td>
+                            <td>
+                                <input type="number" value="200" class="enter-input">
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <button ng-click="saveAdjustInOrder()" class="btn btn-submit">暂存</button>
+                <button class="btn btn-submit">提交</button>
+                <button class="btn btn-cancel">取消</button>
+            </div>
+        </div>
+        <!-- 选择商品弹框 -->
+        <script type="text/ng-template" id="addNewLine.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="new-line-title"><img class="icon" src="../../resources/images/icon-list1.png">选择商品</h3>
+            </div>
+            <div class="condition-query fn-clear">
+                <p class="condition-query-title fn-left">搜
+                    <br/>索</p>
+                <div class="condition-query-box fn-right">
+                    <form name="conditionQueryForm" class="form-inline" role="form">
+                        <div class="row mb10">
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">商品类别：</label>
+                                    <select class="form-control">
+                                        <option value="">手机</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">商品品牌：</label>
+                                    <select class="form-control">
+                                        <option value="">手机</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">商品编码：</label>
+                                    <input class="temp-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">商品名称：</label>
+                                    <input class="temp-input">
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">商品型号：</label>
+                                    <input class="temp-input">
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group btn-search"><button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="choose-table">
+                <div class="model-title-header">
+                    <p class="model-title">商品列表</p>
+                </div>
+                <div class="table-choose mt20">
+                    <table class="table-striped table-hover table-choose">
+                        <thead>
+                            <tr>
+                                <th width="8%">选择</th>
+                                <th width="12%">商品编码</th>
+                                <th>商品名称</th>
+                                <th width="12%">商品类别</th>
+                                <th width="12%">商品品牌</th>
+                                <th width="20%">商品型号</th>
+                                <th width="8%">配置</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio">
+                                </td>
+                                <td>
+                                    <p>10023111</p>
+                                </td>
+                                <td>
+                                    <p>小米 3 白色</p>
+                                </td>
+                                <td>
+                                    <p>手机</p>
+                                </td>
+                                <td>
+                                    <p>小米</p>
+                                </td>
+                                <td>
+                                    <p>小米3 移动4g</p>
+                                </td>
+                                <td>
+                                    <p>一点一充</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio">
+                                </td>
+                                <td>
+                                    <p>10023111</p>
+                                </td>
+                                <td>
+                                    <p>小米 3 黑色</p>
+                                </td>
+                                <td>
+                                    <p>手机</p>
+                                </td>
+                                <td>
+                                    <p>小米</p>
+                                </td>
+                                <td>
+                                    <p>小米3 移动4g</p>
+                                </td>
+                                <td>
+                                    <p>一点一充</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-controller="paginationCtrl" class="text-center page mt10">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="addAlarmSetting.js"></script>
+</body>
+
+</html>
