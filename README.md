@@ -41,5 +41,7 @@
 	* 新调整出库单 **addAdjustOut**
 	* 入库单详情 **detailAdjustIn**
 	* 出库单详情 **detailAdjustOut**
+	* 库存预警 **alarm**
+	* 新预警设置 **addAlarmSetting**
 
 
