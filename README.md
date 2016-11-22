@@ -25,4 +25,7 @@
 
 * **库存管理**
     * 库存查询 **stockCheck**
-
+    * 调拨出库 **transferOutDepot**
+    * 填写出库单 **addTransferOutDepot**
+    * 调拨出库单详情 **transferOutDepotInfo**
+	* 调拨入库 **transferInDepot**

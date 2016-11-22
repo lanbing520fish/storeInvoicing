@@ -1,4 +1,4 @@
-.addPurchase {
+.detailPurchase {
     min-height: 20px;
     margin: 10px;
     border-left: 1px solid #d5d4dc;
@@ -18,7 +18,7 @@
 }
 
 .form-group .edit-txt {
-    height: 54px;
+    height: 80px;
 }
 
 .result-list {
@@ -42,7 +42,9 @@
     padding: 2px !important;
     text-align: center;
 }
-
+.result-table table tr:nth-of-type(2n){
+    background: #faf7fc;
+}
 .result-table table td p {
     height: 25px;
     line-height: 25px;
@@ -183,23 +185,7 @@
     font-size: 12px;
     text-align: center;
 }
-.btn-searching {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 30px;
-    height: 25px;
-    padding: 0;
-    background-color: #fff;
-    border-color: #ccc;
-    border-radius: 15px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    line-height: 25px;
-    color: #a870e0;
-    font-size: 12px;
-    text-align: center;
-}
+
 .btn-keyword:focus,
 .btn-keyword.focus {
     background-color: #9249db;
@@ -461,165 +447,71 @@
     font-weight: 800;
 }
 
-.modal-body{
-    padding:0;
+/*弹窗内容*/
+.high30{
+    height: 30px;
 }
-.info-form{
-    background: #f8f8f8;
+.mt10{
+    margin-top: 10px;
 }
-.info-list{
-    font-size:12px;
-    margin-left:27px;
-    line-height:30px;
+.history-detail-infomation {
+    padding: 5px 20px 0px 20px;
+    background-color: #f8f8f8;
+    border-bottom: 1px dashed #bfbfbf;
 }
-.grey-color{
-    color:#999;
+.model-detail-title{
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
 }
-.purple-color{
-    color:#a870e0;
+.serial-number-list{
+    padding:0 6px;
 }
-.query-box{
-    padding:8px;
-    border:1px solid #ddd;
-    background: #f8f8f8;
-    margin:0 8px;
-    border-radius:5px;
+.model-detailnumber-title{
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 14px;
+    margin-top: 2px;
+    height: 25px;
 }
-.get-width{
-    width:236px;
-    height:26px;
-    border-radius: 26px;
-    border:1px solid #ddd;
-    display: inline-block;
-}
-.serisTab-list{
-    margin:0 8px;
-}
-.num-list{
-    border:1px solid #ddd;
-    border-right:0;
-    border-bottom:0;
-    overflow: hidden;
-    margin-bottom: 10px;
-}
-.num-list li{
-    position:relative;
-    float: left;
-    line-height:28px;
-    width:20%;
-    border:1px solid #ddd;
-    border-top:0;
-    border-left:0;
+.detail-number-list{
+    width: 100%;
     text-align: center;
-    color:#333;
+    border-left: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+}
+.detail-number-list li{
+    width: 20%;
+    float: left;
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: #333;
     font-size: 12px;
 }
-.num-list li span{
-    display:inline-block;
-    padding:0 5px;
+.detail-number-list li span{
+    display: inline-block;
+    padding: 0 5px;
     border-radius: 3px;
     background: #eddbff;
-    color:#a870e0;
+    color: #a870e0;
     margin-right: 8px;
     line-height: 16px;
 }
-.num-list li .small-delete{
-    display:none;
-    position:absolute;
-    color:#a870e0;
-    top:2px;
-    right:10px;
-}
-.num-list li .small-delete:hover{
-    text-decoration: none;
-}
-.num-list li:hover .small-delete{
-    display:block;
-}
-.modal-footer{
-    margin-top: 10px;
-}
-
-/* 商店查询弹出框 */
-.condition-query {
-    height: 80px;
-    padding: 10px 10px 10px 0;
-    background: url('../../resources/images/query-bg.png') no-repeat 0 0;
-    background-color: #f8f8f8;
-    border-bottom: 1px dashed #d2d2d2;
-}
-.condition-query-title {
-    width: 20px;
-    height: 50px;
-    margin: 5px 0 5px 8px;
-    line-height: 25px;
-    color: #333;
-    font-size: 14px;
-    font-weight: 800;
-}
-.condition-query-box {
-    width: calc(100% - 40px);
-}
-.datepicker-input {
-    position: relative;
-    width: 45%;
-}
-.datepicker-text {
-    width: 10%;
-    height: 25px;
-    line-height: 25px;
-    text-align: center;
-}
-.icon_time {
+.form-group .detail-msg{
     position: absolute;
-    top: 5px;
-    right: 10px;
-    color: #cfa9f5;
-    cursor: pointer;
+    left: 0px;
+    width: 100%;
+    text-align: left;
 }
-.form-group .reduce-width {
-    width: calc(100% - 90px) !important;
+.form-group .detail-msg span{
+    color: #999999;
 }
-.btn-query {
-    position: absolute;
-    top: -4px;
-    right: 0;
+.info-detail-form{
+    margin-top: 8px;
 }
-.result-list {
-    padding: 5px 5px 20px;
-}
-.result-head {
-    margin-bottom: 5px;
-}
-.result-table table th {
-    padding: 5px !important;
-    background-color: #a870e0;
-    border-bottom-width: 1px !important;
-    color: #fff;
-    font-weight: 800;
-    text-align: center;
-}
-.result-table table td {
-    padding: 2px !important;
-    text-align: center;
-}
-.result-table table td p {
-    height: 25px;
-    line-height: 25px;
-}
-.model-header {
-    height: 25px;
-    line-height: 25px;
-}
-.model-img {
-    float: left;
-    width: 20px;
-    height: 20px;
-    margin: 2px 4px;
-}
-.model-title {
-    color: #333;
-    font-size: 14px;
-    font-weight: bold;
-}
-/* 商店查询弹出框 */
+/*弹窗内容*/
