@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新调整出库单</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="addAdjustOut.css">
+</head>
+
+<body ng-app="addAdjustOutModule">
+    <!-- DOM结构开始 -->
+    <div class="addPurchase top-line wavy-line" ng-controller="addAdjustOutModalCtrl as $ctrl">
+        <!-- 入库单基本信息 -->
+        <div class="purchase-infomation">
+            <div class="model-header">
+                <img class="model-img" src="../../resources/images/icon-list.png">
+                <span class="model-title">调整出库单基本信息</span>
+            </div>
+            <div class="infomation-form">
+                <form name="infomationForm" class="form-inline" role="form">
+                    <div class="row dashed-line">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">单据号：</label>
+                                <p class="detail-input">101992992</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">调出日期：</label>
+                                <p class="detail-input">2016-11-15</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">制单人：</label>
+                                <p class="detail-input">韩晓惠</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">调整门店：</label>
+                                <p class="detail-input color-violet fwb">中国电信@平庄镇北街区营业厅</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row dashed-line">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">调出仓库：</label>
+                                <select class="form-control">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">备注：</label>
+                                <textarea col="" row="10" id="remarks" class="form-control edit-txt" ng-model="modifiedQueryType.remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 入库商品明细信息 -->
+        <div class="result-list" ng-controller="resultCtrl">
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">调整出库商品明细信息</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <button ng-click="addQueryType()" class="btn btn-xs btn-set"><i class="iconfont">
+                        &#xe60e;</i> 选择商品调整
+                    </div>
+                </div>
+            </div>
+            <div class="result-table">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="18%">商品名称</th>
+                            <th width="10%">商品类别</th>
+                            <th width="10%">商品品牌</th>
+                            <th width="15%">商品型号</th>
+                            <th>配置</th>
+                            <th width="10%">调出数量</th>
+                            <th width="8%">串号</th>
+                            <th width="8%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>华为－麦芒4</p>
+                            </td>
+                            <td>
+                                <p>手机</p>
+                            </td>
+                            <td>
+                                <p>华为</p>
+                            </td>
+                            <td>
+                                <p>HUAWEIRIO</p>
+                            </td>
+                            <td>
+                                <p class="overflow-handle" title="">单电单充</p>
+                            </td>
+                            <td>
+                                <input type="number" value="1" class="enter-input">
+                            </td>
+                            <td>
+                                <button ng-click="editQueryType($index, item)" class="btn btn-xs btn-edit">录入串号</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>华为耳机</p>
+                            </td>
+                            <td>
+                                <p>配件</p>
+                            </td>
+                            <td>
+                                <p>华为</p>
+                            </td>
+                            <td>
+                                <p>HUAWEIRIO</p>
+                            </td>
+                            <td>
+                                <p class="overflow-handle" title="">--</p>
+                            </td>
+                            <td>
+                                <input type="number" value="1" class="enter-input">
+                            </td>
+                            <td>
+                                <p>--</p>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <button ng-click="saveAdjustOutOrder()" class="btn btn-submit">暂存</button>
+                <button class="btn btn-submit">提交</button>
+                <button class="btn btn-cancel">取消</button>
+            </div>
+        </div>
+        <!-- 新增一行弹框 -->
+        <script type="text/ng-template" id="addNewLine.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="new-line-title"><img class="icon" src="../../resources/images/icon-list1.png">选择商品</h3>
+            </div>
+            <div id="new-line-body">
+                <!-- 查询 -->
+                <div class="queries-box">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-keyword">
+                                <label class="control-label">关键词：</label>
+                                <input type="text" class="form-control reduce-width">
+                                <button type="submit" class="btn btn-sm btn-keyword"><i class="iconfont">&#xe600;</i> 查询</button>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <a class="btn-queries" ng-click="$ctrl.toggle('$ctrl.isHidden')">更多查询条件</a>
+                        </div>
+                        <div class="col-xs-4 text-right">
+                            <button type="submit" class="btn btn-sm btn-query btn-goods"><i class="iconfont">&#xe60e;</i> 添加商品</button>
+                        </div>
+                    </div>
+                    <!-- 条件列表 -->
+                    <div class="queries-list" ng-show="!$ctrl.isHidden">
+                        <p class="queries-title">所有分类 > <span class="checked-query">类别：手机<i class="iconfont">&#xe611;</i></span><span class="checked-query">品牌：中兴<i class="iconfont">&#xe611;</i></span></p>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">类别：</span>
+                            <div class="category-list fn-left">
+                                <span class="category-item">手机</span>
+                                <span class="category-item">配件</span>
+                                <span class="category-item">其他数码产品</span>
+                            </div>
+                        </div>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">品牌：</span>
+                            <div class="category-list fn-left" ng-class="{fold: $ctrl.isFoldBrand}">
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                                <span class="category-item">苹果</span>
+                                <span class="category-item">三星</span>
+                                <span class="category-item">华为</span>
+                                <span class="category-item">酷派</span>
+                                <span class="category-item">中兴</span>
+                                <span class="category-item">黑莓</span>
+                            </div>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="$ctrl.isFoldBrand" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="!$ctrl.isFoldBrand" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
+                        </div>
+                        <div class="queries-category fn-clear">
+                            <span class="category-label fn-left">型号：</span>
+                            <div class="category-list fn-left" ng-class="{fold: $ctrl.isFoldModel}">
+                                <span class="category-item">Iphone 5s</span>
+                                <span class="category-item">Iphone 6</span>
+                                <span class="category-item">Iphone 6s</span>
+                                <span class="category-item">Iphone 6plus</span>
+                                <span class="category-item">Iphone 7s</span>
+                            </div>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldModel')" ng-show="$ctrl.isFoldModel" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
+                            <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldModel')" ng-show="!$ctrl.isFoldModel" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 结果 -->
+                <p class="goods-list-title">商品列表</p>
+                <div class="goods-list-box fn-clear" ng-controller="goodsListModalCtrl">
+                    <div class="goods-list fn-left">
+                        <li class="goods-item" ng-class="{current: $index===checkIndex, hover: $index===hoverIndex || hoverIndex===''}" ng-repeat="item in goodsListResult" ng-mouseover="hoverGoods($index)" ng-click="checkedGoods($index)">
+                            <p class="goods-title">商品：<span class="goods-name" ng-bind="item.name"></span></p>
+                        </li>
+                    </div>
+                    <div class="goods-detail fn-left">
+                        <p class="detail-title">商品详情：</p>
+                        <div class="detail-content fn-clear">
+                            <p class="detail-item fn-left">类别：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].type"></span></p>
+                            <p class="detail-item fn-left">品牌：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].brand"></span></p>
+                            <p class="detail-item fn-left">型号：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].model"></span></p>
+                            <p class="detail-item fn-left">配置：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].configuration"></span></p>
+                            <p class="detail-item fn-left">颜色：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].color"></span></p>
+                            <p class="detail-item fn-left">RAM：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].RAM"></span></p>
+                            <p class="detail-item fn-left">尺寸：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].size"></span></p>
+                            <p class="detail-item fn-left">OS：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].OS"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div ng-controller="paginationCtrl" class="text-center page">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
+        <!-- 串号录入弹框 -->
+        <script type="text/ng-template" id="serialNumberModal.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-list1.png">商品串号导入</h3>
+            </div>
+            <div class="modal-body pr50" id="serial-number-body">
+                <div class="info-form">
+                    <p class="model-title info-list">商品列表</p>
+                    <form name="infomationForm" class="form-inline" role="form">
+                        <div class="row dashed-line">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品ID：</label>
+                                    <p class="detail-input purple-color">470000037</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品名称：</label>
+                                    <p class="detail-input">iphone6s</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品品牌：</label>
+                                    <p class="detail-input">苹果</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label grey-color">商品型号：</label>
+                                    <p class="detail-input">iphone6s</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="numInfo-form">
+                    <p class="model-title info-list">串号信息</p>
+                    <!-- 查询 -->
+                    <div class="query-box">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <input type="text" class="form-control get-width" placeholder="输入串号添加">
+                                <button type="submit" class="btn btn-sm btn-submit">添加</button>
+                                <button type="submit" class="btn btn-sm btn-query btn-submit">批量导入</button>
+                                </div>
+                            <div class="col-xs-6 text-right">
+                               <button type="submit" class="btn btn-sm btn-query btn-submit">模板下载</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-list" ng-controller="serisListModalCtrl">
+                    <p class="model-title info-list">商品串号列表</p>
+                    <div class="serisTab-list">
+                        <ul class="num-list">
+                            <li ng-repeat="item in serisListResult">
+                                <span>{{ $index + 1 }}</span>{{item.nub}}<a href="javascript:void(0)" class="small-delete"><i class="iconfont">&#xe611;</i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div ng-controller="paginationCtrl" class="text-center page">
+                        <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                        <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-disabled="isDisabled" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="addAdjustOut.js"></script>
+</body>
+
+</html>
