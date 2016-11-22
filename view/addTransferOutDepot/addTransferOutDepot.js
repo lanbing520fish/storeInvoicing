@@ -24,7 +24,7 @@ angular
         }
     }])
     .controller('purchaseQueryCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
-         // 选择门店
+        // 选择门店
         $scope.openStoreQueryType = function() {
             $scope.$emit('openStoreQueryTypeModal');
         };
@@ -217,41 +217,18 @@ angular
     }])
     .controller('serisListModalCtrl', ['$scope', function($scope) {
         $scope.serisListResult = [
-            {nub: 20161101},
-            {nub: 20161102},
-            {nub: 20161103},
-            {nub: 20161104},
-            {nub: 20161105},
-            {nub: 20161106},
-            {nub: 20161107},
-            {nub: 20161108},
-            {nub: 20161109},
-            {nub: 20161110},
-            {nub: 20161111},
-            {nub: 20161112},
-            {nub: 20161113},
-            {nub: 20161114},
-            {nub: 20161115},
-            {nub: 20161116},
-            {nub: 20161117},
-            {nub: 20161118},
-            {nub: 20161119},
-            {nub: 20161120},
-            {nub: 20161121},
-            {nub: 20161122},
-            {nub: 20161123},
-            {nub: 20161124},
-            {nub: 20161125},
-            {nub: 20161126},
-            {nub: 20161127},
-            {nub: 20161128},
-            {nub: 20161129},
-            {nub: 20161130}
+            { nub: 20161101 },
+            { nub: 20161102 },
+            { nub: 20161103 },
+            { nub: 20161104 },
+            { nub: 20161105 },
+            { nub: 20161106 },
+            { nub: 20161107 },
+            { nub: 20161108 }
         ];
     }])
     .controller('storeQueryTypeModalCtrl', function($uibModalInstance, $scope, items) {
         var $ctrl = this;
-
         $ctrl.ok = function() {
             $scope.$broadcast('submitCardRange');
             $uibModalInstance.close();
@@ -271,6 +248,99 @@ angular
             $uibModalInstance.dismiss('cancel');
         };
     })
+    // 城市
+    .controller('cityCheckCtrl', ['$scope', function($scope) {
+        $scope.citys = [{
+            areaId: '009',
+            areaName: '江苏省',
+            children: [{
+                areaId: '025',
+                areaName: '南京市',
+                children: [{
+                    areaId: '025001',
+                    areaName: '玄武区'
+                }]
+            }, {
+                areaId: '026',
+                areaName: '常州市',
+                children: [{
+                    areaId: '026001',
+                    areaName: '禹会区'
+                }]
+            }]
+        }, {
+            areaId: '009',
+            areaName: '安徽省',
+            children: [{
+                areaId: '0551',
+                areaName: '合肥市',
+                children: [{
+                    areaId: '0551001',
+                    areaName: '肥西县'
+                }, {
+                    areaId: '026',
+                    areaName: '长丰县'
+                }]
+            }]
+        }];
+
+        $scope.visible = false;
+        $scope.key = 1;
+        $scope.provinceIndex = '';
+        $scope.cityIndex = '';
+        $scope.countyIndex = '';
+        $scope.areaId = '';
+        $scope.provinceName = '';
+        $scope.cityName = '';
+        $scope.countyName = '';
+        $scope.checkedAreaName = '';
+
+        $scope.cityCheck = function() {
+            $scope.visible = !$scope.visible;
+        }
+
+        $scope.handleSelectCity = function(level, index, areaId, areaName) {
+            let me = this;
+            switch (level) {
+                case 'province':
+                    $scope.key = 2;
+                    $scope.provinceIndex = index;
+                    $scope.areaId = areaId;
+                    $scope.provinceName = areaName;
+                    me.handleSubmitBtn(level);
+                    break;
+                case 'city':
+                    $scope.key = 3;
+                    $scope.cityIndex = index;
+                    $scope.areaId = areaId;
+                    $scope.cityName = areaName;
+                    me.handleSubmitBtn(level);
+                    break;
+                case 'county':
+                    $scope.countyIndex = index;
+                    $scope.areaId = areaId;
+                    $scope.countyName = areaName;
+                    me.handleSubmitBtn(level);
+                    break;
+            }
+        };
+
+        $scope.handleSubmitBtn = function(level) {
+            let me = this;
+            switch (level) {
+                case 'province':
+                    $scope.checkedAreaName = $scope.provinceName;
+                    break;
+                case 'city':
+                    $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName;
+                    break;
+                case 'county':
+                    $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName + ' ' + $scope.countyName;
+                    $scope.visible = false;
+                    break;
+            }
+        }
+    }])
     // 分页控制器
     .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
         $scope.$on('pageChange', function() {

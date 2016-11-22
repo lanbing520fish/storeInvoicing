@@ -6,8 +6,8 @@
 @font-face {
     font-family: 'iconfont';
     /* project id："144758" */
-    src: url('http://at.alicdn.com/t/font_hdqys5qd792otj4i.eot');
-    src: url('http://at.alicdn.com/t/font_hdqys5qd792otj4i.eot?#iefix') format('embedded-opentype'), url('http://at.alicdn.com/t/font_hdqys5qd792otj4i.woff') format('woff'), url('http://at.alicdn.com/t/font_hdqys5qd792otj4i.ttf') format('truetype'), url('http://at.alicdn.com/t/font_hdqys5qd792otj4i.svg#iconfont') format('svg');
+    src: url('http://at.alicdn.com/t/font_hfu3y6b3h5ixusor.eot');
+    src: url('http://at.alicdn.com/t/font_hfu3y6b3h5ixusor.eot?#iefix') format('embedded-opentype'), url('http://at.alicdn.com/t/font_hfu3y6b3h5ixusor.woff') format('woff'), url('http://at.alicdn.com/t/font_hfu3y6b3h5ixusor.ttf') format('truetype'), url('http://at.alicdn.com/t/font_hfu3y6b3h5ixusor.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -385,7 +385,8 @@ body {
     font-size: 12px;
 }
 
-.form-group input[type="text"], .form-group input[type="number"] {
+.form-group input[type="text"],
+.form-group input[type="number"] {
     width: 100% !important;
     height: 25px;
     padding: 0 12px;
@@ -425,6 +426,7 @@ body {
 
 
 /* 表格边线 */
+
 .table-bordered {
     border: 1px solid #8257ad;
 }

@@ -18,7 +18,7 @@
         <div class="purchase-infomation" ng-controller="purchaseQueryCtrl">
             <div class="model-header">
                 <img class="model-img" src="../../resources/images/icon-list.png">
-                <span class="model-title">调拨出库单基本信息</span>          
+                <span class="model-title">调拨出库单基本信息</span>
             </div>
             <div class="infomation-form">
                 <form name="infomationForm" class="form-inline" role="form">
@@ -40,7 +40,7 @@
                                 <label class="control-label">调出门店：</label>
                                 <p class="detail-input">中国电信@鼓楼营业厅</p>
                             </div>
-                        </div>   
+                        </div>
                     </div>
                     <div class="row dashed-line">
                         <div class="col-xs-4">
@@ -151,14 +151,14 @@
                             </td>
                             <td>
                                 <p>2000毫安</p>
-                            </td>                          
+                            </td>
                             <td>
                                 <input type="number" class="enter-input">
                             </td>
                             <td>
                                 -
                             </td>
-                            <td>                                
+                            <td>
                             </td>
                         </tr>
                     </tbody>
@@ -323,9 +323,9 @@
                                 <input type="text" class="form-control get-width" placeholder="输入串号添加">
                                 <button type="submit" class="btn btn-sm btn-submit">添加</button>
                                 <button type="submit" class="btn btn-sm btn-query btn-submit">批量导入</button>
-                                </div>
+                            </div>
                             <div class="col-xs-6 text-right">
-                               <button type="submit" class="btn btn-sm btn-query btn-submit">模板下载</button>
+                                <button type="submit" class="btn btn-sm btn-query btn-submit">模板下载</button>
                             </div>
                         </div>
                     </div>
@@ -378,10 +378,29 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <div class="form-group">
+                                <div class="form-group" ng-controller="cityCheckCtrl">
                                     <label class="control-label">所在地区：</label>
-                                    <input type="text" class="form-control reduce-width">
-                                    <button type="submit" class="btn btn-sm btn-searching"><i class="iconfont">&#xe600;</i></button>
+                                    <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
+                                    <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
+                                    <div class="city-check-box" ng-show="visible">
+                                        <uib-tabset active="key">
+                                            <uib-tab index="1" heading="省份">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('province', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="2" heading="城市">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys[provinceIndex].children" ng-click="handleSelectCity('city', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="3" heading="区县">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === countyIndex}" ng-repeat="item in citys[provinceIndex].children[cityIndex].children" ng-click="handleSelectCity('county', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                        </uib-tabset>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-xs-6">
@@ -401,7 +420,7 @@
                             <div class="model-header">
                                 <p class="model-title">选择门店</p>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
                 <div class="result-table">
@@ -455,11 +474,11 @@
                     <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length" ng-cloak>
                         没有数据
                     </p>
-                </div>      
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-submit" type="button" ng-disabled="isDisabled" ng-click="$ctrl.ok()">确定</button>
-                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">取消</button> 
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">取消</button>
             </div>
         </script>
     </div>
