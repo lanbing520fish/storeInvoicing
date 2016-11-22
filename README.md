@@ -2,7 +2,7 @@
 
 ### 页面名称字典
 
-* **采购管理服务**
+* **采购管理**
 	* 采购入库 **purchase**
 	* 新增入库单 **addPurchase**
 	* 采购入库单详情 **detailPurchase**
@@ -22,5 +22,10 @@
 	* 日结 **dailyAccounts**
 	* 日结历史 **dailyAccountsHistory**
 	* 日结历史详情 **dailyAccountsHistoryInfo**
+
+* **库存管理**
+	* 库存盘点 **check**
+	* 新库存盘点单 **addCheck**
+	* 盘点详情 **editCheck**
 
 
