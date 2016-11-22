@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>入库单详情</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="detailAdjustIn.css">
+</head>
+
+<body ng-app="detailAdjustInModule">
+    <!-- DOM结构开始 -->
+    <div class="detailHistory top-line wavy-line" ng-controller="historyDetailModalCtrl as $ctrl">
+        <!-- 入库单基本信息 -->
+        <div class="history-infomation">
+            <div class="model-header">
+                <img class="model-img" src="../../resources/images/icon-list.png">
+                <p class="model-title">调整入库单基本信息</p>
+            </div>
+            <div class="infomation-form">
+                <form name="infomationForm" class="form-inline" role="form">
+                    <div class="row dashed-line">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">单据号：</label>
+                                <p class="detail-input">101992992</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">调入日期：</label>
+                                <p class="detail-input">2016-11-15</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">调整门店：</label>
+                                <p class="detail-input color-violet fwb">中国电信@平庄镇北街区营业厅</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">调入门店：</label>
+                                <p class="detail-input">终端仓库1</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">制单人：</label>
+                                <p class="detail-input">韩晓惠</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">备注：</label>
+                                <p class="detail-input">--</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 入库商品明细信息 -->
+        <div class="result-list" ng-controller="resultCtrl">
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">调整入库商品明细信息</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="result-table">
+                <div class="result-table">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="12%">商品名称</th>
+                                <th width="12%">商品类别</th>
+                                <th width="12%">商品品牌</th>
+                                <th width="12%">商品型号</th>
+                                <th>配置</th>
+                                <th width="12%">调入数量</th>
+                                <th width="10%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>苹果iphone6s</p>
+                                </td>
+                                <td>
+                                    <p>手机</p>
+                                </td>
+                                <td>
+                                    <p>苹果</p>
+                                </td>
+                                <td>
+                                    <p>iphone6s</p>
+                                </td>
+                                <td>
+                                    <p>单电单充</p>
+                                </td>
+                                <td>
+                                    <p>1</p>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-edit" ng-click="serialDetail($index, item)" ><i class="iconfont">&#xe60b;</i> 串码详情
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>苹果耳机</p>
+                                </td>
+                                <td>
+                                    <p>配件</p>
+                                </td>
+                                <td>
+                                    <p>苹果</p>
+                                </td>
+                                <td>
+                                    <p>苹果</p>
+                                </td>
+                                <td>
+                                    <p>--</p>
+                                </td>
+                                <td>
+                                    <p>1</p>
+                                </td>
+                                <td>
+                                    <p>--</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
+                        没有数据
+                    </p>
+                </div>
+                
+                <div ng-controller="paginationCtrl" class="text-center page">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                </div>
+            </div>
+        </div>
+
+        
+
+
+        <script src="../../resources/js/angular.min.js"></script>
+        <script src="../../resources/js/angular-touch.min.js"></script>
+        <script src="../../resources/js/angular-animate.min.js"></script>
+        <script src="../../resources/js/angular-aria.min.js"></script>
+        <script src="../../resources/js/jquery.min.js"></script>
+        <script src="../../resources/js/bootstrap.min.js"></script>
+        <script src="../../resources/js/ui-bootstrap.js"></script>
+        <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+        <script src="../../resources/js/lodash.js"></script>
+        <script src="../../resources/js/sweetalert.min.js"></script>
+        <script src="detailAdjustIn.js"></script>
+
+<!-- 弹窗内容 -->
+        <script type="text/ng-template" id="serialNumberModal.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-list1.png">串号详情</h3>
+            </div>
+            <div class="history-detail-infomation">
+                <div class="model-header">
+                    <p class="model-detail-title">商品明细</p>
+                </div>
+                <div class="info-detail-form">
+                    <form name="infomationForm" class="form-inline" role="form">
+                        <div class="row dashed-line">
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <p class="detail-msg"><span>商品编码：</span>CM-NP001</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <p class="detail-msg"><span>商品名称：</span>iphone6S</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <p class="detail-msg"><span>商品类别：</span>手机</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row dashed-line">
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <p class="detail-msg"><span>商品品牌：</span>苹果</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <p class="detail-msg"><span>商品型号：</span>iphone6S</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row high30">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <p class="detail-msg"><span>配置信息：</span>128G银色</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="serial-number-list">
+                <div class="model-header">
+                    <p class="model-detailnumber-title">商品串号列表</p>
+                </div>
+                <ul class="detail-number-list clearfix">
+                    <li ng-repeat="x in serialNubList">
+                        <span>{{ $index + 1 }}</span>{{x.nub}}
+                    </li>
+                </ul>
+            </div>
+            
+                <div ng-controller="paginationCtrl" class="text-center mt10 page">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+            </div>
+
+        </script>
+<!-- 弹窗内容 -->
+
+</body>
+
+</html>

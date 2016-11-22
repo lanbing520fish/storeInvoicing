@@ -27,5 +27,16 @@
 	* 库存盘点 **check**
 	* 新库存盘点单 **addCheck**
 	* 盘点详情 **editCheck**
+	* 库存查询 **stockCheck**
+	* 调拨出库 **transferOutDepot**
+	* 填写出库单 **addTransferOutDepot**
+	* 调拨出库单详情 **transferOutDepotInfo**
+	* 调拨入库 **transferInDepot**
+	* 调整入库 **adjustIn**
+	* 调整出库 **adjustOut**
+	* 新调整入库单 **addAdjustIn**
+	* 新调整出库单 **addAdjustOut**
+	* 入库单详情 **detailAdjustIn**
+	* 出库单详情 **detailAdjustOut**
 
 
