@@ -2,7 +2,7 @@
 
 ### 页面名称字典
 
-* **采购管理服务**
+* **采购管理**
 	* 采购入库 **purchase**
 	* 新增入库单 **addPurchase**
 	* 采购入库单详情 **detailPurchase**
@@ -24,10 +24,13 @@
 	* 日结历史详情 **dailyAccountsHistoryInfo**
 
 * **库存管理**
-    * 库存查询 **stockCheck**
-    * 调拨出库 **transferOutDepot**
-    * 填写出库单 **addTransferOutDepot**
-    * 调拨出库单详情 **transferOutDepotInfo**
+	* 库存盘点 **check**
+	* 新库存盘点单 **addCheck**
+	* 盘点详情 **editCheck**
+	* 库存查询 **stockCheck**
+	* 调拨出库 **transferOutDepot**
+	* 填写出库单 **addTransferOutDepot**
+	* 调拨出库单详情 **transferOutDepotInfo**
 	* 调拨入库 **transferInDepot**
 	* 调拨入库详情 **transferInDepotInfo**
 	* 待确认接收的调拨入库详情 **confirmTransferInDepotInfo**
@@ -38,4 +41,5 @@
 	* 新调整出库单 **addAdjustOut**
 	* 入库单详情 **detailAdjustIn**
 	* 出库单详情 **detailAdjustOut**
+
 
