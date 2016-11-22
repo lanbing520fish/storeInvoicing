@@ -580,7 +580,7 @@
 .form-group .reduce-width {
     width: calc(100% - 90px) !important;
 }
-.btn-query {
+.btn-another {
     position: absolute;
     top: -4px;
     right: 0;
