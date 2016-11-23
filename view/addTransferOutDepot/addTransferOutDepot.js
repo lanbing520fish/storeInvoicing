@@ -287,21 +287,22 @@ angular
                 case 'province':
                     $scope.key = 2;
                     $scope.provinceIndex = index;
-                    $scope.areaId = areaId;
                     $scope.provinceName = areaName;
-                    me.handleSubmitBtn(level);
                     break;
                 case 'city':                   
                     $scope.cityIndex = index;
                     $scope.areaId = areaId;
                     $scope.cityName = areaName;
                     me.handleSubmitBtn(level);
-                    break;               
+                    break;           
             }
         };
         $scope.handleSubmitBtn = function(level) {
             let me = this;
             switch (level) {
+                case 'province':
+                    $scope.checkedAreaName = $scope.provinceName;
+                    break;
                 case 'city':
                     $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName;
                     $scope.visible = false;
