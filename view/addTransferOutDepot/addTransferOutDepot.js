@@ -256,17 +256,9 @@ angular
             children: [{
                 areaId: '025',
                 areaName: '南京市',
-                children: [{
-                    areaId: '025001',
-                    areaName: '玄武区'
-                }]
             }, {
                 areaId: '026',
                 areaName: '常州市',
-                children: [{
-                    areaId: '026001',
-                    areaName: '禹会区'
-                }]
             }]
         }, {
             areaId: '009',
@@ -274,13 +266,6 @@ angular
             children: [{
                 areaId: '0551',
                 areaName: '合肥市',
-                children: [{
-                    areaId: '0551001',
-                    areaName: '肥西县'
-                }, {
-                    areaId: '026',
-                    areaName: '长丰县'
-                }]
             }]
         }];
 
@@ -288,43 +273,30 @@ angular
         $scope.key = 1;
         $scope.provinceIndex = '';
         $scope.cityIndex = '';
-        $scope.countyIndex = '';
         $scope.areaId = '';
         $scope.provinceName = '';
-        $scope.cityName = '';
-        $scope.countyName = '';
+        $scope.cityName = '';        
         $scope.checkedAreaName = '';
 
         $scope.cityCheck = function() {
             $scope.visible = !$scope.visible;
         }
-
         $scope.handleSelectCity = function(level, index, areaId, areaName) {
             let me = this;
             switch (level) {
                 case 'province':
                     $scope.key = 2;
                     $scope.provinceIndex = index;
-                    $scope.areaId = areaId;
                     $scope.provinceName = areaName;
-                    me.handleSubmitBtn(level);
                     break;
-                case 'city':
-                    $scope.key = 3;
+                case 'city':                   
                     $scope.cityIndex = index;
                     $scope.areaId = areaId;
                     $scope.cityName = areaName;
                     me.handleSubmitBtn(level);
-                    break;
-                case 'county':
-                    $scope.countyIndex = index;
-                    $scope.areaId = areaId;
-                    $scope.countyName = areaName;
-                    me.handleSubmitBtn(level);
-                    break;
+                    break;           
             }
         };
-
         $scope.handleSubmitBtn = function(level) {
             let me = this;
             switch (level) {
@@ -333,9 +305,6 @@ angular
                     break;
                 case 'city':
                     $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName;
-                    break;
-                case 'county':
-                    $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName + ' ' + $scope.countyName;
                     $scope.visible = false;
                     break;
             }

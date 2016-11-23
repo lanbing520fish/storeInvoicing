@@ -26,7 +26,7 @@
 * **库存管理**
 	* 库存盘点 **check**
 	* 新库存盘点单 **addCheck**
-	* 盘点详情 **editCheck**
+	* 盘点详情 **detailCheck**
 	* 库存查询 **stockCheck**
 	* 调拨出库 **transferOutDepot**
 	* 填写出库单 **addTransferOutDepot**
