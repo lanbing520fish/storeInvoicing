@@ -1,5 +1,5 @@
 angular
-    .module('refundModule', ['ui.bootstrap'])
+    .module('refundModule', ['ui.bootstrap', 'ui.select'])
     .run(['$rootScope', function($rootScope) {
         $rootScope.checkedGoods = []; // 已选择待退换商品（批量退货）
         $rootScope.checkedGoodsPrice = 0; // 已选择待退换商品总价
@@ -88,3 +88,10 @@ angular
             $rootScope.stepNum = 1;
         }
     }])
+    .controller('selectMultipleCtrl', function($scope) {
+        var vm = this;
+
+        vm.salesperson = ['韩梅', '李成', '韩宇', '栋梁', '国栋', '菲菲', '李国梁', '寒铁柱'];
+        vm.multiple = {};
+        vm.multiple.checkedSalesperson = ['韩梅', '李国梁'];
+    })

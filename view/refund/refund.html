@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>退货管理</title>
     <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/select.css">
     <link rel="stylesheet" href="../../resources/css/bootstrap.css">
     <link rel="stylesheet" href="../../resources/css/reset.css">
     <link rel="stylesheet" href="../../resources/css/common.css">
@@ -347,11 +348,14 @@
                             <p class="cashier-person">收银员：韩晓辉</p>
                         </div>
                         <div class="col-xs-4">
-                            <div class="form-group">
+                            <div class="form-group" ng-controller="selectMultipleCtrl as $ctrl">
                                 <label class="control-label">销售人员：</label>
-                                <select class="form-control">
-                                    <option value="">请选择销售人员</option>
-                                </select>
+                                <ui-select multiple limit="3" ng-model="$ctrl.checkedSalesperson" theme="bootstrap" ng-disabled="$ctrl.disabled" close-on-select="false" title="最多可以选择3人">
+                                    <ui-select-match placeholder="请选择销售人员">{{$item}}</ui-select-match>
+                                    <ui-select-choices repeat="salesperson in $ctrl.salesperson | filter:$select.search">
+                                        {{salesperson}}
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
                         <div class="col-xs-6 text-right">
@@ -551,6 +555,7 @@
     <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
     <script src="../../resources/js/lodash.js"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/select.js"></script>
     <script src="refund.js"></script>
 </body>
 
