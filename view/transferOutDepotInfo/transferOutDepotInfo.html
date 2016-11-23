@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>采购管理</title>
+    <title>调拨出库单详情</title>
     <link rel="stylesheet" href="../../resources/css/sweetalert.css">
     <link rel="stylesheet" href="../../resources/css/bootstrap.css">
     <link rel="stylesheet" href="../../resources/css/reset.css">
@@ -62,29 +62,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row dashed-line">
-                        <div class="col-xs-12">
-                            <div class="col-xs-4">
-                                <div class="form-group">
-                                    <label class="control-label">调入仓库：</label>
-                                    <p class="detail-input">下关区仓仓库</p>
-                                </div>
-                            </div>
-                            <div class="col-xs-4">
-                                <div class="form-group">
-                                    <label class="control-label">制单人：</label>
-                                    <p class="detail-input">韩晓慧</p>
-                                </div>
-                            </div>                           
-                        </div>
-                    </div>
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">调入仓库：</label>
+                                <p class="detail-input">下关区仓仓库</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">制单人：</label>
+                                <p class="detail-input">韩晓慧</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">备注：</label>
                                 <p class="detail-input">备注</p>
                             </div>
-                        </div>
+                        </div>                        
                     </div>
                 </form>
             </div>
@@ -163,6 +159,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <div ng-controller="paginationCtrl" class="text-center mt10 page">
+                <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+            </div>
             </div>
         </div>
         <!-- 串号录入弹框 -->
