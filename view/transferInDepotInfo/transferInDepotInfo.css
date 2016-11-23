@@ -156,6 +156,12 @@
 
 
 /*弹窗内容*/
+.high30{
+    height: 30px;
+}
+.mt10{
+    margin-top: 10px;
+}
 .history-detail-infomation {
     padding: 5px 20px 0px 20px;
     background-color: #f8f8f8;

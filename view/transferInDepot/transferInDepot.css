@@ -782,7 +782,6 @@
     padding-top:10px;
 }
 .bottom .edit-txt{
-    border:1px solid #a87cd3;
     width:94% !important;
 }
 .wavy-line::after {
@@ -792,84 +791,71 @@
 .pd10{
     padding-bottom:10px;
 }
-/* 串号导入 */
-.modal-body{
-    padding:0;
+/*串号信息弹窗内容*/
+.high30{
+    height: 30px;
 }
-.info-form{
-    background: #f8f8f8;
+.mt10{
+    margin-top: 10px;
 }
-.info-list{
-    font-size:12px;
-    margin-left:27px;
-    line-height:30px;
+.history-detail-infomation {
+    padding: 5px 20px 0px 20px;
+    background-color: #f8f8f8;
+    border-bottom: 1px dashed #bfbfbf;
 }
-.grey-color{
-    color:#999;
+.model-detail-title{
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
 }
-.purple-color{
-    color:#a870e0;
+.serial-number-list{
+    padding:0 6px;
 }
-.query-box{
-    padding:8px;
-    border:1px solid #ddd;
-    background: #f8f8f8;
-    margin:0 8px;
-    border-radius:5px;
+.model-detailnumber-title{
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 14px;
+    margin-top: 2px;
+    height: 25px;
 }
-.get-width{
-    width:236px;
-    height:26px;
-    border-radius: 26px;
-    border:1px solid #ddd;
-    display: inline-block;
-}
-.serisTab-list{
-    margin:0 8px;
-}
-.num-list{
-    border:1px solid #ddd;
-    border-right:0;
-    border-bottom:0;
-    overflow: hidden;
-    margin-bottom: 10px;
-}
-.num-list li{
-    position:relative;
-    float: left;
-    line-height:28px;
-    width:20%;
-    border:1px solid #ddd;
-    border-top:0;
-    border-left:0;
+.detail-number-list{
+    width: 100%;
     text-align: center;
-    color:#333;
+    border-left: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+}
+.detail-number-list li{
+    width: 20%;
+    float: left;
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: #333;
     font-size: 12px;
 }
-.num-list li span{
-    display:inline-block;
-    padding:0 5px;
+.detail-number-list li span{
+    display: inline-block;
+    padding: 0 5px;
     border-radius: 3px;
     background: #eddbff;
-    color:#a870e0;
+    color: #a870e0;
     margin-right: 8px;
     line-height: 16px;
 }
-.num-list li .small-delete{
-    display:none;
-    position:absolute;
-    color:#a870e0;
-    top:2px;
-    right:10px;
+.form-group .detail-msg{
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    text-align: left;
 }
-.num-list li .small-delete:hover{
-    text-decoration: none;
+.form-group .detail-msg span{
+    color: #999999;
 }
-.num-list li:hover .small-delete{
-    display:block;
+.info-detail-form{
+    margin-top: 8px;
 }
-.modal-footer{
-    margin-top: 10px;
-}
-/* 串号导入 */
-
+/*弹窗内容*/

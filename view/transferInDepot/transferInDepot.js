@@ -55,9 +55,7 @@ angular
         $scope.editQueryType = function() {
             $scope.$emit('openSerialNumberModal');
         };
-    }])
-    .controller('serisListModalCtrl', ['$scope', function($scope) {
-        $scope.serisListResult = [
+        $rootScope.serialNubList = [
             {nub: 20161101},
             {nub: 20161102},
             {nub: 20161103},

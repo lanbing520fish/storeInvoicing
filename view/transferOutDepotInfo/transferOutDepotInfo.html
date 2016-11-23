@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row dashed-line">
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">调入仓库：</label>
@@ -74,13 +74,15 @@
                                 <label class="control-label">制单人：</label>
                                 <p class="detail-input">韩晓慧</p>
                             </div>
-                        </div>
-                        <div class="col-xs-4">
+                        </div>                     
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
                             <div class="form-group">
-                                <label class="control-label">备注：</label>
+                                <label class="control-label">备注信息：</label>
                                 <p class="detail-input">备注</p>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </form>
             </div>
@@ -131,7 +133,7 @@
                                 <p>1</p>
                             </td>
                             <td>
-                                <button ng-click="editQueryType($index, item)" class="btn btn-xs btn-edit">串码信息</button>
+                                <button ng-click="editQueryType($index, item)" class="btn btn-xs btn-edit">串号详情</button>
                             </td>
                         </tr>
                         <tr>
@@ -154,7 +156,7 @@
                                 <p>1</p>
                             </td>
                             <td>
-                                <button ng-click="editQueryType($index, item)" class="btn btn-xs btn-edit">串码信息</button>
+                                <button ng-click="editQueryType($index, item)" class="btn btn-xs btn-edit">串号详情</button>
                             </td>
                         </tr>
                     </tbody>
@@ -165,7 +167,7 @@
             </div>
             </div>
         </div>
-        <!-- 串号录入弹框 -->
+        <!-- 串号信息弹框 -->
         <script type="text/ng-template" id="serialNumberModal.html">
             <div class="modal-header">
                 <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>

@@ -5,7 +5,6 @@
     border-right: 1px solid #d5d4dc;
     background-color: #fff;
 }
-
 .purchase-infomation {
     padding: 5px 5px 10px;
     background-color: #f8f8f8;
@@ -28,7 +27,17 @@
 .result-head {
     margin-bottom: 5px;
 }
-
+.result-table .grey-table{
+    border:1px solid #c9c9c9;
+}
+.result-table .grey-table th{
+    background: #ddd;
+    border:1px solid #c9c9c9;
+    color:#333;  
+}
+.result-table .grey-table tr:nth-of-type(2n){
+    background: #fff;
+}
 .result-table table th {
     padding: 5px !important;
     background-color: #a870e0;
