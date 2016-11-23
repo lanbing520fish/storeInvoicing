@@ -98,14 +98,14 @@
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
-                            <th width="10%">商品名称</th>
+                            <th width="12%">商品名称</th>
                             <th width="10%">商品类别</th>
                             <th width="10%">商品品牌</th>
                             <th>商品型号</th>
-                            <th width="10%">配置</th>
+                            <th width="16%">配置</th>
                             <th width="8%">调整数量</th>
-                            <th width="8%">串号</th>
-                            <th width="8%">操作</th>
+                            <th width="12%">串号</th>
+                            <th width="12%">操作</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -392,11 +392,6 @@
                                             <uib-tab index="2" heading="城市">
                                                 <div class="city-content">
                                                     <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys[provinceIndex].children" ng-click="handleSelectCity('city', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
-                                                </div>
-                                            </uib-tab>
-                                            <uib-tab index="3" heading="区县">
-                                                <div class="city-content">
-                                                    <li class="city-item" ng-class="{current: $index === countyIndex}" ng-repeat="item in citys[provinceIndex].children[cityIndex].children" ng-click="handleSelectCity('county', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
                                                 </div>
                                             </uib-tab>
                                         </uib-tabset>
