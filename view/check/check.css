@@ -1,3 +1,9 @@
+.purple-color{
+    color:#a870e0;
+}
+.bold{
+    font-weight: bold;
+}
 .check {
     min-height: 20px;
     margin: 10px;

@@ -54,7 +54,9 @@
     font-weight: 800;
     text-align: center;
 }
-
+.result-table table tr:nth-of-type(2n){
+    background: #faf7fc;
+}
 .result-table table td {
     padding: 2px !important;
     text-align: center;
