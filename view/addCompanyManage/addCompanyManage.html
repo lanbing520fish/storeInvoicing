@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新增商户</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="addCompanyManage.css">
+</head>
+
+<body ng-app="addStoreManageModule">
+    <!-- DOM结构开始 -->
+    <div class="addCheck top-line wavy-line" ng-controller="addPurchaseModalCtrl as $ctrl">
+        <!-- 入库单基本信息 -->
+        <div class="purchase-infomation" ng-controller="purchaseQueryCtrl">
+            <div class="model-header">
+                <img class="model-img" src="../../resources/images/icon-list.png">
+                <span class="model-title">新增商户</span>
+            </div>
+            <div class="infomation-form">
+                <form name="infomationForm" class="form-inline" role="form">
+                    <div class="row mb10">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="control-label">商户名称：</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group" ng-controller="cityCheckCtrl">
+                                <label class="control-label">所属地区：</label>
+                                <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
+                                <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
+                                <div class="city-check-box" ng-show="visible">
+                                    <uib-tabset active="key">
+                                        <uib-tab index="1" heading="省份">
+                                            <div class="city-content">
+                                                <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('province', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                            </div>
+                                        </uib-tab>
+                                        <uib-tab index="2" heading="城市">
+                                            <div class="city-content">
+                                                <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys[provinceIndex].children" ng-click="handleSelectCity('city', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                            </div>
+                                        </uib-tab>
+                                    </uib-tabset>
+                                </div>
+                            </div>
+                        </div>      
+                    </div>
+                    <div class="row mb10">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="control-label">联系人：</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="control-label">联系电话：</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb10">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="control-label">证件类型：</label>
+                                <select class="form-control">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="control-label">证件号码：</label>
+                                <select class="form-control">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb10">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="control-label">商户编码：</label>
+                                <input type="text" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="control-label">对应经营主体：</label>
+                                <input type="text" class="form-control reduce-width" disabled>
+                                <button type="submit" class="btn btn-sm btn-searching" ng-click="openStoreQueryType()"><i class="iconfont">&#xe600;</i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb10">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">备注：</label>
+                                <textarea col="" row="10" id="remarks" class="form-control edit-txt" ng-model="modifiedQueryType.remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center btns">
+                        <button class="btn btn-submit">确认</button>
+                        <button class="btn btn-cancel">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 选择经营主体 -->
+        <script type="text/ng-template" id="storeQueryTypeModal.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-list1.png">选择经营主体</h3>
+            </div>
+            <!-- 条件查询 -->
+            <div class="condition-query fn-clear">
+                <p class="condition-query-title fn-left">搜
+                    <br/>索</p>
+                <div class="condition-query-box fn-right">
+                    <form name="conditionQueryForm" class="form-inline" role="form">
+                        <div class="row mb10">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">经营主体名称：</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">经营主体编码：</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group" ng-controller="cityCheckCtrl">
+                                    <label class="control-label">地区：</label>
+                                    <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
+                                    <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
+                                    <div class="city-check-box" ng-show="visible">
+                                        <uib-tabset active="key">
+                                            <uib-tab index="1" heading="省份">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('province', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="2" heading="城市">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys[provinceIndex].children" ng-click="handleSelectCity('city', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                        </uib-tabset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group text-right">
+                                    <button type="submit" class="btn btn-sm btn-query btn-another"><i class="iconfont">&#xe600;</i> 查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 结果列表 -->
+            <div class="result-list">
+                <div class="result-head">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="model-header">
+                                <p class="model-title">选择经营主体</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-table">
+                    <table class="table table-hover table-bordered grey-table">
+                        <thead>
+                            <tr>
+                                <th width="5%">选择</th>
+                                <th width="14%">经营主体编码</th>
+                                <th>经营主体名称</th>                                
+                                <th width="10%">地区</th>
+                                <th width="10%">法人代表</th>
+                                <th width="10%">联系电话</th>
+                                <th width="30%">联系地址</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="store">
+                                </td>
+                                <td>                     
+                                    <p>100000001421</p>
+                                </td>
+                                <td>
+                                    <p>望月路全网通门店</p>
+                                </td>
+                                <td>
+                                    <p>江苏-南京</p>
+                                </td>
+                                <td>
+                                    <p>王老板</p>
+                                </td>
+                                <td>
+                                    <p>18900000013</p>
+                                </td>
+                                <td>
+                                    <p>南京市白下区xx街道112号</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="store">
+                                </td>
+                                <td>                     
+                                    <p>100000001421</p>
+                                </td>
+                                <td>
+                                    <p>新街口天翼卖场</p>
+                                </td>
+                                <td>
+                                    <p>江苏-南京</p>
+                                </td>
+                                <td>
+                                    <p>王老板</p>
+                                </td>
+                                <td>
+                                    <p>18900000013</p>
+                                </td>
+                                <td>
+                                    <p>南京市白下区xx街道112号</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length" ng-cloak>
+                        没有数据
+                    </p>
+                </div>
+            </div>
+            <div ng-controller="paginationCtrl" class="text-center page">
+                <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-submit" type="button" ng-disabled="isDisabled" ng-click="$ctrl.ok()">确定</button>
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">取消</button>
+            </div>
+        </script>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="addCompanyManage.js"></script>
+</body>
+
+</html>
