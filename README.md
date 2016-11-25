@@ -45,4 +45,10 @@
 	* 库存预警设置 **alarmSetting**
 	* 新预警设置 **addAlarmSetting**
 
+* **基础配置**
+    * 仓库配置 **warehouse**
+    * 新增仓库 **addWarehouse**
+    * 供货商管理 **supplier**
+    * 新增供货商 **addSupplier**
+
 
