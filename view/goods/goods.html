@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品配置</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="goods.css">
+</head>
+
+<body ng-app="goodsModule">
+    <!-- DOM结构开始 -->
+    <div class="history top-line wavy-line" ng-controller="addAdjustInModalCtrl as $ctrl">
+        <!-- 条件查询 -->
+        <div class="condition-query fn-clear">
+            <p class="condition-query-title fn-left">搜
+                <br/>索</p>
+            <div class="condition-query-box fn-right">
+                <form name="conditionQueryForm" class="form-inline" role="form">
+                    <div class="row mb10">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">商品编码：</label>
+                                <input type="text" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">商品名称：</label>
+                                <input type="text" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">商品类别：</label>
+                                <select class="form-control">
+                                    <option value="">手机</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                                <div class="form-group" ng-controller="brandListModalCtrl">
+                                    <label class="control-label">商品品牌：</label>
+                                    <input type="text" ng-click="selectedCheck()" class="form-control reduce-width brand-input" ng-model="selectedbrand">
+
+                                    <div class="city-check-box fn-clear" ng-show="visible">
+                                        <div class="brand-list fn-clear">
+                                            <ul>
+                                                <li class="brand-item" ng-class="{current: $index===checkIndex, hover: $index===hoverIndex || hoverIndex===''}" ng-repeat="item in brandsListResult" ng-mouseover="hoverGoods($index)" ng-click="checkedGoods($index)">
+                                                    <span class="brand-name" ng-bind="item.type"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="brand-detail fn-clear">
+                                            <p class="detail-item fn-left" ng-repeat="item in brandsListResult[hoverIndex].list"><span class="detail-name" ng-bind="item.brand" ng-click="handleSelectBrand(item.brand)"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4">
+                            <div class="form-group btn-search"><button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 结果列表 -->
+        <div class="result-list" ng-controller="resultCtrl">
+            <div class="result-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">门店信息管理</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <button class="btn btn-xs btn-set" ng-click="addQueryType()"><i class="iconfont">
+                        &#xe60e;</i> 新增商品</button>
+                        <button class="btn btn-xs btn-set"><i class="iconfont">
+                        &#xe610;</i> 批量删除</button>
+                        <button class="btn btn-xs btn-set"><i class="iconfont">
+                        &#xe628;</i> 批量上架</button>
+                        <button class="btn btn-xs btn-set"><i class="iconfont">
+                        &#xe627;</i> 批量下架</button>
+                    </div>
+                </div>
+            </div>
+            <div class="result-table">
+                <div class="result-table">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="5%">选择</th>
+                                <th width="10%">商品编码</th>
+                                <th width="10%">商品名称</th>
+                                <th width="6%">商品类别</th>
+                                <th width="6%">商品品牌</th>
+                                <th width="12%">商品型号</th>
+                                <th>配置</th>
+                                <th width="8%">管理方式</th>
+                                <th width="8%">状态</th>
+                                <th width="20%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox">
+                                </td>
+                                <td>
+                                    <p>100000045667</p>
+                                </td>
+                                <td>
+                                    <p>三星 galaxy S5</p>
+                                </td>
+                                <td>
+                                    <p>手机</p>
+                                </td>
+                                <td>
+                                    <p>三星</p>
+                                </td>
+                                <td>
+                                    <p>三星 galaxy note3</p>
+                                </td>
+                                <td>
+                                    <p class="overflow-handle">g9009w,16G,白色...</p>
+                                </td>
+                                <td>
+                                    <p>实例管理</p>
+                                </td>
+                                <td>
+                                    <p>有效</p>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe627;</i> 下架
+                                    </button>
+                                    <button class="btn btn-xs btn-edit" ng-click="addQueryType()"><i class="iconfont">&#xe60d;</i> 修改
+                                    </button>
+                                    <button class="btn btn-xs btn-edit" ng-click="editQueryType()"><i class="iconfont">&#xe60b;</i> 详情
+                                    </button>    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox">
+                                </td>
+                                <td>
+                                    <p>100000045667</p>
+                                </td>
+                                <td>
+                                    <p>三星 galaxy S5</p>
+                                </td>
+                                <td>
+                                    <p>手机</p>
+                                </td>
+                                <td>
+                                    <p>三星</p>
+                                </td>
+                                <td>
+                                    <p>三星 galaxy note3</p>
+                                </td>
+                                <td>
+                                    <p class="overflow-handle">g9009w,16G,白色...</p>
+                                </td>
+                                <td>
+                                    <p>实例管理</p>
+                                </td>
+                                <td>
+                                    <p>有效</p>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe627;</i> 下架
+                                    </button>
+                                    <button class="btn btn-xs btn-edit" ng-click="addQueryType()"><i class="iconfont">&#xe60d;</i> 修改
+                                    </button>
+                                    <button class="btn btn-xs btn-edit" ng-click="editQueryType()"><i class="iconfont">&#xe60b;</i> 详情
+                                    </button>    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-controller="paginationCtrl" class="text-center page">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增一行弹框 -->
+        <script type="text/ng-template" id="addNewLine.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="new-line-title"><img class="icon" src="../../resources/images/icon-list1.png">新增/修改商品</h3>
+            </div>
+            <div id="new-line-body">
+
+                <div class="result-list">
+                    <div class="condition-query-box">
+                        <form name="conditionQueryForm" class="form-inline mt10" role="form">
+                            <div class="row mb10">
+                                <div class="col-xs-6">
+                                    <div class="form-group-deploy">
+                                        <label class="control-label">商品类别：</label>
+                                        <select class="form-control">
+                                            <option value="">手机</option>
+                                        </select>
+                                        <i class="iconfont red-star">&#xe692;</i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group-deploy">
+                                        <label class="control-label">商品品牌：</label>
+                                        <select class="form-control">
+                                            <option value="">全部</option>
+                                        </select>
+                                        <i class="iconfont red-star">&#xe692;</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb10">
+                                <div class="col-xs-6">
+                                    <div class="form-group-deploy">
+                                        <label class="control-label">商品名称：</label>
+                                        <input type="text" class="form-control reduce-width">
+                                        <i class="iconfont red-star">&#xe692;</i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group-deploy">
+                                        <label class="control-label">商品型号：</label>
+                                        <input type="text" class="form-control reduce-width">
+                                        <i class="iconfont red-star">&#xe692;</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb10">
+                                <div class="col-xs-6">
+                                    <div class="form-group-deploy">
+                                        <label class="control-label">管理方式：</label>
+                                        <select class="form-control">
+                                            <option value="">全部</option>
+                                        </select>
+                                        <i class="iconfont red-star">&#xe692;</i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group-deploy">
+                                        <label class="control-label">商品单位：</label>
+                                        <select class="form-control">
+                                            <option value="">全部</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb10">
+                                <div class="col-xs-6">
+                                    <div class="form-group-deploy">
+                                        <label class="control-label">建议零售价：</label>
+                                        <input type="text" class="form-control reduce-width">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group-deploy">
+                                        <label class="control-label">最低零售价：</label>
+                                        <input type="text" class="form-control reduce-width">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb10">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label">配置：</label>
+                                        <textarea col="" row="10" id="remarks" class="form-control edit-txt"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
+        <!-- 串号录入弹框 -->
+        <script type="text/ng-template" id="serialNumberModal.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-list1.png">商品详情</h3>
+            </div>
+            <div id="new-line-body">
+                <div class="table-detail">
+                    <table class="detail_table" width="100%">
+                        <tr>
+                            <td width="20%" class="detail_table_left">
+                                商品名称
+                            </td>
+                            <td width="80%">
+                                <p class="text-center">魅族 Note（粉色）</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%" class="detail_table_left">
+                                商品编码
+                            </td>
+                            <td width="80%">
+                                <p class="text-center">xxxxxx</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%" class="detail_table_left">
+                                商品类型
+                            </td>
+                            <td width="80%">
+                                <p class="text-center">手机</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%" class="detail_table_left">
+                                商品品牌
+                            </td>
+                            <td width="80%">
+                                <p class="text-center">魅族</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%" class="detail_table_left">
+                                商品型号
+                            </td>
+                            <td width="80%">
+                                <p class="text-center">魅族Note（粉色）</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%" class="detail_table_left">
+                                管理方式
+                            </td>
+                            <td width="80%">
+                                <p class="text-center">实例化管理</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%" class="detail_table_left">
+                                商品单位
+                            </td>
+                            <td width="80%">
+                                <p class="text-center">台</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%" class="detail_table_left">
+                                建议零售价
+                            </td>
+                            <td width="80%">
+                                <p class="text-center">1400</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%" class="detail_table_left">
+                                最低零售价
+                            </td>
+                            <td width="80%">
+                                <p class="text-center">1280</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%" class="detail_table_left">
+                                配置
+                            </td>
+                            <td width="80%">
+                                <p>5.5英寸，1080P屏幕，单卡槽双卡双待，1300 万像素后置摄像头，全尺寸零延时拍照。30 张每秒的连拍模式，让你忠实记录美好瞬间。注塑工艺加入铝镁合金加固板，一体机身多色选择，3050mAh 超大电池。</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+            </div>
+        </script>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="goods.js"></script>
+</body>
+
+</html>
