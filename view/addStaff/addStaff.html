@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>店员配置</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="addStaff.css">
+</head>
+
+<body ng-app="addStaffModule">
+
+    <!-- DOM结构开始 -->
+
+    <div class="history top-line"  ng-controller="addAlarmSettingModalCtrl as $ctrl">
+        <div class="result-head btm-line">
+            <div class="addStaff-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">新增店员</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="result-list" ng-controller="resultCtrl">
+            <div class="condition-query-box">
+                <form name="conditionQueryForm" class="form-inline" role="form">
+                    <div class="row mb10">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label class="control-label">所属商户：</label>
+                                <input type="text" class="form-control reduce-width">
+                                <button type="submit" class="btn btn-sm btn-searching" ng-click="openStoreQueryType()"><i class="iconfont">&#xe600;</i></button>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label class="control-label">所属门店：</label>
+                                <select class="form-control">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb10">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label class="control-label">店员姓名：</label>
+                                <input type="text" class="form-control reduce-width">
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label class="control-label">对应销售员：</label>
+                                <input type="text" class="form-control reduce-width" disabled>
+                                <button type="submit" class="btn btn-sm btn-searching"  ng-click="addQueryType()"><i class="iconfont">&#xe600;</i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-controller="chkCtrl">
+                        <div class="row mb10">
+                            <div class="col-xs-12">
+                                <div class="from-check-group">
+                                    <label class="control-label"></label><!-- 
+                                    <input type="checkbox"> 不需要使用系统 -->
+                                    <span class="self-buy">
+                                        <input id="isUseSystem" type="checkbox" ng-click="sub()"/>
+                                        <label for="isUseSystem">不需要使用系统</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-show="showType==1" >
+                            <div class="row mb10">
+                                <div class="col-xs-5">
+                                    <div class="form-group">
+                                        <label class="control-label">系统帐号：</label>
+                                        <input type="text" class="form-control reduce-width">
+                                    </div>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="form-group">
+                                        <label class="control-label">登录密码：</label>
+                                        <input type="text" class="form-control reduce-width">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb10">
+                                <div class="col-xs-5">
+                                    <div class="form-group">
+                                        <label class="control-label">捆绑手机：</label>
+                                        <input type="text" class="form-control reduce-width">
+                                    </div>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="form-group">
+                                        <label class="control-label">确认密码：</label>
+                                        <input type="text" class="form-control reduce-width">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb10">
+                                <div class="col-xs-12">
+                                    <div class="from-check-group">
+                                        <label class="control-label">店员角色：</label><!-- 
+                                        <input type="checkbox"> 不需要使用系统 -->
+                                        <span class="self-buy">
+                                            <input id="isShopkeeper" type="checkbox">
+                                            <label for="isShopkeeper">店长</label>
+                                        </span>
+                                        <span class="self-buy">
+                                            <input id="isManager" type="checkbox">
+                                            <label for="isManager">管理员</label>
+                                        </span>
+                                        <span class="self-buy">
+                                            <input id="isCashier" type="checkbox">
+                                            <label for="isCashier">收银员</label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-show="showType!=1" >
+                            <div class="row mb10">
+                                <div class="col-xs-12">
+                                    <div class="from-check-group">
+                                        <label class="control-label">店员角色：</label>
+                                        <span class="self-buy">
+                                            <input id="isShopkeeper" type="checkbox" checked disabled />
+                                            <label for="isShopkeeper">销售员</label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb10">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">备注：</label>
+                                <textarea col="" row="10" id="remarks" class="form-control edit-txt" ng-model="modifiedQueryType.remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">取消</button>
+            <button class="btn btn-submit" type="button" ng-click="$ctrl.ok()">确定</button>
+        </div>
+        <!-- 选择商品弹框 -->
+        <script type="text/ng-template" id="addNewLine.html">
+            <div class="modal-header">
+                <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                <h3 class="modal-title" id="new-line-title"><img class="icon" src="../../resources/images/icon-list1.png">选择销售员</h3>
+            </div>
+            <div class="staffMan">
+                <div class="condition-query-box">
+                    <form name="conditionQueryForm" class="form-inline" role="form">
+                        <div class="row mb10">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">销售员名称：</label>
+                                    <input class="temp-input">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">销售员编码：</label>
+                                    <input class="temp-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group" ng-controller="cityCheckCtrl">
+                                    <label class="control-label">所在地区：</label>
+                                    <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
+                                    <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
+                                    <div class="city-check-box" ng-show="visible">
+                                        <uib-tabset active="key">
+                                            <uib-tab index="1" heading="省份">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('province', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="2" heading="城市">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys[provinceIndex].children" ng-click="handleSelectCity('city', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                        </uib-tabset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group btn-search"><button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="choose-table">
+                <div class="model-title-header">
+                    <p class="model-title">销售员列表</p>
+                </div>
+                <div class="table-choose mt20">
+                    <table class="table-striped table-hover table-choose">
+                        <thead>
+                            <tr>
+                                <th width="8%">选择</th>
+                                <th>销售员名称</th>
+                                <th>销售员编码</th>
+                                <th>地区</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio">
+                                </td>
+                                <td>
+                                    <p>王磊</p>
+                                </td>
+                                <td>
+                                    <p>xsy52352345</p>
+                                </td>
+                                <td>
+                                    <p>南京</p>
+                                </td>
+                                <td>
+                                    <p></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio">
+                                </td>
+                                <td>
+                                    <p>王磊</p>
+                                </td>
+                                <td>
+                                    <p>xsy52352345</p>
+                                </td>
+                                <td>
+                                    <p>南京</p>
+                                </td>
+                                <td>
+                                    <p></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="radio">
+                                </td>
+                                <td>
+                                    <p>王磊</p>
+                                </td>
+                                <td>
+                                    <p>xsy52352345</p>
+                                </td>
+                                <td>
+                                    <p>南京</p>
+                                </td>
+                                <td>
+                                    <p></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-controller="paginationCtrl" class="text-center page mt10">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                <button class="btn btn-submit" type="button" ng-click="$ctrl.ok()">确定</button>
+            </div>
+        </script>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="addStaff.js"></script>
+</body>
+
+</html>
