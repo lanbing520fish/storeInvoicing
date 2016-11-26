@@ -46,6 +46,13 @@
 	* 新预警设置 **addAlarmSetting**
 
 * **基础配置**
+    * 商户管理 **companyManage**
+    * 新增商户管理 **addCompanyManage**
+    * 门店管理 **storeManage**
+    * 新增门店管理 **addStoreManage**
+    * 店员配置 **staff**
+    * 新增店员 **addStaff**
+    * 商品配置 **goods**
     * 仓库配置 **warehouse**
     * 新增仓库 **addWarehouse**
     * 供货商管理 **supplier**

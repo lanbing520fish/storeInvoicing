@@ -6,39 +6,6 @@ angular
             $scope.$emit('openSerialNumberModal');
         };
 
-        $rootScope.serialNubList = [
-            {nub: 20161101},
-            {nub: 20161102},
-            {nub: 20161103},
-            {nub: 20161104},
-            {nub: 20161105},
-            {nub: 20161106},
-            {nub: 20161107},
-            {nub: 20161108},
-            {nub: 20161109},
-            {nub: 20161110},
-            {nub: 20161111},
-            {nub: 20161112},
-            {nub: 20161113},
-            {nub: 20161114},
-            {nub: 20161115},
-            {nub: 20161116},
-            {nub: 20161117},
-            {nub: 20161118},
-            {nub: 20161119},
-            {nub: 20161120},
-            {nub: 20161121},
-            {nub: 20161122},
-            {nub: 20161123},
-            {nub: 20161124},
-            {nub: 20161125},
-            {nub: 20161126},
-            {nub: 20161127},
-            {nub: 20161128},
-            {nub: 20161129},
-            {nub: 20161130}
-        ];
-
     }])
     // 弹出框
     .controller('detailPurchaseModalCtrl', function($scope, $rootScope, $uibModal) {
@@ -72,8 +39,19 @@ angular
             $ctrl.animationsEnabled = !$ctrl.animationsEnabled;
         };
     })
-    .controller('serialNumberModalCtrl', function($uibModalInstance, $scope, items) {
+    .controller('serialNumberModalCtrl', function($uibModalInstance, $scope, $log, items) {
         var $ctrl = this;
+
+        $scope.serialNubList = ['10010', '10011', '10012', '10013', '10014', '10015', '10010', '10011', '10012', '10013', '10014', '10015', '10016', '10011', '10012', '10013', '10014', '10015', '10010', '10011', '10012', '10013', '10014', '10015', '10020', '10011', '10012', '10013', '10014', '10015', '10010', '10011', '10012', '10013', '10014', '10015', '10030', '10011', '10012', '10013', '10014', '10015', '10010', '10011', '10012', '10013', '10014', '10015', '10040', '10051', '10012', '10013', '10014', '10015', '10010', '10011', '10012', '10013', '10014', '10019', '10010', '10011', '10012', '10013', '10014', '10015', '10010', '10011', '10012', '10013', '10014', '10015', '10016', '10011', '10012', '10013', '10014', '10015', '10010', '10011', '10012', '10013', '10014', '10015', '10020', '10011', '10012', '10013', '10014', '10015', '10010', '10011', '10012', '10013', '10014', '10015', '10030', '10011', '10012', '10013', '10014', '10015', '10010', '10011', '10012', '10013', '10014', '10015', '10040', '10051', '10012', '10013', '10014', '10015', '10010', '10011', '10012', '10013', '10014', '10019']; // 总列表
+        $scope.totalNum = $scope.serialNubList.length; // 总条数
+        $scope.currentPage = 1; // 当前页
+        $scope.rowNumPerPage = 30; // 每页显示行数
+        $scope.serialNubListChunk = _.chunk($scope.serialNubList, $scope.rowNumPerPage);
+        $scope.serialNubShow = $scope.serialNubListChunk[0]; // 当前页待显示列表
+        $scope.maxSize = 5; // 最大显示分页条数
+        $scope.pageChanged = function() {
+            $scope.serialNubShow = $scope.serialNubListChunk[$scope.currentPage - 1];
+        };
 
         $ctrl.ok = function() {
             $scope.$broadcast('submitCardRange');
