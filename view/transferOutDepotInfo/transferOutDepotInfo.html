@@ -74,7 +74,7 @@
                                 <label class="control-label">制单人：</label>
                                 <p class="detail-input">韩晓慧</p>
                             </div>
-                        </div>                     
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
@@ -107,7 +107,7 @@
                             <th width="10%">商品类别</th>
                             <th width="14%">商品品牌</th>
                             <th>商品型号</th>
-                            <th width="20%">配置</th>                        
+                            <th width="20%">配置</th>
                             <th width="14%">调入数量</th>
                             <th width="14%">串号</th>
                         </tr>
@@ -162,9 +162,9 @@
                     </tbody>
                 </table>
                 <div ng-controller="paginationCtrl" class="text-center mt10 page">
-                <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
-                <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
-            </div>
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                </div>
             </div>
         </div>
         <!-- 串号信息弹框 -->
@@ -227,14 +227,14 @@
                     <p class="model-detailnumber-title">商品串号列表</p>
                 </div>
                 <ul class="detail-number-list clearfix">
-                    <li ng-repeat="x in serialNubList">
-                        <span>{{ $index + 1 }}</span>{{x.nub}}
+                    <li ng-repeat="nub in serialNubShow track by $index">
+                        <span>{{ $index + (currentPage - 1) * rowNumPerPage + 1 }}</span>{{nub}}
                     </li>
                 </ul>
             </div>
-            <div ng-controller="paginationCtrl" class="text-center mt10 page">
+            <div class="text-center mt10 page">
                 <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
-                <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                <div class="page-num">共<span class="number">{{totalNum}}</span>条记录，当前显示第<span class="number">{{currentPage}}</span>页</div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
