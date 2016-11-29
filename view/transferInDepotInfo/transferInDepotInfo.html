@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>调拨入库单详情</title>
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="../../resources/css/common.css">
     <link rel="stylesheet" href="transferInDepotInfo.css">
 </head>
+
 <body ng-app="transferInDepotInfoModule">
     <!-- DOM结构开始 -->
     <div class="detailHistory top-line wavy-line" ng-controller="historyDetailModalCtrl as $ctrl">
@@ -39,7 +41,6 @@
                                 <p class="detail-input">10000000007654</p>
                             </div>
                         </div>
-
                     </div>
                     <div class="row dashed-line">
                         <div class="col-xs-4">
@@ -133,7 +134,7 @@
                                     <p>1</p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-xs btn-edit" ng-click="serialDetail($index, item)" >串号详情
+                                    <button class="btn btn-xs btn-edit" ng-click="serialDetail($index, item)">串号详情
                                     </button>
                                 </td>
                             </tr>
@@ -157,7 +158,7 @@
                                     <p>1</p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-xs btn-edit" ng-click="serialDetail($index, item)" >串号详情
+                                    <button class="btn btn-xs btn-edit" ng-click="serialDetail($index, item)">串号详情
                                     </button>
                                 </td>
                             </tr>
@@ -167,7 +168,6 @@
                         没有数据
                     </p>
                 </div>
-
                 <div ng-controller="paginationCtrl" class="text-center page">
                     <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
                     <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
@@ -259,6 +259,7 @@
         <script src="../../resources/js/lodash.js"></script>
         <script src="../../resources/js/sweetalert.min.js"></script>
         <script src="transferInDepotInfo.js"></script>
-</div>
+    </div>
 </body>
+
 </html>
