@@ -122,7 +122,7 @@
                             </div>
                         </div>
                         <div class="col-xs-8 text-right">
-                            <button class="btn btn-xs btn-set" ng-click="batchReturn()" ng-disabled="!checkedGoods.length"><i class="iconfont">&#xe62d;</i> 批量换货
+                            <button class="btn btn-xs btn-set" ng-click="batchReturn()" ng-disabled="!checkedGoods.length"><i class="iconfont">&#xe62d;</i> 批量换货</button>
                         </div>
                     </div>
                 </div>
@@ -304,7 +304,7 @@
                             </div>
                         </div>
                         <div class="col-xs-8 text-right">
-                            <button class="btn btn-xs btn-set" ng-click="addQueryType()"><i class="iconfont">&#xe60e;</i> 选择新换商品
+                            <button class="btn btn-xs btn-set" ng-click="addQueryType()"><i class="iconfont">&#xe60e;</i> 选择新换商品</button>
                         </div>
                     </div>
                 </div>
@@ -721,8 +721,8 @@
                         <div class="choose-table pt20">
                             <div class="row">
                                 <div class="col-xs-2 isInstance text-right">
-                                    <input type="checkbox">
-                                    <label for="">是否实例化管理</label>
+                                    <input type="checkbox" id="instand">
+                                    <label for="instand">是否实例化管理</label>
                                 </div>
                                 <div class="col-xs-5">
                                     <div class="form-choose">
@@ -809,10 +809,10 @@
                             <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
                         </div>
                         </div>
-                        
+
                     </uib-tab>
                   </uib-tabset>
-                </div>      
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>

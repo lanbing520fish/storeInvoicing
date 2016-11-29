@@ -39,7 +39,7 @@
                                 <p class="detail-input">10000000007654</p>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="row dashed-line">
                         <div class="col-xs-4">
@@ -105,7 +105,7 @@
                                 <th width="10%">商品类别</th>
                                 <th width="14%">商品品牌</th>
                                 <th>商品型号</th>
-                                <th width="20%">配置</th>                        
+                                <th width="20%">配置</th>
                                 <th width="14%">调入数量</th>
                                 <th width="14%">串号</th>
                             </tr>
@@ -165,7 +165,7 @@
                         没有数据
                     </p>
                 </div>
-                
+
                 <div ng-controller="paginationCtrl" class="text-center page">
                     <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
                     <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
@@ -235,18 +235,19 @@
                             </li>
                         </ul>
                     </div>
-                    
+
                         <div ng-controller="paginationCtrl" class="text-center mt10 page">
                             <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
                             <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
                         </div>
-                    
+
                     <div class="modal-footer">
                         <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
                     </div>
                 </script>
                 <!-- 弹窗内容 -->
             </div>
+        </div>
         </div>
         <script src="../../resources/js/angular.min.js"></script>
         <script src="../../resources/js/angular-touch.min.js"></script>
