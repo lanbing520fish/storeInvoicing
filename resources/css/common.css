@@ -406,8 +406,7 @@ body {
     padding: 0 12px;
     line-height: 25px;
     border-radius: 14px;
-    background: url('../../resources/images/select_bg.png') no-repeat calc(100% - 10px) center;
-    /*background-color: #fff;*/
+    background: #fff url('../../resources/images/select_bg.png') no-repeat 95% center;
     cursor: pointer;
     appearance: none;
     -moz-appearance: none;
