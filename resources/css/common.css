@@ -118,7 +118,6 @@ body {
     color: #a870e0;
 }
 
-
 /* 分页 */
 
 .pagination {
@@ -174,7 +173,6 @@ body {
 .table {
     margin-bottom: 10px;
 }
-
 
 /* 弹出框 */
 
@@ -284,7 +282,6 @@ body {
     margin: 0 !important;
 }
 
-
 /* 表格固定百分比宽度,不会被内容撑开 */
 
 .table {
@@ -366,6 +363,10 @@ body {
     border-bottom: 1px dashed #ccc;
 }
 
+.dashed-line:last-of-type {
+    margin-bottom: 0;
+}
+
 .form-group {
     position: relative;
     width: 100% !important;
@@ -422,11 +423,15 @@ body {
     border-radius: 14px;
 }
 
+.info-form {
+    background: #f8f8f8;
+    overflow: hidden;
+}
+
 .btn-xs,
 .btn-group-xs > .btn {
     height: 23px;
 }
-
 
 /* 表格边线 */
 
