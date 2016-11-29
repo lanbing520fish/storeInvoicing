@@ -18,8 +18,8 @@
 
 body {
     font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     background-color: #f5f0fa;
     color: #333;
     font-size: 12px;
@@ -406,12 +406,16 @@ body {
     padding: 0 12px;
     line-height: 25px;
     border-radius: 14px;
-    background: url(../../resources/images/select_bg.png) no-repeat calc(100% - 10px) center;
-    background-color: #fff;
+    background: url('../../resources/images/select_bg.png') no-repeat calc(100% - 10px) center;
+    /*background-color: #fff;*/
     cursor: pointer;
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
+}
+
+.form-group select::-ms-expand {
+    display: none;
 }
 
 .form-group textarea {
