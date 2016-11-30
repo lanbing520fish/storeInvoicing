@@ -87,7 +87,7 @@ angular
         $ctrl.openSerialNumberModal = function(data) {
             modalInstance = $uibModal.open({
                 animation: $ctrl.animationsEnabled,
-                ariaLabelledBy: 'serial-number-title',
+                ariaLabelledBy: 'serial-number-title1',
                 ariaDescribedBy: 'serial-number-body',
                 templateUrl: 'serialNumberModal.html',
                 controller: 'serialNumberModalCtrl',
@@ -450,7 +450,7 @@ angular
             $scope.visible = !$scope.visible;
         }
         $scope.handleSelectCity = function(level, index, areaId, areaName) {
-            let me = this;
+            var me = this;
             switch (level) {
                 case 'province':
                     $scope.key = 2;
@@ -466,7 +466,7 @@ angular
             }
         };
         $scope.handleSubmitBtn = function(level) {
-            let me = this;
+            var me = this;
             switch (level) {
                 case 'province':
                     $scope.checkedAreaName = $scope.provinceName;

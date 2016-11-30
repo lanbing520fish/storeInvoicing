@@ -11,7 +11,7 @@ angular
             $scope.$emit('openSerialNumberModal');
         };
 
-        
+
     }])
     // 弹出框
     .controller('addAdjustInModalCtrl', function($scope, $rootScope, $uibModal) {
@@ -34,7 +34,7 @@ angular
             modalInstance = $uibModal.open({
                 animation: $ctrl.animationsEnabled,
                 ariaLabelledBy: 'new-line-title',
-                ariaDescribedBy: 'new-line-body',
+                ariaDescribedBy: 'new-line-body1',
                 templateUrl: 'addNewLine.html',
                 controller: 'addNewLineCtrl',
                 controllerAs: '$ctrl',
@@ -165,7 +165,7 @@ angular
         $scope.hoverGoods = function(index) {
             $scope.hoverIndex = index;
         }
-        $scope.handleSelectBrand = function(brand) {                  
+        $scope.handleSelectBrand = function(brand) {
             $scope.selectedbrand = brand;
             $scope.visible = false;
         };
