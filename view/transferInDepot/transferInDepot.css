@@ -1,6 +1,9 @@
 .purple-color{
     color:#a870e0;
 }
+.bold{
+    font-weight:bold;
+}
 .exchange {
     min-height: 20px;
     margin: 10px;
@@ -192,7 +195,9 @@
     font-weight: 800;
     text-align: center;
 }
-
+.result-table table tr:nth-of-type(2n){
+    background: #faf7fc;
+}
 .result-table table th input[type="checkbox"] {
     vertical-align: top;
 }
