@@ -58,4 +58,8 @@
     * 供货商管理 **supplier**
     * 新增供货商 **addSupplier**
 
+* **统计分析** 
+    * 登录页 **index**
+    * 库存量TOP5统计 **storageCount**
+
 
