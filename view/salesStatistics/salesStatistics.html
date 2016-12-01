@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>进货量统计</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="salesStatistics.css">
+    
+</head>
+
+<body ng-app="carriedOutModule">
+    <!-- DOM结构开始 -->
+    <div class="history top-line wavy-line">
+
+    <!-- step -->
+        <div class="step fn-clear" ng-show="stepNum !== 2">
+            <li class="step-item fn-left" ng-class="{current: stepNum === 0}">
+                <p class="step-title" ng-click="goBack(stepNum)">按<span>月</span>统计</p>
+            </li>
+            <li class="step-item fn-left" ng-class="{current: stepNum === 1}">
+                <p class="step-title" ng-click="forward(stepNum)">按<span>天</span>统计</p>
+            </li>
+        </div>
+
+        <div ng-show="stepNum === 0">
+            <!-- 条件查询 -->
+            <div class="alarm-query fn-clear" ng-controller="monthConditionQuery">
+                <p class="alarm-query-title fn-left">搜
+                    <br/>索</p>
+                <div class="condition-query-box fn-right">
+                    <form name="monthConditionQueryForm" class="form-inline" role="form">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">调整日期：</label>
+                                    <div class="datepicker-input fn-left">
+                                        <input type="text" id="createStartMonth" class="form-control modify-input" uib-datepicker-popup readonly ng-model="monthConditionQueryForm.createStartMonth" is-open="startPopupOpened" min-date="minStartMonth" max-date="maxStartDate" datepicker-options="startMonthOptions" />
+                                        <span class="icon_time" ng-click="startOpen()">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                    <div class="datepicker-text fn-left">至</div>
+                                    <div class="datepicker-input fn-left">
+                                        <input type="text" id="createEndMonth" class="form-control modify-input" uib-datepicker-popup readonly ng-model="monthConditionQueryForm.createEndMonth" is-open="endPopupOpened" min-date="minEndMonth" max-date="maxEndMonth" datepicker-options="endMonthOptions" />
+                                        <span class="icon_time" ng-click="endOpen()">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group" ng-controller="cityCheckCtrl">
+                                    <label class="control-label">所属地区：</label>
+                                    <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
+                                    <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
+                                    <div class="city-check-box" ng-show="visible">
+                                        <uib-tabset active="key">
+                                            <uib-tab index="1" heading="省份">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('province', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="2" heading="城市">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys[provinceIndex].children" ng-click="handleSelectCity('city', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                        </uib-tabset>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label">所属商户：</label>
+                                    <input type="text" class="form-control reduce-width">
+                                    <button type="submit" class="btn btn-sm btn-searching" ng-click="openStoreQueryType()"><i class="iconfont">&#xe600;</i></button>
+                                </div>
+                            </div>
+                            <div class="col-xs-1">
+                                <div>
+                                    <button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 结果列表 -->
+            <div class="result-list fn-clear" ng-controller="monthLineCtrl">
+                <div class="col-xs-4">
+                    <p class="table-title">连续6个月的进货量统计</p>
+                    <div class="result-table">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="10%">统计月份</th>
+                                    <th width="10%">进货量（台）</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in carriedoOutList">
+                                    <td>
+                                        <p ng-bind="item.date"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.price"></p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
+                            没有数据
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-8">
+                    <div>
+                        <monthline id="main" date="date" price="price" title="title" legend="legend"></monthline>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div ng-show="stepNum === 1">
+            <!-- 条件查询 -->
+            <div class="alarm-query fn-clear" ng-controller="conditionQuery">
+                <p class="alarm-query-title fn-left">搜
+                    <br/>索</p>
+                <div class="condition-query-box fn-right">
+                    <form name="conditionQueryForm" class="form-inline" role="form">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">调整日期：</label>
+                                    <div class="datepicker-input fn-left">
+                                        <input type="text" id="createStartDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createStartDt" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" />
+                                        <span class="icon_time" ng-click="startOpen()">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                    <div class="datepicker-text fn-left">至</div>
+                                    <div class="datepicker-input fn-left">
+                                        <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" />
+                                        <span class="icon_time" ng-click="endOpen()">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group" ng-controller="cityCheckCtrl">
+                                    <label class="control-label">所属地区：</label>
+                                    <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
+                                    <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
+                                    <div class="city-check-box" ng-show="visible">
+                                        <uib-tabset active="key">
+                                            <uib-tab index="1" heading="省份">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('province', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="2" heading="城市">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys[provinceIndex].children" ng-click="handleSelectCity('city', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                        </uib-tabset>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label">所属商户：</label>
+                                    <input type="text" class="form-control reduce-width">
+                                    <button type="submit" class="btn btn-sm btn-searching" ng-click="openStoreQueryType()"><i class="iconfont">&#xe600;</i></button>
+                                </div>
+                            </div>
+                            <div class="col-xs-1">
+                                <div>
+                                    <button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 结果列表 -->
+            <div class="result-list fn-clear" ng-controller="dayLineCtrl">
+                <div class="col-xs-4">
+                    <p class="table-title">连续7天的进货量统计</p>
+                    <div class="result-table">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="10%">统计日期</th>
+                                    <th width="10%">进货量（台）</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in dayCarriedoOutList">
+                                    <td>
+                                        <p ng-bind="item.day"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.price"></p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="no-data" ng-if="dayCarriedoOutList && !dayCarriedoOutList.length">
+                            没有数据
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-8">
+                    <div>
+                        <day id="mainDay" day="day" price="price" title="title" legend="legend"></day>
+                    </div> 
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+	<script src="../../resources/js/echarts.min.js"></script>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+
+    
+    <script src="salesStatistics.js"></script>
+</body>
+
+</html>
