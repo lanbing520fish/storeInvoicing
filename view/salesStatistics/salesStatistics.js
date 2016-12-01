@@ -202,7 +202,7 @@ angular
                         }
                     },
                     legend: {
-                        data: ['直接访问', '邮件营销','联盟广告','视频广告','搜索引擎','合计']
+                        data: ['[0,300]', '[300,700]','[700,1000]','[1000,1500]','[1500,2000]','[2000,3000]','[3000+]','总销量']
                     },
                     grid: {
                         left: '3%',
@@ -215,80 +215,108 @@ angular
                     },
                     xAxis: {
                         type: 'category',
-                        data: ['周一','周二','周三','周四','周五','周六','周日']
+                        data: ['2016/01','2016/02','2016/03','2016/04','2016/05','2016/06']
                     },
                     series: [
                         {
-                            name: '直接访问',
+                            name: '[0,300]',
                             type: 'bar',
-                            stack: '总量',
+                            stack: '销量',
                             label: {
                                 normal: {
                                     show: true,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [320, 302, 301, 334, 390, 330, 320]
+                            data: [10, 20, 30, 40, 50, 60]
                         },
                         {
-                            name: '邮件营销',
+                            name: '[300,700]',
                             type: 'bar',
-                            stack: '总量',
+                            stack: '销量',
                             label: {
                                 normal: {
                                     show: true,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [120, 132, 101, 134, 90, 230, 210]
+                            data: [20, 40, 30, 60, 70, 50]
                         },
                         {
-                            name: '联盟广告',
+                            name: '[700,1000]',
                             type: 'bar',
-                            stack: '总量',
+                            stack: '销量',
                             label: {
                                 normal: {
                                     show: true,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [220, 182, 191, 234, 290, 330, 310]
+                            data: [20, 18, 19, 23, 29, 33]
                         },
                         {
-                            name: '视频广告',
+                            name: '[1000,1500]',
                             type: 'bar',
-                            stack: '总量',
+                            stack: '销量',
                             label: {
                                 normal: {
                                     show: true,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [150, 212, 201, 154, 190, 330, 410]
+                            data: [15, 21, 20, 15, 19, 33]
                         },
                         {
-                            name: '搜索引擎',
+                            name: '[1500,2000]',
                             type: 'bar',
-                            stack: '总量',
+                            stack: '销量',
                             label: {
                                 normal: {
                                     show: true,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [820, 832, 901, 934, 1290, 1330, 1320]
+                            data: [80, 32, 90, 34, 12, 13]
                         },
                         {
-                            name: '合计',
+                            name: '[2000,3000]',
+                            type: 'bar',
+                            stack: '销量',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'insideRight'
+                                }
+                            },
+                            data: [20, 32, 10, 30, 90, 30]
+                        },
+                        {
+                            name: '[3000+]',
+                            type: 'bar',
+                            stack: '销量',
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'insideRight'
+                                }
+                            },
+                            data: [10, 10, 10, 10, 10, 10]
+                        },
+                        {
+                            name: '总销量',
                             type: 'line',
-                            stack: '总量',
+                            stack: '总销量',
                             label: {
                                 normal: {
                                     show: true,
-                                    position: 'insideRight'
+                                    // position: ''
                                 }
                             },
-                            data: [820, 832, 901, 934, 1290, 1330, 1320]
+                            textStyle: {
+                                fontSize: 12,
+                                color: '#000'
+                            },
+                            data: [175, 174, 209, 212, 280, 229]
                         }
                     ]
                 };  
