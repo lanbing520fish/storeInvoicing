@@ -46,45 +46,37 @@
     font-weight: 800;
     text-align: center;
 }
-
 .result-table table td {
     padding: 2px !important;
     text-align: center;
 }
-
 .result-table table td p {
     height: 25px;
     line-height: 25px;
 }
-
 .model-header {
     height: 25px;
     line-height: 25px;
 }
-
 .model-img {
     float: left;
     width: 20px;
     height: 20px;
     margin: 2px 4px;
 }
-
 .model-title {
     color: #333;
     font-size: 14px;
     font-weight: bold;
 }
-
 .self-buy {
     margin-left: 16px;
     color: #a870e0;
     font-weight: normal;
 }
-
 .self-buy input[type="checkbox"] {
     vertical-align: inherit;
 }
-
 .btn-set {
     margin-left: 2px;
     padding-left: 10px;
@@ -94,7 +86,6 @@
     color: #333;
     font-size: 12px;
 }
-
 .btn-set:focus,
 .btn-set.focus {
     background-color: #f7f7f7;
