@@ -209,6 +209,7 @@ body {
     border-radius: 15px;
     font-size: 14px;
     font-weight: normal !important;
+    box-shadow: none !important;
 }
 .sweet-alert button.cancel {
     background-color: #ffefce !important;
@@ -240,6 +241,7 @@ body {
 .modal-body {
     max-height: 450px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 .no-data {
     margin-top: -10px;
@@ -335,7 +337,7 @@ body {
     overflow: hidden;
 }
 .form-group select {
-    width: calc(100% + 30px) !important;
+    width: calc(100% + 32px) !important;
     height: 25px;
     padding: 0 12px;
     line-height: 25px;
@@ -367,6 +369,12 @@ body {
 }
 .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th {
     border: 1px solid #8257ad;
+    padding: 5px !important;
+    background-color: #a870e0;
+    border-bottom-width: 1px !important;
+    color: #fff;
+    font-weight: 800;
+    text-align: center;
 }
 .depict {
     color: #823dc6;
@@ -399,4 +407,13 @@ body {
 }
 .form-group label {
     font-weight: normal;
+}
+
+/* 表格 */
+.result-table table tr:nth-of-type(2n) {
+    background: #faf7fc;
+}
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn.active.focus {
+    outline: 0;
+    outline-offset: 0;
 }
