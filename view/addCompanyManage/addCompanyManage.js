@@ -1,6 +1,6 @@
 angular
     .module('addStoreManageModule', ['ui.bootstrap'])
-   
+
     .controller('purchaseQueryCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
         // 选择门店
         $scope.openStoreQueryType = function() {
@@ -11,7 +11,7 @@ angular
     .controller('addPurchaseModalCtrl', function($scope, $rootScope, $uibModal) {
         var $ctrl = this,
             modalInstance;
-        $ctrl.animationsEnabled = true;      
+        $ctrl.animationsEnabled = true;
         //对应经营主体
         $scope.$on('openStoreQueryTypeModal', function(d, data) {
             $ctrl.openStoreQueryTypeModal(data);
@@ -46,7 +46,7 @@ angular
             $uibModalInstance.dismiss('cancel');
         };
     })
-    
+
     // 城市
     .controller('cityCheckCtrl', ['$scope', function($scope) {
         $scope.citys = [{
@@ -74,30 +74,30 @@ angular
         $scope.cityIndex = '';
         $scope.areaId = '';
         $scope.provinceName = '';
-        $scope.cityName = '';        
+        $scope.cityName = '';
         $scope.checkedAreaName = '';
 
         $scope.cityCheck = function() {
             $scope.visible = !$scope.visible;
         }
         $scope.handleSelectCity = function(level, index, areaId, areaName) {
-            let me = this;
+            var me = this;
             switch (level) {
                 case 'province':
                     $scope.key = 2;
                     $scope.provinceIndex = index;
                     $scope.provinceName = areaName;
                     break;
-                case 'city':                   
+                case 'city':
                     $scope.cityIndex = index;
                     $scope.areaId = areaId;
                     $scope.cityName = areaName;
                     me.handleSubmitBtn(level);
-                    break;           
+                    break;
             }
         };
         $scope.handleSubmitBtn = function(level) {
-            let me = this;
+            var me = this;
             switch (level) {
                 case 'province':
                     $scope.checkedAreaName = $scope.provinceName;

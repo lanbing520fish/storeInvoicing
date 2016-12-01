@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>日结</title>
@@ -13,14 +14,13 @@
 <body ng-app="dailyAccountsModule">
     <!-- DOM结构开始 -->
     <div class="dailyAccounts top-line wavy-line" ng-controller="dailyAccountsCtrl" ng-show="isHidden">
-		<div class="daily-store">
-			<span>日结门店：中国电信@平庄镇北街区营业厅</span>
-			<button ng-click="toggle()" class="btn btn-submit">日结</button>
-			<button ng-click="" class="btn btn-submit">日结历史查询</button>
-		</div>
-		
-        <div class="result-list" >
-        	<!-- 总计信息 -->
+        <div class="daily-store">
+            <span>日结门店：中国电信@平庄镇北街区营业厅</span>
+            <button ng-click="toggle()" class="btn btn-submit">日结</button>
+            <button ng-click="" class="btn btn-submit">日结历史查询</button>
+        </div>
+        <div class="result-list">
+            <!-- 总计信息 -->
             <div class="result-head">
                 <div class="row">
                     <div class="col-xs-4">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-            </div>          
+            </div>
             <div class="result-table">
                 <table class="table table-bordered mb5">
                     <thead>
@@ -67,41 +67,56 @@
                             </td>
                             <td>
                                 <table class="tabover">
-                                	<tr>
-                                		<td><p>现金</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>现金</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>现金</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>现金</p></td>
-                                	</tr>                               	
-                                </table> 
+                                    <tr>
+                                        <td>
+                                            <p>现金</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>现金</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>现金</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>现金</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                             <td>
                                 <table class="tabover">
-                                	<tr>
-                                		<td><p>¥442353.00</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>¥0.00</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>¥0.00</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>¥0.00</p></td>
-                                	</tr>                               	
-                                </table> 
+                                    <tr>
+                                        <td>
+                                            <p>¥442353.00</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>¥0.00</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>¥0.00</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>¥0.00</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
-                        </tr>                     
+                        </tr>
                     </tbody>
                 </table>
             </div>
-
             <!-- 商品列表 -->
             <div class="result-head">
                 <div class="row">
@@ -136,42 +151,60 @@
                             </td>
                             <td>
                                 <table class="tabover">
-                                	<tr>
-                                		<td><p>iphone6s</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>小米电源</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>小米电源</p></td>
-                                	</tr>                                                   	
-                                </table> 
+                                    <tr>
+                                        <td>
+                                            <p>iphone6s</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>小米电源</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>小米电源</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                             <td>
                                 <table class="tabover">
-                                	<tr>
-                                		<td><p>A10000ADEDF6</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>-</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>-</p></td>
-                                	</tr>                                                   	
-                                </table> 
+                                    <tr>
+                                        <td>
+                                            <p>A10000ADEDF6</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>-</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>-</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                             <td>
                                 <table class="tabover">
-                                	<tr>
-                                		<td><p>1</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>1</p></td>
-                                	</tr>
-                                	<tr>
-                                		<td><p>1</p></td>
-                                	</tr>                                                	
-                                </table> 
+                                    <tr>
+                                        <td>
+                                            <p>1</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>1</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>1</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                             <td>
                                 <p>零售换货</p>
@@ -188,7 +221,7 @@
                             <td>
                                 <p>现金:122134</p>
                             </td>
-                        </tr>                      
+                        </tr>
                         <tr>
                             <td>
                                 <p class="purple-color">12543240000003424242511</p>
@@ -218,7 +251,7 @@
                             <td>
                                 <p>现金:989</p>
                             </td>
-                        </tr>                      
+                        </tr>
                         <tr>
                             <td>
                                 <p class="purple-color">12543240000003424242511</p>
@@ -258,19 +291,19 @@
             </div>
         </div>
     </div>
-	<!-- 日结完成 -->
+    <!-- 日结完成 -->
     <div class="dailyAccounts top-line wavy-line" ng-show="!isHidden">
-    	<div class="finish">
-    		<div class="wrds">
-	    		<img src="../../resources/images/icon_zan.png">
-	    		门店已完成日结，日结单号为<span class="purple-color">  100000000023401</span>
-    		</div>
-    		<div class="btns">
-    			<button ng-click="" class="btn btn-submit">日结历史查询</button>
-    			<button ng-click="" class="btn btn-cancel">关闭</button>
-    		</div>
-    	</div>
-    </div> 
+        <div class="finish">
+            <div class="wrds">
+                <img src="../../resources/images/icon_zan.png"> 门店已完成日结，日结单号为
+                <span class="purple-color">  100000000023401</span>
+            </div>
+            <div class="btns">
+                <button ng-click="" class="btn btn-submit">日结历史查询</button>
+                <button ng-click="" class="btn btn-cancel">关闭</button>
+            </div>
+        </div>
+    </div>
     <script src="../../resources/js/angular.min.js"></script>
     <script src="../../resources/js/angular-touch.min.js"></script>
     <script src="../../resources/js/angular-animate.min.js"></script>
@@ -282,5 +315,6 @@
     <script src="../../resources/js/lodash.js"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
     <script src="dailyAccounts.js"></script>
-    </body>
+</body>
+
 </html>

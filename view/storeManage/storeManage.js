@@ -37,30 +37,30 @@ angular
         $scope.cityIndex = '';
         $scope.areaId = '';
         $scope.provinceName = '';
-        $scope.cityName = '';        
+        $scope.cityName = '';
         $scope.checkedAreaName = '';
 
         $scope.cityCheck = function() {
             $scope.visible = !$scope.visible;
         }
         $scope.handleSelectCity = function(level, index, areaId, areaName) {
-            let me = this;
+            var me = this;
             switch (level) {
                 case 'province':
                     $scope.key = 2;
                     $scope.provinceIndex = index;
                     $scope.provinceName = areaName;
                     break;
-                case 'city':                   
+                case 'city':
                     $scope.cityIndex = index;
                     $scope.areaId = areaId;
                     $scope.cityName = areaName;
                     me.handleSubmitBtn(level);
-                    break;           
+                    break;
             }
         };
         $scope.handleSubmitBtn = function(level) {
-            let me = this;
+            var me = this;
             switch (level) {
                 case 'province':
                     $scope.checkedAreaName = $scope.provinceName;
@@ -76,7 +76,7 @@ angular
     .controller('addPurchaseModalCtrl', function($scope, $rootScope, $uibModal) {
         var $ctrl = this,
             modalInstance;
-        $ctrl.animationsEnabled = true;  
+        $ctrl.animationsEnabled = true;
 
         //门店所属商户
         $scope.$on('openStoreQueryTypeModal', function(d, data) {
@@ -85,11 +85,11 @@ angular
         //对应渠道单元编码
         $scope.$on('openChannelUnitModal', function(d, data) {
             $ctrl.openChannelUnitModal(data);
-        }); 
+        });
         $ctrl.openStoreQueryTypeModal = function(data) {
             modalInstance = $uibModal.open({
                 animation: $ctrl.animationsEnabled,
-                ariaLabelledBy: 'serial-number-title',
+                ariaLabelledBy: 'serial-number-title1',
                 ariaDescribedBy: 'serial-number-body',
                 templateUrl: 'storeQueryTypeModal.html',
                 controller: 'storeQueryTypeModalCtrl',

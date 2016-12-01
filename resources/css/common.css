@@ -4,10 +4,12 @@
  */
 
 @font-face {
-    font-family: 'iconfont';
-    /* project id："144758" */
-    src: url('http://at.alicdn.com/t/font_60tb0unwx819vn29.eot');
-    src: url('http://at.alicdn.com/t/font_60tb0unwx819vn29.eot?#iefix') format('embedded-opentype'), url('http://at.alicdn.com/t/font_60tb0unwx819vn29.woff') format('woff'), url('http://at.alicdn.com/t/font_60tb0unwx819vn29.ttf') format('truetype'), url('http://at.alicdn.com/t/font_60tb0unwx819vn29.svg#iconfont') format('svg');
+    font-family: 'iconfont';  /* project id："144758" */
+    src: url('http://at.alicdn.com/t/font_bikjgokqdn0442t9.eot');
+    src: url('http://at.alicdn.com/t/font_bikjgokqdn0442t9.eot?#iefix') format('embedded-opentype'),
+    url('http://at.alicdn.com/t/font_bikjgokqdn0442t9.woff') format('woff'),
+    url('http://at.alicdn.com/t/font_bikjgokqdn0442t9.ttf') format('truetype'),
+    url('http://at.alicdn.com/t/font_bikjgokqdn0442t9.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -18,8 +20,8 @@
 
 body {
     font-family: "微软雅黑", "宋体", Arial, Helvetica, sans-serif;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     background-color: #f5f0fa;
     color: #333;
     font-size: 12px;
@@ -118,7 +120,6 @@ body {
     color: #a870e0;
 }
 
-
 /* 分页 */
 
 .pagination {
@@ -174,7 +175,6 @@ body {
 .table {
     margin-bottom: 10px;
 }
-
 
 /* 弹出框 */
 
@@ -284,7 +284,6 @@ body {
     margin: 0 !important;
 }
 
-
 /* 表格固定百分比宽度,不会被内容撑开 */
 
 .table {
@@ -366,6 +365,10 @@ body {
     border-bottom: 1px dashed #ccc;
 }
 
+.dashed-line:last-of-type {
+    margin-bottom: 0;
+}
+
 .form-group {
     position: relative;
     width: 100% !important;
@@ -386,7 +389,8 @@ body {
 }
 
 .form-group input[type="text"],
-.form-group input[type="number"] {
+.form-group input[type="number"],
+.form-group input[type="password"] {
     width: 100% !important;
     height: 25px;
     padding: 0 12px;
@@ -400,18 +404,30 @@ body {
     line-height: 25px;
 }
 
+.select-box {
+    width: 100%;
+    height: 25px;
+    border: 1px solid #ccc;
+    border-radius: 14px;
+    background: #fff url('../../resources/images/select_bg.png') no-repeat 95% center;
+    overflow: hidden;
+}
+
 .form-group select {
-    width: 100% !important;
+    width: calc(100% + 30px) !important;
     height: 25px;
     padding: 0 12px;
     line-height: 25px;
-    border-radius: 14px;
-    background: url(../../resources/images/select_bg.png) no-repeat calc(100% - 10px) center;
-    background-color: #fff;
+    background: transparent;
+    border: none;
     cursor: pointer;
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
+}
+
+.form-group select::-ms-expand {
+    display: none;
 }
 
 .form-group textarea {
@@ -419,11 +435,15 @@ body {
     border-radius: 14px;
 }
 
+.info-form {
+    background: #f8f8f8;
+    overflow: hidden;
+}
+
 .btn-xs,
 .btn-group-xs > .btn {
     height: 23px;
 }
-
 
 /* 表格边线 */
 

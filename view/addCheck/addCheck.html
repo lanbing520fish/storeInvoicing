@@ -123,9 +123,11 @@
                                 <p>-</p>
                             </td>
                             <td class="check-num-box">
-                                <button class="btn btn-xs btn-edit" ng-click="editQueryType($index, item)">串码核对</button><br/>
+                                <button class="btn btn-xs btn-edit" ng-click="editQueryType($index, item)">串码核对</button>
+                                <br/>
                                 <input type="checkbox" id="checkbox{{$index}}" ng-model="isChecked" class="hide">
-                                <label for="checkbox{{$index}}" class="btn btn-xs btn-edit">数量核对</label><br/>
+                                <label for="checkbox{{$index}}" class="btn btn-xs btn-edit">数量核对</label>
+                                <br/>
                                 <button class="btn btn-xs btn-edit">暂不盘点</button>
                                 <div class="check-num" ng-show="isChecked">
                                     <div class="check-head">

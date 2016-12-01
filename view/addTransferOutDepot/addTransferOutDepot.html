@@ -90,7 +90,7 @@
                     </div>
                     <div class="col-xs-8 text-right">
                         <button ng-click="addQueryType()" class="btn btn-xs btn-set"><i class="iconfont">
-                        &#xe60e;</i> 选择调拨商品
+                        &#xe60e;</i> 选择调拨商品</button>
                     </div>
                 </div>
             </div>
@@ -195,49 +195,30 @@
                         </div>
                     </div>
                     <!-- 条件列表 -->
-                    <div class="queries-list" ng-show="!$ctrl.isHidden">
-                        <p class="queries-title">所有分类 > <span class="checked-query">类别：手机<i class="iconfont">&#xe611;</i></span><span class="checked-query">品牌：中兴<i class="iconfont">&#xe611;</i></span></p>
-                        <div class="queries-category fn-clear">
+                    <div class="queries-list" ng-controller="queriesCtrl" ng-show="!$ctrl.isHidden">
+                        <p class="queries-title">所有分类 >
+                            <span class="checked-query" ng-show="checkedQueries.category.name">类别：{{checkedQueries.category.name}}<i ng-click="removeCheckedQueries('category')" class="iconfont">&#xe611;</i></span>
+                            <span class="checked-query" ng-show="checkedQueries.brand.name">品牌：{{checkedQueries.brand.name}}<i ng-click="removeCheckedQueries('brand')" class="iconfont">&#xe611;</i></span>
+                            <span class="checked-query" ng-show="checkedQueries.model.name">型号：{{checkedQueries.model.name}}<i ng-click="removeCheckedQueries('model')" class="iconfont">&#xe611;</i></span>
+                        </p>
+                        <div class="queries-category fn-clear" ng-show="isCategoryShow">
                             <span class="category-label fn-left">类别：</span>
                             <div class="category-list fn-left">
-                                <span class="category-item">手机</span>
-                                <span class="category-item">配件</span>
-                                <span class="category-item">其他数码产品</span>
+                                <button ng-repeat="item in categoryList" ng-click="addCheckedQueries('category', item)" class="category-item">{{item.name}}</button>
                             </div>
                         </div>
-                        <div class="queries-category fn-clear">
+                        <div class="queries-category fn-clear" ng-show="isBrankShow">
                             <span class="category-label fn-left">品牌：</span>
                             <div class="category-list fn-left" ng-class="{fold: $ctrl.isFoldBrand}">
-                                <span class="category-item">苹果</span>
-                                <span class="category-item">三星</span>
-                                <span class="category-item">华为</span>
-                                <span class="category-item">酷派</span>
-                                <span class="category-item">中兴</span>
-                                <span class="category-item">黑莓</span>
-                                <span class="category-item">苹果</span>
-                                <span class="category-item">三星</span>
-                                <span class="category-item">华为</span>
-                                <span class="category-item">酷派</span>
-                                <span class="category-item">中兴</span>
-                                <span class="category-item">黑莓</span>
-                                <span class="category-item">苹果</span>
-                                <span class="category-item">三星</span>
-                                <span class="category-item">华为</span>
-                                <span class="category-item">酷派</span>
-                                <span class="category-item">中兴</span>
-                                <span class="category-item">黑莓</span>
+                                <button ng-repeat="item in brandList" ng-click="addCheckedQueries('brand', item)" class="category-item" ng-disabled="!checkedQueries.category.name">{{item.name}}</button>
                             </div>
                             <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="$ctrl.isFoldBrand" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
                             <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldBrand')" ng-show="!$ctrl.isFoldBrand" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
                         </div>
-                        <div class="queries-category fn-clear">
+                        <div class="queries-category fn-clear" ng-show="isModelShow">
                             <span class="category-label fn-left">型号：</span>
                             <div class="category-list fn-left" ng-class="{fold: $ctrl.isFoldModel}">
-                                <span class="category-item">Iphone 5s</span>
-                                <span class="category-item">Iphone 6</span>
-                                <span class="category-item">Iphone 6s</span>
-                                <span class="category-item">Iphone 6plus</span>
-                                <span class="category-item">Iphone 7s</span>
+                                <button ng-repeat="item in modelList" ng-click="addCheckedQueries('model', item)" class="category-item" ng-disabled="!checkedQueries.brand.name">{{item.name}}</button>
                             </div>
                             <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldModel')" ng-show="$ctrl.isFoldModel" class="category-more fn-right">更多 <i class="iconfont">&#xe608;</i></a>
                             <a href="javascript:;" ng-click="$ctrl.toggle('$ctrl.isFoldModel')" ng-show="!$ctrl.isFoldModel" class="category-more fn-right">收起 <i class="iconfont">&#xe607;</i></a>
@@ -245,30 +226,32 @@
                     </div>
                 </div>
                 <!-- 结果 -->
-                <p class="goods-list-title">商品列表</p>
-                <div class="goods-list-box fn-clear" ng-controller="goodsListModalCtrl">
-                    <div class="goods-list fn-left">
-                        <li class="goods-item" ng-class="{current: $index===checkIndex, hover: $index===hoverIndex || hoverIndex===''}" ng-repeat="item in goodsListResult" ng-mouseover="hoverGoods($index)" ng-click="checkedGoods($index)">
-                            <p class="goods-title">商品：<span class="goods-name" ng-bind="item.name"></span></p>
-                        </li>
-                    </div>
-                    <div class="goods-detail fn-left">
-                        <p class="detail-title">商品详情：</p>
-                        <div class="detail-content fn-clear">
-                            <p class="detail-item fn-left">类别：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].type"></span></p>
-                            <p class="detail-item fn-left">品牌：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].brand"></span></p>
-                            <p class="detail-item fn-left">型号：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].model"></span></p>
-                            <p class="detail-item fn-left">配置：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].configuration"></span></p>
-                            <p class="detail-item fn-left">颜色：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].color"></span></p>
-                            <p class="detail-item fn-left">RAM：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].RAM"></span></p>
-                            <p class="detail-item fn-left">尺寸：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].size"></span></p>
-                            <p class="detail-item fn-left">OS：<span class="detail-name" ng-bind="goodsListResult[hoverIndex].OS"></span></p>
+                <div ng-controller="goodsListModalCtrl">
+                    <p class="goods-list-title">商品列表</p>
+                    <div class="goods-list-box fn-clear">
+                        <div class="goods-list fn-left">
+                            <li class="goods-item" ng-class="{current: $index===checkIndex, hover: $index===hoverIndex || hoverIndex===''}" ng-repeat="item in serialNubShow" ng-mouseover="hoverGoods($index)" ng-click="checkedGoods($index)">
+                                <p class="goods-title">商品：<span class="goods-name" ng-bind="item.name"></span></p>
+                            </li>
+                        </div>
+                        <div class="goods-detail fn-left">
+                            <p class="detail-title">商品详情：</p>
+                            <div class="detail-content fn-clear">
+                                <p class="detail-item fn-left">类别：<span class="detail-name" ng-bind="serialNubShow[hoverIndex].type"></span></p>
+                                <p class="detail-item fn-left">品牌：<span class="detail-name" ng-bind="serialNubShow[hoverIndex].brand"></span></p>
+                                <p class="detail-item fn-left">型号：<span class="detail-name" ng-bind="serialNubShow[hoverIndex].model"></span></p>
+                                <p class="detail-item fn-left">配置：<span class="detail-name" ng-bind="serialNubShow[hoverIndex].configuration"></span></p>
+                                <p class="detail-item fn-left">颜色：<span class="detail-name" ng-bind="serialNubShow[hoverIndex].color"></span></p>
+                                <p class="detail-item fn-left">RAM：<span class="detail-name" ng-bind="serialNubShow[hoverIndex].RAM"></span></p>
+                                <p class="detail-item fn-left">尺寸：<span class="detail-name" ng-bind="serialNubShow[hoverIndex].size"></span></p>
+                                <p class="detail-item fn-left">OS：<span class="detail-name" ng-bind="serialNubShow[hoverIndex].OS"></span></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div ng-controller="paginationCtrl" class="text-center page">
-                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
-                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                    <div class="text-center page">
+                        <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                        <div class="page-num">共<span class="number">{{totalNum}}</span>条记录，当前显示第<span class="number">{{currentPage}}</span>页</div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -280,7 +263,7 @@
         <script type="text/ng-template" id="serialNumberModal.html">
             <div class="modal-header">
                 <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
-                <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-list1.png">商品串号导入</h3>
+                <h3 class="modal-title" id="serial-number-title1"><img class="icon" src="../../resources/images/icon-list1.png">商品串号导入</h3>
             </div>
             <div class="modal-body pr50" id="serial-number-body">
                 <div class="info-form">

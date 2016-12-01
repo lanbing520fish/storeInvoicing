@@ -112,7 +112,7 @@
                                     <p>1</p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-xs btn-edit" ng-click="serialDetail($index, item)" >串号详情
+                                    <button class="btn btn-xs btn-edit" ng-click="serialDetail($index, item)">串号详情
                                     </button>
                                 </td>
                             </tr>
@@ -145,17 +145,12 @@
                         没有数据
                     </p>
                 </div>
-                
                 <div ng-controller="paginationCtrl" class="text-center page">
                     <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
                     <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
                 </div>
             </div>
         </div>
-
-        
-
-
         <script src="../../resources/js/angular.min.js"></script>
         <script src="../../resources/js/angular-touch.min.js"></script>
         <script src="../../resources/js/angular-animate.min.js"></script>
@@ -167,8 +162,7 @@
         <script src="../../resources/js/lodash.js"></script>
         <script src="../../resources/js/sweetalert.min.js"></script>
         <script src="detailAdjustOut.js"></script>
-
-<!-- 弹窗内容 -->
+        <!-- 弹窗内容 -->
         <script type="text/ng-template" id="serialNumberModal.html">
             <div class="modal-header">
                 <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
@@ -233,19 +227,16 @@
                     </li>
                 </ul>
             </div>
-            
-                <div ng-controller="paginationCtrl" class="text-center mt10 page">
-                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
-                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
-                </div>
-            
+            <div ng-controller="paginationCtrl" class="text-center mt10 page">
+                <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+            </div>
             <div class="modal-footer">
                 <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
             </div>
-
         </script>
-<!-- 弹窗内容 -->
-
+        <!-- 弹窗内容 -->
+    </div>
 </body>
 
 </html>

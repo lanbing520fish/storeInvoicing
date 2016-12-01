@@ -35,7 +35,7 @@
                 </div>
                 <div class="customer-search fn-left">
                     <label for="name">客户姓名：</label>
-                    <input type="text">
+                    <input id="name" type="text">
                 </div>
             </div>
             <!-- 列表 -->
@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-xs-8 pt3 text-right">
                             <button ng-click="addQueryType()" class="btn btn-xs btn-set"><i class="iconfont">
-                        &#xe60e;</i> 选购商品
+                        &#xe60e;</i> 选购商品</button>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                             </td>
                             <td>
                                 <div class="table-select-group">
-                                    <select name="" id="" class="enter-select">
+                                    <select name="" class="enter-select">
                                         <option value="0">裸机销售</option>
                                         <option value="1">宽带绑定</option>
                                         <option value="2">合约机</option>

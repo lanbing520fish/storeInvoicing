@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>店员配置</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="addWarehouse.css">
+</head>
+
+<body ng-app="addWarehouseModule">
+    <!-- DOM结构开始 -->
+    <div class="addWarehouse top-line">
+        <div class="result-head btm-line">
+            <div class="addWarehouse-head">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="model-header">
+                            <img class="model-img" src="../../resources/images/icon-list.png">
+                            <p class="model-title">新增仓库</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="result-list" ng-controller="resultCtrl">
+            <div class="condition-query-box">
+                <form name="conditionQueryForm" class="form-inline" role="form">
+                    <div class="row mb10">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label class="control-label">所属商户：</label>
+                                <input type="text" class="form-control reduce-width">
+                                <button type="submit" class="btn btn-sm btn-searching" ng-click="openStoreQueryType()"><i class="iconfont">&#xe600;</i></button>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label class="control-label">所属门店：</label>
+                                <select class="form-control">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb10">
+                        <div class="col-xs-10">
+                            <div class="form-group">
+                                <label class="control-label">仓库名称：</label>
+                                <input type="text" class="form-control reduce-width">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb10">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">备注：</label>
+                                <textarea col="" row="10" id="remarks" class="form-control edit-txt" ng-model="modifiedQueryType.remarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">取消</button>
+            <button class="btn btn-submit" type="button" ng-click="$ctrl.ok()">确定</button>
+        </div>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="addWarehouse.js"></script>
+</body>
+
+</html>

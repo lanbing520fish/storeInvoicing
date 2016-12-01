@@ -33,7 +33,7 @@
 .result-table .grey-table th{
     background: #ddd;
     border:1px solid #c9c9c9;
-    color:#333;  
+    color:#333;
 }
 .result-table .grey-table tr:nth-of-type(2n){
     background: #fff;
@@ -336,9 +336,27 @@
 
 .category-item {
     display: inline-block;
+    height: 20px;
     margin-right: 12px;
     white-space: nowrap;
     cursor: pointer;
+    text-align: center;
+    color: #333;
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 0;
+    border-width: 0;
+    border-style: none;
+    border-color: none;
+}
+
+.category-item:hover {
+    color: #651faa;
+}
+
+.category-item[disabled] {
+    color: #333;
+    cursor: not-allowed;
 }
 
 .category-more {
@@ -752,6 +770,4 @@
     background-color: #a870e0;
     color: #fff;
     border-radius: 5px;
-
 }
-
