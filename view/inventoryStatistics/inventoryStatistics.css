@@ -1,0 +1,71 @@
+.inventory {
+    min-height: 20px;
+    margin: 10px;
+    border-left: 1px solid #d5d4dc;
+    border-right: 1px solid #d5d4dc;
+    background-color: #fff;
+}
+
+.inventory-query {
+    height: 48px;
+    padding: 10px 10px 10px 0;
+    background: #f8f8f8 url('../../resources/images/query-bg-s.png') no-repeat 0 0;
+    border-bottom: 1px dashed #d2d2d2;
+}
+
+.inventory-query-title {
+    width: 20px;
+    height: 38px;
+    position: relative;
+    top: -9px;
+    margin: 0 0 0 8px;
+    line-height: 24px;
+    color: #333;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.condition-query-box {
+    width: calc(100% - 40px);
+}
+
+.datepicker-input {
+    position: relative;
+    width: 45%;
+}
+
+.datepicker-text {
+    width: 10%;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+}
+
+.icon_time {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #cfa9f5;
+    cursor: pointer;
+}
+
+.form-group .reduce-width {
+    width: calc(100% - 90px) !important;
+}
+
+.btn-query {
+    position: absolute;
+    top: -1px;
+    right: 0;
+}
+
+.charts-box {
+    width: 50%;
+    height: 400px;
+    padding: 20px;
+    border-right: 1px solid #e0e0e0;
+}
+
+.charts-box:last-of-type {
+    border-right: none;
+}
