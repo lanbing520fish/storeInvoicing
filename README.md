@@ -57,6 +57,9 @@
     * 新增仓库 **addWarehouse**
     * 供货商管理 **supplier**
     * 新增供货商 **addSupplier**
+    
+* **统计分析**
+    * 库存量TOP5统计分析 **inventoryStatistics**
 
 * **统计分析** 
     * 登录页 **index**
