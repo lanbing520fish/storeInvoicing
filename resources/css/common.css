@@ -474,15 +474,26 @@ body {
 
 .ui-select-multiple.ui-select-bootstrap {
     height: 25px;
-    padding: 0 3px;
+    padding: 0 5px;
+    border-radius: 14px;
+}
+
+.ui-select-multiple.ui-select-bootstrap input.ui-select-search {
+    height: 25px;
+    line-height: 25px;
+}
+
+.ui-select-multiple.ui-select-bootstrap .ui-select-match .close {
+    line-height: 18px;
 }
 
 .ui-select-multiple.ui-select-bootstrap .ui-select-match-item {
-    height: 18px;
-    line-height: 18px;
+    height: 20px;
+    line-height: 20px;
     border: none;
     background-color: #f5f5f5;
     color: #333;
+    border-radius: 8px;
 }
 
 
