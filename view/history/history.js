@@ -10,13 +10,15 @@ angular
         $scope.startDateOptions = {
             formatYear: 'yy',
             maxDate: $scope.conditionQueryForm.createEndDt,
-            startingDay: 1
+            startingDay: 1,
+            showWeeks: false
         };
         $scope.endDateOptions = {
             formatYear: 'yy',
             minDate: $scope.conditionQueryForm.createStartDt,
             // maxDate: new Date(),
-            startingDay: 1
+            startingDay: 1,
+            showWeeks: false
         };
 
         $scope.$watch('conditionQueryForm.createStartDt', function(newValue) {
