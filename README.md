@@ -69,5 +69,3 @@
     * 集中收银 **concentratedCharge** 
     * 订单计费 **orderCharge** 
     * 订单退费 **orderRefund** 
-
-
