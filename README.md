@@ -65,4 +65,9 @@
     * 登录页 **index**
     * 库存量TOP5统计 **storageCount**
 
+* **集中收银**
+    * 集中收银 **concentratedCharge** 
+    * 订单计费 **orderCharge** 
+    * 订单退费 **orderRefund** 
+
 

@@ -71,12 +71,17 @@
 
             </div>
         </div>
-        <div class="target">
-            <div class="target-left">
-                <div id="brand"></div>
+        <!-- 结果列表 -->
+        <div class="result-list fn-clear" ng-controller="dayLineCtrl">
+            <div class="col-xs-6">
+                <div>
+                    <day id="brand" day="day" price="price" title="title" legend="legend"></day>
+                </div> 
             </div>
-            <div class="target-right">
-                
+            <div class="col-xs-6">
+                <!-- <div>
+                    <day id="type" day="day" price="price" title="title" legend="legend"></day>
+                </div>  -->
             </div>
         </div>
         <!-- 选择门店 -->

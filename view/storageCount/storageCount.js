@@ -111,90 +111,94 @@ angular
             $uibModalInstance.dismiss('cancel');
         };
     })
-    var myChart = echarts.init(document.getElementById('brand'));
-    option = {
-        title : {
-            text: '南丁格尔玫瑰图',
-            subtext: '纯属虚构',
-            x:'center'
-        },
-        tooltip : {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-            x : 'center',
-            y : 'bottom',
-            data:['rose1','rose2','rose3','rose4','rose5','rose6','rose7','rose8']
-        },
-        toolbox: {
-            show : true,
-            feature : {
-                mark : {show: true},
-                dataView : {show: true, readOnly: false},
-                magicType : {
-                    show: true,
-                    type: ['pie', 'funnel']
-                },
-                restore : {show: true},
-                saveAsImage : {show: true}
-            }
-        },
-        calculable : true,
-        series : [
+    /*echarts图标1*/
+    .controller('dayLineCtrl', function($rootScope, $scope, $log) {
+        $rootScope.dayCarriedoOutList = [
             {
-                name:'半径模式',
-                type:'pie',
-                radius : [20, 110],
-                center : ['25%', '50%'],
-                roseType : 'radius',
-                label: {
-                    normal: {
-                        show: false
-                    },
-                    emphasis: {
-                        show: true
-                    }
-                },
-                lableLine: {
-                    normal: {
-                        show: false
-                    },
-                    emphasis: {
-                        show: true
-                    }
-                },
-                data:[
-                    {value:10, name:'rose1'},
-                    {value:5, name:'rose2'},
-                    {value:15, name:'rose3'},
-                    {value:25, name:'rose4'},
-                    {value:20, name:'rose5'},
-                    {value:35, name:'rose6'},
-                    {value:30, name:'rose7'},
-                    {value:40, name:'rose8'}
-                ]
-            },
-            {
-                name:'面积模式',
-                type:'pie',
-                radius : [30, 110],
-                center : ['75%', '50%'],
-                roseType : 'area',
-                data:[
-                    {value:10, name:'rose1'},
-                    {value:5, name:'rose2'},
-                    {value:15, name:'rose3'},
-                    {value:25, name:'rose4'},
-                    {value:20, name:'rose5'},
-                    {value:35, name:'rose6'},
-                    {value:30, name:'rose7'},
-                    {value:40, name:'rose8'}
-                ]
+              type:'中兴',
+              numb:'300'
+            },{
+              day:'酷派',
+              numb:'200'
+            },{
+              day:'三星',
+              numb:'100'
+            },{
+              day:'华为',
+              numb:'50'
+            },{
+              day:'乐视',
+              numb:'30'
             }
-        ]
-    };
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+        ];
+        $scope.day = [];
+        $scope.price = [];
 
-    
+        _.map($rootScope.dayCarriedoOutList, function(elem, index) {
+          $scope.day.push(elem.day);
+          $scope.price.push(elem.price);
+        })
+
+    })
+    .directive('day', function() { 
+        return {  
+            scope: {  
+                id: "@",  
+                type: "=",  
+                numb: "="
+            },  
+            restrict: 'E',  
+            template: '<div style="width:100%; height:300px;"></div>',  
+            replace: true,  
+            link: function($scope, element, attrs, controller) { 
+                option = {                    
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        x : 'right',
+                        y : 'center',
+                        data:['中兴','酷派','三星','华为','乐视']
+                    },
+                    calculable : true,
+                    series : [
+                        {
+                            name:'面积模式',
+                            type:'pie',
+                            radius : [40, 80],
+                            center : ['50%', '50%'],
+                            roseType : 'area',
+                            data:[
+                                {value:200, name:'酷派'},
+                                {value:30, name:'乐视'},
+                                {value:50, name:'华为'},
+                                {value:300, name:'中兴'},
+                                {value:100, name:'三星'}                               
+                            ]
+                        }
+                    ]
+                };
+                var myChart = echarts.init(document.getElementById($scope.id),'macarons');
+                myChart.setOption(option);  
+            }  
+        }
+    })
+
+    // 分页控制器
+    .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
+        $scope.$on('pageChange', function() {
+            $scope.currentPage = 1;
+        });
+
+        $scope.maxSize = 10;
+        $scope.setPage = function(pageNo) {
+            $scope.currentPage = pageNo;
+        };
+
+        $scope.pageChanged = function() {
+            $scope.queryTypeFormSubmit($scope.currentPage);
+            $log.log('Page changed to: ' + $scope.currentPage);
+        };
+    }]);
