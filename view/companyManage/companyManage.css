@@ -1,3 +1,6 @@
+body{
+    height:100%;
+}
 .purple-color{
     color:#a870e0;
 }
@@ -186,7 +189,7 @@
     top: 30px;
     right: 0;
     z-index: 99;
-    width: calc(100% - 110px);
+    width: 100%;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -255,4 +258,6 @@
     color: #fff;
     border-radius: 5px;
 }
-
+.zhezhao{
+   height:100%; width:100%; position:fixed; top:0; left:0; z-index:98;
+}

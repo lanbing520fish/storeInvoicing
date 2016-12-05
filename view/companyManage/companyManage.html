@@ -33,12 +33,12 @@
                                 <input type="text" class="form-control" placeholder="请输入单据号">
                             </div>
                         </div>
-                        <div class="col-xs-4">
-                            <div class="form-group" ng-controller="cityCheckCtrl">
+                        <div class="col-xs-4" ng-controller="cityCheckCtrl">
+                            <div class="form-group">
                                 <label class="control-label">所在地区：</label>
                                 <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
                                 <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
-                                <div class="city-check-box" ng-show="visible">
+                                <div class="city-check-box ng-cloak" ng-show="visible">
                                     <uib-tabset active="key">
                                         <uib-tab index="1" heading="省份">
                                             <div class="city-content">
@@ -52,7 +52,9 @@
                                         </uib-tab>
                                     </uib-tabset>
                                 </div>
+
                             </div>
+                            <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
                         </div>
                     </div>
                     <div class="row">

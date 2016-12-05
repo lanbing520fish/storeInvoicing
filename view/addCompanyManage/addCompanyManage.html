@@ -55,7 +55,7 @@
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label class="control-label">联系人：</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-maxlength="6" maxlength="6">
                             </div>
                         </div>
                         <div class="col-xs-6">
@@ -203,7 +203,7 @@
                                     <p>100000001421</p>
                                 </td>
                                 <td>
-                                    <p>望月路全网通门店</p>
+                                    <p class="overflow-handle" title="{{item.storeName}}">望月路全网通门店</p>
                                 </td>
                                 <td>
                                     <p>江苏-南京</p>
