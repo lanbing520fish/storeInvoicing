@@ -10,7 +10,8 @@
 	width:100%;
 	height:40px;
 	background: #f8f8f8;
-	border-bottom:1px dotted #ddd;	
+	border-bottom:1px dotted #ddd;
+    overflow-x: hidden;
 }
 .daily-store .wrds{
 	display:inline-block;
@@ -44,7 +45,7 @@
 .form-group {
     padding-left: 74px;
 }
-.form-group label {  
+.form-group label {
     width: 72px !important;
     line-height: 40px;
 }
@@ -186,14 +187,14 @@
     line-height: 29px;
 }
 .tabover{
-	width:100%;	
+	width:100%;
 }
 .tabover td{
-	width:100%;	
+	width:100%;
 	border-bottom: 1px solid #d5d4dc;
 }
 .tabover tr:last-child td{
-	border-bottom: none; 
+	border-bottom: none;
 }
 .tabover tr:nth-of-type(2n){
 	background: #faf7fc;
