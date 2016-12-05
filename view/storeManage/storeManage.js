@@ -43,6 +43,9 @@ angular
         $scope.cityCheck = function() {
             $scope.visible = !$scope.visible;
         }
+        $scope.clHide = function() {
+            $scope.visible = false;
+        }
         $scope.handleSelectCity = function(level, index, areaId, areaName) {
             var me = this;
             switch (level) {

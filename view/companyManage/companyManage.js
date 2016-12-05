@@ -1,5 +1,11 @@
 angular
     .module('companyManageModule', ['ui.bootstrap'])
+    .controller('purchaseQueryCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
+        // 选择经营主体
+        $scope.openStoreQueryType = function() {
+            $scope.$emit('openStoreQueryTypeModal');
+        };
+    }])
     // 城市
     .controller('cityCheckCtrl', ['$scope', function($scope) {
         $scope.citys = [{
@@ -65,6 +71,45 @@ angular
             }
         }
     }])
+    // 弹出框
+    .controller('addPurchaseModalCtrl', function($scope, $rootScope, $uibModal) {
+        var $ctrl = this,
+            modalInstance;
+        $ctrl.animationsEnabled = true;
+        //对应经营主体
+        $scope.$on('openStoreQueryTypeModal', function(d, data) {
+            $ctrl.openStoreQueryTypeModal(data);
+        });
+        $ctrl.openStoreQueryTypeModal = function(data) {
+            modalInstance = $uibModal.open({
+                animation: $ctrl.animationsEnabled,
+                ariaLabelledBy: 'serial-number-title',
+                ariaDescribedBy: 'serial-number-body',
+                templateUrl: 'storeQueryTypeModal.html',
+                controller: 'storeQueryTypeModalCtrl',
+                controllerAs: '$ctrl',
+                size: 'lg',
+                resolve: {
+                    items: function() {
+                        return data;
+                    }
+                }
+            });
+        };
+        $ctrl.toggleAnimation = function() {
+            $ctrl.animationsEnabled = !$ctrl.animationsEnabled;
+        };
+    })
+    .controller('storeQueryTypeModalCtrl', function($uibModalInstance, $scope, items) {
+        var $ctrl = this;
+        $ctrl.ok = function() {
+            $scope.$broadcast('submitCardRange');
+            $uibModalInstance.close();
+        };
+        $ctrl.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+    })
     // 分页控制器
     .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
         $scope.$on('pageChange', function() {
