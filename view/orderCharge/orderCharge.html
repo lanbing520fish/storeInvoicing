@@ -13,7 +13,7 @@
 
 <body ng-app="orderChargeModule">
     <!-- DOM结构开始 -->
-    <div class="addReturned top-line wavy-line">
+    <div class="addReturned top-line wavy-line" ng-controller="orderChargeCtrl">
         <!-- 订单收费 -->
         <div class="purchase-infomation">
             <div class="model-header dashed-line">
@@ -26,58 +26,54 @@
                         <div class="row">
                             <div class="col-xs-3">
                                 <div class="form-group">
-                                    <p class="detail-msg"><span>订单号：</span>1000201611230086</p>
+                                    <p class="detail-msg"><span>订单号：</span><em ng-bind="modifiedOrderCharge.orderNo"></em></p>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group">
-                                    <p class="detail-msg"><span>客户名称：</span>王磊</p>
+                                    <p class="detail-msg"><span>客户名称：</span><em ng-bind="modifiedOrderCharge.custName"></em></p>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group">
-                                    <p class="detail-msg"><span>号码：</span>18756342211</p>
+                                    <p class="detail-msg"><span>号码：</span><em ng-bind="modifiedOrderCharge.phoneNumber"></em></p>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group">
-                                    <p class="detail-msg"><span>合约销售品：</span>乐享299</p>
+                                    <p class="detail-msg"><span>合约销售品：</span><em ng-bind="modifiedOrderCharge.offerName"></em></p>
                                 </div>
                             </div>
                         </div>
                         <div class="row mt10 dashed-line">
                             <div class="col-xs-3">
                                 <div class="form-group">
-                                    <p class="detail-msg"><span>受理员工：</span>张学东</p>
+                                    <p class="detail-msg"><span>受理员工：</span><em ng-bind="modifiedOrderCharge.staffName"></em></p>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group">
-                                    <p class="detail-msg"><span>受理渠道：</span>北大街营业厅</p>
+                                    <p class="detail-msg"><span>受理渠道：</span><em ng-bind="modifiedOrderCharge.channelName"></em></p>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group">
-                                    <p class="detail-msg"><span>订单类型：</span>合约销售</p>
+                                    <p class="detail-msg"><span>订单类型：</span><em ng-bind="modifiedOrderCharge.orderType | orderTypeFilter"></em></p>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group">
-                                    <p class="detail-msg"><span>订单日期：</span>2016-11-01</p>
+                                    <p class="detail-msg"><span>订单日期：</span><em ng-bind="modifiedOrderCharge.orderDate"></em></p>
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt15 high60 dashed-line">
+                        <div class="row mt15 terminal-box">
                             <div class="col-xs-12">
                                 <div class="form-group other">
                                     <p class="detail-msg fl"><span>订单销售的终端信息：</span></p>
-                                    <div class="end fl">
-                                       <p class="p1"><span>终端：</span>OPPO R9</p>
-                                       <p class="p2"><span>串号：</span>Ac201923456</p>
-                                    </div>
-                                    <div class="end fl">
-                                        <p class="p1"><span>终端：</span>VIVO M8</p>
-                                        <p class="p2"><span>串号：</span>Ac201923433</p>
+                                    <div class="end fl" ng-cloak ng-repeat="terminal in modifiedOrderCharge.terminalList">
+                                        <p class="p1"><span>终端：</span><span ng-bind="terminal.terminalName"></span></p>
+                                        <p class="p2"><span>串号：</span><span ng-bind="terminal.instCode"></span></p>
                                     </div>
                                 </div>
                             </div>
@@ -87,9 +83,9 @@
                                 <div class="form-group">
                                     <p class="detail-msg fl"><span>卡项费用：</span></p>
                                     <div class="cost fl">
-                                        <p class="pone"><span class="spone">卡费</span><span class="sptwo">金额：-10元</span><span class="spthree"><i class="iconfont green">&#xe62e;</i>已收费</span></p>
-                                        <p class="pone"><span class="spone">手续费</span><span class="sptwo">金额：-10元</span><span class="spthree"><i class="iconfont green">&#xe62e;</i>已收费</span></p>
-                                        <p class="pone"><span class="spone">终端费</span><span class="sptwo">金额：-10元</span><span class="spthree"><i class="iconfont org">&#xe646;</i>未收费</span></p>
+                                        <p class="pone" ng-cloak ng-repeat="info in modifiedOrderCharge.infoList">
+                                            <span class="spone">{{info.feeItemName}}</span><span class="sptwo">金额：{{info.amount}}元</span><span class="spthree"><i class="iconfont" ng-class="{'green': info.chargeFlag == 'N', 'org': info.chargeFlag == 'Y'}" ng-if="info.chargeFlag == 'N'">&#xe646;</i><i class="iconfont" ng-class="{'green': info.chargeFlag == 'N', 'org': info.chargeFlag == 'Y'}" ng-if="info.chargeFlag == 'Y'">&#xe62e;</i>{{info.chargeFlag | chargeFlagFilter}}</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +100,7 @@
                         <div class="col-xs-12">
                             <div class="model-header">
                                 <img class="model-img" src="../../resources/images/icon-list.png">
-                                <p class="model-title">收银台：<span class="money">应收金额：<bold>¥4688.00</bold></span><span class="money">实收金额：<bold>¥4688.00</bold></span></p>          
+                                <p class="model-title">收银台：<span class="money">应收金额：<bold ng-bind="uncollected | currency"></bold></span><span class="money">实收金额：<bold ng-bind="cashAmount + posAmount | currency"></bold></span></p>
                             </div>
                         </div>
                     </div>
@@ -117,7 +113,7 @@
                                     <th width="5%">序号</th>
                                     <th width="33%"><i class="iconfont red-star">&#xe692;</i>收款方式</th>
                                     <th width="30%"><i class="iconfont red-star">&#xe692;</i>金额</th>
-                                    <th width="33%">单据号</th>                       
+                                    <th width="33%">单据号</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -129,9 +125,11 @@
                                         <p>现金</p>
                                     </td>
                                     <td>
-                                        <input type="number" class="enter-input" value="688">
+                                        <input type="number" class="enter-input" ng-model="cashAmount">
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <p>-</p>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -141,28 +139,25 @@
                                         <p>pos机</p>
                                     </td>
                                     <td>
-                                        <input type="number" class="enter-input" value="4000">
+                                        <input type="number" class="enter-input" ng-model="posAmount">
                                     </td>
                                     <td>
-                                        <input type="number" class="enter-input" value="34568992123412">
+                                        <input type="number" class="enter-input" ng-model="posNo">
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
-                            没有数据
-                        </p>
                     </div>
                 </div>
             </div>
             <div class="reason">
                 <div class="form-group another">
-                    <label class="control-label"><span><i class="iconfont red-star">&#xe692;</i>收银员：王磊</span>备注：</label>
-                    <textarea col="" row="20" id="remarks" class="form-control edit-txt"></textarea>
+                    <label class="control-label"><span><i class="iconfont red-star">&#xe692;</i>收银员：<em ng-bind="modifiedOrderCharge.staffName"></em> </span>备注：</label>
+                    <textarea col="" row="20" id="remarks" class="form-control edit-txt" ng-model="remark"></textarea>
                 </div>
                 <div class="text-center">
-                    <button ng-click="" ng-disabled="isForbid" class="btn btn-submit">确定</button>
-                    <button ng-click="" ng-disabled="isForbid" class="btn btn-cancel">取消</button>
+                    <button class="btn btn-submit" ng-click="comfirmCashOrder()">确定</button>
+                    <button class="btn btn-cancel">取消</button>
                 </div>
             </div>
         </div>
@@ -177,5 +172,6 @@
     <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
     <script src="../../resources/js/lodash.js"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/mock.js"></script>
     <script src="orderCharge.js"></script>
 </body>

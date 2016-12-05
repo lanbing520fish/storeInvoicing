@@ -173,7 +173,7 @@
 .form-group.other{
     padding-left:120px;
 }
-.form-group label {  
+.form-group label {
     width: 150px !important;
 }
 .enter-input {
@@ -391,7 +391,7 @@
     font-size: 12px;
 }
 .num-list li span{
-    display:inline-block;  
+    display:inline-block;
     padding:0 5px;
     border-radius: 3px;
     background: #eddbff;
@@ -427,6 +427,9 @@
     width:120px;
     text-align: right;
 }
+em{
+    font-style: normal;
+}
 .high60 {
     height: 60px;
 }
@@ -455,7 +458,10 @@
     font-size: 12px;
     font-weight: bold;
 }
-
+.terminal-box {
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #ccc;
+}
 .form-group {
     padding-left: 150px;
 }
@@ -470,9 +476,15 @@
     line-height:21px;
     background: #efefef;
     border-bottom:1px dashed #dcdcdc;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .end .p2{
     line-height:22px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .end p span{
     color:#aeaeae;
