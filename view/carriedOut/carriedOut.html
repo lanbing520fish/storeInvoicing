@@ -13,6 +13,7 @@
 </head>
 
 <body ng-app="carriedOutModule">
+
     <!-- DOM结构开始 -->
     <div class="history top-line wavy-line">
 
@@ -32,20 +33,20 @@
                 <p class="alarm-query-title fn-left">搜
                     <br/>索</p>
                 <div class="condition-query-box fn-right">
-                    <form name="monthConditionQueryForm" class="form-inline" role="form">
+                    <form name="conditionQueryForm" class="form-inline" role="form">
                         <div class="row">
                             <div class="col-xs-4">
                                 <div class="form-group">
-                                    <label class="control-label">调整日期：</label>
+                                    <label class="control-label">统计月份：</label>
                                     <div class="datepicker-input fn-left">
-                                        <input type="text" id="createStartMonth" class="form-control modify-input" uib-datepicker-popup readonly ng-model="monthConditionQueryForm.createStartMonth" is-open="startPopupOpened" min-date="minStartMonth" max-date="maxStartDate" datepicker-options="startMonthOptions" />
+                                        <input type="text" id="createStartDt" class="form-control modify-input" uib-datepicker-popup="{{format}}" readonly ng-model="conditionQueryForm.createStartDt" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" show-button-bar='false'/>
                                         <span class="icon_time" ng-click="startOpen()">
                                             <i class="glyphicon glyphicon-calendar"></i>
                                         </span>
                                     </div>
                                     <div class="datepicker-text fn-left">至</div>
                                     <div class="datepicker-input fn-left">
-                                        <input type="text" id="createEndMonth" class="form-control modify-input" uib-datepicker-popup readonly ng-model="monthConditionQueryForm.createEndMonth" is-open="endPopupOpened" min-date="minEndMonth" max-date="maxEndMonth" datepicker-options="endMonthOptions" />
+                                        <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup="{{format}}" readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" show-button-bar='false' />
                                         <span class="icon_time" ng-click="endOpen()">
                                             <i class="glyphicon glyphicon-calendar"></i>
                                         </span>
@@ -56,21 +57,41 @@
                                 <div class="form-group" ng-controller="cityCheckCtrl">
                                     <label class="control-label">所属地区：</label>
                                     <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
-                                    <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
-                                    <div class="city-check-box" ng-show="visible">
-                                        <uib-tabset active="key">
-                                            <uib-tab index="1" heading="省份">
-                                                <div class="city-content">
-                                                    <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('province', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                    <button ng-click="cityClose()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
+
+
+                                    <div class="city-check-box" ng-show="visible" ng-cloak>
+                                        <div id="area-box">
+                                            <div class="area-title">
+                                                <button type="button" class="close iconfont area_cloese" ng-click="cityClose()">&#xe611;</button>
+                                                <span class="area-title-choose">您选择了：</span>
+                                                <div class="choose-area">
+                                                    <span ng-if="selectedProvince" ng-bind="selectedProvince"></span><span ng-if="selectedCity" ng-bind="selectedCity"></span><span ng-if="selectedArea" ng-bind="selectedArea"></span>
                                                 </div>
-                                            </uib-tab>
-                                            <uib-tab index="2" heading="城市">
-                                                <div class="city-content">
-                                                    <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys[provinceIndex].children" ng-click="handleSelectCity('city', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
-                                                </div>
-                                            </uib-tab>
-                                        </uib-tabset>
+                                            </div>
+
+                                            <div class="area-list">
+                                                <ul>
+                                                    <li ng-repeat="item in cityList" class="areaProvince" ng-click="selectProvince($index,item)" ng-class="{areaSelected:$index===selectedRow}">{{item.name}}
+                                                        <ul>
+                                                            <li ng-repeat="itemcity in item.child" class="areaProvince" ng-click="selectCity($index, itemcity)" ng-class="{areaSelected:$index===selectedRowb}">{{itemcity.name}}
+                                                                <ul>
+                                                                    <li ng-repeat="itemarea in itemcity.child" ng-click="selectArea($index, itemarea)">{{itemarea.name}}</li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="area-footer">
+                                                <button class="btn btn-cancel" type="button" ng-click="cityClose()">关闭</button>
+                                                <button class="btn btn-submit" type="button" ng-click="cityChecked()">确定
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
                                 </div>
                             </div> 
                             <div class="col-xs-3">
@@ -82,7 +103,7 @@
                             </div>
                             <div class="col-xs-1">
                                 <div>
-                                    <button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                                    <button type="submit" class="btn btn-sm btn-stat-query"><i class="iconfont">&#xe600;</i> 查询</button>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +145,7 @@
                 </div>
             </div>
         </div>
-        <div ng-show="stepNum === 1">
+        <div ng-show="stepNum === 1"  ng-cloak>
             <!-- 条件查询 -->
             <div class="alarm-query fn-clear" ng-controller="conditionQuery">
                 <p class="alarm-query-title fn-left">搜
@@ -134,16 +155,16 @@
                         <div class="row">
                             <div class="col-xs-4">
                                 <div class="form-group">
-                                    <label class="control-label">调整日期：</label>
+                                    <label class="control-label">统计日期：</label>
                                     <div class="datepicker-input fn-left">
-                                        <input type="text" id="createStartDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createStartDt" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" />
+                                        <input type="text" id="createStartDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createStartDt" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" show-button-bar='false' />
                                         <span class="icon_time" ng-click="startOpen()">
                                             <i class="glyphicon glyphicon-calendar"></i>
                                         </span>
                                     </div>
                                     <div class="datepicker-text fn-left">至</div>
                                     <div class="datepicker-input fn-left">
-                                        <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" />
+                                        <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" show-button-bar='false' />
                                         <span class="icon_time" ng-click="endOpen()">
                                             <i class="glyphicon glyphicon-calendar"></i>
                                         </span>
@@ -154,21 +175,41 @@
                                 <div class="form-group" ng-controller="cityCheckCtrl">
                                     <label class="control-label">所属地区：</label>
                                     <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
-                                    <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
-                                    <div class="city-check-box" ng-show="visible">
-                                        <uib-tabset active="key">
-                                            <uib-tab index="1" heading="省份">
-                                                <div class="city-content">
-                                                    <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('province', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                    <button ng-click="cityClose()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
+
+
+                                    <div class="city-check-box" ng-show="visible" ng-cloak>
+                                        <div id="area-box">
+                                            <div class="area-title">
+                                                <button type="button" class="close iconfont area_cloese" ng-click="cityClose()">&#xe611;</button>
+                                                <span class="area-title-choose">您选择了：</span>
+                                                <div class="choose-area">
+                                                    <span ng-if="selectedProvince" ng-bind="selectedProvince"></span><span ng-if="selectedCity" ng-bind="selectedCity"></span><span ng-if="selectedArea" ng-bind="selectedArea"></span>
                                                 </div>
-                                            </uib-tab>
-                                            <uib-tab index="2" heading="城市">
-                                                <div class="city-content">
-                                                    <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys[provinceIndex].children" ng-click="handleSelectCity('city', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
-                                                </div>
-                                            </uib-tab>
-                                        </uib-tabset>
+                                            </div>
+
+                                            <div class="area-list">
+                                                <ul>
+                                                    <li ng-repeat="item in cityList" class="areaProvince" ng-click="selectProvince($index,item)" ng-class="{areaSelected:$index===selectedRow}">{{item.name}}
+                                                        <ul>
+                                                            <li ng-repeat="itemcity in item.child" class="areaProvince" ng-click="selectCity($index, itemcity)" ng-class="{areaSelected:$index===selectedRowb}">{{itemcity.name}}
+                                                                <ul>
+                                                                    <li ng-repeat="itemarea in itemcity.child" ng-click="selectArea($index, itemarea)">{{itemarea.name}}</li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="area-footer">
+                                                <button class="btn btn-cancel" type="button" ng-click="cityClose()">关闭</button>
+                                                <button class="btn btn-submit" type="button" ng-click="cityChecked()">确定
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
                                 </div>
                             </div> 
                             <div class="col-xs-3">
@@ -180,7 +221,7 @@
                             </div>
                             <div class="col-xs-1">
                                 <div>
-                                    <button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                                    <button type="submit" class="btn btn-sm btn-stat-query"><i class="iconfont">&#xe600;</i> 查询</button>
                                 </div>
                             </div>
                         </div>
@@ -222,8 +263,9 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+
 
 
 
@@ -233,6 +275,7 @@
     <script src="../../resources/js/angular-touch.min.js"></script>
     <script src="../../resources/js/angular-animate.min.js"></script>
     <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/angular-locale_zh-cn.js"></script>
     <script src="../../resources/js/jquery.min.js"></script>
     <script src="../../resources/js/bootstrap.min.js"></script>
     <script src="../../resources/js/ui-bootstrap.js"></script>

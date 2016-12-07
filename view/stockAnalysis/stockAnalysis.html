@@ -3,17 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>库存量TOP5统计</title>
+    <title>终端库存及库存周转分析</title>
     <link rel="stylesheet" href="../../resources/css/sweetalert.css">
     <link rel="stylesheet" href="../../resources/css/bootstrap.css">
     <link rel="stylesheet" href="../../resources/css/reset.css">
     <link rel="stylesheet" href="../../resources/css/common.css">
-    <link rel="stylesheet" href="inventoryStatistics.css">
+    <link rel="stylesheet" href="stockAnalysis.css">
+    
 </head>
 
-<body ng-app="inventoryModule">
+<body ng-app="carriedOutModule">
     <!-- DOM结构开始 -->
-    <div class="inventory top-line wavy-line">
+    <div class="history top-line wavy-line">
+
         <!-- 条件查询 -->
         <div class="alarm-query fn-clear" ng-controller="conditionQuery">
             <p class="alarm-query-title fn-left">搜
@@ -97,67 +99,67 @@
             </div>
         </div>
         <!-- 结果列表 -->
-        <div class="inventory-charts fn-clear">
-            <div class="fn-left charts-box" ng-controller="inventoryCtrl">
-                <div class="echartbox">
-                    <brand-chart id="brand" legend="legend" data="data"></brand-chart>
+        <div class="result-list fn-clear mt10" ng-controller="monthLineCtrl">
+            <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-8">
+                    <div>
+                        <monthline id="main" date="date" store="store" sales="sales" turndays="turndays"></monthline>
+                    </div> 
                 </div>
-                <div class="terminal-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th width="15%"></th>
-                                <th><p class="textleft">品牌</p></th>
-                                <th>库存量（台）</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="item in data">
-                                <td>
-                                    <p><span class="terminal-index" ng-bind="$index + 1"></span></p>
-                                </td>
-                                <td>
-                                    <p class="textleft" ng-bind="item.name"></p>
-                                </td>
-                                <td>
-                                    <p class="terminam-value" ng-bind="item.value"></p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <div class="col-xs-2"></div>
             </div>
-            <div class="fn-right charts-box" ng-controller="terminaltypeCtrl">
-                <div class="echartbox">
-                    <model-chart id="model" legend="legend" data="data"></model-chart>
+            <div class="row">
+                <div class="col-xs-1"></div>
+                <div class="col-xs-10">
+                    <p class="table-title">连续6个月的进货量统计</p>
+                    <div class="result-table">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="15%">统计月份</th>
+                                    <th>当日库存（台）</th>
+                                    <th>当日库存价值（元）</th>
+                                    <th>当日销量（台）</th>
+                                    <th>库存周转天数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in storeList">
+                                    <td>
+                                        <p ng-bind="item.date"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.store"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.value"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.sales"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.turndays"></p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
+                            没有数据
+                        </p>
+                    </div>
                 </div>
-                <div class="terminal-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th width="15%"></th>
-                                <th><p class="textleft">机型</p></th>
-                                <th>库存量（台）</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="item in data">
-                                <td>
-                                    <p><span class="terminal-index" ng-bind="$index + 1"></span></p>
-                                </td>
-                                <td>
-                                    <p class="textleft" ng-bind="item.name"></p>
-                                </td>
-                                <td>
-                                    <p class="terminam-value" ng-bind="item.value"></p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <div class="col-xs-1"></div>
             </div>
         </div>
+
+
     </div>
+
+
+
+
+	<script src="../../resources/js/echarts.min.js"></script>
     <script src="../../resources/js/angular.min.js"></script>
     <script src="../../resources/js/angular-touch.min.js"></script>
     <script src="../../resources/js/angular-animate.min.js"></script>
@@ -169,8 +171,9 @@
     <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
     <script src="../../resources/js/lodash.js"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
-    <script src="../../resources/js/echarts.min.js"></script>
-    <script src="inventoryStatistics.js"></script>
+
+    
+    <script src="stockAnalysis.js"></script>
 </body>
 
 </html>
