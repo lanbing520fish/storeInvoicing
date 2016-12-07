@@ -280,7 +280,7 @@
                                     <label class="control-label">地区：</label>
                                     <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
                                     <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
-                                    <div class="city-check-box" ng-show="visible">
+                                    <div class="city-check-box" ng-show="visible" ng-cloak>
                                         <uib-tabset active="key">
                                             <uib-tab index="1" heading="省份">
                                                 <div class="city-content">

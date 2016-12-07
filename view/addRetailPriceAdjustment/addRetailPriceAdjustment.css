@@ -239,6 +239,9 @@
 .btns .btn{
     margin-top:10px;
 }
+.no-data{
+    margin-bottom: 10px;
+}
 /*弹窗内容*/
 .btn-keyword {
     position: absolute;
@@ -594,5 +597,8 @@
     background-color: #a870e0;
     color: #fff;
     border-radius: 5px;
+}
+.zhezhao{
+   height:100%; width:100%; position:fixed; top:0; left:0; z-index:98;
 }
 /* 地区选择 */

@@ -19,7 +19,6 @@ angular
 
         // 选择商品
         $scope.$on('openEditQueryTypeModal', function(d, data) {
-            $rootScope.queryTypeResultList = [];
             $ctrl.open(data);
         });
         // 适应门店
@@ -214,6 +213,9 @@ angular
 
         $scope.cityCheck = function() {
             $scope.visible = !$scope.visible;
+        }
+        $scope.clHide = function() {
+            $scope.visible = false;
         }
         $scope.handleSelectCity = function(level, index, areaId, areaName) {
             var me = this;
