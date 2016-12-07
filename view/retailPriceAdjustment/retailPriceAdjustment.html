@@ -37,14 +37,14 @@
                             <div class="form-group">
                                 <label class="control-label">制单日期：</label>
                                 <div class="datepicker-input fn-left">
-                                    <input type="text" id="createStartDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createStartDt" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" />
+                                    <input type="text" id="createStartDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createStartDt" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" show-button-bar="false"/>
                                     <span class="icon_time" ng-click="startOpen()">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
                                 </div>
                                 <div class="datepicker-text fn-left">至</div>
                                 <div class="datepicker-input fn-left">
-                                    <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" />
+                                    <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" show-button-bar="false"/>
                                     <span class="icon_time" ng-click="endOpen()">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
@@ -265,6 +265,7 @@
     <script src="../../resources/js/jquery.min.js"></script>
     <script src="../../resources/js/bootstrap.min.js"></script>
     <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/angular-locale_zh-cn.js"></script>
     <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
     <script src="../../resources/js/lodash.js"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
