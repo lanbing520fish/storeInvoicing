@@ -1,5 +1,7 @@
 angular
-    .module('inventoryModule', ['ui.bootstrap'])
+    .module('carriedOutModule', ['ui.bootstrap'])
+    .run(['$rootScope', function($rootScope) {
+    }])
     .controller('conditionQuery', ['$scope', '$timeout', function($scope, $timeout) {
 
         $scope.conditionQueryForm = {
@@ -242,157 +244,129 @@ angular
 
 
     }])
-    .controller('inventoryCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
-        $scope.legend = ['中兴', '酷派', '三星', '华为', '乐视'];
-        $scope.data = [
-            {value: 30, name: '中兴'},
-            {value: 50, name: '酷派'},
-            {value: 150, name: '三星'},
-            {value: 100, name: '华为'},
-            {value: 200, name: '乐视'}
-        ];
-    }])
-    .directive('brandChart', function () {
-        return {
-            scope: {
-                id: "@",
-                legend: "=",
-                data: "="
+    /*echarts图标*/
+    .controller('monthLineCtrl', function($rootScope, $scope, $log) {
+        $rootScope.storeList = [
+            {
+              date:'11/01',
+              store: '28',
+              value: '39200',
+              sales: '5',
+              turndays: '4.6666667',
             },
-            restrict: 'E',
-            template: '<div style="height:400px; width:100%;"></div>',
-            replace: true,
-            link: function ($scope, iElm, iAttrs, controller) {
-                var option = {
-                    title: {
-                        text: '库存量TOP5品牌',
-                        x: 'center',
-                        textStyle: {
-                            'fontWeight': 'bolder'
-                        },
-                    },
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b} : {c} ({d}%)"
-                    },
-                    color: ['#b148cc', '#41a36e', '#29dcdc', '#e8be50', '#ff5baa'],
-                    legend: {
-                        x: 'right',
-                        y: '26%',
-                        orient: 'vertical',
-                        itemWidth: 14,
-                        itemHeight: 14,
-                        align: 'left',
-                        textStyle: {
-                            'color': '#393939'
-                        },
-                        data: $scope.legend
-                    },
-                    series: {
-                        name: '库存量',
-                        type: 'pie',
-                        radius: [60, 100],
-                        center: ['50%', '40%'],
-                        roseType: 'radius',
-                        label: {
-                            normal: {
-                                show: true,
-                                formatter: "{c}"
-                            },
-                            emphasis: {
-                                show: true
-                            }
-                        },
-                        lableLine: {
-                            normal: {
-                                show: true
-                            },
-                            emphasis: {
-                                show: true
-                            }
-                        },
-                        data: $scope.data
-                    }
-                };
-
-                var myChart = echarts.init(document.getElementById($scope.id));
-                myChart.setOption(option);
-            }
-        };
+            {
+              date:'11/02',
+              store: '31',
+              value: '41850',
+              sales: '7',
+              turndays: '5.1666667',
+            },
+            {
+              date:'11/03',
+              store: '35',
+              value: '51100',
+              sales: '8',
+              turndays: '5.8333333',
+            },
+            {
+              date:'11/04',
+              store: '34',
+              value: '47940',
+              sales: '6',
+              turndays: '5.6666667',
+            },
+            {
+              date:'11/05',
+              store: '44',
+              value: '52000',
+              sales: '6',
+              turndays: '6.6666667',
+            },
+            {
+              date:'11/06',
+              store: '35',
+              value: '51123',
+              sales: '8',
+              turndays: '5.8333333',
+            },
+            {
+              date:'11/07',
+              store: '31',
+              value: '41900',
+              sales: '7',
+              turndays: '5.1666667',
+            },
+        ];
+        $scope.date = [];
+        $scope.store = [];
+        $scope.sales = [];
+        $scope.turndays = [];
+        _.map($rootScope.storeList, function(elem, index){
+            $scope.date.push(elem.date);
+            $scope.store.push(elem.store);
+            $scope.sales.push(elem.sales);
+            $scope.turndays.push(elem.turndays);
+        });
     })
-    .controller('terminaltypeCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
-        $scope.legend = ['三星J3199', '中兴', '海信', 'iphone6s', '魅族'];
-        $scope.data = [
-            {value: 99, name: '三星J3199'},
-            {value: 88, name: '中兴'},
-            {value: 77, name: '海信'},
-            {value: 66, name: 'iphone6s'},
-            {value: 30, name: '魅族'}
-        ];
-    }])
-    .directive('modelChart', function () {
-        return {
-            scope: {
-                id: "@",
-                legend: "=",
-                data: "="
+    .directive('monthline', function() {
+        return {  
+            scope: {  
+                id: "@",  
+                date: "=",  
+                store: "=",
+                sales: "=",
+                turndays: "=",
             },
-            restrict: 'E',
-            template: '<div style="height:420px; width:100%;"></div>',
-            replace: true,
-            link: function ($scope, iElm, iAttrs, controller) {
+            restrict: 'E',  
+            template: '<div style="width:100%; height:200px;"></div>',  
+            replace: true,  
+            link: function($scope, element, attrs, controller) { 
                 var option = {
-                    title : {
-                        text: '库存量TOP5机型',
-                        x:'center',
-                        textStyle: {
-                            'fontWeight': 'bolder'
+                        tooltip: {
+                            trigger: 'axis'
                         },
-                    },
-                    tooltip : {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b} : {c} ({d}%)"
-                    },
-                    color: ['#f7d14d', '#e65252', '#79c564', '#48adc8', '#5b7ed6'],
-                    legend: {
-                        x: 'right',
-                        y: '23%',
-                        orient: 'vertical',
-                        itemWidth: 14,
-                        itemHeight: 14,
-                        align: 'left',
-                        data: $scope.legend
-                    },
-                    series : [
-                        {
-                            name: '库存量',
-                            type: 'pie',
-                            radius : '40%',
-                            center: ['50%', '38%'],
-                            data: $scope.data,
-                            label: {
-                                normal: {
-                                    show: true,
-                                    formatter: "{c}"
-                                },
-                                emphasis: {
-                                    show: true
-                                }
+                        legend: {
+                            data:['库存到达量','库存价值（元）','库存周转天数']
+                        },
+                        color: ['#41c9eb','#fd5c5c','#41be47'],
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: $scope.date
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                show: false,
                             },
-                            lableLine: {
-                                normal: {
-                                    show: true
-                                },
-                                emphasis: {
-                                    show: true
-                                }
+                            {
+                                show: false,
+                            }
+                        ],
+                        series: [
+                            {
+                                name:'库存到达量',
+                                type:'bar',
+                                barGap: 0,
+                                data: $scope.store
                             },
-                        }
-                    ]
-                };
-
-                var myChart = echarts.init(document.getElementById($scope.id));
-                myChart.setOption(option);
-            }
-        };
+                            {
+                                name:'库存价值（元）',
+                                type:'bar',
+                                barGap: 0,
+                                data: $scope.sales
+                            },
+                            {
+                                name:'库存周转天数',
+                                type:'line',
+                                yAxisIndex: 1,
+                                symbol: 'circle',
+                                data: $scope.turndays
+                            }
+                        ]
+                    };
+                var myChart = echarts.init(document.getElementById($scope.id),'macarons');  
+                myChart.setOption(option);  
+            }  
+        }
     })

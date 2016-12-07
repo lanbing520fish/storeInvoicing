@@ -9,31 +9,31 @@ angular
             $rootScope.stepNum = num + 1;
         };
     }])
-    .controller('monthConditionQuery', ['$scope', '$timeout', function($scope, $timeout) {
-
-        $scope.monthConditionQueryForm = {
-            createStartMonth: '', //制单日期开始
-            createEndMonth: '', //制单日期结束
+    .controller('monthConditionQuery', ['$scope', '$timeout', '$filter', function($scope, $timeout, $filter) {
+        $scope.format = "yyyy-MM";
+        $scope.conditionQueryForm = {
+            createStartDt: '', //制单日期开始
+            createEndDt: '', //制单日期结束
         };
 
         // 时间控件
-        $scope.startMonthOptions = {
+        
+        $scope.startDateOptions = {
             formatYear: 'yy',
-            maxMode: $scope.monthConditionQueryForm.createEndMonth,
-            startingMonth: 1
+            minMode: 'month',
+            maxDate: $scope.conditionQueryForm.createEndDt,
         };
-        $scope.endMonthOptions = {
+        $scope.endDateOptions = {
             formatYear: 'yy',
-            minMode: $scope.monthConditionQueryForm.createStartMonth,
-            // maxDate: new Date(),
-            startingMonth: 1
+            minMode: 'month',
+            minDate: $scope.conditionQueryForm.createStartDt,
         };
 
-        $scope.$watch('monthConditionQueryForm.createStartMonth', function(newValue) {
-            $scope.endDateOptions.minMonth = newValue;
+        $scope.$watch('conditionQueryForm.createStartDt', function(newValue) {
+            $scope.endDateOptions.minDate = newValue;
         });
-        $scope.$watch('monthConditionQueryForm.createEndMonth', function(newValue) {
-            $scope.startDateOptions.maxMonth = newValue;
+        $scope.$watch('conditionQueryForm.createEndDt', function(newValue) {
+            $scope.startDateOptions.maxDate = newValue;
         });
 
         $scope.startOpen = function() {
@@ -90,97 +90,238 @@ angular
         $scope.endPopupOpened = false;
     }])
     // 城市
-    .controller('cityCheckCtrl', ['$scope', function($scope) {
-        $scope.citys = [{
-            areaId: '009',
-            areaName: '江苏省',
-            children: [{
-                areaId: '025',
-                areaName: '南京市',
-            }, {
-                areaId: '026',
-                areaName: '常州市',
-            }]
-        }, {
-            areaId: '009',
-            areaName: '安徽省',
-            children: [{
-                areaId: '0551',
-                areaName: '合肥市',
-            }]
-        }];
+    .controller('cityCheckCtrl', ['$scope','$rootScope', function($scope, $rootScope) {
 
-        $scope.visible = false;
-        $scope.key = 1;
-        $scope.provinceIndex = '';
-        $scope.cityIndex = '';
-        $scope.areaId = '';
-        $scope.provinceName = '';
-        $scope.cityName = '';        
+        $scope.cityClose = function() {
+            $scope.visible = !$scope.visible;
+        };
+        $scope.clHide = function() {
+            $scope.visible = false;
+        };
+
+        $scope.cityList = [{
+                name: '江西省',
+                areaId: '001',
+                child: [
+                        {
+                            name: '南昌市',
+                            areaId: '001001',
+                            child: [
+                                {
+                                    name: '东湖区',
+                                    areaId:'001001001',
+                                }, {
+                                    name: '西湖区',
+                                    areaId:'001001002',
+                                }, {
+                                    name: '青云谱区',
+                                    areaId:'001001003',
+                                },
+                                {
+                                    name: '湾里区',
+                                    areaId:'001001004',
+                                }
+                            ]
+                        },
+                        {
+                            name: '景德镇市',
+                            areaId: '001002',
+                            child: [
+                                {
+                                    name: '昌江区',
+                                    areaId:'001002001',
+                                }, {
+                                    name: '珠山区',
+                                    areaId:'001002002',
+                                }, {
+                                    name: '乐平市',
+                                    areaId:'001002003',
+                                },
+                                {
+                                    name: '浮梁县',
+                                    areaId:'001002004',
+                                }
+                            ]
+                        }
+                    ]
+            },
+            {
+                name: '吉林省',
+                areaId: '002',
+                child: [
+                        {
+                            name: '长春市',
+                            areaId: '002001',
+                            child: [
+                                {
+                                    name: '朝阳区',
+                                    areaId:'002001001',
+                                }, {
+                                    name: '南关区',
+                                    areaId:'002001002',
+                                }, {
+                                    name: '宽城区',
+                                    areaId:'002001003',
+                                },
+                                {
+                                    name: '二道区',
+                                    areaId:'002001004',
+                                }
+                            ]
+                        },
+                        {
+                            name: '吉林市',
+                            areaId: '002002',
+                            child: [
+                                {
+                                    name: '船营区',
+                                    areaId:'002002001',
+                                }, {
+                                    name: '昌邑区',
+                                    areaId:'002002002',
+                                }, {
+                                    name: '龙潭区',
+                                    areaId:'002002003',
+                                },
+                                {
+                                    name: '丰满区',
+                                    areaId:'002002004',
+                                }
+                            ]
+                        }
+                    ]
+            },
+            {
+                name: '黑龙江省',
+                areaId: '003',
+                child: [
+                        {
+                            name: '齐齐哈尔市',
+                            areaId: '003001',
+                        },
+                        {
+                            name: '牡丹江市',
+                            areaId: '003002',
+                        }
+                    ]
+            },
+            {
+                name: '上海市',
+                areaId: '004'
+            },
+            {
+                name: '江苏省',
+                areaId: '005',
+                child: [
+                        {
+                            name: '南京市',
+                            areaId: '005001',
+                            child: [
+                                {
+                                    name: '雨花区',
+                                    areaId:'005001001',
+                                }, {
+                                    name: '建邺',
+                                    areaId:'005001002',
+                                }, {
+                                    name: '鼓楼区',
+                                    areaId:'005001003',
+                                },
+                                {
+                                    name: '浦口区',
+                                    areaId:'006001004',
+                                }
+                            ]
+                        },
+                        {
+                            name: '苏州市',
+                            areaId: '005002',
+                            child: [
+                                {
+                                    name: '姑苏区',
+                                    areaId:'005002001',
+                                }, {
+                                    name: '虎丘区',
+                                    areaId:'005002002',
+                                }, {
+                                    name: '吴中区',
+                                    areaId:'005002003',
+                                },
+                                {
+                                    name: '相城区',
+                                    areaId:'005002004',
+                                }
+                            ]
+                        }
+                    ]
+            }
+        ];
+
+        $scope.selectedRow = null; //一级索引值
+        $scope.selectedRowb = null; //二级索引值
+        $scope.selectedProvince = '',
+        $scope.selectedCity = '',
+        $scope.selectedArea = '',
         $scope.checkedAreaName = '';
 
-        $scope.cityCheck = function() {
-            $scope.visible = !$scope.visible;
-        }
-        $scope.handleSelectCity = function(level, index, areaId, areaName) {
-            let me = this;
-            switch (level) {
-                case 'province':
-                    $scope.key = 2;
-                    $scope.provinceIndex = index;
-                    $scope.provinceName = areaName;
-                    break;
-                case 'city':                   
-                    $scope.cityIndex = index;
-                    $scope.areaId = areaId;
-                    $scope.cityName = areaName;
-                    me.handleSubmitBtn(level);
-                    break;           
-            }
+        $scope.selectProvince = function(index,item) {
+            $scope.selectedRow = index;
+            $scope.selectedRowb = null;
+            $scope.selectedProvince = item.name;
+            $scope.selectedCity = '';
+            $scope.selectedArea = '';
         };
-        $scope.handleSubmitBtn = function(level) {
-            let me = this;
-            switch (level) {
-                case 'province':
-                    $scope.checkedAreaName = $scope.provinceName;
-                    break;
-                case 'city':
-                    $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName;
-                    $scope.visible = false;
-                    break;
-            }
-        }
+
+        $scope.selectCity = function(rowb, item) {
+            event.stopPropagation();
+            $scope.selectedRowb = rowb;
+            $scope.selectedCity = ' - ' + item.name;
+            $scope.selectedArea = '';
+        };
+
+        $scope.selectArea = function(rowb, item) {
+            event.stopPropagation();
+            $scope.selectedArea = ' - ' + item.name; 
+        };
+
+        $scope.cityChecked = function(){
+            $scope.checkedAreaName = $scope.selectedProvince + $scope.selectedCity + $scope.selectedArea;
+            $scope.visible = !$scope.visible;
+        };
+
+
     }])
     /*echarts图标1*/
     .controller('monthLineCtrl', function($rootScope, $scope, $log) {
-        $rootScope.carriedoOutList = [
+        $rootScope.salesList = [
             {
+              date:'2016/01',
+              sales:[10,10,30,50,20,40,20]
+            },{
               date:'2016/02',
-              price:'110'
+              sales:[10,20,40,50,30,20,30]
             },{
               date:'2016/03',
-              price:'56'
+              sales:[0,10,50,60,20,30,30]
             },{
               date:'2016/04',
-              price:'70'
+              sales:[0,0,60,60,20,30,30]
             },{
               date:'2016/05',
-              price:'100'
+              sales:[0,10,50,60,20,30,30]
             },{
               date:'2016/06',
-              price:'89'
-            },{
-              date:'2016/07',
-              price:'140'
+              sales:[10,20,40,40,30,20,30]
             }
         ];
         $scope.date = [];
-        $scope.price = [];
+        $scope.sales = [];
+        
+        
+        
 
-        _.map($rootScope.carriedoOutList, function(elem, index) {
-          $scope.date.push(elem.date);
-          $scope.price.push(elem.price);
-        })
+
+        $scope.legend = ['[0,300]', '[300,700]','[700,1000]','[1000,1500]','[1500,2000]','[2000,3000]','[3000+]','总销量'];
 
     })
     .directive('monthline', function() {
@@ -188,7 +329,8 @@ angular
             scope: {  
                 id: "@",  
                 date: "=",  
-                price: "="
+                price: "=",
+                legend: "="
             },  
             restrict: 'E',  
             template: '<div style="width:100%; height:300px;"></div>',  
@@ -202,8 +344,12 @@ angular
                         }
                     },
                     legend: {
-                        data: ['[0,300]', '[300,700]','[700,1000]','[1000,1500]','[1500,2000]','[2000,3000]','[3000+]','总销量']
+                        data: $scope.legend,
+                        width: 400,
+                        left: 'center',
+                        itemHeight: 8
                     },
+                    color: ['#b770ff', '#9f9f9f', '#fbbb0b', '#3f92e7', '#4bc863', '#99c3f4', '#fd5c5c','#41c9eb'],
                     grid: {
                         left: '3%',
                         right: '4%',
@@ -211,11 +357,13 @@ angular
                         containLabel: true
                     },
                     yAxis:  {
-                        type: ''
+                        show: false,
+                        type: '',
+                        // max: 300
                     },
                     xAxis: {
                         type: 'category',
-                        data: ['2016/01','2016/02','2016/03','2016/04','2016/05','2016/06']
+                        data: ['2016/01','2016/02','2016/03','2016/04','2016/05','2016/06'],
                     },
                     series: [
                         {
@@ -224,11 +372,11 @@ angular
                             stack: '销量',
                             label: {
                                 normal: {
-                                    show: true,
+                                    show: false,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [10, 20, 30, 40, 50, 60]
+                            data: [10, 10, 0, 0, 200, 10]
                         },
                         {
                             name: '[300,700]',
@@ -236,11 +384,11 @@ angular
                             stack: '销量',
                             label: {
                                 normal: {
-                                    show: true,
+                                    show: false,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [20, 40, 30, 60, 70, 50]
+                            data: [10, 20, 10, 0, 10, 20]
                         },
                         {
                             name: '[700,1000]',
@@ -248,11 +396,11 @@ angular
                             stack: '销量',
                             label: {
                                 normal: {
-                                    show: true,
+                                    show: false,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [20, 18, 19, 23, 29, 33]
+                            data: [30, 40, 50, 60, 50, 40]
                         },
                         {
                             name: '[1000,1500]',
@@ -260,11 +408,11 @@ angular
                             stack: '销量',
                             label: {
                                 normal: {
-                                    show: true,
+                                    show: false,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [15, 21, 20, 15, 19, 33]
+                            data: [50, 50, 60, 60, 60, 40]
                         },
                         {
                             name: '[1500,2000]',
@@ -272,11 +420,11 @@ angular
                             stack: '销量',
                             label: {
                                 normal: {
-                                    show: true,
+                                    show: false,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [80, 32, 90, 34, 12, 13]
+                            data: [20, 30, 20, 20, 20, 30]
                         },
                         {
                             name: '[2000,3000]',
@@ -284,11 +432,11 @@ angular
                             stack: '销量',
                             label: {
                                 normal: {
-                                    show: true,
+                                    show: false,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [20, 32, 10, 30, 90, 30]
+                            data: [40, 20, 30, 30, 30, 20]
                         },
                         {
                             name: '[3000+]',
@@ -296,19 +444,20 @@ angular
                             stack: '销量',
                             label: {
                                 normal: {
-                                    show: true,
+                                    show: false,
                                     position: 'insideRight'
                                 }
                             },
-                            data: [10, 10, 10, 10, 10, 10]
+                            data: [20, 30, 30, 30, 30, 30]
                         },
                         {
                             name: '总销量',
                             type: 'line',
                             stack: '总销量',
+                            symbol: 'circle',
                             label: {
                                 normal: {
-                                    show: true,
+                                    show: false,
                                     // position: ''
                                 }
                             },
@@ -316,7 +465,7 @@ angular
                                 fontSize: 12,
                                 color: '#000'
                             },
-                            data: [175, 174, 209, 212, 280, 229]
+                            data: [180, 200, 200, 200, 400, 190]
                         }
                     ]
                 };  
@@ -327,112 +476,184 @@ angular
     })
     /*echarts图标2*/
     .controller('dayLineCtrl', function($rootScope, $scope, $log) {
-        $rootScope.dayCarriedoOutList = [
+        $rootScope.daysalesList = [
             {
-              day:'2016/02/02',
-              price:'10'
+              date:'2016/02/01',
+              sales:[10,10,30,50,20,40,20]
             },{
-              day:'2016/02/03',
-              price:'5'
+              date:'2016/02/02',
+              sales:[10,20,40,50,30,20,30]
             },{
-              day:'2016/02/04',
-              price:'7'
+              date:'2016/02/03',
+              sales:[0,10,50,60,20,30,30]
             },{
-              day:'2016/02/05',
-              price:'12'
+              date:'2016/02/04',
+              sales:[0,0,60,60,20,30,30]
             },{
-              day:'2016/02/06',
-              price:'8'
+              date:'2016/02/05',
+              sales:[0,10,50,60,20,30,30]
             },{
-              day:'2016/02/07',
-              price:'14'
+              date:'2016/02/06',
+              sales:[10,20,40,40,30,20,30]
             }
         ];
-        $scope.day = [];
-        $scope.price = [];
+        $scope.date = [];
+        $scope.sales = [];
+        
+        
+        
 
-        _.map($rootScope.dayCarriedoOutList, function(elem, index) {
-          $scope.day.push(elem.day);
-          $scope.price.push(elem.price);
-        })
+
+        $scope.legend = ['[0,300]', '[300,700]','[700,1000]','[1000,1500]','[1500,2000]','[2000,3000]','[3000+]','总销量'];
 
     })
-    .directive('day', function() { 
+    .directive('dayline', function() {
         return {  
             scope: {  
                 id: "@",  
-                day: "=",  
-                price: "="
+                date: "=",  
+                price: "=",
+                legend: "="
             },  
             restrict: 'E',  
             template: '<div style="width:100%; height:300px;"></div>',  
             replace: true,  
             link: function($scope, element, attrs, controller) { 
                 var option = {
-                              legend: {
-                                  data: ['进货量(台)'],
-                                  align: 'left',
-                                  right: 10,
-                                  top: 20,
-                                  textStyle: {
-                                      fontSize: 12,
-                                      color: '#a0a0a0'
-                                  }
-                              },
-                              color: ['#1bc48e'],
-                              tooltip : {
-                                  trigger: 'axis',
-                                  axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                                      type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                                  }
-                              },
-                              grid: {
-                                  left: '3%',
-                                  right: '4%',
-                                  bottom: '3%',
-                                  containLabel: true
-                              },
-                              xAxis : [
-                                  {
-                                      type : 'category',
-                                      data : $scope.day,
-                                      axisTick: {
-                                          alignWithLabel: true
-                                      }
-                                  }
-                              ],
-                              yAxis : [
-                                  {
-                                      type : 'value'
-                                  }
-                              ],
-                              series : [
-                                  {
-                                      name:'进货量(台)',
-                                      type:'bar',
-                                      barWidth: '40%',
-                                      data: $scope.price
-                                  }
-                              ]
-                          };  
-                var myChart = echarts.init(document.getElementById($scope.id),'macarons');
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    legend: {
+                        data: $scope.legend,
+                        width: 400,
+                        left: 'center',
+                        itemHeight: 8
+                    },
+                    color: ['#b770ff', '#9f9f9f', '#fbbb0b', '#3f92e7', '#4bc863', '#99c3f4', '#fd5c5c','#41c9eb'],
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    yAxis:  {
+                        show: false,
+                        type: '',
+                        // max: 300
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ['2016/02/01','2016/02/02','2016/02/03','2016/02/04','2016/02/05','2016/02/06'],
+                    },
+                    series: [
+                        {
+                            name: '[0,300]',
+                            type: 'bar',
+                            stack: '销量',
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'insideRight'
+                                }
+                            },
+                            data: [10, 10, 0, 0, 200, 10]
+                        },
+                        {
+                            name: '[300,700]',
+                            type: 'bar',
+                            stack: '销量',
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'insideRight'
+                                }
+                            },
+                            data: [10, 20, 10, 0, 10, 20]
+                        },
+                        {
+                            name: '[700,1000]',
+                            type: 'bar',
+                            stack: '销量',
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'insideRight'
+                                }
+                            },
+                            data: [30, 40, 50, 60, 50, 40]
+                        },
+                        {
+                            name: '[1000,1500]',
+                            type: 'bar',
+                            stack: '销量',
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'insideRight'
+                                }
+                            },
+                            data: [50, 50, 60, 60, 60, 40]
+                        },
+                        {
+                            name: '[1500,2000]',
+                            type: 'bar',
+                            stack: '销量',
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'insideRight'
+                                }
+                            },
+                            data: [20, 30, 20, 20, 20, 30]
+                        },
+                        {
+                            name: '[2000,3000]',
+                            type: 'bar',
+                            stack: '销量',
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'insideRight'
+                                }
+                            },
+                            data: [40, 20, 30, 30, 30, 20]
+                        },
+                        {
+                            name: '[3000+]',
+                            type: 'bar',
+                            stack: '销量',
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'insideRight'
+                                }
+                            },
+                            data: [20, 30, 30, 30, 30, 30]
+                        },
+                        {
+                            name: '总销量',
+                            type: 'line',
+                            stack: '总销量',
+                            symbol: 'circle',
+                            label: {
+                                normal: {
+                                    show: false,
+                                    // position: ''
+                                }
+                            },
+                            textStyle: {
+                                fontSize: 12,
+                                color: '#000'
+                            },
+                            data: [180, 200, 200, 200, 400, 190]
+                        }
+                    ]
+                };  
+                var myChart = echarts.init(document.getElementById($scope.id),'macarons');  
                 myChart.setOption(option);  
             }  
         }
     })
-    // 分页控制器
-    .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
-        $scope.$on('pageChange', function() {
-            $scope.currentPage = 1;
-        });
-
-        $scope.maxSize = 10;
-        $scope.setPage = function(pageNo) {
-            $scope.currentPage = pageNo;
-        };
-
-        $scope.pageChanged = function() {
-            $scope.queryTypeFormSubmit($scope.currentPage);
-            $log.log('Page changed to: ' + $scope.currentPage);
-        };
-    }]);

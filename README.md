@@ -60,6 +60,9 @@
     
 * **统计分析**
     * 库存量TOP5统计分析 **inventoryStatistics**
+    * 进货量统计 **carriedOut**
+    * 终端分价位段销量分布统计 **salesStatistics**
+    * 终端库存及库存周转分析 **stockAnalysis**
 
 * **统计分析** 
     * 登录页 **index**

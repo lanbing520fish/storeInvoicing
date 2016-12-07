@@ -8,32 +8,34 @@ angular
         $rootScope.forward = function(num) { // 返回（num+1）
             $rootScope.stepNum = num + 1;
         };
+        
     }])
-    .controller('monthConditionQuery', ['$scope', '$timeout', function($scope, $timeout) {
-
-        $scope.monthConditionQueryForm = {
-            createStartMonth: '', //制单日期开始
-            createEndMonth: '', //制单日期结束
+    .controller('monthConditionQuery', ['$scope', '$timeout', '$filter', function($scope, $timeout, $filter) {
+        $scope.format = "yyyy年MM月";
+        $scope.conditionQueryForm = {
+            createStartDt: '', //制单日期开始
+            createEndDt: '', //制单日期结束
         };
+
 
         // 时间控件
-        $scope.startMonthOptions = {
+        
+        $scope.startDateOptions = {
             formatYear: 'yy',
-            maxMode: $scope.monthConditionQueryForm.createEndMonth,
-            startingMonth: 1
+            minMode: 'month',
+            maxDate: $scope.conditionQueryForm.createEndDt,
         };
-        $scope.endMonthOptions = {
+        $scope.endDateOptions = {
             formatYear: 'yy',
-            minMode: $scope.monthConditionQueryForm.createStartMonth,
-            // maxDate: new Date(),
-            startingMonth: 1
+            minMode: 'month',
+            minDate: $scope.conditionQueryForm.createStartDt,
         };
 
-        $scope.$watch('monthConditionQueryForm.createStartMonth', function(newValue) {
-            $scope.endDateOptions.minMonth = newValue;
+        $scope.$watch('conditionQueryForm.createStartDt', function(newValue) {
+            $scope.endDateOptions.minDate = newValue;
         });
-        $scope.$watch('monthConditionQueryForm.createEndMonth', function(newValue) {
-            $scope.startDateOptions.maxMonth = newValue;
+        $scope.$watch('conditionQueryForm.createEndDt', function(newValue) {
+            $scope.startDateOptions.maxDate = newValue;
         });
 
         $scope.startOpen = function() {
@@ -89,67 +91,208 @@ angular
         $scope.startPopupOpened = false;
         $scope.endPopupOpened = false;
     }])
-    // 城市
-    .controller('cityCheckCtrl', ['$scope', function($scope) {
-        $scope.citys = [{
-            areaId: '009',
-            areaName: '江苏省',
-            children: [{
-                areaId: '025',
-                areaName: '南京市',
-            }, {
-                areaId: '026',
-                areaName: '常州市',
-            }]
-        }, {
-            areaId: '009',
-            areaName: '安徽省',
-            children: [{
-                areaId: '0551',
-                areaName: '合肥市',
-            }]
-        }];
 
-        $scope.visible = false;
-        $scope.key = 1;
-        $scope.provinceIndex = '';
-        $scope.cityIndex = '';
-        $scope.areaId = '';
-        $scope.provinceName = '';
-        $scope.cityName = '';        
+    // 城市
+    .controller('cityCheckCtrl', ['$scope','$rootScope', function($scope, $rootScope) {
+
+        $scope.cityClose = function() {
+            $scope.visible = !$scope.visible;
+        };
+        $scope.clHide = function() {
+            $scope.visible = false;
+        };
+
+        $scope.cityList = [{
+                name: '江西省',
+                areaId: '001',
+                child: [
+                        {
+                            name: '南昌市',
+                            areaId: '001001',
+                            child: [
+                                {
+                                    name: '东湖区',
+                                    areaId:'001001001',
+                                }, {
+                                    name: '西湖区',
+                                    areaId:'001001002',
+                                }, {
+                                    name: '青云谱区',
+                                    areaId:'001001003',
+                                },
+                                {
+                                    name: '湾里区',
+                                    areaId:'001001004',
+                                }
+                            ]
+                        },
+                        {
+                            name: '景德镇市',
+                            areaId: '001002',
+                            child: [
+                                {
+                                    name: '昌江区',
+                                    areaId:'001002001',
+                                }, {
+                                    name: '珠山区',
+                                    areaId:'001002002',
+                                }, {
+                                    name: '乐平市',
+                                    areaId:'001002003',
+                                },
+                                {
+                                    name: '浮梁县',
+                                    areaId:'001002004',
+                                }
+                            ]
+                        }
+                    ]
+            },
+            {
+                name: '吉林省',
+                areaId: '002',
+                child: [
+                        {
+                            name: '长春市',
+                            areaId: '002001',
+                            child: [
+                                {
+                                    name: '朝阳区',
+                                    areaId:'002001001',
+                                }, {
+                                    name: '南关区',
+                                    areaId:'002001002',
+                                }, {
+                                    name: '宽城区',
+                                    areaId:'002001003',
+                                },
+                                {
+                                    name: '二道区',
+                                    areaId:'002001004',
+                                }
+                            ]
+                        },
+                        {
+                            name: '吉林市',
+                            areaId: '002002',
+                            child: [
+                                {
+                                    name: '船营区',
+                                    areaId:'002002001',
+                                }, {
+                                    name: '昌邑区',
+                                    areaId:'002002002',
+                                }, {
+                                    name: '龙潭区',
+                                    areaId:'002002003',
+                                },
+                                {
+                                    name: '丰满区',
+                                    areaId:'002002004',
+                                }
+                            ]
+                        }
+                    ]
+            },
+            {
+                name: '黑龙江省',
+                areaId: '003',
+                child: [
+                        {
+                            name: '齐齐哈尔市',
+                            areaId: '003001',
+                        },
+                        {
+                            name: '牡丹江市',
+                            areaId: '003002',
+                        }
+                    ]
+            },
+            {
+                name: '上海市',
+                areaId: '004'
+            },
+            {
+                name: '江苏省',
+                areaId: '005',
+                child: [
+                        {
+                            name: '南京市',
+                            areaId: '005001',
+                            child: [
+                                {
+                                    name: '雨花区',
+                                    areaId:'005001001',
+                                }, {
+                                    name: '建邺',
+                                    areaId:'005001002',
+                                }, {
+                                    name: '鼓楼区',
+                                    areaId:'005001003',
+                                },
+                                {
+                                    name: '浦口区',
+                                    areaId:'006001004',
+                                }
+                            ]
+                        },
+                        {
+                            name: '苏州市',
+                            areaId: '005002',
+                            child: [
+                                {
+                                    name: '姑苏区',
+                                    areaId:'005002001',
+                                }, {
+                                    name: '虎丘区',
+                                    areaId:'005002002',
+                                }, {
+                                    name: '吴中区',
+                                    areaId:'005002003',
+                                },
+                                {
+                                    name: '相城区',
+                                    areaId:'005002004',
+                                }
+                            ]
+                        }
+                    ]
+            }
+        ];
+
+        $scope.selectedRow = null; //一级索引值
+        $scope.selectedRowb = null; //二级索引值
+        $scope.selectedProvince = '',
+        $scope.selectedCity = '',
+        $scope.selectedArea = '',
         $scope.checkedAreaName = '';
 
-        $scope.cityCheck = function() {
-            $scope.visible = !$scope.visible;
-        }
-        $scope.handleSelectCity = function(level, index, areaId, areaName) {
-            let me = this;
-            switch (level) {
-                case 'province':
-                    $scope.key = 2;
-                    $scope.provinceIndex = index;
-                    $scope.provinceName = areaName;
-                    break;
-                case 'city':                   
-                    $scope.cityIndex = index;
-                    $scope.areaId = areaId;
-                    $scope.cityName = areaName;
-                    me.handleSubmitBtn(level);
-                    break;           
-            }
+        $scope.selectProvince = function(index,item) {
+            $scope.selectedRow = index;
+            $scope.selectedRowb = null;
+            $scope.selectedProvince = item.name;
+            $scope.selectedCity = '';
+            $scope.selectedArea = '';
         };
-        $scope.handleSubmitBtn = function(level) {
-            let me = this;
-            switch (level) {
-                case 'province':
-                    $scope.checkedAreaName = $scope.provinceName;
-                    break;
-                case 'city':
-                    $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName;
-                    $scope.visible = false;
-                    break;
-            }
-        }
+
+        $scope.selectCity = function(rowb, item) {
+            event.stopPropagation();
+            $scope.selectedRowb = rowb;
+            $scope.selectedCity = ' - ' + item.name;
+            $scope.selectedArea = '';
+        };
+
+        $scope.selectArea = function(rowb, item) {
+            event.stopPropagation();
+            $scope.selectedArea = ' - ' + item.name; 
+        };
+
+        $scope.cityChecked = function(){
+            $scope.checkedAreaName = $scope.selectedProvince + $scope.selectedCity + $scope.selectedArea;
+            $scope.visible = !$scope.visible;
+        };
+
+
     }])
     /*echarts图标1*/
     .controller('monthLineCtrl', function($rootScope, $scope, $log) {
@@ -341,19 +484,4 @@ angular
             }  
         }
     })
-    // 分页控制器
-    .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
-        $scope.$on('pageChange', function() {
-            $scope.currentPage = 1;
-        });
 
-        $scope.maxSize = 10;
-        $scope.setPage = function(pageNo) {
-            $scope.currentPage = pageNo;
-        };
-
-        $scope.pageChanged = function() {
-            $scope.queryTypeFormSubmit($scope.currentPage);
-            $log.log('Page changed to: ' + $scope.currentPage);
-        };
-    }]);

@@ -4,6 +4,9 @@
 .color-violet {
     color: #a870e0;
 }
+.mt10{
+    margin-top: 10px;
+}
 .history {
     min-height: 20px;
     margin: 10px;
@@ -350,3 +353,124 @@
     height: 100%;
 }
 /*tab切换*/
+
+/*地区选择*/
+#area-box{
+    width: 100%;
+}
+.area-title{
+    height: 34px;
+    line-height: 34px;
+    border-bottom: 1px solid #dcdcdc;
+    padding-left: 10px;
+    position: relative;
+}
+.area-title span{
+    float: left;
+    display: inline-block;
+    height: 34px;
+    width: auto;
+}
+.choose-area{
+    float: left;
+    display: inline-block;
+}
+.choose-area span:last-child{
+    float: left;
+    display: inline-block;
+    color: #7a2bca;
+    font-size: 14px;
+    background: url(../../resources/images/icon_check.png) no-repeat right center;
+    padding-right: 20px;
+}
+.area-title-choose{
+    color: #8b8b8b;
+}
+.area-list{
+    padding: 5px 20px 0px;
+    height: 100px;
+    overflow: auto;
+}
+.area-list li{
+    background: url(../../resources/images/area_close.jpg) no-repeat left 3px;
+    padding-left: 20px;
+    min-height: 22px;
+    height: auto!important;
+    line-height: 22px;
+}
+.area-list li.area-selected{
+    background: url(../../resources/images/area_check.jpg) no-repeat left 3px!important;
+    padding-left: 20px;
+    min-height: 22px;
+    height: auto!important;
+    line-height: 22px;
+}
+.area-list li ul li ul li{
+    background: url(../../resources/images/area_list.png) no-repeat left center;
+    padding-left: 10px;
+    min-height: 22px;
+    height: auto!important;
+    line-height: 22px;
+}
+.area-footer {
+    position: relative;
+    height: 40px;
+    padding: 8px 0 0;
+    margin-top: 5px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #e0e0e0;
+    text-align: center !important;
+}
+.area_cloese{
+    position: absolute;
+    right: 5px;
+    top: 10px;
+}
+.area-list li{
+    cursor: pointer;
+}
+.areaProvince>ul {
+    display: none;
+}
+.areaProvince.areaSelected>ul {
+    display: block;
+}
+.areaProvince.areaSelected{
+    display: block;
+    background: url(../../resources/images/area_check.jpg) no-repeat left 3px!important;
+}
+.zhezhao {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 98;
+}
+.zhezhao{
+   height:100%; width:100%; position:fixed; top:0; left:0; z-index:98;
+}
+/*地区选择*/
+
+.btn-stat-query{
+    width: 100%;
+    height: 25px;
+    padding: 0;
+    background-color: #a870e0;
+    border-color: #a870e0;
+    border-radius: 15px;
+    line-height: 25px;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+}
+.btn-stat-query:hover {
+    background-color: #9249db;
+    border-color: #9249db;
+    color: #fff;
+}
+.btn-stat-query.focus {
+    background-color: #9249db;
+    border-color: #9249db;
+    color: #fff;
+}

@@ -4,6 +4,9 @@
 .color-violet {
     color: #a870e0;
 }
+.mt10{
+    margin-top: 10px;
+}
 .history {
     min-height: 20px;
     margin: 10px;
@@ -308,7 +311,6 @@
     height: 40px;
     line-height: 40px;
     font-size: 14px;
-    margin-top: 15px;
 }
 
 /*tab切换*/
