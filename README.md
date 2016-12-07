@@ -63,12 +63,13 @@
     * 进货量统计 **carriedOut**
     * 终端分价位段销量分布统计 **salesStatistics**
     * 终端库存及库存周转分析 **stockAnalysis**
-
-* **统计分析** 
     * 登录页 **index**
-    * 库存量TOP5统计 **storageCount**
 
 * **集中收银**
     * 集中收银 **concentratedCharge** 
     * 订单计费 **orderCharge** 
     * 订单退费 **orderRefund** 
+
+* **价格管理**
+    * 零售调价 **retailPriceAdjustment** 
+    * 新零售调价单 **addRetailPriceAdjustment** 

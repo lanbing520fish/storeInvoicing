@@ -2,7 +2,7 @@ angular
     .module('addStoreManageModule', ['ui.bootstrap'])
 
     .controller('purchaseQueryCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
-        // 选择门店
+        // 选择经营主体
         $scope.openStoreQueryType = function() {
             $scope.$emit('openStoreQueryTypeModal');
         };
