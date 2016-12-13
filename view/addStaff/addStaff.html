@@ -69,13 +69,13 @@
                                     <!--
                                     <input type="checkbox"> 不需要使用系统 -->
                                     <span class="self-buy">
-                                        <input id="isUseSystem" type="checkbox" ng-click="sub()"/>
+                                        <input id="isUseSystem" type="checkbox" ng-click="isUsesystem()"/>
                                         <label for="isUseSystem">不需要使用系统</label>
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <div ng-show="showType==1">
+                        <div ng-show="useSystem===1">
                             <div class="row mb10">
                                 <div class="col-xs-5">
                                     <div class="form-group">
@@ -126,7 +126,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-show="showType!=1">
+                        <div ng-show="useSystem===0">
                             <div class="row mb10">
                                 <div class="col-xs-12">
                                     <div class="from-check-group">
