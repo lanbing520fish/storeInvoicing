@@ -2,12 +2,15 @@ angular
     .module('carriedOutModule', ['ui.bootstrap'])
     .run(['$rootScope', function($rootScope) {
         $rootScope.stepNum = 0; // 当前显示的step索引值（Number类型）
-        $rootScope.goBack = function(num) { // 返回（num-1）
-            $rootScope.stepNum = num - 1;
+        $rootScope.goBack = function(num) {
+            $rootScope.stepNum = 0;
         };
-        $rootScope.forward = function(num) { // 返回（num+1）
-            $rootScope.stepNum = num + 1;
+        $rootScope.forward = function(num) {
+            $rootScope.stepNum = 1;
         };
+
+        $rootScope.salesList = []; //列表内容
+        $rootScope.sectionList = ["价位：0～300", "价位：300～700","价位：700～1000","价位：1000～1500","价位：1500～2000","价位：2000～3000","价位：3000+"]; //价格区间
     }])
     .controller('storeQuery', ['$scope', '$rootScope', function($scope, $rootScope) {
         //门店所属商户
@@ -410,35 +413,89 @@ angular
     }])
     /*echarts图标1*/
     .controller('monthLineCtrl', function($rootScope, $scope, $log) {
-        $rootScope.salesList = [
-            {
-              date:'2016/01',
-              sales:[10,10,30,50,20,40,20]
-            },{
-              date:'2016/02',
-              sales:[10,20,40,50,30,20,30]
-            },{
-              date:'2016/03',
-              sales:[0,10,50,60,20,30,30]
-            },{
-              date:'2016/04',
-              sales:[0,0,60,60,20,30,30]
-            },{
-              date:'2016/05',
-              sales:[0,10,50,60,20,30,30]
-            },{
-              date:'2016/06',
-              sales:[10,20,40,40,30,20,30]
-            }
-        ];
+        $scope.legend = [];
         $scope.date = [];
-        $scope.sales = [];
-        
-        
-        
+        $scope.shuzu = [];
+        $scope.total = [];
+        $scope.queryFormSubmit = function(){
+                $scope.legend = [];
+                $scope.date = [];
+                $scope.shuzu = [];
+                $scope.arra = [];
+                $scope.arrb = [];
+                $scope.arrc = [];
+                $scope.arrd = [];
+                $scope.arre = [];
+                $scope.arrf = [];
+                $scope.arrg = [];
+                $scope.total = [0, 0, 0, 0, 0, 0];
+                $rootScope.salesList = [
+                    {
+                      date:'2016/01',
+                      sales:[1,2,3,4,5,6,7],
+                    },{
+                      date:'2016/02',
+                      sales:[11,12,13,14,15,16,17],
+                    },{
+                      date:'2016/03',
+                      sales:[21,22,23,24,25,26,27],
+                    },{
+                      date:'2016/04',
+                      sales:[31,32,33,34,35,36,37],
+                    },{
+                      date:'2016/05',
+                      sales:[41,42,43,44,45,46,47],
+                    },{
+                      date:'2016/06',
+                      sales:[51,52,53,54,55,56,57],
+                    }
+                ];
 
-
-        $scope.legend = ['[0,300]', '[300,700]','[700,1000]','[1000,1500]','[1500,2000]','[2000,3000]','[3000+]','总销量'];
+            _.map($rootScope.salesList, function(elem, index){
+                $scope.date.push(elem.date);
+                $scope.shuzu.push(elem.sales);
+                _.map(elem.sales, function(item, i) {
+                    switch(i) {
+                        case 0:
+                            $scope.arra.push(item);
+                            break;
+                        case 1:
+                            $scope.arrb.push(item);
+                            break;
+                        case 2:
+                            $scope.arrc.push(item);
+                            break;
+                        case 3:
+                            $scope.arrd.push(item);
+                            break;
+                        case 4:
+                            $scope.arre.push(item);
+                            break;
+                        case 5:
+                            $scope.arrf.push(item);
+                            break;
+                        case 6:
+                            $scope.arrg.push(item);
+                            break;
+                    }
+                })
+            });
+            $scope.tootal = [180, 200, 200, 200, 400, 190]
+            //更新数据
+            $scope.legend = ['[0,300]', '[300,700]','[700,1000]','[1000,1500]','[1500,2000]','[2000,3000]','[3000+]','总销量']
+            var option = myChart.getOption();
+            option.legend[0].data = $scope.legend;
+            option.xAxis[0].data = $scope.date;
+            option.series[0].data = $scope.arra;
+            option.series[1].data = $scope.arrb;
+            option.series[2].data = $scope.arrc;
+            option.series[3].data = $scope.arrd;
+            option.series[4].data = $scope.arre;
+            option.series[5].data = $scope.arrf;
+            option.series[6].data = $scope.arrg;
+            option.series[7].data = $scope.tootal;
+            myChart.setOption(option); 
+        };
 
     })
     .directive('monthline', function() {
@@ -480,7 +537,7 @@ angular
                     },
                     xAxis: {
                         type: 'category',
-                        data: ['2016/01','2016/02','2016/03','2016/04','2016/05','2016/06'],
+                        data: $scope.date,
                     },
                     series: [
                         {
@@ -493,7 +550,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [10, 10, 0, 0, 200, 10]
+                            data: $scope.arra
                         },
                         {
                             name: '[300,700]',
@@ -505,7 +562,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [10, 20, 10, 0, 10, 20]
+                            data: $scope.arrb
                         },
                         {
                             name: '[700,1000]',
@@ -517,7 +574,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [30, 40, 50, 60, 50, 40]
+                            data: $scope.arrc
                         },
                         {
                             name: '[1000,1500]',
@@ -529,7 +586,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [50, 50, 60, 60, 60, 40]
+                            data: $scope.arrd
                         },
                         {
                             name: '[1500,2000]',
@@ -541,7 +598,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [20, 30, 20, 20, 20, 30]
+                            data: $scope.arre
                         },
                         {
                             name: '[2000,3000]',
@@ -553,7 +610,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [40, 20, 30, 30, 30, 20]
+                            data: $scope.arrf
                         },
                         {
                             name: '[3000+]',
@@ -565,7 +622,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [20, 30, 30, 30, 30, 30]
+                            data: $scope.arrg
                         },
                         {
                             name: '总销量',
@@ -582,46 +639,101 @@ angular
                                 fontSize: 12,
                                 color: '#000'
                             },
-                            data: [180, 200, 200, 200, 400, 190]
+                            data: $scope.tootal
                         }
                     ]
                 };  
-                var myChart = echarts.init(document.getElementById($scope.id),'macarons');  
+                myChart = echarts.init(document.getElementById($scope.id),'macarons');  
                 myChart.setOption(option);  
             }  
         }
     })
+    
     /*echarts图标2*/
     .controller('dayLineCtrl', function($rootScope, $scope, $log) {
-        $rootScope.daysalesList = [
-            {
-              date:'2016/02/01',
-              sales:[10,10,30,50,20,40,20]
-            },{
-              date:'2016/02/02',
-              sales:[10,20,40,50,30,20,30]
-            },{
-              date:'2016/02/03',
-              sales:[0,10,50,60,20,30,30]
-            },{
-              date:'2016/02/04',
-              sales:[0,0,60,60,20,30,30]
-            },{
-              date:'2016/02/05',
-              sales:[0,10,50,60,20,30,30]
-            },{
-              date:'2016/02/06',
-              sales:[10,20,40,40,30,20,30]
-            }
-        ];
+        $scope.legend = [];
         $scope.date = [];
-        $scope.sales = [];
-        
-        
-        
+        $scope.shuzub = [];
+        $scope.total = [];
+        $scope.queryFormSubmit = function(){
+                $scope.legend = [];
+                $scope.date = [];
+                $scope.shuzu = [];
+                $scope.arra = [];
+                $scope.arrb = [];
+                $scope.arrc = [];
+                $scope.arrd = [];
+                $scope.arre = [];
+                $scope.arrf = [];
+                $scope.arrg = [];
+                $scope.total = [0, 0, 0, 0, 0, 0];
+                $rootScope.daysalesList = [
+                    {
+                      date:'2016/01/01',
+                      sales:[11,21,31,41,51,61,71],
+                    },{
+                      date:'2016/02/01',
+                      sales:[12,22,32,42,52,62,72],
+                    },{
+                      date:'2016/03/01',
+                      sales:[13,23,33,43,53,63,73],
+                    },{
+                      date:'2016/04/01',
+                      sales:[14,24,34,44,54,64,74],
+                    },{
+                      date:'2016/05/01',
+                      sales:[15,25,35,45,55,65,75],
+                    },{
+                      date:'2016/06/01',
+                      sales:[16,26,36,46,56,66,76],
+                    }
+                ];
 
-
-        $scope.legend = ['[0,300]', '[300,700]','[700,1000]','[1000,1500]','[1500,2000]','[2000,3000]','[3000+]','总销量'];
+            _.map($rootScope.daysalesList, function(elem, index){
+                $scope.date.push(elem.date);
+                $scope.shuzub.push(elem.sales);
+                _.map(elem.sales, function(item, i) {
+                    switch(i) {
+                        case 0:
+                            $scope.arra.push(item);
+                            break;
+                        case 1:
+                            $scope.arrb.push(item);
+                            break;
+                        case 2:
+                            $scope.arrc.push(item);
+                            break;
+                        case 3:
+                            $scope.arrd.push(item);
+                            break;
+                        case 4:
+                            $scope.arre.push(item);
+                            break;
+                        case 5:
+                            $scope.arrf.push(item);
+                            break;
+                        case 6:
+                            $scope.arrg.push(item);
+                            break;
+                    }
+                })
+            });
+            $scope.tootal = [180, 200, 200, 200, 400, 190]
+            //更新数据
+            $scope.legend = ['[0,300]', '[300,700]','[700,1000]','[1000,1500]','[1500,2000]','[2000,3000]','[3000+]','总销量']
+            var option = daymyChart.getOption();
+            option.legend[0].data = $scope.legend;
+            option.xAxis[0].data = $scope.date;
+            option.series[0].data = $scope.arra;
+            option.series[1].data = $scope.arrb;
+            option.series[2].data = $scope.arrc;
+            option.series[3].data = $scope.arrd;
+            option.series[4].data = $scope.arre;
+            option.series[5].data = $scope.arrf;
+            option.series[6].data = $scope.arrg;
+            option.series[7].data = $scope.tootal;
+            daymyChart.setOption(option); 
+        };
 
     })
     .directive('dayline', function() {
@@ -663,7 +775,7 @@ angular
                     },
                     xAxis: {
                         type: 'category',
-                        data: ['2016/02/01','2016/02/02','2016/02/03','2016/02/04','2016/02/05','2016/02/06'],
+                        data: $scope.date,
                     },
                     series: [
                         {
@@ -676,7 +788,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [10, 10, 0, 0, 200, 10]
+                            data: $scope.arra
                         },
                         {
                             name: '[300,700]',
@@ -688,7 +800,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [10, 20, 10, 0, 10, 20]
+                            data: $scope.arrb
                         },
                         {
                             name: '[700,1000]',
@@ -700,7 +812,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [30, 40, 50, 60, 50, 40]
+                            data: $scope.arrc
                         },
                         {
                             name: '[1000,1500]',
@@ -712,7 +824,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [50, 50, 60, 60, 60, 40]
+                            data: $scope.arrd
                         },
                         {
                             name: '[1500,2000]',
@@ -724,7 +836,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [20, 30, 20, 20, 20, 30]
+                            data: $scope.arre
                         },
                         {
                             name: '[2000,3000]',
@@ -736,7 +848,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [40, 20, 30, 30, 30, 20]
+                            data: $scope.arrf
                         },
                         {
                             name: '[3000+]',
@@ -748,7 +860,7 @@ angular
                                     position: 'insideRight'
                                 }
                             },
-                            data: [20, 30, 30, 30, 30, 30]
+                            data: $scope.arrg
                         },
                         {
                             name: '总销量',
@@ -765,12 +877,12 @@ angular
                                 fontSize: 12,
                                 color: '#000'
                             },
-                            data: [180, 200, 200, 200, 400, 190]
+                            data: $scope.tootal
                         }
                     ]
                 };  
-                var myChart = echarts.init(document.getElementById($scope.id),'macarons');  
-                myChart.setOption(option);  
+                daymyChart = echarts.init(document.getElementById($scope.id),'macarons');  
+                daymyChart.setOption(option);  
             }  
         }
     })
