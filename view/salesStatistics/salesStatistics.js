@@ -19,7 +19,7 @@ angular
     }])
 
     /*传入数据*/
-    .factory('httpMethod', 'httpConfig', ['$http', '$q', function ($http, $q) {
+    .factory('httpMethod',  ['$http', '$q', function ($http, $q) {
         var httpMethod = {};
 
         // 查询地区
@@ -96,124 +96,124 @@ angular
         };
 
 
-        if (httpConfig.isMock) {
-            debugger;
-            // 地区查询
-            Mock.mock('http://192.168.16.84:8088/chain/terminal/q/qryCommonRegionInfo', {
-                'areaId': '@id',
-                'areaLevel': ['1', '2', '3'], //(地区等级，1：国家，2:省，3，市)
-                'childrenCommon': [{ //(下一级地区列表)
-                    'areaId': '@id',
-                    'areaLevel|1-100': 3,
-                    'childrenCommon': 'null',
-                    'commonRegionId': '@id', //(区域id)
-                    'createDate': "2013-04-15 11:46:11",
-                    'idPrefix|1-100': 73,
-                    'regionCode': "@id",
-                    'regionDesc': "乌海市", //(区域详情)
-                    'regionName': "乌海市", //(区域名称)
-                    'upRegionId|1-100': 2, //(上一级commonRegionId)
-                    'zipCode': "0473",
-                    'zoneNumber': "17399",
-                }],
-                'commonRegionId|1-100': 2,
-                'createDate': "2013-04-15 11:46:11",
-                'idPrefix|90-99': 99,
-                'regionCode': "@id",
-                'regionDesc': "内蒙古自治区",
-                'regionName': "内蒙古",
-                'upRegionId': 'null',
-                'zipCode': "0000",
-                'zoneNumber': "2",
-            });
-            // 查询商户
-            Mock.mock('http://192.168.16.84:8088/chain/config/claim/q/qryBizmanByCon', {
-                'endRow': 5,
-                'firstPage': 1,
-                'hasNextPage': 'true',
-                'hasPreviousPage': 'false',
-                'isFirstPage': 'true',
-                'isLastPage': 'false',
-                'lastPage': 2,
-                'list':[{ //(数据信息在这个list)
-                    'areaId': 'null',
-                    'bizmanCode': 'null',
-                    'bizmanId': '54173', //(商户id)
-                    'bizmanName': "德乐", //(经营主体名称)
-                    'commonRegionId': 'null',
-                    'email': 'null',
-                    'identifyName': 'null',
-                    'identifyNum': 'null',
-                    'identifyType': 'null',
-                    'linkNbr': 'null',
-                    'manageStaff': 'null',
-                    'oldBizmanName': 'null',
-                    'operatorsId': 'null', //(经营主体id)
-                    'operatorsName': "中国电信齐齐哈尔分公司", //(经营主体名称)
-                    'operatorsNbr': "J12345212344", //(经营主体编码)
-                    'parentBizman': 'null',
-                    'regionName': "乌海市",
-                    'remarks': 'null',
-                    'retailShopName': 'null',
-                    'staffName': 'null',
-                    'statusCd': "1001",
-                }],
-                'navigatePages': '8',
-                'navigatepageNums': [{
-                    '0': '1',
-                    '1': '2',
-                }],
-                'nextPage': '2',
-                'pageNum': '1',
-                'pageSize': '5',
-                'pages': '2',
-                'prePage': '0',
-                'size': '5',
-                'startRow': '1',
-                'success': 'true',
-                'total': '10',
-            });
-            // 查询终端分价位销量统计
-            Mock.mock('http://192.168.16.84:8088/chain/form/q/qrySalesStatisticsByCon', {
-                'bizmanId': 'null', //(商户id)
-                'bizmanName': 'null', //(商户名称)
-                'channelId': 'null', //(渠道id)
-                'channelName': 'null', //(渠道名称)
-                'commonRegionId': 'null', //(区域id)
-                'etlTime': 'null',
-                'levelQty': 'null',
-                'numType': 'null',
-                'priceSeg': 'null',
-                'retailPrice': 'null',
-                'retailShopId': 'null',
-                'retailShopName': 'null', //(门店名称)
-                'saleMonth': "201607", //(月份信息，按月查询的时候用)
-                'saleTime': 'null', //(日期信息，按日查询时候用)
-                'salesQty': 'null',
-                'segList': [{ //(价位分类)
-                    'priceSegment': '1', //(价位类型，从1到7)
-                    'totalNum': '0', //(销量总和)
-                }],
-                'sellingPrice': 'null',
-                'statisticId': 'null',
-                'totalQty': 'null', //(销售总和)
-            });
-            // 终端库存及库存周转分析
-            Mock.mock('http://192.168.16.84:8088/chain/form/q/qryStockAnalysisByCon', {
-                'bizmanId': 'null',
-                'bizmanName': 'null',
-                'channelId': 'null',
-                'channelName': 'null',
-                'commonRegionId': 'null',
-                'retailShopId': 'null',
-                'retailShopName': 'null',
-                'salesQty': 'null', //(当日销售总和)
-                'stockDuring': 'null', //(最近一周的销量总和)
-                'stockQty': 'null', //(库存总和)
-                'stockTime': "2016-11-10 00:00:00", //(统计月份)
-                'stockValue': 'null', //(库存价值总和)
-            });
-        }
+        // if (httpConfig.isMock) {
+        //     debugger;
+        //     // 地区查询
+        //     Mock.mock('http://192.168.16.84:8088/chain/terminal/q/qryCommonRegionInfo', {
+        //         'areaId': '@id',
+        //         'areaLevel': ['1', '2', '3'], //(地区等级，1：国家，2:省，3，市)
+        //         'childrenCommon': [{ //(下一级地区列表)
+        //             'areaId': '@id',
+        //             'areaLevel|1-100': 3,
+        //             'childrenCommon': 'null',
+        //             'commonRegionId': '@id', //(区域id)
+        //             'createDate': "2013-04-15 11:46:11",
+        //             'idPrefix|1-100': 73,
+        //             'regionCode': "@id",
+        //             'regionDesc': "乌海市", //(区域详情)
+        //             'regionName': "乌海市", //(区域名称)
+        //             'upRegionId|1-100': 2, //(上一级commonRegionId)
+        //             'zipCode': "0473",
+        //             'zoneNumber': "17399",
+        //         }],
+        //         'commonRegionId|1-100': 2,
+        //         'createDate': "2013-04-15 11:46:11",
+        //         'idPrefix|90-99': 99,
+        //         'regionCode': "@id",
+        //         'regionDesc': "内蒙古自治区",
+        //         'regionName': "内蒙古",
+        //         'upRegionId': 'null',
+        //         'zipCode': "0000",
+        //         'zoneNumber': "2",
+        //     });
+        //     // 查询商户
+        //     Mock.mock('http://192.168.16.84:8088/chain/config/claim/q/qryBizmanByCon', {
+        //         'endRow': 5,
+        //         'firstPage': 1,
+        //         'hasNextPage': 'true',
+        //         'hasPreviousPage': 'false',
+        //         'isFirstPage': 'true',
+        //         'isLastPage': 'false',
+        //         'lastPage': 2,
+        //         'list':[{ //(数据信息在这个list)
+        //             'areaId': 'null',
+        //             'bizmanCode': 'null',
+        //             'bizmanId': '54173', //(商户id)
+        //             'bizmanName': "德乐", //(经营主体名称)
+        //             'commonRegionId': 'null',
+        //             'email': 'null',
+        //             'identifyName': 'null',
+        //             'identifyNum': 'null',
+        //             'identifyType': 'null',
+        //             'linkNbr': 'null',
+        //             'manageStaff': 'null',
+        //             'oldBizmanName': 'null',
+        //             'operatorsId': 'null', //(经营主体id)
+        //             'operatorsName': "中国电信齐齐哈尔分公司", //(经营主体名称)
+        //             'operatorsNbr': "J12345212344", //(经营主体编码)
+        //             'parentBizman': 'null',
+        //             'regionName': "乌海市",
+        //             'remarks': 'null',
+        //             'retailShopName': 'null',
+        //             'staffName': 'null',
+        //             'statusCd': "1001",
+        //         }],
+        //         'navigatePages': '8',
+        //         'navigatepageNums': [{
+        //             '0': '1',
+        //             '1': '2',
+        //         }],
+        //         'nextPage': '2',
+        //         'pageNum': '1',
+        //         'pageSize': '5',
+        //         'pages': '2',
+        //         'prePage': '0',
+        //         'size': '5',
+        //         'startRow': '1',
+        //         'success': 'true',
+        //         'total': '10',
+        //     });
+        //     // 查询终端分价位销量统计
+        //     Mock.mock('http://192.168.16.84:8088/chain/form/q/qrySalesStatisticsByCon', {
+        //         'bizmanId': 'null', //(商户id)
+        //         'bizmanName': 'null', //(商户名称)
+        //         'channelId': 'null', //(渠道id)
+        //         'channelName': 'null', //(渠道名称)
+        //         'commonRegionId': 'null', //(区域id)
+        //         'etlTime': 'null',
+        //         'levelQty': 'null',
+        //         'numType': 'null',
+        //         'priceSeg': 'null',
+        //         'retailPrice': 'null',
+        //         'retailShopId': 'null',
+        //         'retailShopName': 'null', //(门店名称)
+        //         'saleMonth': "201607", //(月份信息，按月查询的时候用)
+        //         'saleTime': 'null', //(日期信息，按日查询时候用)
+        //         'salesQty': 'null',
+        //         'segList': [{ //(价位分类)
+        //             'priceSegment': '1', //(价位类型，从1到7)
+        //             'totalNum': '0', //(销量总和)
+        //         }],
+        //         'sellingPrice': 'null',
+        //         'statisticId': 'null',
+        //         'totalQty': 'null', //(销售总和)
+        //     });
+        //     // 终端库存及库存周转分析
+        //     Mock.mock('http://192.168.16.84:8088/chain/form/q/qryStockAnalysisByCon', {
+        //         'bizmanId': 'null',
+        //         'bizmanName': 'null',
+        //         'channelId': 'null',
+        //         'channelName': 'null',
+        //         'commonRegionId': 'null',
+        //         'retailShopId': 'null',
+        //         'retailShopName': 'null',
+        //         'salesQty': 'null', //(当日销售总和)
+        //         'stockDuring': 'null', //(最近一周的销量总和)
+        //         'stockQty': 'null', //(库存总和)
+        //         'stockTime': "2016-11-10 00:00:00", //(统计月份)
+        //         'stockValue': 'null', //(库存价值总和)
+        //     });
+        // }
 
         return httpMethod;
     }])
