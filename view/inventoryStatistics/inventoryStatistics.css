@@ -361,6 +361,9 @@
     color: #666;
     text-align: center;
     text-decoration: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     cursor: pointer;
 }
 .city-item.current {
@@ -678,7 +681,7 @@
 }
 .target-right{
     float:left;
-    
+
 }
 .condition-query {
     height: 80px;
