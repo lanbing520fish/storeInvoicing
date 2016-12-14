@@ -1,12 +1,128 @@
 angular
     .module('inventoryModule', ['ui.bootstrap'])
-    .controller('conditionQuery', ['$scope', '$timeout', function($scope, $timeout) {
+    .run(['$rootScope', function($rootScope) {
+        $rootScope.regionInfoList = []; // 地区列表
+        $rootScope.checkedAreaID = ''; // 选择的地区ID
+        $rootScope.qryStockStatisticData = ''; // 库存量TOP5统计数据
+    }])
+    .factory('httpMethod', ['$http', '$q', function($http, $q) {
+        var httpConfig = {
+                'siteUrl': 'http://192.168.16.84:8088',
+                'requestHeader': {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+                'isMock': true // 是否开启测试数据
+            },
+            httpMethod = {};
+
+        // 地区查询
+        httpMethod.qryCommonRegionInfo = function() {
+            var defer = $q.defer();
+            $http({
+                url: httpConfig.siteUrl + '/chain/terminal/q/qryCommonRegionInfo',
+                method: 'POST',
+                headers: httpConfig.requestHeader
+            }).success(function(data, header, config, status) {
+                if (status !== 200) {
+                    // 跳转403页面
+                }
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                defer.reject(data);
+            });
+            return defer.promise;
+        };
+
+        // 库存量TOP5统计
+        httpMethod.qryStockStatisticTwo = function(param) {
+            var defer = $q.defer();
+            $http({
+                url: httpConfig.siteUrl + '/chain/report/q/qryStockStatisticTwo',
+                method: 'POST',
+                headers: httpConfig.requestHeader,
+                data: JSON.stringify(param)
+            }).success(function(data, header, config, status) {
+                if (status !== 200) {
+                    // 跳转403页面
+                }
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                defer.reject(data);
+            });
+            return defer.promise;
+        };
+
+        if (httpConfig.isMock) {
+            // 地区查询
+            Mock.mock(httpConfig.siteUrl + '/chain/terminal/q/qryCommonRegionInfo', {
+                'rsphead': 's',
+                'success': true, //是否成功
+                'code': null,
+                'msg': null, //失败信息
+                'data|5': [{
+                    'commonRegionId|1-100': 100,
+                    'regionName': '@province',
+                    'regionCode': '',
+                    'upRegionId': '',
+                    'regionDesc': '',
+                    'createDate': '',
+                    'idPrefix': '',
+                    'areaLevel': '',
+                    'zipCode': '',
+                    'zoneNumber': '',
+                    'areaId': '',
+                    'childrenCommon': [{
+                        'commonRegionId|1-100': 100,
+                        'regionName': '@city',
+                        'regionCode': '',
+                        'upRegionId': '',
+                        'regionDesc': '',
+                        'createDate': '',
+                        'idPrefix': '',
+                        'areaLevel': '',
+                        'zipCode': '',
+                        'zoneNumber': '',
+                        'areaId': '',
+                        'childrenCommon': ''
+                    }]
+                }],
+                'errors': null
+            });
+
+            // TOP5
+            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryStockStatisticTwo', {
+                'rsphead': 's',
+                'success': true, //是否成功
+                'code': null,
+                'msg': null, //失败信息
+                'data': {
+                    'brands|5': [{
+                        'brandName': '@cword(3)',
+                        'stockQuantity|1-100': 100
+                    }],
+                    'models|5': [{
+                        'modelName': '@cword(3)',
+                        'stockQuantity|1-100': 100
+                    }]
+                },
+                'errors': null
+            });
+        }
+
+        return httpMethod;
+    }])
+    .controller('conditionQuery', ['$scope', '$rootScope', '$timeout', '$log', 'httpMethod', function($scope, $rootScope, $timeout, $log, httpMethod) {
+        httpMethod.qryCommonRegionInfo().then(function(rsp) {
+            $rootScope.regionInfoList = rsp.data;
+            $log.log('获取地区列表成功.');
+        }, function() {
+            $log.log('获取地区列表失败.');
+        });
 
         $scope.conditionQueryForm = {
             createStartDt: '', //制单日期开始
             createEndDt: '', //制单日期结束
         };
-
         // 时间控件
         $scope.startDateOptions = {
             formatYear: 'yy',
@@ -19,14 +135,12 @@ angular
             // maxDate: new Date(),
             startingDay: 1
         };
-
         $scope.$watch('conditionQueryForm.createStartDt', function(newValue) {
             $scope.endDateOptions.minDate = newValue;
         });
         $scope.$watch('conditionQueryForm.createEndDt', function(newValue) {
             $scope.startDateOptions.maxDate = newValue;
         });
-
         $scope.startOpen = function() {
             $timeout(function() {
                 $scope.startPopupOpened = true;
@@ -39,10 +153,25 @@ angular
         };
         $scope.startPopupOpened = false;
         $scope.endPopupOpened = false;
+
+        // 确定查询
+        $scope.queryFormSubmit = function() {
+            var param = {
+                beginDt: $scope.conditionQueryForm.createStartDt, //开始时间
+                endDt: $scope.conditionQueryForm.createEndDt, //结束时间
+                bizmanId: '', //商户id
+                commonRegionId: $rootScope.checkedAreaID //区域id
+            };
+            httpMethod.qryStockStatisticTwo(param).then(function(rsp) {
+                $rootScope.qryStockStatisticData = rsp.data;
+                $log.log('获取库存量TOP5统计数据成功.');
+            }, function() {
+                $log.log('获取库存量TOP5统计数据失败.');
+            });
+        }
     }])
     // 城市
-    .controller('cityCheckCtrl', ['$scope','$rootScope', function($scope, $rootScope) {
-
+    .controller('cityCheckCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
         $scope.cityClose = function() {
             $scope.visible = !$scope.visible;
         };
@@ -50,175 +179,19 @@ angular
             $scope.visible = false;
         };
 
-        $scope.cityList = [{
-                name: '江西省',
-                areaId: '001',
-                child: [
-                        {
-                            name: '南昌市',
-                            areaId: '001001',
-                            child: [
-                                {
-                                    name: '东湖区',
-                                    areaId:'001001001',
-                                }, {
-                                    name: '西湖区',
-                                    areaId:'001001002',
-                                }, {
-                                    name: '青云谱区',
-                                    areaId:'001001003',
-                                },
-                                {
-                                    name: '湾里区',
-                                    areaId:'001001004',
-                                }
-                            ]
-                        },
-                        {
-                            name: '景德镇市',
-                            areaId: '001002',
-                            child: [
-                                {
-                                    name: '昌江区',
-                                    areaId:'001002001',
-                                }, {
-                                    name: '珠山区',
-                                    areaId:'001002002',
-                                }, {
-                                    name: '乐平市',
-                                    areaId:'001002003',
-                                },
-                                {
-                                    name: '浮梁县',
-                                    areaId:'001002004',
-                                }
-                            ]
-                        }
-                    ]
-            },
-            {
-                name: '吉林省',
-                areaId: '002',
-                child: [
-                        {
-                            name: '长春市',
-                            areaId: '002001',
-                            child: [
-                                {
-                                    name: '朝阳区',
-                                    areaId:'002001001',
-                                }, {
-                                    name: '南关区',
-                                    areaId:'002001002',
-                                }, {
-                                    name: '宽城区',
-                                    areaId:'002001003',
-                                },
-                                {
-                                    name: '二道区',
-                                    areaId:'002001004',
-                                }
-                            ]
-                        },
-                        {
-                            name: '吉林市',
-                            areaId: '002002',
-                            child: [
-                                {
-                                    name: '船营区',
-                                    areaId:'002002001',
-                                }, {
-                                    name: '昌邑区',
-                                    areaId:'002002002',
-                                }, {
-                                    name: '龙潭区',
-                                    areaId:'002002003',
-                                },
-                                {
-                                    name: '丰满区',
-                                    areaId:'002002004',
-                                }
-                            ]
-                        }
-                    ]
-            },
-            {
-                name: '黑龙江省',
-                areaId: '003',
-                child: [
-                        {
-                            name: '齐齐哈尔市',
-                            areaId: '003001',
-                        },
-                        {
-                            name: '牡丹江市',
-                            areaId: '003002',
-                        }
-                    ]
-            },
-            {
-                name: '上海市',
-                areaId: '004'
-            },
-            {
-                name: '江苏省',
-                areaId: '005',
-                child: [
-                        {
-                            name: '南京市',
-                            areaId: '005001',
-                            child: [
-                                {
-                                    name: '雨花区',
-                                    areaId:'005001001',
-                                }, {
-                                    name: '建邺',
-                                    areaId:'005001002',
-                                }, {
-                                    name: '鼓楼区',
-                                    areaId:'005001003',
-                                },
-                                {
-                                    name: '浦口区',
-                                    areaId:'006001004',
-                                }
-                            ]
-                        },
-                        {
-                            name: '苏州市',
-                            areaId: '005002',
-                            child: [
-                                {
-                                    name: '姑苏区',
-                                    areaId:'005002001',
-                                }, {
-                                    name: '虎丘区',
-                                    areaId:'005002002',
-                                }, {
-                                    name: '吴中区',
-                                    areaId:'005002003',
-                                },
-                                {
-                                    name: '相城区',
-                                    areaId:'005002004',
-                                }
-                            ]
-                        }
-                    ]
-            }
-        ];
-
         $scope.selectedRow = null; //一级索引值
         $scope.selectedRowb = null; //二级索引值
         $scope.selectedProvince = '',
-        $scope.selectedCity = '',
-        $scope.selectedArea = '',
-        $scope.checkedAreaName = '';
+            $scope.selectedCity = '',
+            $scope.selectedArea = '',
+            $scope.checkedAreaName = '',
+            $scope.todoCheckedAreaID = ''; //待确定的地区ID
 
-        $scope.selectProvince = function(index,item) {
+        $scope.selectProvince = function(index, item) {
             $scope.selectedRow = index;
             $scope.selectedRowb = null;
-            $scope.selectedProvince = item.name;
+            $scope.selectedProvince = item.regionName;
+            $scope.todoCheckedAreaID = item.commonRegionId;
             $scope.selectedCity = '';
             $scope.selectedArea = '';
         };
@@ -226,33 +199,50 @@ angular
         $scope.selectCity = function(rowb, item) {
             event.stopPropagation();
             $scope.selectedRowb = rowb;
-            $scope.selectedCity = ' - ' + item.name;
+            $scope.selectedCity = ' - ' + item.regionName;
+            $scope.todoCheckedAreaID = item.commonRegionId;
             $scope.selectedArea = '';
         };
 
         $scope.selectArea = function(rowb, item) {
             event.stopPropagation();
-            $scope.selectedArea = ' - ' + item.name; 
+            $scope.selectedArea = ' - ' + item.regionName;
+            $scope.todoCheckedAreaID = item.commonRegionId;
         };
 
-        $scope.cityChecked = function(){
+        $scope.cityChecked = function() {
             $scope.checkedAreaName = $scope.selectedProvince + $scope.selectedCity + $scope.selectedArea;
+            $rootScope.checkedAreaID = $scope.todoCheckedAreaID;
             $scope.visible = !$scope.visible;
         };
-
-
     }])
-    .controller('inventoryCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
-        $scope.legend = ['中兴', '酷派', '三星', '华为', '乐视'];
-        $scope.data = [
-            {value: 30, name: '中兴'},
-            {value: 50, name: '酷派'},
-            {value: 150, name: '三星'},
-            {value: 100, name: '华为'},
-            {value: 200, name: '乐视'}
-        ];
+    .controller('inventoryCtrl', ['$rootScope', '$scope', '$timeout', function($rootScope, $scope, $timeout) {
+        $scope.brandsLegend = []; // 图表图例
+        $scope.brandsData = []; // 图表数据
+
+        $rootScope.$watch('qryStockStatisticData.brands', function(newValue) {
+            if (newValue) {
+                var stockDataList = newValue;
+                _.map(stockDataList, function(item) {
+                    $scope.brandsLegend.push(item.brandName);
+                });
+
+                if (stockDataList && _.size(stockDataList)) {
+                    $scope.brandsData = []; // 置空
+                    _.map(stockDataList, function(item) {
+                        var obj = {
+                            name: '',
+                            value: ''
+                        };
+                        obj.name = item.brandName;
+                        obj.value = item.stockQuantity;
+                        $scope.brandsData.push(obj);
+                    });
+                };
+            }
+        }, true);
     }])
-    .directive('brandChart', function () {
+    .directive('brandChart', function() {
         return {
             scope: {
                 id: "@",
@@ -262,7 +252,7 @@ angular
             restrict: 'E',
             template: '<div style="height:400px; width:100%;"></div>',
             replace: true,
-            link: function ($scope, iElm, iAttrs, controller) {
+            link: function($scope, iElm, iAttrs, controller) {
                 var option = {
                     title: {
                         text: '库存量TOP5品牌',
@@ -314,23 +304,51 @@ angular
                         data: $scope.data
                     }
                 };
-
                 var myChart = echarts.init(document.getElementById($scope.id));
                 myChart.setOption(option);
+
+                $scope.$watch('data', function(newValue) {
+                    if (newValue) {
+                        myChart.setOption({
+                            legend: {
+                                data: $scope.legend
+                            },
+                            series: {
+                                data: $scope.data
+                            }
+                        });
+                    }
+                }, true);
             }
         };
     })
-    .controller('terminaltypeCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
-        $scope.legend = ['三星J3199', '中兴', '海信', 'iphone6s', '魅族'];
-        $scope.data = [
-            {value: 99, name: '三星J3199'},
-            {value: 88, name: '中兴'},
-            {value: 77, name: '海信'},
-            {value: 66, name: 'iphone6s'},
-            {value: 30, name: '魅族'}
-        ];
+    .controller('terminaltypeCtrl', ['$scope', '$rootScope', '$timeout', function($scope, $rootScope, $timeout) {
+        $scope.brandsLegend = []; // 图表图例
+        $scope.brandsData = []; // 图表数据
+
+        $rootScope.$watch('qryStockStatisticData.models', function(newValue) {
+            if (newValue) {
+                var stockDataList = newValue;
+                _.map(stockDataList, function(item) {
+                    $scope.brandsLegend.push(item.modelName);
+                });
+
+                if (stockDataList && _.size(stockDataList)) {
+                    $scope.brandsData = []; // 置空
+                    _.map(stockDataList, function(item) {
+                        var obj = {
+                            name: '',
+                            value: ''
+                        };
+                        obj.name = item.modelName;
+                        obj.value = item.stockQuantity;
+                        $scope.brandsData.push(obj);
+                    });
+                };
+            }
+        }, true);
     }])
-    .directive('modelChart', function () {
+    .directive('modelChart', function() {
         return {
             scope: {
                 id: "@",
@@ -340,16 +358,16 @@ angular
             restrict: 'E',
             template: '<div style="height:420px; width:100%;"></div>',
             replace: true,
-            link: function ($scope, iElm, iAttrs, controller) {
+            link: function($scope, iElm, iAttrs, controller) {
                 var option = {
-                    title : {
+                    title: {
                         text: '库存量TOP5机型',
-                        x:'center',
+                        x: 'center',
                         textStyle: {
                             'fontWeight': 'bolder'
                         },
                     },
-                    tooltip : {
+                    tooltip: {
                         trigger: 'item',
                         formatter: "{a} <br/>{b} : {c} ({d}%)"
                     },
@@ -363,36 +381,47 @@ angular
                         align: 'left',
                         data: $scope.legend
                     },
-                    series : [
-                        {
-                            name: '库存量',
-                            type: 'pie',
-                            radius : '40%',
-                            center: ['50%', '38%'],
-                            data: $scope.data,
-                            label: {
-                                normal: {
-                                    show: true,
-                                    formatter: "{c}"
-                                },
-                                emphasis: {
-                                    show: true
-                                }
+                    series: [{
+                        name: '库存量',
+                        type: 'pie',
+                        radius: '40%',
+                        center: ['50%', '38%'],
+                        data: $scope.data,
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: "{c}"
                             },
-                            lableLine: {
-                                normal: {
-                                    show: true
-                                },
-                                emphasis: {
-                                    show: true
-                                }
+                            emphasis: {
+                                show: true
+                            }
+                        },
+                        lableLine: {
+                            normal: {
+                                show: true
                             },
-                        }
-                    ]
+                            emphasis: {
+                                show: true
+                            }
+                        },
+                    }]
                 };
 
                 var myChart = echarts.init(document.getElementById($scope.id));
                 myChart.setOption(option);
+
+                $scope.$watch('data', function(newValue) {
+                    if (newValue) {
+                        myChart.setOption({
+                            legend: {
+                                data: $scope.legend
+                            },
+                            series: {
+                                data: $scope.data
+                            }
+                        });
+                    }
+                }, true);
             }
         };
     })

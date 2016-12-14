@@ -19,7 +19,7 @@
             <p class="alarm-query-title fn-left">搜
                 <br/>索</p>
             <div class="condition-query-box fn-right">
-                <form name="conditionQueryForm" class="form-inline" role="form">
+                <form name="conditionQueryForm" ng-submit="queryFormSubmit()" class="form-inline" role="form">
                     <div class="row">
                         <div class="col-xs-4">
                             <div class="form-group">
@@ -44,8 +44,6 @@
                                 <label class="control-label">所属地区：</label>
                                 <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
                                 <button ng-click="cityClose()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
-
-
                                 <div class="city-check-box" ng-show="visible" ng-cloak>
                                     <div id="area-box">
                                         <div class="area-title">
@@ -55,14 +53,13 @@
                                                 <span ng-if="selectedProvince" ng-bind="selectedProvince"></span><span ng-if="selectedCity" ng-bind="selectedCity"></span><span ng-if="selectedArea" ng-bind="selectedArea"></span>
                                             </div>
                                         </div>
-
                                         <div class="area-list">
                                             <ul>
-                                                <li ng-repeat="item in cityList" class="areaProvince" ng-click="selectProvince($index,item)" ng-class="{areaSelected:$index===selectedRow}">{{item.name}}
+                                                <li ng-repeat="item in regionInfoList" class="areaProvince" ng-click="selectProvince($index,item)" ng-class="{areaSelected:$index===selectedRow}">{{item.regionName}}
                                                     <ul>
-                                                        <li ng-repeat="itemcity in item.child" class="areaProvince" ng-click="selectCity($index, itemcity)" ng-class="{areaSelected:$index===selectedRowb}">{{itemcity.name}}
+                                                        <li ng-repeat="itemcity in item.childrenCommon" class="areaProvince" ng-click="selectCity($index, itemcity)" ng-class="{areaSelected:$index===selectedRowb}">{{itemcity.regionName}}
                                                             <ul>
-                                                                <li ng-repeat="itemarea in itemcity.child" ng-click="selectArea($index, itemarea)">{{itemarea.name}}</li>
+                                                                <li ng-repeat="itemarea in itemcity.childrenCommon" ng-click="selectArea($index, itemarea)">{{itemarea.regionName}}</li>
                                                             </ul>
                                                         </li>
                                                     </ul>
@@ -76,10 +73,9 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">所属商户：</label>
@@ -89,7 +85,7 @@
                         </div>
                         <div class="col-xs-1">
                             <div>
-                                <button type="submit" class="btn btn-sm btn-stat-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                                <button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
                             </div>
                         </div>
                     </div>
@@ -100,21 +96,23 @@
         <div class="inventory-charts fn-clear">
             <div class="fn-left charts-box" ng-controller="inventoryCtrl">
                 <div class="echartbox">
-                    <brand-chart id="brand" legend="legend" data="data"></brand-chart>
+                    <brand-chart id="brand" legend="brandsLegend" data="brandsData"></brand-chart>
                 </div>
                 <div class="terminal-table">
                     <table>
                         <thead>
                             <tr>
                                 <th width="15%"></th>
-                                <th><p class="textleft">品牌</p></th>
+                                <th>
+                                    <p class="textleft">品牌</p>
+                                </th>
                                 <th>库存量（台）</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in data">
+                            <tr ng-repeat="item in brandsData">
                                 <td>
-                                    <p><span class="terminal-index" ng-bind="$index + 1"></span></p>
+                                    <p><span class="terminal-index" ng-cloak ng-bind="$index + 1"></span></p>
                                 </td>
                                 <td>
                                     <p class="textleft" ng-bind="item.name"></p>
@@ -129,21 +127,23 @@
             </div>
             <div class="fn-right charts-box" ng-controller="terminaltypeCtrl">
                 <div class="echartbox">
-                    <model-chart id="model" legend="legend" data="data"></model-chart>
+                    <model-chart id="model" legend="brandsLegend" data="brandsData"></model-chart>
                 </div>
                 <div class="terminal-table">
                     <table>
                         <thead>
                             <tr>
                                 <th width="15%"></th>
-                                <th><p class="textleft">机型</p></th>
+                                <th>
+                                    <p class="textleft">机型</p>
+                                </th>
                                 <th>库存量（台）</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in data">
+                            <tr ng-repeat="item in brandsData">
                                 <td>
-                                    <p><span class="terminal-index" ng-bind="$index + 1"></span></p>
+                                    <p><span class="terminal-index" ng-cloak ng-bind="$index + 1"></span></p>
                                 </td>
                                 <td>
                                     <p class="textleft" ng-bind="item.name"></p>
@@ -169,6 +169,7 @@
     <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
     <script src="../../resources/js/lodash.js"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/mock.js"></script>
     <script src="../../resources/js/echarts.min.js"></script>
     <script src="inventoryStatistics.js"></script>
 </body>
