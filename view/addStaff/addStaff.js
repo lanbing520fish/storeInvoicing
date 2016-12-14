@@ -9,10 +9,10 @@ angular
     }])
 
     .controller('chkCtrl', function($scope){
-        $scope.showType=1;
-        $scope.sub = function(){
-            $scope.showType=!$scope.showType;
-            };
+        $scope.useSystem = 1;
+        $scope.isUsesystem = function() {
+            $scope.useSystem = $scope.useSystem === 0 ? 1: 0;
+        };
     })
 
     // 弹出框
