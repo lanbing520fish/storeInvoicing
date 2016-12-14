@@ -11,12 +11,227 @@ angular
 
         $rootScope.salesList = []; //列表内容
         $rootScope.sectionList = ["价位：0～300", "价位：300～700","价位：700～1000","价位：1000～1500","价位：1500～2000","价位：2000～3000","价位：3000+"]; //价格区间
+
+        $rootScope.cityList = []; //查询地区列表
+        $rootScope.contactList = []; //查询商户列表
+
+
     }])
-    .controller('storeQuery', ['$scope', '$rootScope', function($scope, $rootScope) {
+
+    /*传入数据*/
+    .factory('httpMethod', 'httpConfig', ['$http', '$q', function ($http, $q) {
+        var httpMethod = {};
+
+        // 查询地区
+        httpMethod.qryCommonRegionInfo = function () {
+            var defer = $q.defer();
+            $http({
+                url: 'http://192.168.16.84:8088/chain/terminal/q/qryCommonRegionInfo',
+                method: 'GET',
+                // headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+            }).success(function (data, header, config, status) {
+                if (status != 200) {
+                    // 跳转403页面
+                }
+                defer.resolve(data);
+            }).error(function (data, status, headers, config) {
+                defer.reject(data);
+            });
+            return defer.promise;
+        };
+        // 查询商户
+        httpMethod.qryBizmanByCon = function (param) {
+            var defer = $q.defer();
+            $http({
+                url: 'http://192.168.16.84:8088/chain/config/claim/q/qryBizmanByCon',
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                data: param
+            }).success(function (data, header, config, status) {
+                if (status != 200) {
+                    // 跳转403页面
+                }
+                defer.resolve(data);
+            }).error(function (data, status, headers, config) {
+                defer.reject(data);
+            });
+            return defer.promise;
+        };
+        //查询终端分价位销量统计
+        httpMethod.qrySalesStatisticsByCon = function () {
+            var defer = $q.defer();
+            $http({
+                url: 'http://192.168.16.84:8088/chain/form/q/qrySalesStatisticsByCon',
+                method: 'GET',
+                // headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                data: JSON.stringify(),
+            }).success(function (data, header, config, status) {
+                if (status != 200) {
+                    // 跳转403页面
+                }
+                defer.resolve(data);
+            }).error(function (data, status, headers, config) {
+                defer.reject(data);
+            });
+            return defer.promise;
+        };
+
+        //终端库存及库存周转分析
+        httpMethod.qryStockAnalysisByCon = function () {
+            var defer = $q.defer();
+            $http({
+                url: 'http://192.168.16.84:8088/chain/form/q/qryStockAnalysisByCon',
+                method: 'GET',
+                // headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                data: JSON.stringify(),
+            }).success(function (data, header, config, status) {
+                if (status != 200) {
+                    // 跳转403页面
+                }
+                defer.resolve(data);
+            }).error(function (data, status, headers, config) {
+                defer.reject(data);
+            });
+            return defer.promise;
+        };
+
+
+        if (httpConfig.isMock) {
+            debugger;
+            // 地区查询
+            Mock.mock('http://192.168.16.84:8088/chain/terminal/q/qryCommonRegionInfo', {
+                'areaId': '@id',
+                'areaLevel': ['1', '2', '3'], //(地区等级，1：国家，2:省，3，市)
+                'childrenCommon': [{ //(下一级地区列表)
+                    'areaId': '@id',
+                    'areaLevel|1-100': 3,
+                    'childrenCommon': 'null',
+                    'commonRegionId': '@id', //(区域id)
+                    'createDate': "2013-04-15 11:46:11",
+                    'idPrefix|1-100': 73,
+                    'regionCode': "@id",
+                    'regionDesc': "乌海市", //(区域详情)
+                    'regionName': "乌海市", //(区域名称)
+                    'upRegionId|1-100': 2, //(上一级commonRegionId)
+                    'zipCode': "0473",
+                    'zoneNumber': "17399",
+                }],
+                'commonRegionId|1-100': 2,
+                'createDate': "2013-04-15 11:46:11",
+                'idPrefix|90-99': 99,
+                'regionCode': "@id",
+                'regionDesc': "内蒙古自治区",
+                'regionName': "内蒙古",
+                'upRegionId': 'null',
+                'zipCode': "0000",
+                'zoneNumber': "2",
+            });
+            // 查询商户
+            Mock.mock('http://192.168.16.84:8088/chain/config/claim/q/qryBizmanByCon', {
+                'endRow': 5,
+                'firstPage': 1,
+                'hasNextPage': 'true',
+                'hasPreviousPage': 'false',
+                'isFirstPage': 'true',
+                'isLastPage': 'false',
+                'lastPage': 2,
+                'list':[{ //(数据信息在这个list)
+                    'areaId': 'null',
+                    'bizmanCode': 'null',
+                    'bizmanId': '54173', //(商户id)
+                    'bizmanName': "德乐", //(经营主体名称)
+                    'commonRegionId': 'null',
+                    'email': 'null',
+                    'identifyName': 'null',
+                    'identifyNum': 'null',
+                    'identifyType': 'null',
+                    'linkNbr': 'null',
+                    'manageStaff': 'null',
+                    'oldBizmanName': 'null',
+                    'operatorsId': 'null', //(经营主体id)
+                    'operatorsName': "中国电信齐齐哈尔分公司", //(经营主体名称)
+                    'operatorsNbr': "J12345212344", //(经营主体编码)
+                    'parentBizman': 'null',
+                    'regionName': "乌海市",
+                    'remarks': 'null',
+                    'retailShopName': 'null',
+                    'staffName': 'null',
+                    'statusCd': "1001",
+                }],
+                'navigatePages': '8',
+                'navigatepageNums': [{
+                    '0': '1',
+                    '1': '2',
+                }],
+                'nextPage': '2',
+                'pageNum': '1',
+                'pageSize': '5',
+                'pages': '2',
+                'prePage': '0',
+                'size': '5',
+                'startRow': '1',
+                'success': 'true',
+                'total': '10',
+            });
+            // 查询终端分价位销量统计
+            Mock.mock('http://192.168.16.84:8088/chain/form/q/qrySalesStatisticsByCon', {
+                'bizmanId': 'null', //(商户id)
+                'bizmanName': 'null', //(商户名称)
+                'channelId': 'null', //(渠道id)
+                'channelName': 'null', //(渠道名称)
+                'commonRegionId': 'null', //(区域id)
+                'etlTime': 'null',
+                'levelQty': 'null',
+                'numType': 'null',
+                'priceSeg': 'null',
+                'retailPrice': 'null',
+                'retailShopId': 'null',
+                'retailShopName': 'null', //(门店名称)
+                'saleMonth': "201607", //(月份信息，按月查询的时候用)
+                'saleTime': 'null', //(日期信息，按日查询时候用)
+                'salesQty': 'null',
+                'segList': [{ //(价位分类)
+                    'priceSegment': '1', //(价位类型，从1到7)
+                    'totalNum': '0', //(销量总和)
+                }],
+                'sellingPrice': 'null',
+                'statisticId': 'null',
+                'totalQty': 'null', //(销售总和)
+            });
+            // 终端库存及库存周转分析
+            Mock.mock('http://192.168.16.84:8088/chain/form/q/qryStockAnalysisByCon', {
+                'bizmanId': 'null',
+                'bizmanName': 'null',
+                'channelId': 'null',
+                'channelName': 'null',
+                'commonRegionId': 'null',
+                'retailShopId': 'null',
+                'retailShopName': 'null',
+                'salesQty': 'null', //(当日销售总和)
+                'stockDuring': 'null', //(最近一周的销量总和)
+                'stockQty': 'null', //(库存总和)
+                'stockTime': "2016-11-10 00:00:00", //(统计月份)
+                'stockValue': 'null', //(库存价值总和)
+            });
+        }
+
+        return httpMethod;
+    }])
+    /*传入数据*/
+
+    .controller('storeQuery', ['$scope', '$rootScope', 'httpMethod', function($scope, $rootScope, httpMethod) {
         //门店所属商户
         $scope.openStoreQueryType = function() {
             $scope.$emit('openStoreQueryTypeModal');
         };
+
+        // //查询终端分价位销量统计
+        // httpMethod.qrySalesStatisticsByCon().then(function(rsp) {
+        //     console.log('调用终端分价位销量统计接口成功.');
+        //     $rootScope.salesStatList = rsp;
+        // }, function () {
+        //     console.log('调用终端分价位销量统计接口失败.');
+        // });
        
     }])
     // 弹出框
@@ -148,25 +363,14 @@ angular
         $scope.endPopupOpened = false;
     }])
     // 弹框内城市
-    .controller('bouncedCityCheckCtrl', ['$scope', function($scope) {
-        $scope.citys = [{
-            areaId: '009',
-            areaName: '江苏省',
-            children: [{
-                areaId: '025',
-                areaName: '南京市',
-            }, {
-                areaId: '026',
-                areaName: '常州市',
-            }]
-        }, {
-            areaId: '009',
-            areaName: '安徽省',
-            children: [{
-                areaId: '0551',
-                areaName: '合肥市',
-            }]
-        }];
+    .controller('bouncedCityCheckCtrl', ['$scope', '$rootScope', 'httpMethod', function($scope, $rootScope, httpMethod) {
+        // 查询地区信息
+        httpMethod.qryCommonRegionInfo().then(function(rsp) {
+            console.log('调用查询地区接口成功.');
+            $rootScope.citys = rsp.data;
+        }, function () {
+            console.log('调用查询地区接口失败.');
+        });
 
         $scope.visible = false;
         $scope.key = 1;
@@ -210,7 +414,7 @@ angular
         }
     }])
     // 城市
-    .controller('cityCheckCtrl', ['$scope','$rootScope', function($scope, $rootScope) {
+    .controller('cityCheckCtrl', ['$scope','$rootScope', 'httpMethod', function($scope, $rootScope, httpMethod) {
 
         $scope.cityClose = function() {
             $scope.visible = !$scope.visible;
@@ -219,163 +423,13 @@ angular
             $scope.visible = false;
         };
 
-        $scope.cityList = [{
-                name: '江西省',
-                areaId: '001',
-                child: [
-                        {
-                            name: '南昌市',
-                            areaId: '001001',
-                            child: [
-                                {
-                                    name: '东湖区',
-                                    areaId:'001001001',
-                                }, {
-                                    name: '西湖区',
-                                    areaId:'001001002',
-                                }, {
-                                    name: '青云谱区',
-                                    areaId:'001001003',
-                                },
-                                {
-                                    name: '湾里区',
-                                    areaId:'001001004',
-                                }
-                            ]
-                        },
-                        {
-                            name: '景德镇市',
-                            areaId: '001002',
-                            child: [
-                                {
-                                    name: '昌江区',
-                                    areaId:'001002001',
-                                }, {
-                                    name: '珠山区',
-                                    areaId:'001002002',
-                                }, {
-                                    name: '乐平市',
-                                    areaId:'001002003',
-                                },
-                                {
-                                    name: '浮梁县',
-                                    areaId:'001002004',
-                                }
-                            ]
-                        }
-                    ]
-            },
-            {
-                name: '吉林省',
-                areaId: '002',
-                child: [
-                        {
-                            name: '长春市',
-                            areaId: '002001',
-                            child: [
-                                {
-                                    name: '朝阳区',
-                                    areaId:'002001001',
-                                }, {
-                                    name: '南关区',
-                                    areaId:'002001002',
-                                }, {
-                                    name: '宽城区',
-                                    areaId:'002001003',
-                                },
-                                {
-                                    name: '二道区',
-                                    areaId:'002001004',
-                                }
-                            ]
-                        },
-                        {
-                            name: '吉林市',
-                            areaId: '002002',
-                            child: [
-                                {
-                                    name: '船营区',
-                                    areaId:'002002001',
-                                }, {
-                                    name: '昌邑区',
-                                    areaId:'002002002',
-                                }, {
-                                    name: '龙潭区',
-                                    areaId:'002002003',
-                                },
-                                {
-                                    name: '丰满区',
-                                    areaId:'002002004',
-                                }
-                            ]
-                        }
-                    ]
-            },
-            {
-                name: '黑龙江省',
-                areaId: '003',
-                child: [
-                        {
-                            name: '齐齐哈尔市',
-                            areaId: '003001',
-                        },
-                        {
-                            name: '牡丹江市',
-                            areaId: '003002',
-                        }
-                    ]
-            },
-            {
-                name: '上海市',
-                areaId: '004'
-            },
-            {
-                name: '江苏省',
-                areaId: '005',
-                child: [
-                        {
-                            name: '南京市',
-                            areaId: '005001',
-                            child: [
-                                {
-                                    name: '雨花区',
-                                    areaId:'005001001',
-                                }, {
-                                    name: '建邺',
-                                    areaId:'005001002',
-                                }, {
-                                    name: '鼓楼区',
-                                    areaId:'005001003',
-                                },
-                                {
-                                    name: '浦口区',
-                                    areaId:'006001004',
-                                }
-                            ]
-                        },
-                        {
-                            name: '苏州市',
-                            areaId: '005002',
-                            child: [
-                                {
-                                    name: '姑苏区',
-                                    areaId:'005002001',
-                                }, {
-                                    name: '虎丘区',
-                                    areaId:'005002002',
-                                }, {
-                                    name: '吴中区',
-                                    areaId:'005002003',
-                                },
-                                {
-                                    name: '相城区',
-                                    areaId:'005002004',
-                                }
-                            ]
-                        }
-                    ]
-            }
-        ];
+        // 查询地区信息
+        httpMethod.qryCommonRegionInfo().then(function(rsp) {
+            console.log('调用查询地区接口成功.');
+            $rootScope.cityList = rsp.data;
+        }, function () {
+            console.log('调用查询地区接口失败.');
+        });
 
         $scope.selectedRow = null; //一级索引值
         $scope.selectedRowb = null; //二级索引值
@@ -387,7 +441,7 @@ angular
         $scope.selectProvince = function(index,item) {
             $scope.selectedRow = index;
             $scope.selectedRowb = null;
-            $scope.selectedProvince = item.name;
+            $scope.selectedProvince = item.regionName;
             $scope.selectedCity = '';
             $scope.selectedArea = '';
         };
@@ -395,13 +449,13 @@ angular
         $scope.selectCity = function(rowb, item) {
             event.stopPropagation();
             $scope.selectedRowb = rowb;
-            $scope.selectedCity = ' - ' + item.name;
+            $scope.selectedCity = ' - ' + item.regionName;
             $scope.selectedArea = '';
         };
 
         $scope.selectArea = function(rowb, item) {
             event.stopPropagation();
-            $scope.selectedArea = ' - ' + item.name; 
+            $scope.selectedArea = ' - ' + item.regionName; 
         };
 
         $scope.cityChecked = function(){
@@ -411,6 +465,60 @@ angular
 
 
     }])
+
+    // 弹窗内查询控制器
+    .controller('queryStoreFormCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', function ($scope, $rootScope, $log, httpMethod) {
+
+        $scope.isForbid = true;
+        $scope.queryStoreForm = {
+            bizmanName: '', //门店名称
+            bizmanId: '', //商户id
+            areaId: '', //地区
+        };
+
+        // 查询结果分页信息
+        $scope.requirePaging = true; // 是否需要分页
+        $scope.curPage = 1; // 当前页
+        $scope.pageSize = 10; // 每页显示行数
+        $scope.totalSize = 0; // 总条数
+
+
+        $scope.queryStoreFormSubmit = function (curPage) {
+            !curPage && $scope.$broadcast('pageChange');
+            $scope.checkedSys = []; // 置空已选业务模型列表
+
+            var param = {
+                // requirePaging: $scope.requirePaging, // 是否需要分页
+                curPage: curPage || $scope.curPage, // 当前页
+                pageSize: $scope.pageSize, // 每页显示行数
+                totalSize: $scope.totalSize, //总条数
+                bizmanId: undefined,
+                bizmanName: undefined,
+                areaId: undefined,
+                cityId: undefined,
+            };
+    $scope.queryStoreForm.bizmanId ? param.bizmanId = $scope.queryStoreForm.bizmanId : undefined;
+    $scope.queryStoreForm.bizmanName ? param.bizmanName = $scope.queryStoreForm.bizmanName : undefined;
+    // $scope.queryStoreForm.areaIdItem ? param.areaId = $scope.queryStoreForm.areaIdItem.areaId : undefined;
+    // $scope.queryStoreForm.cityIdItem ? param.cityId = $scope.queryStoreForm.cityIdItem.cityId : undefined;
+
+            // 查询商户信息
+            httpMethod.qryBizmanByCon(param).then(function(rsp) {
+                console.log('调用查询商户信息接口成功.');
+                $rootScope.contactList = rsp.list;
+            }, function () {
+                console.log('调用查询商户信息接口失败.');
+            });
+        }
+        $scope.$watch('queryStoreForm', function (current, old, scope) {
+            if (scope.queryStoreForm.bizmanId || scope.queryStoreForm.bizmanName) {
+                scope.isForbid = false;
+            } else {
+                scope.isForbid = true;
+            }
+        }, true)
+    }])
+
     /*echarts图标1*/
     .controller('monthLineCtrl', function($rootScope, $scope, $log) {
         $scope.legend = [];
@@ -886,3 +994,18 @@ angular
             }  
         }
     })
+    // 分页控制器
+    .controller('paginationCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', function ($scope, $rootScope, $log, httpMethod) {
+        $scope.$on('pageChange', function () {
+            $scope.curPage = 1;
+        });
+        $scope.maxSize = 10;
+        $scope.setPage = function (pageNo) {
+            $scope.curPage = pageNo;
+        };
+
+        $scope.pageChanged = function () {
+            $scope.queryStoreFormSubmit($scope.curPage);
+            $log.log('Page changed to: ' + $scope.curPage);
+        };
+    }])
