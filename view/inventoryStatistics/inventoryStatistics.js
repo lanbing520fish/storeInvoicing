@@ -151,10 +151,6 @@ angular
         };
         $scope.startPopupOpened = false;
         $scope.endPopupOpened = false;
-<<<<<<< .merge_file_6sJmJC
-=======
-
-
 
         // 确定查询
         $scope.queryFormSubmit = function() {
@@ -171,7 +167,6 @@ angular
                 $log.log('获取库存量TOP5统计数据失败.');
             });
         }
->>>>>>> .merge_file_30AuAN
     }])
     // 城市
     .controller('cityCheckCtrl', ['$scope','$rootScope', function($scope, $rootScope) {
