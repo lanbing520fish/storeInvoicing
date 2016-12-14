@@ -151,6 +151,27 @@ angular
         };
         $scope.startPopupOpened = false;
         $scope.endPopupOpened = false;
+<<<<<<< .merge_file_6sJmJC
+=======
+
+
+
+        // 确定查询
+        $scope.queryFormSubmit = function() {
+            var param = {
+                beginDt: $scope.conditionQueryForm.createStartDt, //开始时间
+                endDt: $scope.conditionQueryForm.createEndDt, //结束时间
+                bizmanId: '', //商户id
+                commonRegionId: $rootScope.checkedAreaID //区域id
+            };
+            httpMethod.qryStockStatisticTwo(param).then(function(rsp) {
+                $rootScope.qryStockStatisticData = rsp.data;
+                $log.log('获取库存量TOP5统计数据成功.');
+            }, function() {
+                $log.log('获取库存量TOP5统计数据失败.');
+            });
+        }
+>>>>>>> .merge_file_30AuAN
     }])
     // 城市
     .controller('cityCheckCtrl', ['$scope','$rootScope', function($scope, $rootScope) {
