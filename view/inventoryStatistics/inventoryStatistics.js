@@ -154,6 +154,8 @@ angular
         $scope.startPopupOpened = false;
         $scope.endPopupOpened = false;
 
+
+
         // 确定查询
         $scope.queryFormSubmit = function() {
             var param = {
