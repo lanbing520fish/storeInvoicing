@@ -12,7 +12,7 @@
     
 </head>
 
-<body ng-app="carriedOutModule">
+<body>
     <!-- DOM结构开始 -->
     <div class="history top-line wavy-line">
 
@@ -34,7 +34,7 @@
                         <p class="alarm-query-title fn-left">搜
                             <br/>索</p>
                         <div class="condition-query-box fn-right" ng-controller="monthConditionQuery">
-                            <form name="conditionQueryForm" ng-submit="queryFormSubmit()" class="form-inline" role="form">
+                            <form name="conditionQueryForm" class="form-inline" role="form">
                                 <div class="row mb10">
                                     <div class="col-xs-4">
                                         <div class="form-group">
@@ -99,12 +99,12 @@
                                             <div class="form-group">
                                                 <label class="control-label">所属商户：</label>
                                                 <input type="text" class="form-control reduce-width">
-                                                <span type="submit" class="btn btn-sm btn-searching" ng-click="openStoreQueryType()"><i class="iconfont">&#xe600;</i></span>
+                                                <button class="btn btn-sm btn-searching" ng-click="openStoreQueryType()"><i class="iconfont">&#xe600;</i></button>
                                             </div>
                                         </div>
                                         <div class="col-xs-1">
                                             <div>
-                                                <button type="submit" class="btn btn-sm btn-stat-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                                                <button type="submit" ng-click="queryFormSubmit()" class="btn btn-sm btn-stat-query"><i class="iconfont">&#xe600;</i> 查询</button>
                                             </div>
                                         </div>
                                 </div>
@@ -117,7 +117,7 @@
                             <div class="col-xs-2"></div>
                             <div class="col-xs-8">
                                 <div>
-                                    <monthline id="main" date="date" price="price" legend="legend"></monthline>
+                                    <monthline id="main" xData="xData" series="series" legend="legend"></monthline>
                                 </div> 
                             </div>
                             <div class="col-xs-2"></div>
@@ -412,24 +412,8 @@
 
     </div>
 
-	<script src="../../resources/js/echarts.min.js"></script>
-    <script src="../../resources/js/angular.min.js"></script>
-    <script src="../../resources/js/angular-touch.min.js"></script>
-    <script src="../../resources/js/angular-animate.min.js"></script>
-    <script src="../../resources/js/angular-aria.min.js"></script>
-    <script src="../../resources/js/angular-locale_zh-cn.js"></script>
-    <script src="../../resources/js/jquery.min.js"></script>
-    <script src="../../resources/js/bootstrap.min.js"></script>
-    <script src="../../resources/js/ui-bootstrap.js"></script>
-    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
-    <script src="../../resources/js/lodash.js"></script>
-    <script src="../../resources/js/sweetalert.min.js"></script>
-    <script src="../../resources/js/moment.js"></script>
-    <script src="../../resources/js/mock.js"></script>
-
-
-    
-    <script src="salesStatistics.js"></script>
+    <script src="../../resources/js/require.js" data-main="entry"></script>
+    <!-- <script src="salesStatistics.js"></script> -->
 </body>
 
 </html>
