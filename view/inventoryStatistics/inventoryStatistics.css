@@ -537,7 +537,7 @@
     border-color: #9249db;
     color: #fff;
 }
-.btn-stat-query.focus {
+.btn-stat-query:focus {
     background-color: #9249db;
     border-color: #9249db;
     color: #fff;

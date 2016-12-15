@@ -25,7 +25,7 @@ angular
                 'requestHeader': {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                 },
-                'isMock': true // 是否开启测试数据
+                'isMock': false // 是否开启测试数据
             },
             httpMethod = {};
 
@@ -361,10 +361,10 @@ angular
 
         $scope.queryFormSubmit = function () {
             var param = {
-                beginDt: $scope.conditionQueryForm.createStartDt, // 开始时间
+                beginDt: $scope.conditionQueryForm.createStartDt ? moment($scope.conditionQueryForm.createStartDt).format("YYYY-MM-DD") : '', //开始时间
+                endDt: $scope.conditionQueryForm.createEndDt ? moment($scope.conditionQueryForm.createEndDt).format("YYYY-MM-DD") : '', //结束时间
                 bizmanId: $rootScope.submitBizmanId, // 商户id
                 commonRegionId: $scope.checkedSubimitAreaId, // 地区id
-                endDt: $scope.conditionQueryForm.createEndDt, // 结束时间
                 // priceSeg: undefined, // 价段分类标志时间
                 qryType: 1, // 1:按月份查询，2:按天查询 不能为空
                 // pageSize: 10,
@@ -479,10 +479,10 @@ angular
 
         $scope.queryFormSubmit = function () {
             var param = {
-                beginDt: $scope.conditionQueryForm.createStartDt, // 开始时间
+                beginDt: $scope.conditionQueryForm.createStartDt ? moment($scope.conditionQueryForm.createStartDt).format("YYYY-MM-DD") : '', //开始时间
+                endDt: $scope.conditionQueryForm.createEndDt ? moment($scope.conditionQueryForm.createEndDt).format("YYYY-MM-DD") : '', //结束时间
                 bizmanId: $rootScope.submitBizmanId, // 商户id
                 commonRegionId: $scope.checkedSubimitAreaId, // 地区id
-                endDt: $scope.conditionQueryForm.createEndDt, // 结束时间
                 // priceSeg: undefined, // 价段分类标志时间
                 qryType: 2, // 1:按月份查询，2:按天查询 不能为空
                 // pageSize: 10,
@@ -597,7 +597,8 @@ angular
                                 $scope.legend[6] = item.priceSegment;
                                 break;
                         }
-                    })
+                    });
+                    $scope.legend = ['[0,300]', '[300,700]','[700,1000]','[1000,1500]','[1500,2000]','[2000,3000]','[3000+]','总销量'];
                 });
             }
         }, true);
@@ -838,7 +839,8 @@ angular
                                 $scope.legend[6] = item.priceSegment;
                                 break;
                         }
-                    })
+                    });
+                    $scope.legend = ['[0,300]', '[300,700]','[700,1000]','[1000,1500]','[1500,2000]','[2000,3000]','[3000+]','总销量'];
                 });
             }
         }, true);

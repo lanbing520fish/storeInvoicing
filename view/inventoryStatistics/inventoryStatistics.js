@@ -213,11 +213,13 @@ angular
             startingDay: 1,
             showWeeks: false
         };
-        $scope.$watch('conditionQueryForm.createStartDt', function (newValue) {
+        $scope.$watch('conditionQueryForm.createStartDt', function(newValue) {
             $scope.endDateOptions.minDate = newValue;
+            $scope.endDateOptions.maxDate = newValue ? moment(newValue).add(5, 'd') : null;
         });
-        $scope.$watch('conditionQueryForm.createEndDt', function (newValue) {
+        $scope.$watch('conditionQueryForm.createEndDt', function(newValue) {
             $scope.startDateOptions.maxDate = newValue;
+            $scope.startDateOptions.minDate = newValue ? moment(newValue).subtract(5, 'd') : null;
         });
         $scope.startOpen = function () {
             $timeout(function () {
@@ -240,8 +242,8 @@ angular
         // 确定查询
         $scope.queryFormSubmit = function () {
             var param = {
-                beginDt: $scope.conditionQueryForm.createStartDt, //开始时间
-                endDt: $scope.conditionQueryForm.createEndDt, //结束时间
+                beginDt: $scope.conditionQueryForm.createStartDt ? moment($scope.conditionQueryForm.createStartDt).format("YYYY-MM-DD") : '', //开始时间
+                endDt: $scope.conditionQueryForm.createEndDt ? moment($scope.conditionQueryForm.createEndDt).format("YYYY-MM-DD") : '', //结束时间
                 bizmanId: $rootScope.submitBizmanId, //商户id
                 commonRegionId: $rootScope.checkedAreaID //区域id
             };

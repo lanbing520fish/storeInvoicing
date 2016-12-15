@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-xs-4">
                                     <div class="form-group">
                                         <label class="control-label">所属地区：</label>
                                         <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
@@ -125,9 +125,9 @@
                                             class="iconfont">&#xe600;</i></button>
                                     </div>
                                 </div>
-                                <div class="col-xs-2 text-right">
+                                <div class="col-xs-1 text-right">
                                     <div>
-                                        <button type="submit" ng-click="queryFormSubmit()" class="btn btn-sm btn-query">
+                                        <button type="submit" ng-click="queryFormSubmit()" class="btn btn-sm btn-stat-query">
                                             <i class="iconfont">&#xe600;</i> 查询
                                         </button>
                                     </div>
@@ -222,7 +222,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-xs-4">
                                     <div class="form-group">
                                         <label class="control-label">所属地区：</label>
                                         <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
@@ -287,9 +287,9 @@
                                               ng-click="openStoreQueryType()"><i class="iconfont">&#xe600;</i></span>
                                     </div>
                                 </div>
-                                <div class="col-xs-2 text-right">
+                                <div class="col-xs-1 text-right">
                                     <div>
-                                        <button type="submit" ng-click="queryFormSubmit()"  class="btn btn-sm btn-query"><i class="iconfont">
+                                        <button type="submit" ng-click="queryFormSubmit()"  class="btn btn-sm btn-stat-query"><i class="iconfont">
                                             &#xe600;</i> 查询
                                         </button>
                                     </div>
@@ -328,7 +328,7 @@
                                     <tbody>
                                     <tr ng-repeat="item in salesListForDate">
                                         <td>
-                                            <p ng-bind="item.saleTime"></p>
+                                            <p ng-bind="item.saleTime" class="overflow-handle"></p>
                                         </td>
                                         <td ng-repeat="value in item.segList track by $index">
                                             <p ng-bind="value.totalNum"></p>
