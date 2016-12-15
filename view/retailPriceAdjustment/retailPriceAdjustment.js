@@ -11,7 +11,7 @@ angular
         httpMethod.loadShop = function (param) {
             var defer = $q.defer();
             $http({
-                url: 'http://192.168.74.17:8088/price/retail/a/loadShop',
+                url: 'http://192.168.16.51:8088/chain/config/shop/q/loadShop',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -32,7 +32,7 @@ angular
         httpMethod.savePriceRetailAdjustOrder = function(param) {
             var defer = $q.defer();
             $http({
-                url: 'http://192.168.74.17:8088/price/retail/a/savePriceRetailAdjustOrder',
+                url: 'http://192.168.16.51:8088/chain/price/retail/q/findPriceRetailAdjustOrderList',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -52,7 +52,7 @@ angular
         httpMethod.findPriceRetailAdjustOrder = function(param) {
             var defer = $q.defer();
             $http({
-                url: 'http://192.168.74.17:8088/price/retail/q/findPriceRetailAdjustOrder',
+                url: 'http://192.168.16.51:8088/chain/price/retail/q/findPriceRetailAdjustOrder',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -171,10 +171,14 @@ angular
         // 查询结果分页信息
         $scope.curPage = 1; // 当前页
         $scope.rowNumPerPage = 10; // 每页显示行数
-        $scope.totalNum = 0; // 总条数
+        $scope.totalSize = 0; // 总条数
         $scope.maxSize = 5; // 最大展示页数
 
         $scope.conditionQueryForm = {
+            praOrderId: '', //订单号码
+            statusCd: '', //门店ID
+            staffName: '', //员工ID
+            retailShopId:'',
             startDate: '', //制单日期开始
             endDate: '', //制单日期结束
         };
@@ -221,26 +225,30 @@ angular
             $log.log('调用获取门店接口失败.');
         });
 
-        $scope.orderId = '';
         $scope.orderQuery = function(curPage) {
             !curPage && $scope.$broadcast('pageChange');
             var param = {
                 'pageSize': $scope.rowNumPerPage, //每页条数
                 'curPage': $scope.curPage, //当前页
                 'totalSize': $scope.totalSize,
-                'praOrderId': $scope.praOrderId, //订单号码
-                'statusCd': '', //门店ID
-                'staffName': '', //员工ID
-                'retailShopId':'',
-                'startDate':'',
-                'endDate':''
+                // 'praOrderId': $scope.praOrderId, //订单号码
+                // 'statusCd': '', //门店ID
+                // 'staffName': '', //员工ID
+                // 'retailShopId':'',
+                // 'startDate':'',
+                // 'endDate':''
             }
+            $scope.conditionQueryForm.praOrderId ? param.praOrderId = $scope.conditionQueryForm.orderId : '';
+            $scope.conditionQueryForm.statusCd ? param.statusCd = $scope.conditionQueryForm.statusCd : '';
+            $scope.conditionQueryForm.staffName ? param.staffName = $scope.conditionQueryForm.staffName : '';
+            $scope.conditionQueryForm.retailShopId ? param.retailShopId = $scope.conditionQueryForm.retailShopId : '';
+            $scope.conditionQueryForm.startDate ? param.startDate = $scope.conditionQueryForm.startDate : '';
+            $scope.conditionQueryForm.endDate ? param.endDate = $scope.conditionQueryForm.endDate : '';
 
             // 查询零售调价单
             httpMethod.savePriceRetailAdjustOrder(param).then(function(rsp) {
                 $log.log('调用查询零售调价单接口成功.');
                 $rootScope.retailPriceResultList = rsp.data.list;
-
                 $scope.totalNum = rsp.data.total;
             }, function() {
                 $log.log('调用查询零售调价单接口失败.');
@@ -305,5 +313,21 @@ angular
             $uibModalInstance.dismiss('cancel');
         };
     })
+    // 分页控制器
+    .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
+        $scope.$on('pageChange', function() {
+            $scope.currentPage = 1;
+        });
+
+        $scope.maxSize = 10;
+        $scope.setPage = function(pageNo) {
+            $scope.currentPage = pageNo;
+        };
+
+        $scope.pageChanged = function() {
+            $scope.queryTypeFormSubmit($scope.currentPage);
+            $log.log('Page changed to: ' + $scope.currentPage);
+        };
+    }]);
 
    
