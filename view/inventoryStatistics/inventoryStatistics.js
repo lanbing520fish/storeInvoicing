@@ -15,7 +15,7 @@ angular
                 'requestHeader': {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                 },
-                'isMock': true // 是否开启测试数据
+                'isMock': false // 是否开启测试数据
             },
             httpMethod = {};
 
@@ -44,7 +44,7 @@ angular
                 url: httpConfig.siteUrl + '/chain/config/claim/q/qryBizmanByCon',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: param
+                data: $.param(param)
             }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
@@ -63,7 +63,7 @@ angular
                 url: httpConfig.siteUrl + '/chain/report/q/qryStockStatisticTwo',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: param
+                data: $.param(param)
             }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
@@ -553,7 +553,7 @@ angular
         };
     })
     // 弹出框查询商户
-    .controller('queryStoreCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', function ($scope, $rootScope, $log, httpMethod) {
+    .controller('queryStoreCtrl', ['$scope', '$rootScope', '$log', '$http', 'httpMethod', function ($scope, $rootScope, $log, $http, httpMethod) {
         $scope.requirePaging = true; // 是否需要分页
         $scope.currentPage = 1; // 当前页
         $scope.rowNumPerPage = 4; // 每页显示行数
@@ -578,7 +578,6 @@ angular
             }, function () {
                 $log.log('获取商戶列表失败.');
             });
-
         };
 
         // 城市选择

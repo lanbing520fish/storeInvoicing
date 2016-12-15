@@ -4,14 +4,17 @@ angular
         $rootScope.stepNum = 0; // 当前显示的step索引值（Number类型）
         $rootScope.goBack = function () {
             $rootScope.stepNum = 0;
+            $rootScope.submitBizmanId = '';
+            $rootScope.submitBizmanName = '';
         };
         $rootScope.forward = function () {
             $rootScope.stepNum = 1;
+            $rootScope.submitBizmanId = '';
+            $rootScope.submitBizmanName = '';
         };
 
         $rootScope.salesList = []; //列表内容-按月
         $rootScope.salesListForDate = []; //列表内容-按天
-        $rootScope.sectionList = ["价位：0～300", "价位：300～700", "价位：700～1000", "价位：1000～1500", "价位：1500～2000", "价位：2000～3000", "价位：3000+"]; //价格区间
 
         $rootScope.regionInfoList = []; //查询地区列表
         $rootScope.contactList = []; //查询商户列表
@@ -50,7 +53,7 @@ angular
                 url: httpConfig.siteUrl + '/chain/config/claim/q/qryBizmanByCon',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: param
+                data: $.param(param)
             }).success(function (data, header, config, status) {
                 if (status != 200) {
                     // 跳转403页面
@@ -66,9 +69,9 @@ angular
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/form/q/qrySalesStatisticsByCon',
-                method: 'GET',
+                method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: param
+                data: $.param(param)
             }).success(function (data, header, config, status) {
                 if (status != 200) {
                     // 跳转403页面
@@ -85,9 +88,9 @@ angular
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/form/q/qryStockAnalysisByCon',
-                method: 'GET',
+                method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: param
+                data: $.param(param)
             }).success(function (data, header, config, status) {
                 if (status != 200) {
                     // 跳转403页面
@@ -256,11 +259,66 @@ angular
         };
     }])
 
-    .controller('monthConditionQuery', ['$scope', '$timeout', '$filter', function ($scope, $timeout, $filter) {
+    // 按月搜索
+    .controller('monthConditionQuery', ['$scope', '$rootScope', '$timeout', '$filter', 'httpMethod', function ($scope, $rootScope, $timeout, $filter, httpMethod) {
+        //城市
+        $scope.cityClose = function () {
+            $scope.visible = !$scope.visible;
+        };
+        $scope.clHide = function () {
+            $scope.visible = false;
+        };
+
+        // 查询地区信息
+        httpMethod.qryCommonRegionInfo().then(function (rsp) {
+            console.log('调用查询地区接口成功.');
+            $rootScope.regionInfoList = rsp.data;
+        }, function () {
+            console.log('调用查询地区接口失败.');
+        });
+
+        $scope.selectedRow = null; //一级索引值
+        $scope.selectedRowb = null; //二级索引值
+        $scope.selectedProvince = '';
+        $scope.selectedCity = '';
+        $scope.selectedArea = '';
+        $scope.checkedAreaName = '';
+        $scope.checkedAreaId = '';
+
+        $scope.selectProvince = function (index, item) {
+            $scope.selectedRow = index;
+            $scope.selectedRowb = null;
+            $scope.selectedProvince = item.regionName;
+            $scope.selectedCity = '';
+            $scope.selectedArea = '';
+            $scope.checkedAreaId = item.commonRegionId;
+        };
+
+        $scope.selectCity = function (rowb, item) {
+            event.stopPropagation();
+            $scope.selectedRowb = rowb;
+            $scope.selectedCity = ' - ' + item.regionName;
+            $scope.selectedArea = '';
+            $scope.checkedAreaId = item.commonRegionId;
+        };
+
+        $scope.selectArea = function (rowb, item) {
+            event.stopPropagation();
+            $scope.selectedArea = ' - ' + item.regionName;
+            $scope.checkedAreaId = item.commonRegionId;
+        };
+
+        $scope.cityChecked = function () {
+            $scope.checkedAreaName = $scope.selectedProvince + $scope.selectedCity + $scope.selectedArea;
+            $scope.checkedSubimitAreaId = $scope.checkedAreaId;
+            $scope.visible = !$scope.visible;
+        };
+        //城市
+
         $scope.format = "yyyy年MM月";
         $scope.conditionQueryForm = {
             createStartDt: '', //制单日期开始
-            createEndDt: '', //制单日期结束
+            createEndDt: '' //制单日期结束
         };
 
         // 时间控件
@@ -300,9 +358,85 @@ angular
         };
         $scope.startPopupOpened = false;
         $scope.endPopupOpened = false;
+
+        $scope.queryFormSubmit = function () {
+            var param = {
+                beginDt: $scope.conditionQueryForm.createStartDt, // 开始时间
+                bizmanId: $rootScope.submitBizmanId, // 商户id
+                commonRegionId: $scope.checkedSubimitAreaId, // 地区id
+                endDt: $scope.conditionQueryForm.createEndDt, // 结束时间
+                // priceSeg: undefined, // 价段分类标志时间
+                qryType: 1, // 1:按月份查询，2:按天查询 不能为空
+                // pageSize: 10,
+                // curPage: 1,
+                // totalSize: 0
+            };
+
+            httpMethod.qrySalesStatisticsByCon(param).then(function (rsp) {
+                console.log('调用终端分价位销量统计接口成功.'); //按月
+                $rootScope.salesList = rsp.data;
+            }, function () {
+                console.log('调用终端分价位销量统计接口失败.');
+            });
+        };
     }])
 
-    .controller('conditionQuery', ['$scope', '$timeout', function ($scope, $timeout) {
+    // 按天搜索
+    .controller('conditionQuery', ['$scope', '$rootScope', '$timeout', 'httpMethod', function ($scope, $rootScope, $timeout, httpMethod) {
+        //城市
+        $scope.cityClose = function () {
+            $scope.visible = !$scope.visible;
+        };
+        $scope.clHide = function () {
+            $scope.visible = false;
+        };
+
+        // 查询地区信息
+        httpMethod.qryCommonRegionInfo().then(function (rsp) {
+            console.log('调用查询地区接口成功.');
+            $rootScope.regionInfoList = rsp.data;
+        }, function () {
+            console.log('调用查询地区接口失败.');
+        });
+
+        $scope.selectedRow = null; //一级索引值
+        $scope.selectedRowb = null; //二级索引值
+        $scope.selectedProvince = '';
+        $scope.selectedCity = '';
+        $scope.selectedArea = '';
+        $scope.checkedAreaName = '';
+        $scope.checkedAreaId = '';
+
+        $scope.selectProvince = function (index, item) {
+            $scope.selectedRow = index;
+            $scope.selectedRowb = null;
+            $scope.selectedProvince = item.regionName;
+            $scope.selectedCity = '';
+            $scope.selectedArea = '';
+            $scope.checkedAreaId = item.commonRegionId;
+        };
+
+        $scope.selectCity = function (rowb, item) {
+            event.stopPropagation();
+            $scope.selectedRowb = rowb;
+            $scope.selectedCity = ' - ' + item.regionName;
+            $scope.selectedArea = '';
+            $scope.checkedAreaId = item.commonRegionId;
+        };
+
+        $scope.selectArea = function (rowb, item) {
+            event.stopPropagation();
+            $scope.selectedArea = ' - ' + item.regionName;
+            $scope.checkedAreaId = item.commonRegionId;
+        };
+
+        $scope.cityChecked = function () {
+            $scope.checkedAreaName = $scope.selectedProvince + $scope.selectedCity + $scope.selectedArea;
+            $scope.checkedSubimitAreaId = $scope.checkedAreaId;
+            $scope.visible = !$scope.visible;
+        };
+        //城市
+
         $scope.conditionQueryForm = {
             createStartDt: '', //制单日期开始
             createEndDt: '', //制单日期结束
@@ -342,10 +476,29 @@ angular
         };
         $scope.startPopupOpened = false;
         $scope.endPopupOpened = false;
+
+        $scope.queryFormSubmit = function () {
+            var param = {
+                beginDt: $scope.conditionQueryForm.createStartDt, // 开始时间
+                bizmanId: $rootScope.submitBizmanId, // 商户id
+                commonRegionId: $scope.checkedSubimitAreaId, // 地区id
+                endDt: $scope.conditionQueryForm.createEndDt, // 结束时间
+                // priceSeg: undefined, // 价段分类标志时间
+                qryType: 2, // 1:按月份查询，2:按天查询 不能为空
+                // pageSize: 10,
+                // curPage: 1,
+                // totalSize: 0
+            };
+            httpMethod.qrySalesStatisticsByCon(param).then(function (rsp) {
+                console.log('调用终端分价位销量统计接口成功.'); //按月
+                $rootScope.salesListForDate = rsp.data;
+            }, function () {
+                console.log('调用终端分价位销量统计接口失败.');
+            });
+        };
     }])
     // 弹框内城市
     .controller('bouncedCityCheckCtrl', ['$scope', '$rootScope', 'httpMethod', function ($scope, $rootScope, httpMethod) {
-
         $scope.visible = false;
         $scope.key = 1;
         $scope.provinceIndex = '';
@@ -357,7 +510,8 @@ angular
 
         $scope.cityCheck = function () {
             $scope.visible = !$scope.visible;
-        }
+        };
+
         $scope.handleSelectCity = function (level, index, areaId, areaName) {
             var me = this;
             switch (level) {
@@ -387,108 +541,6 @@ angular
             }
         }
     }])
-    // 城市
-    .controller('cityCheckCtrl', ['$scope', '$rootScope', 'httpMethod', function ($scope, $rootScope, httpMethod) {
-        $scope.cityClose = function () {
-            $scope.visible = !$scope.visible;
-        };
-        $scope.clHide = function () {
-            $scope.visible = false;
-        };
-
-        // 查询地区信息
-        httpMethod.qryCommonRegionInfo().then(function (rsp) {
-            console.log('调用查询地区接口成功.');
-            $rootScope.regionInfoList = rsp.data;
-        }, function () {
-            console.log('调用查询地区接口失败.');
-        });
-
-        $scope.selectedRow = null; //一级索引值
-        $scope.selectedRowb = null; //二级索引值
-        $scope.selectedProvince = '',
-            $scope.selectedCity = '',
-            $scope.selectedArea = '',
-            $scope.checkedAreaName = '';
-
-        $scope.selectProvince = function (index, item) {
-            $scope.selectedRow = index;
-            $scope.selectedRowb = null;
-            $scope.selectedProvince = item.regionName;
-            $scope.selectedCity = '';
-            $scope.selectedArea = '';
-        };
-
-        $scope.selectCity = function (rowb, item) {
-            event.stopPropagation();
-            $scope.selectedRowb = rowb;
-            $scope.selectedCity = ' - ' + item.regionName;
-            $scope.selectedArea = '';
-        };
-
-        $scope.selectArea = function (rowb, item) {
-            event.stopPropagation();
-            $scope.selectedArea = ' - ' + item.regionName;
-        };
-
-        $scope.cityChecked = function () {
-            $scope.checkedAreaName = $scope.selectedProvince + $scope.selectedCity + $scope.selectedArea;
-            $scope.visible = !$scope.visible;
-        };
-    }])
-
-    // 弹窗内查询控制器
-    .controller('queryStoreFormCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', function ($scope, $rootScope, $log, httpMethod) {
-
-        $scope.isForbid = true;
-        $scope.queryStoreForm = {
-            bizmanName: '', //门店名称
-            bizmanId: '', //商户id
-            areaId: '', //地区
-        };
-
-        // 查询结果分页信息
-        $scope.requirePaging = true; // 是否需要分页
-        $scope.curPage = 1; // 当前页
-        $scope.pageSize = 10; // 每页显示行数
-        $scope.totalSize = 0; // 总条数
-
-
-        $scope.queryStoreFormSubmit = function (curPage) {
-            !curPage && $scope.$broadcast('pageChange');
-            $scope.checkedSys = []; // 置空已选业务模型列表
-
-            var param = {
-                // requirePaging: $scope.requirePaging, // 是否需要分页
-                curPage: curPage || $scope.curPage, // 当前页
-                pageSize: $scope.pageSize, // 每页显示行数
-                totalSize: $scope.totalSize, //总条数
-                bizmanId: undefined,
-                bizmanName: undefined,
-                areaId: undefined,
-                cityId: undefined,
-            };
-            $scope.queryStoreForm.bizmanId ? param.bizmanId = $scope.queryStoreForm.bizmanId : undefined;
-            $scope.queryStoreForm.bizmanName ? param.bizmanName = $scope.queryStoreForm.bizmanName : undefined;
-            // $scope.queryStoreForm.areaIdItem ? param.areaId = $scope.queryStoreForm.areaIdItem.areaId : undefined;
-            // $scope.queryStoreForm.cityIdItem ? param.cityId = $scope.queryStoreForm.cityIdItem.cityId : undefined;
-
-            // 查询商户信息
-            httpMethod.qryBizmanByCon(param).then(function (rsp) {
-                console.log('调用查询商户信息接口成功.');
-                $rootScope.contactList = rsp.list;
-            }, function () {
-                console.log('调用查询商户信息接口失败.');
-            });
-        }
-        $scope.$watch('queryStoreForm', function (current, old, scope) {
-            if (scope.queryStoreForm.bizmanId || scope.queryStoreForm.bizmanName) {
-                scope.isForbid = false;
-            } else {
-                scope.isForbid = true;
-            }
-        }, true)
-    }])
 
     /*echarts图标1*/
     .controller('monthLineCtrl', function ($rootScope, $scope, $log, httpMethod) {
@@ -496,68 +548,60 @@ angular
         $scope.legend = [];
         $scope.series = [];
 
-        $scope.queryFormSubmit = function () {
-            httpMethod.qrySalesStatisticsByCon().then(function (rsp) {
-                console.log('调用终端分价位销量统计接口成功.'); //按月
-                $rootScope.salesList = rsp.data;
-            }, function () {
-                console.log('调用终端分价位销量统计接口失败.');
-            });
+        $rootScope.$watch('salesList', function (newValue) {
+            if (newValue) {
+                $scope.xaxis = [];
+                $scope.legend = [];
+                $scope.series = [
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    []
+                ];
+                _.map(newValue, function (elem, index) {
+                    $scope.xaxis.push(elem.saleMonth); // 月:saleMonth；天:saleTime
+                    $scope.series[7].push(elem.totalQty);
+                    $scope.legend[7] = '总销量';
+                    _.map(elem.segList, function (item, i) {
+                        switch (i) {
+                            case 0:
+                                $scope.series[0].push(item.totalNum);
+                                $scope.legend[0] = item.priceSegment;
+                                break;
+                            case 1:
+                                $scope.series[1].push(item.totalNum);
+                                $scope.legend[1] = item.priceSegment;
+                                break;
+                            case 2:
+                                $scope.series[2].push(item.totalNum);
+                                $scope.legend[2] = item.priceSegment;
+                                break;
+                            case 3:
+                                $scope.series[3].push(item.totalNum);
+                                $scope.legend[3] = item.priceSegment;
+                                break;
+                            case 4:
+                                $scope.series[4].push(item.totalNum);
+                                $scope.legend[4] = item.priceSegment;
+                                break;
+                            case 5:
+                                $scope.series[5].push(item.totalNum);
+                                $scope.legend[5] = item.priceSegment;
+                                break;
+                            case 6:
+                                $scope.series[6].push(item.totalNum);
+                                $scope.legend[6] = item.priceSegment;
+                                break;
+                        }
+                    })
+                });
+            }
+        }, true);
 
-            $rootScope.$watch('salesList', function (newValue) {
-                if (newValue) {
-                    $scope.xaxis = [];
-                    $scope.legend = [];
-                    $scope.series = [
-                        [],
-                        [],
-                        [],
-                        [],
-                        [],
-                        [],
-                        [],
-                        []
-                    ];
-                    _.map(newValue, function (elem, index) {
-                        $scope.xaxis.push(elem.saleMonth); // 月:saleMonth；天:saleTime
-                        $scope.series[7].push(elem.totalQty);
-                        $scope.legend[7] = '总销量';
-                        _.map(elem.segList, function (item, i) {
-                            switch (i) {
-                                case 0:
-                                    $scope.series[0].push(item.totalNum);
-                                    $scope.legend[0] = item.priceSegment;
-                                    break;
-                                case 1:
-                                    $scope.series[1].push(item.totalNum);
-                                    $scope.legend[1] = item.priceSegment;
-                                    break;
-                                case 2:
-                                    $scope.series[2].push(item.totalNum);
-                                    $scope.legend[2] = item.priceSegment;
-                                    break;
-                                case 3:
-                                    $scope.series[3].push(item.totalNum);
-                                    $scope.legend[3] = item.priceSegment;
-                                    break;
-                                case 4:
-                                    $scope.series[4].push(item.totalNum);
-                                    $scope.legend[4] = item.priceSegment;
-                                    break;
-                                case 5:
-                                    $scope.series[5].push(item.totalNum);
-                                    $scope.legend[5] = item.priceSegment;
-                                    break;
-                                case 6:
-                                    $scope.series[6].push(item.totalNum);
-                                    $scope.legend[6] = item.priceSegment;
-                                    break;
-                            }
-                        })
-                    });
-                }
-            }, true);
-        };
     })
     .directive('monthline', function () {
         return {
@@ -745,68 +789,59 @@ angular
         $scope.legend = [];
         $scope.series = [];
 
-        $scope.queryFormSubmit = function () {
-            httpMethod.qrySalesStatisticsByCon().then(function (rsp) {
-                console.log('调用终端分价位销量统计接口成功.'); // 按天
-                $rootScope.salesListForDate = rsp.data;
-            }, function () {
-                console.log('调用终端分价位销量统计接口失败.');
-            });
-
-            $rootScope.$watch('salesListForDate', function (newValue) {
-                if (newValue) {
-                    $scope.xaxis = [];
-                    $scope.legend = [];
-                    $scope.series = [
-                        [],
-                        [],
-                        [],
-                        [],
-                        [],
-                        [],
-                        [],
-                        []
-                    ];
-                    _.map(newValue, function (elem, index) {
-                        $scope.xaxis.push(elem.saleTime); // 月:saleMonth；天:saleTime
-                        $scope.series[7].push(elem.totalQty);
-                        $scope.legend[7] = '总销量';
-                        _.map(elem.segList, function (item, i) {
-                            switch (i) {
-                                case 0:
-                                    $scope.series[0].push(item.totalNum);
-                                    $scope.legend[0] = item.priceSegment;
-                                    break;
-                                case 1:
-                                    $scope.series[1].push(item.totalNum);
-                                    $scope.legend[1] = item.priceSegment;
-                                    break;
-                                case 2:
-                                    $scope.series[2].push(item.totalNum);
-                                    $scope.legend[2] = item.priceSegment;
-                                    break;
-                                case 3:
-                                    $scope.series[3].push(item.totalNum);
-                                    $scope.legend[3] = item.priceSegment;
-                                    break;
-                                case 4:
-                                    $scope.series[4].push(item.totalNum);
-                                    $scope.legend[4] = item.priceSegment;
-                                    break;
-                                case 5:
-                                    $scope.series[5].push(item.totalNum);
-                                    $scope.legend[5] = item.priceSegment;
-                                    break;
-                                case 6:
-                                    $scope.series[6].push(item.totalNum);
-                                    $scope.legend[6] = item.priceSegment;
-                                    break;
-                            }
-                        })
-                    });
-                }
-            }, true);
-        };
+        $rootScope.$watch('salesListForDate', function (newValue) {
+            if (newValue) {
+                $scope.xaxis = [];
+                $scope.legend = [];
+                $scope.series = [
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    []
+                ];
+                _.map(newValue, function (elem, index) {
+                    $scope.xaxis.push(elem.saleTime); // 月:saleMonth；天:saleTime
+                    $scope.series[7].push(elem.totalQty);
+                    $scope.legend[7] = '总销量';
+                    _.map(elem.segList, function (item, i) {
+                        switch (i) {
+                            case 0:
+                                $scope.series[0].push(item.totalNum);
+                                $scope.legend[0] = item.priceSegment;
+                                break;
+                            case 1:
+                                $scope.series[1].push(item.totalNum);
+                                $scope.legend[1] = item.priceSegment;
+                                break;
+                            case 2:
+                                $scope.series[2].push(item.totalNum);
+                                $scope.legend[2] = item.priceSegment;
+                                break;
+                            case 3:
+                                $scope.series[3].push(item.totalNum);
+                                $scope.legend[3] = item.priceSegment;
+                                break;
+                            case 4:
+                                $scope.series[4].push(item.totalNum);
+                                $scope.legend[4] = item.priceSegment;
+                                break;
+                            case 5:
+                                $scope.series[5].push(item.totalNum);
+                                $scope.legend[5] = item.priceSegment;
+                                break;
+                            case 6:
+                                $scope.series[6].push(item.totalNum);
+                                $scope.legend[6] = item.priceSegment;
+                                break;
+                        }
+                    })
+                });
+            }
+        }, true);
     })
     .directive('dayline', function () {
         return {

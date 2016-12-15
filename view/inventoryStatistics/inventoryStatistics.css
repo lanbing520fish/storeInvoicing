@@ -431,6 +431,7 @@
     border-bottom: 1px solid #dcdcdc;
     padding-left: 10px;
     position: relative;
+    overflow: hidden;
 }
 .area-title span{
     float: left;
