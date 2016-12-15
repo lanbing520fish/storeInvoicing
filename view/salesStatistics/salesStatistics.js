@@ -13,7 +13,7 @@ angular
         $rootScope.salesListForDate = []; //列表内容-按天
         $rootScope.sectionList = ["价位：0～300", "价位：300～700", "价位：700～1000", "价位：1000～1500", "价位：1500～2000", "价位：2000～3000", "价位：3000+"]; //价格区间
 
-        $rootScope.cityList = []; //查询地区列表
+        $rootScope.regionInfoList = []; //查询地区列表
         $rootScope.contactList = []; //查询商户列表
     }])
     .factory('httpMethod', ['$http', '$q', function ($http, $q) {
@@ -256,50 +256,6 @@ angular
         };
     }])
 
-    // 弹出框
-    .controller('addPurchaseModalCtrl', function ($scope, $rootScope, $uibModal) {
-        var $ctrl = this,
-            modalInstance;
-        $ctrl.animationsEnabled = true;
-
-        //门店所属商户
-        $scope.$on('openStoreQueryTypeModal', function (d, data) {
-            $ctrl.openStoreQueryTypeModal(data);
-        });
-
-        $ctrl.openStoreQueryTypeModal = function (data) {
-            modalInstance = $uibModal.open({
-                animation: $ctrl.animationsEnabled,
-                ariaLabelledBy: 'serial-number-title1',
-                ariaDescribedBy: 'serial-number-body',
-                templateUrl: 'storeQueryTypeModal.html',
-                controller: 'storeQueryTypeModalCtrl',
-                controllerAs: '$ctrl',
-                size: 'lg',
-                resolve: {
-                    items: function () {
-                        return data;
-                    }
-                }
-            });
-        };
-
-        $ctrl.toggleAnimation = function () {
-            $ctrl.animationsEnabled = !$ctrl.animationsEnabled;
-        };
-    })
-
-    .controller('storeQueryTypeModalCtrl', function ($uibModalInstance, $scope, items) {
-        var $ctrl = this;
-        $ctrl.ok = function () {
-            $scope.$broadcast('submitCardRange');
-            $uibModalInstance.close();
-        };
-        $ctrl.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
-        };
-    })
-
     .controller('monthConditionQuery', ['$scope', '$timeout', '$filter', function ($scope, $timeout, $filter) {
         $scope.format = "yyyy年MM月";
         $scope.conditionQueryForm = {
@@ -313,12 +269,14 @@ angular
             minMode: 'month',
             minDate: '',
             maxDate: $scope.conditionQueryForm.createEndDt,
+            showWeeks: false
         };
         $scope.endDateOptions = {
             formatYear: 'yy',
             minMode: 'month',
             minDate: $scope.conditionQueryForm.createStartDt,
             maxDate: '',
+            showWeeks: false
         };
 
         $scope.$watch('conditionQueryForm.createStartDt', function (newValue) {
@@ -353,12 +311,14 @@ angular
         $scope.startDateOptions = {
             formatYear: 'yy',
             maxDate: $scope.conditionQueryForm.createEndDt,
-            startingDay: 1
+            startingDay: 1,
+            showWeeks: false
         };
         $scope.endDateOptions = {
             formatYear: 'yy',
             minDate: $scope.conditionQueryForm.createStartDt,
-            startingDay: 1
+            startingDay: 1,
+            showWeeks: false
         };
 
         $scope.$watch('conditionQueryForm.createStartDt', function (newValue) {
@@ -385,13 +345,6 @@ angular
     }])
     // 弹框内城市
     .controller('bouncedCityCheckCtrl', ['$scope', '$rootScope', 'httpMethod', function ($scope, $rootScope, httpMethod) {
-        // 查询地区信息
-        httpMethod.qryCommonRegionInfo().then(function (rsp) {
-            console.log('调用查询地区接口成功.');
-            $rootScope.citys = rsp.data;
-        }, function () {
-            console.log('调用查询地区接口失败.');
-        });
 
         $scope.visible = false;
         $scope.key = 1;
@@ -446,7 +399,7 @@ angular
         // 查询地区信息
         httpMethod.qryCommonRegionInfo().then(function (rsp) {
             console.log('调用查询地区接口成功.');
-            $rootScope.cityList = rsp.data;
+            $rootScope.regionInfoList = rsp.data;
         }, function () {
             console.log('调用查询地区接口失败.');
         });
@@ -796,7 +749,6 @@ angular
             httpMethod.qrySalesStatisticsByCon().then(function (rsp) {
                 console.log('调用终端分价位销量统计接口成功.'); // 按天
                 $rootScope.salesListForDate = rsp.data;
-                debugger
             }, function () {
                 console.log('调用终端分价位销量统计接口失败.');
             });
@@ -1035,18 +987,140 @@ angular
             }
         }
     })
-    // 分页控制器
-    .controller('paginationCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', function ($scope, $rootScope, $log, httpMethod) {
-        $scope.$on('pageChange', function () {
-            $scope.curPage = 1;
+
+    // 弹出框
+    .controller('addPurchaseModalCtrl', function ($scope, $rootScope, $uibModal) {
+        var $ctrl = this,
+            modalInstance;
+        $ctrl.animationsEnabled = true;
+
+        //门店所属商户
+        $scope.$on('openStoreQueryTypeModal', function (d, data) {
+            $ctrl.openStoreQueryTypeModal(data);
         });
-        $scope.maxSize = 10;
-        $scope.setPage = function (pageNo) {
-            $scope.curPage = pageNo;
+
+        $ctrl.openStoreQueryTypeModal = function (data) {
+            modalInstance = $uibModal.open({
+                animation: $ctrl.animationsEnabled,
+                ariaLabelledBy: 'serial-number-title1',
+                ariaDescribedBy: 'serial-number-body',
+                templateUrl: 'storeQueryTypeModal.html',
+                controller: 'storeQueryTypeModalCtrl',
+                controllerAs: '$ctrl',
+                size: 'lg',
+                resolve: {
+                    items: function () {
+                        return data;
+                    }
+                }
+            });
         };
 
+        $ctrl.toggleAnimation = function () {
+            $ctrl.animationsEnabled = !$ctrl.animationsEnabled;
+        };
+    })
+    .controller('storeQueryTypeModalCtrl', function ($uibModalInstance, $scope, items) {
+        var $ctrl = this;
+        $ctrl.ok = function () {
+            $scope.$broadcast('submitCardRange');
+            $uibModalInstance.close();
+        };
+        $ctrl.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+    })
+    // 弹出框查询商户
+    .controller('queryStoreCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', function ($scope, $rootScope, $log, httpMethod) {
+        $scope.requirePaging = true; // 是否需要分页
+        $scope.currentPage = 1; // 当前页
+        $scope.rowNumPerPage = 4; // 每页显示行数
+        $scope.totalNum = 0; // 总条数
+
+        $scope.queryStoreFormSubmit = function (currentPage) {
+            !currentPage && $scope.$broadcast('pageChange');
+            var param = {
+                areaId: $scope.areaId, // 地区id也就是commonRegionId
+                // bizmanId: '', // 商户Id
+                bizmanName: $scope.bizmanName, // 商户名称
+                storeName: $scope.storeName, // 门店名称
+                // cityId: '', // 城市id
+                curPage: currentPage || $scope.currentPage,
+                pageSize: $scope.rowNumPerPage,
+                totalSize: $scope.totalNum
+            };
+            httpMethod.qryBizmanByCon(param).then(function (rsp) {
+                $rootScope.bizmanByConList = rsp.data.list;
+                $scope.totalNum = rsp.data.total;
+                $log.log('获取商戶列表成功.');
+            }, function () {
+                $log.log('获取商戶列表失败.');
+            });
+
+        };
+
+        // 城市选择
+        $scope.visible = false;
+        $scope.key = 1;
+        $scope.provinceIndex = '';
+        $scope.cityIndex = '';
+        $scope.areaId = '';
+        $scope.provinceName = '';
+        $scope.cityName = '';
+        $scope.checkedAreaName = '';
+        $scope.cityCheck = function () {
+            $scope.visible = !$scope.visible;
+        };
+        $scope.handleSelectCity = function (level, index, areaId, areaName) {
+            var me = this;
+            switch (level) {
+                case 'province':
+                    $scope.key = 2;
+                    $scope.provinceIndex = index;
+                    $scope.provinceName = areaName;
+                    break;
+                case 'city':
+                    $scope.cityIndex = index;
+                    $scope.areaId = areaId;
+                    $scope.cityName = areaName;
+                    me.handleSubmitBtn(level);
+                    break;
+            }
+        };
+        $scope.handleSubmitBtn = function (level) {
+            switch (level) {
+                case 'province':
+                    $scope.checkedAreaName = $scope.provinceName;
+                    break;
+                case 'city':
+                    $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName;
+                    $scope.visible = false;
+                    break;
+            }
+        };
+    }])
+    // 弹出查询结果
+    .controller('resultStoreCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+        $scope.selectSysList = function (item) {
+            $rootScope.checkedBizmanData = item;
+        };
+
+        $scope.$on('submitCardRange', function () {
+            $rootScope.submitBizmanId = $rootScope.checkedBizmanData.bizmanId;
+            $rootScope.submitBizmanName = $rootScope.checkedBizmanData.bizmanName;
+        });
+    }])
+    // 分页控制器
+    .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function ($scope, $rootScope, $log) {
+        $scope.$on('pageChange', function () {
+            $scope.currentPage = 1;
+        });
+
+        $scope.maxSize = 4;
+        $scope.setPage = function (pageNo) {
+            $scope.currentPage = pageNo;
+        };
         $scope.pageChanged = function () {
-            $scope.queryStoreFormSubmit($scope.curPage);
-            $log.log('Page changed to: ' + $scope.curPage);
+            $scope.queryStoreFormSubmit($scope.currentPage);
         };
     }])

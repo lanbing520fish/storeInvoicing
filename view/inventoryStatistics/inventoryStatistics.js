@@ -1,6 +1,6 @@
 angular
     .module('inventoryModule', ['ui.bootstrap'])
-    .run(['$rootScope', function($rootScope) {
+    .run(['$rootScope', function ($rootScope) {
         $rootScope.regionInfoList = []; // 地区列表
         $rootScope.checkedAreaID = ''; // 选择的地区ID
         $rootScope.qryStockStatisticData = ''; // 库存量TOP5统计数据
@@ -9,7 +9,7 @@ angular
         $rootScope.submitBizmanId = ''; // 确定的商户ID
         $rootScope.submitBizmanName = ''; // 确定的商户名称
     }])
-    .factory('httpMethod', ['$http', '$q', function($http, $q) {
+    .factory('httpMethod', ['$http', '$q', function ($http, $q) {
         var httpConfig = {
                 'siteUrl': 'http://192.168.16.84:8088',
                 'requestHeader': {
@@ -20,56 +20,56 @@ angular
             httpMethod = {};
 
         // 地区查询
-        httpMethod.qryCommonRegionInfo = function() {
+        httpMethod.qryCommonRegionInfo = function () {
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/terminal/q/qryCommonRegionInfo',
                 method: 'POST',
                 headers: httpConfig.requestHeader
-            }).success(function(data, header, config, status) {
+            }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
                 }
                 defer.resolve(data);
-            }).error(function(data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 defer.reject(data);
             });
             return defer.promise;
         };
 
         // 查询商户
-        httpMethod.qryBizmanByCon = function(param) {
+        httpMethod.qryBizmanByCon = function (param) {
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/config/claim/q/qryBizmanByCon',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: "body=" + JSON.stringify(param)
-            }).success(function(data, header, config, status) {
+                data: param
+            }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
                 }
                 defer.resolve(data);
-            }).error(function(data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 defer.reject(data);
             });
             return defer.promise;
         };
 
         // 库存量TOP5统计
-        httpMethod.qryStockStatisticTwo = function(param) {
+        httpMethod.qryStockStatisticTwo = function (param) {
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/report/q/qryStockStatisticTwo',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: "body=" + JSON.stringify(param)
-            }).success(function(data, header, config, status) {
+                data: param
+            }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
                 }
                 defer.resolve(data);
-            }).error(function(data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
                 defer.reject(data);
             });
             return defer.promise;
@@ -186,11 +186,11 @@ angular
 
         return httpMethod;
     }])
-    .controller('conditionQuery', ['$scope', '$rootScope', '$timeout', '$log', 'httpMethod', function($scope, $rootScope, $timeout, $log, httpMethod) {
-        httpMethod.qryCommonRegionInfo().then(function(rsp) {
+    .controller('conditionQuery', ['$scope', '$rootScope', '$timeout', '$log', 'httpMethod', function ($scope, $rootScope, $timeout, $log, httpMethod) {
+        httpMethod.qryCommonRegionInfo().then(function (rsp) {
             $rootScope.regionInfoList = rsp.data;
             $log.log('获取地区列表成功.');
-        }, function() {
+        }, function () {
             $log.log('获取地区列表失败.');
         });
 
@@ -203,27 +203,29 @@ angular
         $scope.startDateOptions = {
             formatYear: 'yy',
             maxDate: $scope.conditionQueryForm.createEndDt,
-            startingDay: 1
+            startingDay: 1,
+            showWeeks: false
         };
         $scope.endDateOptions = {
             formatYear: 'yy',
             minDate: $scope.conditionQueryForm.createStartDt,
             // maxDate: new Date(),
-            startingDay: 1
+            startingDay: 1,
+            showWeeks: false
         };
-        $scope.$watch('conditionQueryForm.createStartDt', function(newValue) {
+        $scope.$watch('conditionQueryForm.createStartDt', function (newValue) {
             $scope.endDateOptions.minDate = newValue;
         });
-        $scope.$watch('conditionQueryForm.createEndDt', function(newValue) {
+        $scope.$watch('conditionQueryForm.createEndDt', function (newValue) {
             $scope.startDateOptions.maxDate = newValue;
         });
-        $scope.startOpen = function() {
-            $timeout(function() {
+        $scope.startOpen = function () {
+            $timeout(function () {
                 $scope.startPopupOpened = true;
             });
         };
-        $scope.endOpen = function() {
-            $timeout(function() {
+        $scope.endOpen = function () {
+            $timeout(function () {
                 $scope.endPopupOpened = true;
             });
         };
@@ -231,32 +233,32 @@ angular
         $scope.endPopupOpened = false;
 
         //门店所属商户
-        $scope.openStoreQueryType = function() {
+        $scope.openStoreQueryType = function () {
             $scope.$emit('openStoreQueryTypeModal');
         };
 
         // 确定查询
-        $scope.queryFormSubmit = function() {
+        $scope.queryFormSubmit = function () {
             var param = {
                 beginDt: $scope.conditionQueryForm.createStartDt, //开始时间
                 endDt: $scope.conditionQueryForm.createEndDt, //结束时间
                 bizmanId: $rootScope.submitBizmanId, //商户id
                 commonRegionId: $rootScope.checkedAreaID //区域id
             };
-            httpMethod.qryStockStatisticTwo(param).then(function(rsp) {
+            httpMethod.qryStockStatisticTwo(param).then(function (rsp) {
                 $rootScope.qryStockStatisticData = rsp.data;
                 $log.log('获取库存量TOP5统计数据成功.');
-            }, function() {
+            }, function () {
                 $log.log('获取库存量TOP5统计数据失败.');
             });
         }
     }])
     // 城市
-    .controller('cityCheckCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
-        $scope.cityClose = function() {
+    .controller('cityCheckCtrl', ['$scope', '$rootScope', '$log', function ($scope, $rootScope, $log) {
+        $scope.cityClose = function () {
             $scope.visible = !$scope.visible;
         };
-        $scope.clHide = function() {
+        $scope.clHide = function () {
             $scope.visible = false;
         };
 
@@ -268,7 +270,7 @@ angular
             $scope.checkedAreaName = '',
             $scope.todoCheckedAreaID = ''; //待确定的地区ID
 
-        $scope.selectProvince = function(index, item) {
+        $scope.selectProvince = function (index, item) {
             $scope.selectedRow = index;
             $scope.selectedRowb = null;
             $scope.selectedProvince = item.regionName;
@@ -277,7 +279,7 @@ angular
             $scope.selectedArea = '';
         };
 
-        $scope.selectCity = function(rowb, item) {
+        $scope.selectCity = function (rowb, item) {
             event.stopPropagation();
             $scope.selectedRowb = rowb;
             $scope.selectedCity = ' - ' + item.regionName;
@@ -285,32 +287,32 @@ angular
             $scope.selectedArea = '';
         };
 
-        $scope.selectArea = function(rowb, item) {
+        $scope.selectArea = function (rowb, item) {
             event.stopPropagation();
             $scope.selectedArea = ' - ' + item.regionName;
             $scope.todoCheckedAreaID = item.commonRegionId;
         };
 
-        $scope.cityChecked = function() {
+        $scope.cityChecked = function () {
             $scope.checkedAreaName = $scope.selectedProvince + $scope.selectedCity + $scope.selectedArea;
             $rootScope.checkedAreaID = $scope.todoCheckedAreaID;
             $scope.visible = !$scope.visible;
         };
     }])
-    .controller('inventoryCtrl', ['$rootScope', '$scope', '$timeout', function($rootScope, $scope, $timeout) {
+    .controller('inventoryCtrl', ['$rootScope', '$scope', '$timeout', function ($rootScope, $scope, $timeout) {
         $scope.brandsLegend = []; // 图表图例
         $scope.brandsData = []; // 图表数据
 
-        $rootScope.$watch('qryStockStatisticData.brands', function(newValue) {
+        $rootScope.$watch('qryStockStatisticData.brands', function (newValue) {
             if (newValue) {
                 var stockDataList = newValue;
-                _.map(stockDataList, function(item) {
+                _.map(stockDataList, function (item) {
                     $scope.brandsLegend.push(item.brandName);
                 });
 
                 if (stockDataList && _.size(stockDataList)) {
                     $scope.brandsData = []; // 置空
-                    _.map(stockDataList, function(item) {
+                    _.map(stockDataList, function (item) {
                         var obj = {
                             name: '',
                             value: ''
@@ -319,11 +321,12 @@ angular
                         obj.value = item.stockQuantity;
                         $scope.brandsData.push(obj);
                     });
-                };
+                }
+                ;
             }
         }, true);
     }])
-    .directive('brandChart', function() {
+    .directive('brandChart', function () {
         return {
             scope: {
                 id: "@",
@@ -333,7 +336,7 @@ angular
             restrict: 'E',
             template: '<div style="height:400px; width:100%;"></div>',
             replace: true,
-            link: function($scope, iElm, iAttrs, controller) {
+            link: function ($scope, iElm, iAttrs, controller) {
                 var option = {
                     title: {
                         text: '库存量TOP5品牌',
@@ -388,7 +391,7 @@ angular
                 var myChart = echarts.init(document.getElementById($scope.id));
                 myChart.setOption(option);
 
-                $scope.$watch('data', function(newValue) {
+                $scope.$watch('data', function (newValue) {
                     if (newValue) {
                         myChart.setOption({
                             legend: {
@@ -403,20 +406,20 @@ angular
             }
         };
     })
-    .controller('terminaltypeCtrl', ['$scope', '$rootScope', '$timeout', function($scope, $rootScope, $timeout) {
+    .controller('terminaltypeCtrl', ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
         $scope.brandsLegend = []; // 图表图例
         $scope.brandsData = []; // 图表数据
 
-        $rootScope.$watch('qryStockStatisticData.models', function(newValue) {
+        $rootScope.$watch('qryStockStatisticData.models', function (newValue) {
             if (newValue) {
                 var stockDataList = newValue;
-                _.map(stockDataList, function(item) {
+                _.map(stockDataList, function (item) {
                     $scope.brandsLegend.push(item.modelName);
                 });
 
                 if (stockDataList && _.size(stockDataList)) {
                     $scope.brandsData = []; // 置空
-                    _.map(stockDataList, function(item) {
+                    _.map(stockDataList, function (item) {
                         var obj = {
                             name: '',
                             value: ''
@@ -425,11 +428,12 @@ angular
                         obj.value = item.stockQuantity;
                         $scope.brandsData.push(obj);
                     });
-                };
+                }
+                ;
             }
         }, true);
     }])
-    .directive('modelChart', function() {
+    .directive('modelChart', function () {
         return {
             scope: {
                 id: "@",
@@ -439,7 +443,7 @@ angular
             restrict: 'E',
             template: '<div style="height:420px;width:100%;"></div>',
             replace: true,
-            link: function($scope, iElm, iAttrs, controller) {
+            link: function ($scope, iElm, iAttrs, controller) {
                 var option = {
                     title: {
                         text: '库存量TOP5机型',
@@ -491,7 +495,7 @@ angular
                 var myChart = echarts.init(document.getElementById($scope.id));
                 myChart.setOption(option);
 
-                $scope.$watch('data', function(newValue) {
+                $scope.$watch('data', function (newValue) {
                     if (newValue) {
                         myChart.setOption({
                             legend: {
@@ -507,17 +511,17 @@ angular
         };
     })
     // 弹出框
-    .controller('addPurchaseModalCtrl', function($scope, $rootScope, $uibModal) {
+    .controller('addPurchaseModalCtrl', function ($scope, $rootScope, $uibModal) {
         var $ctrl = this,
             modalInstance;
         $ctrl.animationsEnabled = true;
 
         //门店所属商户
-        $scope.$on('openStoreQueryTypeModal', function(d, data) {
+        $scope.$on('openStoreQueryTypeModal', function (d, data) {
             $ctrl.openStoreQueryTypeModal(data);
         });
 
-        $ctrl.openStoreQueryTypeModal = function(data) {
+        $ctrl.openStoreQueryTypeModal = function (data) {
             modalInstance = $uibModal.open({
                 animation: $ctrl.animationsEnabled,
                 ariaLabelledBy: 'serial-number-title1',
@@ -527,35 +531,35 @@ angular
                 controllerAs: '$ctrl',
                 size: 'lg',
                 resolve: {
-                    items: function() {
+                    items: function () {
                         return data;
                     }
                 }
             });
         };
 
-        $ctrl.toggleAnimation = function() {
+        $ctrl.toggleAnimation = function () {
             $ctrl.animationsEnabled = !$ctrl.animationsEnabled;
         };
     })
-    .controller('storeQueryTypeModalCtrl', function($uibModalInstance, $scope, items) {
+    .controller('storeQueryTypeModalCtrl', function ($uibModalInstance, $scope, items) {
         var $ctrl = this;
-        $ctrl.ok = function() {
+        $ctrl.ok = function () {
             $scope.$broadcast('submitCardRange');
             $uibModalInstance.close();
         };
-        $ctrl.cancel = function() {
+        $ctrl.cancel = function () {
             $uibModalInstance.dismiss('cancel');
         };
     })
     // 弹出框查询商户
-    .controller('queryStoreCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', function($scope, $rootScope, $log, httpMethod) {
+    .controller('queryStoreCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', function ($scope, $rootScope, $log, httpMethod) {
         $scope.requirePaging = true; // 是否需要分页
         $scope.currentPage = 1; // 当前页
         $scope.rowNumPerPage = 4; // 每页显示行数
         $scope.totalNum = 0; // 总条数
 
-        $scope.queryStoreFormSubmit = function(currentPage) {
+        $scope.queryStoreFormSubmit = function (currentPage) {
             !currentPage && $scope.$broadcast('pageChange');
             var param = {
                 areaId: $scope.areaId, // 地区id也就是commonRegionId
@@ -567,11 +571,11 @@ angular
                 pageSize: $scope.rowNumPerPage,
                 totalSize: $scope.totalNum
             };
-            httpMethod.qryBizmanByCon(param).then(function(rsp) {
+            httpMethod.qryBizmanByCon(param).then(function (rsp) {
                 $rootScope.bizmanByConList = rsp.data.list;
                 $scope.totalNum = rsp.data.total;
                 $log.log('获取商戶列表成功.');
-            }, function() {
+            }, function () {
                 $log.log('获取商戶列表失败.');
             });
 
@@ -586,10 +590,10 @@ angular
         $scope.provinceName = '';
         $scope.cityName = '';
         $scope.checkedAreaName = '';
-        $scope.cityCheck = function() {
+        $scope.cityCheck = function () {
             $scope.visible = !$scope.visible;
         };
-        $scope.handleSelectCity = function(level, index, areaId, areaName) {
+        $scope.handleSelectCity = function (level, index, areaId, areaName) {
             var me = this;
             switch (level) {
                 case 'province':
@@ -605,7 +609,7 @@ angular
                     break;
             }
         };
-        $scope.handleSubmitBtn = function(level) {
+        $scope.handleSubmitBtn = function (level) {
             switch (level) {
                 case 'province':
                     $scope.checkedAreaName = $scope.provinceName;
@@ -618,8 +622,8 @@ angular
         };
     }])
     // 弹出查询结果
-    .controller('resultStoreCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
-        $scope.selectSysList = function(item) {
+    .controller('resultStoreCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+        $scope.selectSysList = function (item) {
             $rootScope.checkedBizmanData = item;
         };
 
@@ -629,7 +633,7 @@ angular
         });
     }])
     // 分页控制器
-    .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
+    .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function ($scope, $rootScope, $log) {
         $scope.$on('pageChange', function () {
             $scope.currentPage = 1;
         });
