@@ -4,7 +4,7 @@ angular
         $rootScope.regionInfoList = []; // 地区列表
         $rootScope.checkedAreaID = ''; // 选择的地区ID
         $rootScope.qryStockStatisticData = ''; // 库存量TOP5统计数据
-        $rootScope.bizmanByConList = ''; // 查询的商户列表
+        $rootScope.bizmanByConList = []; // 查询的商户列表
         $rootScope.checkedBizmanData = ''; // 待确定的商户
         $rootScope.submitBizmanId = ''; // 确定的商户ID
         $rootScope.submitBizmanName = ''; // 确定的商户名称
@@ -15,7 +15,7 @@ angular
                 'requestHeader': {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                 },
-                'isMock': false // 是否开启测试数据
+                'isMock': true // 是否开启测试数据
             },
             httpMethod = {};
 
@@ -143,7 +143,7 @@ angular
                         'operatorsName': '', // 经营主体名称
                         'operatorsNbr': '', // 经营主体编码
                         'parentBizman': null,
-                        'regionName': '',
+                        'regionName': '@city',
                         'remarks': null,
                         'retailShopName': null,
                         'staffName': null,
@@ -520,6 +520,7 @@ angular
 
         //门店所属商户
         $scope.$on('openStoreQueryTypeModal', function (d, data) {
+            $rootScope.bizmanByConList = []; // 置空商户列表
             $ctrl.openStoreQueryTypeModal(data);
         });
 
@@ -565,9 +566,9 @@ angular
             !currentPage && $scope.$broadcast('pageChange');
             var param = {
                 areaId: $scope.areaId, // 地区id也就是commonRegionId
-                // bizmanId: '', // 商户Id
+                bizmanId: $scope.bizmanId, // 商户Id
                 bizmanName: $scope.bizmanName, // 商户名称
-                storeName: $scope.storeName, // 门店名称
+                // storeName: $scope.storeName, // 门店名称
                 // cityId: '', // 城市id
                 curPage: currentPage || $scope.currentPage,
                 pageSize: $scope.rowNumPerPage,
