@@ -13,10 +13,17 @@ angular
 
         // 暂存
         $scope.saveAdjustInOrder = function() {
+            var title = '操作失败',
+                text = '抱歉~系统出错了,请联系系统管理和 运维人员，尽快为您解决问题。',
+                detailText = '错误信息:集团CRM串码查询接口出错:### Error updating database.Cause: java.sql.SQLException: ORA-01400: 无法将 NULL 插入 ("SHOPOM"."SHOPTOCRM_INTERFACE"."TRANSACTION_TYPE")### Theerror may involve com.ai.chain.common.dao.mapper.ShopToCrmInterfaceMapper.insertRecord-Inline### The error occurred while setting parameters### SQL: insert into SHOPTOCRM_INTERFACE';
+
             swal({
-                title: '操作成功!',
-                text: '更新采购入库成功～',
-                type: 'success',
+                title: title,
+                text: '<div class="sa-text-box"><p class="text-title">' + text + '</p><label class="text-btn" for="text-btn">详细信息《</label><input id="text-btn" type="checkbox"><p class="text-detail">' + detailText + '</p></div>',
+                // type: 'success',
+                imageUrl: '../../resources/images/003.jpg',
+                imageSize: '150x150',
+                html: true,
                 confirmButtonText: '确定'
             }, function() {
                 $timeout(function() {
@@ -192,36 +199,36 @@ angular
     }])
     .controller('serisListModalCtrl', ['$scope', function($scope) {
         $scope.serisListResult = [
-            {nub: 20161101},
-            {nub: 20161102},
-            {nub: 20161103},
-            {nub: 20161104},
-            {nub: 20161105},
-            {nub: 20161106},
-            {nub: 20161107},
-            {nub: 20161108},
-            {nub: 20161109},
-            {nub: 20161110},
-            {nub: 20161111},
-            {nub: 20161112},
-            {nub: 20161113},
-            {nub: 20161114},
-            {nub: 20161115},
-            {nub: 20161116},
-            {nub: 20161117},
-            {nub: 20161118},
-            {nub: 20161119},
-            {nub: 20161120},
-            {nub: 20161121},
-            {nub: 20161122},
-            {nub: 20161123},
-            {nub: 20161124},
-            {nub: 20161125},
-            {nub: 20161126},
-            {nub: 20161127},
-            {nub: 20161128},
-            {nub: 20161129},
-            {nub: 20161130}
+            { nub: 20161101 },
+            { nub: 20161102 },
+            { nub: 20161103 },
+            { nub: 20161104 },
+            { nub: 20161105 },
+            { nub: 20161106 },
+            { nub: 20161107 },
+            { nub: 20161108 },
+            { nub: 20161109 },
+            { nub: 20161110 },
+            { nub: 20161111 },
+            { nub: 20161112 },
+            { nub: 20161113 },
+            { nub: 20161114 },
+            { nub: 20161115 },
+            { nub: 20161116 },
+            { nub: 20161117 },
+            { nub: 20161118 },
+            { nub: 20161119 },
+            { nub: 20161120 },
+            { nub: 20161121 },
+            { nub: 20161122 },
+            { nub: 20161123 },
+            { nub: 20161124 },
+            { nub: 20161125 },
+            { nub: 20161126 },
+            { nub: 20161127 },
+            { nub: 20161128 },
+            { nub: 20161129 },
+            { nub: 20161130 }
         ];
     }])
     .controller('serialNumberModalCtrl', function($uibModalInstance, $scope, items) {
