@@ -60,8 +60,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-3">
-                                    <div class="form-group" ng-controller="cityCheckCtrl">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
                                         <label class="control-label">所属地区：</label>
                                         <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
                                         <button ng-click="cityClose()" type="submit" class="btn btn-sm btn-location"><i
@@ -125,9 +125,10 @@
                                             class="iconfont">&#xe600;</i></button>
                                     </div>
                                 </div>
-                                <div class="col-xs-2 text-right">
+                                <div class="col-xs-1 text-right">
                                     <div>
-                                        <button type="submit" ng-click="queryFormSubmit()" class="btn btn-sm btn-query">
+                                        <button type="submit" ng-click="queryFormSubmit()"
+                                                class="btn btn-sm btn-stat-query">
                                             <i class="iconfont">&#xe600;</i> 查询
                                         </button>
                                     </div>
@@ -193,7 +194,7 @@
                     <p class="alarm-query-title fn-left">搜
                         <br/>索</p>
                     <div class="condition-query-box fn-right" ng-controller="conditionQuery">
-                        <form name="conditionQueryForm" ng-submit="queryFormSubmit()" class="form-inline" role="form">
+                        <form name="conditionQueryForm" class="form-inline" role="form">
                             <div class="row mb10">
                                 <div class="col-xs-4">
                                     <div class="form-group">
@@ -222,8 +223,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-3">
-                                    <div class="form-group" ng-controller="cityCheckCtrl">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
                                         <label class="control-label">所属地区：</label>
                                         <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
                                         <button ng-click="cityClose()" type="submit" class="btn btn-sm btn-location"><i
@@ -287,9 +288,10 @@
                                               ng-click="openStoreQueryType()"><i class="iconfont">&#xe600;</i></span>
                                     </div>
                                 </div>
-                                <div class="col-xs-2 text-right">
+                                <div class="col-xs-1 text-right">
                                     <div>
-                                        <button type="submit" class="btn btn-sm btn-query"><i class="iconfont">
+                                        <button type="submit" ng-click="queryFormSubmit()"
+                                                class="btn btn-sm btn-stat-query"><i class="iconfont">
                                             &#xe600;</i> 查询
                                         </button>
                                     </div>
@@ -328,7 +330,7 @@
                                     <tbody>
                                     <tr ng-repeat="item in salesListForDate">
                                         <td>
-                                            <p ng-bind="item.saleTime"></p>
+                                            <p ng-bind="item.saleTime" class="overflow-handle"></p>
                                         </td>
                                         <td ng-repeat="value in item.segList track by $index">
                                             <p ng-bind="value.totalNum"></p>
@@ -347,12 +349,12 @@
             </div>
         </div>
     </div>
-    <!-- 选择门店 -->
+    <!-- 选择商户 -->
     <script type="text/ng-template" id="storeQueryTypeModal.html">
         <div class="modal-header">
             <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
             <h3 class="modal-title" id="serial-number-title"><img class="icon"
-                                                                  src="../../resources/images/icon-list1.png">选择门店</h3>
+                                                                  src="../../resources/images/icon-list1.png">选择商户</h3>
         </div>
         <div ng-controller="queryStoreCtrl">
             <!-- 条件查询 -->
@@ -364,14 +366,14 @@
                         <div class="row mb10">
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <label class="control-label">门店名称：</label>
-                                    <input type="text" class="form-control" ng-model="storeName">
+                                    <label class="control-label">商户名称：</label>
+                                    <input type="text" class="form-control" ng-model="bizmanName">
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <label class="control-label">商户名称：</label>
-                                    <input type="text" class="form-control" ng-model="bizmanName">
+                                    <label class="control-label">商户编码：</label>
+                                    <input type="text" class="form-control" ng-model="bizmanId">
                                 </div>
                             </div>
                         </div>
@@ -421,7 +423,7 @@
                     <div class="row">
                         <div class="col-xs-4">
                             <div class="model-header">
-                                <p class="model-title">选择门店</p>
+                                <p class="model-title">选择商户</p>
                             </div>
                         </div>
                     </div>
@@ -431,10 +433,9 @@
                         <thead>
                         <tr>
                             <th width="10%">选择</th>
-                            <th width="30%">门店名称</th>
+                            <th width="20%">商户编码</th>
                             <th>商户名称</th>
-                            <th width="15%">省份</th>
-                            <th width="15%">地区</th>
+                            <th width="20%">地区</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -443,16 +444,13 @@
                                 <input type="radio" name="store" ng-click="selectSysList(item)">
                             </td>
                             <td>
-                                <p ng-bind="item.bizmanName"></p>
+                                <p ng-bind="item.bizmanId"></p>
                             </td>
                             <td>
-                                <p class="overflow-handle"></p>
+                                <p class="overflow-handle" ng-bind="item.bizmanName"></p>
                             </td>
                             <td>
-                                <p></p>
-                            </td>
-                            <td>
-                                <p></p>
+                                <p ng-bind="item.regionName"></p>
                             </td>
                         </tr>
                         </tbody>

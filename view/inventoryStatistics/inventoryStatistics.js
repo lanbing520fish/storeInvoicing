@@ -4,7 +4,7 @@ angular
         $rootScope.regionInfoList = []; // 地区列表
         $rootScope.checkedAreaID = ''; // 选择的地区ID
         $rootScope.qryStockStatisticData = ''; // 库存量TOP5统计数据
-        $rootScope.bizmanByConList = ''; // 查询的商户列表
+        $rootScope.bizmanByConList = []; // 查询的商户列表
         $rootScope.checkedBizmanData = ''; // 待确定的商户
         $rootScope.submitBizmanId = ''; // 确定的商户ID
         $rootScope.submitBizmanName = ''; // 确定的商户名称
@@ -44,7 +44,7 @@ angular
                 url: httpConfig.siteUrl + '/chain/config/claim/q/qryBizmanByCon',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: param
+                data: $.param(param)
             }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
@@ -63,7 +63,7 @@ angular
                 url: httpConfig.siteUrl + '/chain/report/q/qryStockStatisticTwo',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: param
+                data: $.param(param)
             }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
@@ -143,7 +143,7 @@ angular
                         'operatorsName': '', // 经营主体名称
                         'operatorsNbr': '', // 经营主体编码
                         'parentBizman': null,
-                        'regionName': '',
+                        'regionName': '@city',
                         'remarks': null,
                         'retailShopName': null,
                         'staffName': null,
@@ -213,11 +213,13 @@ angular
             startingDay: 1,
             showWeeks: false
         };
-        $scope.$watch('conditionQueryForm.createStartDt', function (newValue) {
+        $scope.$watch('conditionQueryForm.createStartDt', function(newValue) {
             $scope.endDateOptions.minDate = newValue;
+            $scope.endDateOptions.maxDate = newValue ? moment(newValue).add(5, 'd') : null;
         });
-        $scope.$watch('conditionQueryForm.createEndDt', function (newValue) {
+        $scope.$watch('conditionQueryForm.createEndDt', function(newValue) {
             $scope.startDateOptions.maxDate = newValue;
+            $scope.startDateOptions.minDate = newValue ? moment(newValue).subtract(5, 'd') : null;
         });
         $scope.startOpen = function () {
             $timeout(function () {
@@ -240,8 +242,8 @@ angular
         // 确定查询
         $scope.queryFormSubmit = function () {
             var param = {
-                beginDt: $scope.conditionQueryForm.createStartDt, //开始时间
-                endDt: $scope.conditionQueryForm.createEndDt, //结束时间
+                beginDt: $scope.conditionQueryForm.createStartDt ? moment($scope.conditionQueryForm.createStartDt).format("YYYY-MM-DD") : '', //开始时间
+                endDt: $scope.conditionQueryForm.createEndDt ? moment($scope.conditionQueryForm.createEndDt).format("YYYY-MM-DD") : '', //结束时间
                 bizmanId: $rootScope.submitBizmanId, //商户id
                 commonRegionId: $rootScope.checkedAreaID //区域id
             };
@@ -518,6 +520,7 @@ angular
 
         //门店所属商户
         $scope.$on('openStoreQueryTypeModal', function (d, data) {
+            $rootScope.bizmanByConList = []; // 置空商户列表
             $ctrl.openStoreQueryTypeModal(data);
         });
 
@@ -553,7 +556,7 @@ angular
         };
     })
     // 弹出框查询商户
-    .controller('queryStoreCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', function ($scope, $rootScope, $log, httpMethod) {
+    .controller('queryStoreCtrl', ['$scope', '$rootScope', '$log', '$http', 'httpMethod', function ($scope, $rootScope, $log, $http, httpMethod) {
         $scope.requirePaging = true; // 是否需要分页
         $scope.currentPage = 1; // 当前页
         $scope.rowNumPerPage = 4; // 每页显示行数
@@ -563,9 +566,9 @@ angular
             !currentPage && $scope.$broadcast('pageChange');
             var param = {
                 areaId: $scope.areaId, // 地区id也就是commonRegionId
-                // bizmanId: '', // 商户Id
+                bizmanId: $scope.bizmanId, // 商户Id
                 bizmanName: $scope.bizmanName, // 商户名称
-                storeName: $scope.storeName, // 门店名称
+                // storeName: $scope.storeName, // 门店名称
                 // cityId: '', // 城市id
                 curPage: currentPage || $scope.currentPage,
                 pageSize: $scope.rowNumPerPage,
@@ -578,7 +581,6 @@ angular
             }, function () {
                 $log.log('获取商戶列表失败.');
             });
-
         };
 
         // 城市选择
