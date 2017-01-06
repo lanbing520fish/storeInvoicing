@@ -11,7 +11,7 @@ angular
         httpMethod.loadShop = function (param) {
             var defer = $q.defer();
             $http({
-                url: 'http://192.168.16.51:8088/chain/config/shop/q/loadShop',
+                url: 'http://192.168.74.17:8088/chain/config/shop/q/loadShop',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -32,7 +32,7 @@ angular
         httpMethod.savePriceRetailAdjustOrder = function(param) {
             var defer = $q.defer();
             $http({
-                url: 'http://192.168.16.51:8088/chain/price/retail/q/findPriceRetailAdjustOrderList',
+                url: 'http://192.168.74.17:8088/chain/price/retail/q/findPriceRetailAdjustOrderList',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -52,7 +52,7 @@ angular
         httpMethod.findPriceRetailAdjustOrder = function(param) {
             var defer = $q.defer();
             $http({
-                url: 'http://192.168.16.51:8088/chain/price/retail/q/findPriceRetailAdjustOrder',
+                url: 'http://192.168.74.17:8088/chain/price/retail/q/findPriceRetailAdjustOrder',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -90,7 +90,7 @@ angular
                     "size": 10,
                     "startRow": 1,
                     "endRow": 10,
-                    "total": 23,
+                    "totalSize": 23,
                     "pages": 3,
                     "list|10": [{
                             "praOrderId": '@id',
@@ -248,8 +248,8 @@ angular
             // 查询零售调价单
             httpMethod.savePriceRetailAdjustOrder(param).then(function(rsp) {
                 $log.log('调用查询零售调价单接口成功.');
-                $rootScope.retailPriceResultList = rsp.data.list;
-                $scope.totalNum = rsp.data.total;
+                $rootScope.retailPriceResultList = rsp.data;
+                // $scope.totalSize = rsp.data.totalSize;
             }, function() {
                 $log.log('调用查询零售调价单接口失败.');
             });
