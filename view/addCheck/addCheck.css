@@ -31,7 +31,7 @@
 
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
@@ -69,7 +69,7 @@
 
 .self-buy {
     margin-left: 16px;
-    color: #a870e0;
+    color: #6d90e3;
     font-weight: normal;
 }
 
@@ -101,7 +101,7 @@
 }
 
 .btn-set .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit {
@@ -109,7 +109,7 @@
     padding: 0 6px;
     background-color: #eddbff;
     border-color: #ceaaf2;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 12px;
     line-height: 22px;
 }
@@ -118,17 +118,17 @@
 .btn-edit.focus {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit:hover {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-disabled {
@@ -175,8 +175,8 @@
     width: 80px;
     height: 25px;
     padding: 0;
-    background-color: #a870e0;
-    border-color: #a870e0;
+    background-color: #6d90e3;
+    border-color: #6d90e3;
     border-radius: 15px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -277,11 +277,11 @@
 }
 
 .checked-query:hover {
-    border-color: #a870e0;
+    border-color: #6d90e3;
 }
 
 .checked-query:hover .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .queries-category {
@@ -391,7 +391,7 @@
 .goods-item.current {
     background-color: #fff;
     width: calc(100% + 1px);
-    border-left: 2px solid #a870e0;
+    border-left: 2px solid #6d90e3;
     border-top: 1px solid #d2d2d2;
     border-bottom: 1px solid #d2d2d2;
 }
@@ -466,7 +466,7 @@
 }
 
 .purple-color {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .query-box {
@@ -515,7 +515,7 @@
     padding: 0 5px;
     border-radius: 3px;
     background: #eddbff;
-    color: #a870e0;
+    color: #6d90e3;
     margin-right: 8px;
     line-height: 16px;
 }
@@ -523,7 +523,7 @@
 .num-list li .small-delete {
     display: none;
     position: absolute;
-    color: #a870e0;
+    color: #6d90e3;
     top: 2px;
     right: 10px;
 }
@@ -554,7 +554,7 @@
     left: -235px;
     width: 230px;
     background-color: #fff;
-    border: 2px solid #a870e0;
+    border: 2px solid #6d90e3;
 }
 
 .angle {

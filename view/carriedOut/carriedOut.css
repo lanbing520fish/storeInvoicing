@@ -2,7 +2,7 @@
     color:#ff5400;
 }
 .color-violet {
-    color: #a870e0;
+    color: #6d90e3;
 }
 .history {
     min-height: 20px;
@@ -71,7 +71,7 @@
 
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
@@ -135,7 +135,7 @@
 }
 
 .btn-set .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit {
@@ -143,7 +143,7 @@
     padding: 0 6px;
     background-color: #eddbff;
     border-color: #ceaaf2;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 12px;
 }
 
@@ -151,17 +151,17 @@
 .btn-edit.focus {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit:hover {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-disabled {
@@ -215,7 +215,7 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     line-height: 25px;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 12px;
     text-align: center;
 }
@@ -291,7 +291,7 @@
     cursor: pointer;
 }
 .city-item.current {
-    background-color: #a870e0;
+    background-color: #6d90e3;
     color: #fff;
     border-radius: 5px;
 }
@@ -337,7 +337,7 @@
     color: #9455d4;
     height: 33px;
     background: url(../../resources/images/stat_title.png) no-repeat center bottom;
-    border-bottom: 1px solid #a870e0;
+    border-bottom: 1px solid #6d90e3;
 }
 
 .step-content {
@@ -448,8 +448,8 @@
     width: 100%;
     height: 25px;
     padding: 0;
-    background-color: #a870e0;
-    border-color: #a870e0;
+    background-color: #6d90e3;
+    border-color: #6d90e3;
     border-radius: 15px;
     line-height: 25px;
     color: #fff;
@@ -543,7 +543,7 @@
     cursor: pointer;
 }
 .city-item.current {
-    background-color: #a870e0;
+    background-color: #6d90e3;
     color: #fff;
     border-radius: 5px;
 }
@@ -560,7 +560,7 @@
 }
 .target-right{
     float:left;
-    
+
 }
 .condition-query {
     height: 80px;
@@ -601,7 +601,7 @@
 }
 
 .city-item.current {
-    background-color: #a870e0;
+    background-color: #6d90e3;
     color: #fff;
     border-radius: 5px;
 }

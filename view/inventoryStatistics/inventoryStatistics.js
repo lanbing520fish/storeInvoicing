@@ -15,7 +15,7 @@ angular
                 'requestHeader': {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                 },
-                'isMock': true // 是否开启测试数据
+                'isMock': false // 是否开启测试数据
             },
             httpMethod = {};
 

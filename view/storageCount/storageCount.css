@@ -2,7 +2,7 @@
     color:#ff5400;
 }
 .color-violet {
-    color: #a870e0;
+    color: #6d90e3;
 }
 .storageCount {
     min-height: 20px;
@@ -99,7 +99,7 @@
     cursor: pointer;
 }
 .city-item.current {
-    background-color: #a870e0;
+    background-color: #6d90e3;
     color: #fff;
     border-radius: 5px;
 }
@@ -119,7 +119,7 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     line-height: 25px;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 12px;
     text-align: center;
 }
@@ -146,7 +146,7 @@
 
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
@@ -244,7 +244,7 @@
 
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
@@ -363,7 +363,7 @@
 }
 
 .city-item.current {
-    background-color: #a870e0;
+    background-color: #6d90e3;
     color: #fff;
     border-radius: 5px;
 }
@@ -378,5 +378,5 @@
 }
 .target-right{
     float:left;
-    
+
 }

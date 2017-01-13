@@ -50,8 +50,8 @@ body {
     width: 80px;
     height: 25px;
     padding: 0;
-    background-color: #a870e0;
-    border-color: #a870e0;
+    background-color: #6d90e3;
+    border-color: #6d90e3;
     border-radius: 15px;
     line-height: 25px;
     color: #fff;
@@ -85,7 +85,7 @@ body {
 
 .btn-submit {
     color: #fff;
-    background-color: #a870e0;
+    background-color: #6d90e3;
 }
 
 .btn-submit:focus,
@@ -101,7 +101,7 @@ body {
 
 .btn-cancel {
     background-color: #eddbff;
-    color: #a870e0;
+    color: #6d90e3;
     border: 1px solid #cfacf2;
     box-shadow: none;
     padding: 4px 19px;
@@ -110,12 +110,12 @@ body {
 .btn-cancel:focus,
 .btn-cancel.focus {
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-cancel:hover {
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 
@@ -166,7 +166,7 @@ body {
     line-height: 16px;
     margin: 0 3px;
     padding: 0 4px;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-radius: 5px;
     color: #fff;
 }
@@ -183,7 +183,7 @@ body {
 }
 
 .modal-header {
-    background-color: #a870e0;
+    background-color: #6d90e3;
     padding: 4px 10px;
 }
 
@@ -310,7 +310,7 @@ body {
     top: -2px;
     width: calc(100% + 8px);
     height: 0;
-    border-top: 3px solid #a870e0;
+    border-top: 3px solid #6d90e3;
 }
 
 .wavy-line {
@@ -436,7 +436,7 @@ body {
 .table-bordered > tfoot > tr > th {
     border: 1px solid #8257ad;
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;

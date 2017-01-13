@@ -71,7 +71,7 @@
 
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
@@ -88,7 +88,7 @@
 .result-table .grey-table th{
     background: #ddd;
     border:1px solid #c9c9c9;
-    color:#333;  
+    color:#333;
 }
 .result-table .grey-table tr:nth-of-type(2n){
     background: #fafafa;
@@ -149,7 +149,7 @@
 }
 
 .btn-set .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit {
@@ -157,7 +157,7 @@
     padding: 0 6px;
     background-color: #eddbff;
     border-color: #ceaaf2;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 12px;
 }
 
@@ -165,17 +165,17 @@
 .btn-edit.focus {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit:hover {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-disabled {
@@ -216,7 +216,7 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     line-height: 25px;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 12px;
     text-align: center;
 }
@@ -250,8 +250,8 @@
     width: 80px;
     height: 25px;
     padding: 0;
-    background-color: #a870e0;
-    border-color: #a870e0;
+    background-color: #6d90e3;
+    border-color: #6d90e3;
     border-radius: 15px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -357,11 +357,11 @@
 }
 
 .checked-query:hover {
-    border-color: #a870e0;
+    border-color: #6d90e3;
 }
 
 .checked-query:hover .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .category-label {
@@ -463,7 +463,7 @@
 .goods-item.current {
     background-color: #fff;
     width: calc(100% + 1px);
-    border-left: 2px solid #a870e0;
+    border-left: 2px solid #6d90e3;
     border-top: 1px solid #d2d2d2;
     border-bottom: 1px solid #d2d2d2;
 }
@@ -594,7 +594,7 @@
     cursor: pointer;
 }
 .city-item.current {
-    background-color: #a870e0;
+    background-color: #6d90e3;
     color: #fff;
     border-radius: 5px;
 }

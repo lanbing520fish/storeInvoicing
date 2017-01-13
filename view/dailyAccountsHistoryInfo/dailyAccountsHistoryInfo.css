@@ -11,7 +11,7 @@
     width:100%;
     height:40px;
     background: #f8f8f8;
-    border-bottom:1px dotted #ddd;  
+    border-bottom:1px dotted #ddd;
 }
 .daily-store .wrds{
     display:inline-block;
@@ -28,7 +28,7 @@
 	margin-bottom: 8px;
 }
 .purple-color{
-	color:#a870e0;
+	color:#6d90e3;
 }
 .font14{
 	font-size:14px;
@@ -61,7 +61,7 @@
 }
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
@@ -80,14 +80,14 @@
     line-height: 29px;
 }
 .tabover{
-	width:100%;	
+	width:100%;
 }
 .tabover td{
-	width:100%;	
+	width:100%;
 	border-bottom: 1px solid #d5d4dc;
 }
 .tabover tr:last-child td{
-	border-bottom: none; 
+	border-bottom: none;
 }
 .tabover tr:nth-of-type(2n){
 	background: #faf7fc;

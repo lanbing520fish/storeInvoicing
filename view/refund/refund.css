@@ -49,11 +49,11 @@
 
 .step-item.current .step-icon,
 .step-item.current .step-line {
-    background-color: #a870e0;
+    background-color: #6d90e3;
 }
 
 .step-item.current .step-title {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .step-content {
@@ -88,8 +88,8 @@
     width: 80px;
     height: 25px;
     padding: 0;
-    background-color: #a870e0;
-    border-color: #a870e0;
+    background-color: #6d90e3;
+    border-color: #6d90e3;
     border-radius: 15px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -139,7 +139,7 @@
 
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
@@ -222,7 +222,7 @@
 }
 
 .btn-set .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit {
@@ -230,7 +230,7 @@
     padding: 0 6px;
     background-color: #eddbff;
     border-color: #ceaaf2;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 12px;
 }
 
@@ -238,17 +238,17 @@
 .btn-edit.focus {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit:hover {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-disabled {
@@ -287,7 +287,7 @@
 }
 
 .cashier-head .number {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .cashier-count {
@@ -373,7 +373,7 @@
 .final-head {
     height: 30px;
     line-height: 30px;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 14px;
     font-weight: 800;
     text-align: center;

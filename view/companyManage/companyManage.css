@@ -2,7 +2,7 @@ body{
     height:100%;
 }
 .purple-color{
-    color:#a870e0;
+    color:#6d90e3;
 }
 .bold{
     font-weight: bold;
@@ -71,7 +71,7 @@ body{
 
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
@@ -130,7 +130,7 @@ body{
 }
 
 .btn-set .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit {
@@ -138,7 +138,7 @@ body{
     padding: 0 6px;
     background-color: #eddbff;
     border-color: #ceaaf2;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 12px;
 }
 
@@ -146,15 +146,15 @@ body{
 .btn-edit.focus {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 .btn-edit:hover {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 .btn-edit .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 .btn-disabled {
     margin-left: 2px;
@@ -257,7 +257,7 @@ body{
     cursor: pointer;
 }
 .city-item.current {
-    background-color: #a870e0;
+    background-color: #6d90e3;
     color: #fff;
     border-radius: 5px;
 }
@@ -279,7 +279,7 @@ body{
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     line-height: 25px;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 12px;
     text-align: center;
 }
@@ -345,7 +345,7 @@ body{
 
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
