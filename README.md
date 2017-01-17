@@ -73,3 +73,8 @@
 * **价格管理**
     * 零售调价 **retailPriceAdjustment** 
     * 新零售调价单 **addRetailPriceAdjustment** 
+
+
+* 合约甩单 **contractOrder** 
+* 终端预购 **terminalAppointment** 
+* 串码查询 **codeQuery** 

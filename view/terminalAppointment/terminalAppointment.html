@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>终端预购</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="terminalAppointment.css">
+</head>
+
+<body ng-app="terminalAppointmentModule">
+
+    <div class="addReturned top-line wavy-line">
+
+        <!-- step -->
+        <div class="step fn-clear">
+            <li class="step-item fn-left" ng-cloak ng-class="{current: stepNum === 0}">
+                <div class="step-icon"></div>
+                <div class="step-line"></div>
+                <p class="step-title">终端选购</p>
+            </li>
+            <li class="step-item fn-left" ng-cloak ng-class="{current: stepNum === 1}">
+                <div class="step-icon"></div>
+                <div class="step-line"></div>
+                <p class="step-title">收银</p>
+            </li>
+        </div>
+        <div class="result-list bt-1p" ng-cloak ng-show="stepNum === 0">
+
+            <div class="order-header fn-clear">
+                <img src="../../resources/images/customer-img-blue.png" alt="">
+                <p class="order-title">客户信息</p>
+            </div>
+
+            <div class="infomation-form">
+                <form>
+                    <div class="row mb10">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label for="">客户姓名：</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label for="">证件类型：</label>
+                                <div class="select-box">
+                                    <select class="form-control">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label for="">证件号码：</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="choose-header bt-1p fn-clear">
+                <div class="choose-title">
+                    <img src="../../resources/images/cart-img-blue.png" alt="">
+                    <p class="order-title fn-left">终端选购</p>
+                </div>
+                <div class="choose-right">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="form-keyword">
+                                <label>商品串码：</label>
+                                <input type="text" class="form-control reduce-width">
+                                <button type="submit" class="btn btn-sm btn-keyword">扫描并验证</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="result-table">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <th>序号</th>
+                        <th>商品编码</th>
+                        <th>商品名称</th>
+                        <th>串码</th>
+                        <th>销售单价</th>
+                        <th>销售方式</th>
+                        <th>金额</th>
+                        <th>操作</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><p>1</p></td>
+                            <td><p>ZTE101</p></td>
+                            <td><p>中兴A7</p></td>
+                            <td><p>901000010</p></td>
+                            <td><input type="number" value="123" class="enter-input"></td>
+                            <td><p>合约销售</p></td>
+                            <td><p class="number">¥123.00</p></td>
+                            <td>
+                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p>1</p></td>
+                            <td><p>ZTE101</p></td>
+                            <td><p>中兴A7</p></td>
+                            <td><p>901000010</p></td>
+                            <td><input type="number" value="200" class="enter-input"></td>
+                            <td><p>合约销售</p></td>
+                            <td><p class="number">¥123.00</p></td>
+                            <td>
+                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center bt-1p">
+                <button class="btn btn-submit" ng-click="forward(stepNum)">提交并收款</button>
+                <button class="btn btn-cancel">取消</button>
+            </div>
+
+        </div>
+        <div class="bt-1p" ng-cloak ng-show="stepNum === 1">
+            <div class="collect-list">
+
+                <div class="order-header fn-clear">
+                    <img src="../../resources/images/icon-info.png" alt="">
+                    <p class="collect-title">客户信息</p>
+                </div>
+
+                <div class="history-detail-infomation">
+                    <div class="info-detail-form">
+                        <form name="infomationForm" class="form-inline" role="form">
+                            <div class="row dashed-line">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <p class="detail-msg"><span>客户姓名：</span><em>张三</em></p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <p class="detail-msg"><span>证件类型：</span><em>身份证</em></p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <p class="detail-msg"><span>身份证号：</span><em>320324199206166255</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt10 terminal-box fn-clear">
+                                <div class="customer-info-title">
+                                    <div class="order-header">
+                                        <img src="../../resources/images/icon-terminal.png" alt="">
+                                        <p class="collect-title">选购的终端信息:</p>
+                                    </div>
+                                </div>
+                                <div class="fn-left customer-info-list">
+                                    <div class="form-group other">
+                                        <div class="end fl">
+                                            <p class="p1"><span>终端：</span><span class="color-31">中兴A7</span></p>
+                                            <p class="p2"><span>串号：</span><span class="color-31">Ac201923456</span></p>
+                                        </div>
+                                        <div class="end fl">
+                                            <p class="p1"><span>终端：</span><span class="color-31">中兴A7</span></p>
+                                            <p class="p2"><span>串号：</span><span class="color-31">Ac201923456</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="order-header fn-clear">
+                    <img src="../../resources/images/icon-collect.png" alt="">
+                    <p class="collect-title fn-left">收银台:</p>
+                    <div class="ar-text fn-left">
+                        应收金额：<span>¥222 .00</span>实收金额：<span>¥222.00</span>
+                    </div>
+                </div>
+
+                <div class="result-table">
+                    <table class="collect-table table-hover table-bordered">
+                        <thead>
+                            <th>序号</th>
+                            <th><i class="iconfont red-star">&#xe692;</i>收款方式</th>
+                            <th><i class="iconfont red-star">&#xe692;</i>金额（元）</th>
+                            <th>单据号</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><p>1</p></td>
+                                <td><p>现金</p></td>
+                                <td><input type="number" class="enter-input" value="123"></td>
+                                <td><input type="text" class="enter-input" value="34564563456123"></td>
+                            </tr>
+                            <tr>
+                                <td><p>2</p></td>
+                                <td><p>POS机</p></td>
+                                <td><input type="number" class="enter-input" value="123"></td>
+                                <td><input type="text" class="enter-input" value="34564563456123"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="reason">
+                <div class="form-group another">
+                    <label class="control-label"><span><i class="iconfont red-star">&#xe692;</i>收银员：<em>王磊</em> </span>备注：</label>
+                    <textarea col="" row="20" id="remarks" class="form-control edit-txt"></textarea>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-submit">完成</button>
+                    <button class="btn btn-cancel" ng-click="goBack(stepNum)">取消</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/mock.js"></script>
+    <script src="terminalAppointment.js"></script>
+
+</body>
