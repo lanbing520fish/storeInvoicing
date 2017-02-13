@@ -76,7 +76,8 @@
 
     * 合约甩单 **contractOrder** 
     * 终端预购 **terminalAppointment** 
-    * 串码查询 **codeQuery** 
+    * 串码查询 **codeQuery**
+    * 已售终端领取 **terminalSaledReceive** 
 
 * **报表**
     * 终端入库订单报表 **terminalOrderReport**
