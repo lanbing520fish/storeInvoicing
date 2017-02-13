@@ -118,12 +118,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-if="true">
+                            <tr ng-if="allTerminalInCalTotal">
                                 <td class="total" colspan="10">
                                     <p>合并</p>
                                 </td>
                                 <td>
-                                    <p class="total-num">190000</p>
+                                    <p class="total-num" ng-bind="allTerminalInCalTotal.OFFER_QTY"></p>
                                 </td>
                             </tr>
                             <tr ng-repeat="item in qryStockStatisticData">

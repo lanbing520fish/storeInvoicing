@@ -357,6 +357,12 @@
                 }, function() {
                     $log.log('获取查询数据接口响应失败.');
                 });
+
+                if (!currentPage) {
+                    httpMethod.qryTerminalInCalTotal(param).then(function(rsp) {
+                        $scope.allTerminalInCalTotal = rsp.data;
+                    });
+                }
             }
 
             $scope.$on('pageChange', function(event, data) {
