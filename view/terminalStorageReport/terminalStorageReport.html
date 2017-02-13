@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>终端入库订单报表</title>
+    <title>终端入库统计报表</title>
     <link rel="stylesheet" href="../../resources/css/sweetalert.css">
     <link rel="stylesheet" href="../../resources/css/bootstrap.css">
     <link rel="stylesheet" href="../../resources/css/reset.css">
     <link rel="stylesheet" href="../../resources/css/common.css">
-    <link rel="stylesheet" href="terminalOrderReport.css">
+    <link rel="stylesheet" href="terminalStorageReport.css">
 </head>
 
 <body ng-app="inventoryModule">
@@ -20,10 +20,30 @@
                 <br/>索</p>
             <div class="condition-query-box fn-right">
                 <form name="conditionQueryForm" class="form-inline" role="form">
-                    <div class="row">
+                    <div class="row mb10">
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label class="control-label">统计日期：</label>
+                                <label class="control-label">商品类型：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="staffId" ng-options="staff.staffId as staff.staffName for staff in staffsList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">商品品牌：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="staffId" ng-options="staff.staffId as staff.staffName for staff in staffsList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">入库时间：</label>
                                 <div class="datepicker-input fn-left">
                                     <input type="text" id="createStartDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createStartDt" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" show-button-bar='false' />
                                     <span class="icon_time" ng-click="startOpen()">
@@ -39,6 +59,8 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">操作人：</label>
@@ -52,6 +74,16 @@
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">仓库名称：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="staffId" ng-options="staff.staffId as staff.staffName for staff in staffsList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">商品型号：</label>
                                 <div class="select-box reduce-width">
                                     <select class="form-control" ng-model="storageId" ng-options="storage.storageId as storage.storageName for storage in storagesList">
                                         <option value="">全部</option>
@@ -72,15 +104,17 @@
                     <table class="table table-striped table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th width="12%">单据号</th>
-                                <th width="15%">入库门店</th>
+                                <th width="5%">序号</th>
+                                <th width="8%">商品型类</th>
+                                <th width="8%">商品品牌</th>
+                                <th width="10%">商品型号</th>
+                                <th width="10%">商品名称</th>
+                                <th width="8%">采购单价</th>
+                                <th width="8%">操作人</th>
+                                <th width="8%">操作人工号</th>
                                 <th>仓库</th>
-                                <th width="10%">操作人</th>
-                                <th width="12%">操作工号</th>
-                                <th width="10%">制单时间</th>
-                                <th width="10%">入库时间</th>
-                                <th width="8%">入库总量</th>
-                                <th width="8%">状态</th>
+                                <th width="14%">入库门店</th>
+                                <th width="8%">入库数量</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,7 +173,7 @@
     <script src="../../resources/js/sweetalert.min.js"></script>
     <script src="../../resources/js/mock.js"></script>
     <script src="../../resources/js/moment.js"></script>
-    <script src="terminalOrderReport.js"></script>
+    <script src="terminalStorageReport.js"></script>
 </body>
 
 </html>

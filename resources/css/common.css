@@ -4,12 +4,10 @@
  */
 
 @font-face {
-  font-family: 'iconfont';  /* project id 144758 */
-  src: url('http://at.alicdn.com/t/font_adohqfajxk5oecdi.eot');
-  src: url('http://at.alicdn.com/t/font_adohqfajxk5oecdi.eot?#iefix') format('embedded-opentype'),
-  url('http://at.alicdn.com/t/font_adohqfajxk5oecdi.woff') format('woff'),
-  url('http://at.alicdn.com/t/font_adohqfajxk5oecdi.ttf') format('truetype'),
-  url('http://at.alicdn.com/t/font_adohqfajxk5oecdi.svg#iconfont') format('svg');
+    font-family: 'iconfont';
+    /* project id 144758 */
+    src: url('http://at.alicdn.com/t/font_adohqfajxk5oecdi.eot');
+    src: url('http://at.alicdn.com/t/font_adohqfajxk5oecdi.eot?#iefix') format('embedded-opentype'), url('http://at.alicdn.com/t/font_adohqfajxk5oecdi.woff') format('woff'), url('http://at.alicdn.com/t/font_adohqfajxk5oecdi.ttf') format('truetype'), url('http://at.alicdn.com/t/font_adohqfajxk5oecdi.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -514,7 +512,9 @@ body {
     outline-offset: 0;
 }
 
+
 /* ng-cloak修复闪跳 */
+
 [ng\:cloak],
 [ng-cloak],
 [data-ng-cloak],
@@ -525,7 +525,9 @@ body {
     display: none !important;
 }
 
+
 /* 自定义sweetAlert */
+
 .sweet-alert {
     top: 30%;
     padding: 0;
