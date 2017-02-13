@@ -147,6 +147,17 @@
     text-align: center;
 }
 
+.result-table table td.total {
+    background-color: #e3eafd;
+    color: #3b3b3b;
+    font-size: 14px;
+}
+
+.total-num {
+    color: #6b8ee6;
+    font-size: 14px;
+}
+
 .result-table table td p {
     height: 25px;
     line-height: 25px;

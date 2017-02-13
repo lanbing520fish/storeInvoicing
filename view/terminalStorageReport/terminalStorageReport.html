@@ -25,7 +25,7 @@
                             <div class="form-group">
                                 <label class="control-label">商品类型：</label>
                                 <div class="select-box">
-                                    <select class="form-control" ng-model="staffId" ng-options="staff.staffId as staff.staffName for staff in staffsList">
+                                    <select class="form-control" ng-model="categoryCd" ng-options="category.categoryCd as category.categoryName for category in allCategoryList">
                                         <option value="">全部</option>
                                     </select>
                                 </div>
@@ -35,7 +35,7 @@
                             <div class="form-group">
                                 <label class="control-label">商品品牌：</label>
                                 <div class="select-box">
-                                    <select class="form-control" ng-model="staffId" ng-options="staff.staffId as staff.staffName for staff in staffsList">
+                                    <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
                                         <option value="">全部</option>
                                     </select>
                                 </div>
@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label class="control-label">仓库名称：</label>
                                 <div class="select-box">
-                                    <select class="form-control" ng-model="staffId" ng-options="staff.staffId as staff.staffName for staff in staffsList">
+                                    <select class="form-control" ng-model="storageId" ng-options="storage.storageId as storage.storageName for storage in storagesList">
                                         <option value="">全部</option>
                                     </select>
                                 </div>
@@ -85,7 +85,7 @@
                             <div class="form-group">
                                 <label class="control-label">商品型号：</label>
                                 <div class="select-box reduce-width">
-                                    <select class="form-control" ng-model="storageId" ng-options="storage.storageId as storage.storageName for storage in storagesList">
+                                    <select class="form-control" ng-model="modelCd" ng-options="model.modelCd as model.modelName for model in allModelList">
                                         <option value="">全部</option>
                                     </select>
                                 </div>
@@ -118,15 +118,32 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr ng-if="true">
+                                <td class="total" colspan="10">
+                                    <p>合并</p>
+                                </td>
+                                <td>
+                                    <p class="total-num">190000</p>
+                                </td>
+                            </tr>
                             <tr ng-repeat="item in qryStockStatisticData">
                                 <td>
-                                    <p ng-bind="item.SI_ORDER_ID"></p>
+                                    <p ng-bind="item.ROW_ID"></p>
                                 </td>
                                 <td>
-                                    <p ng-bind="item.RETAIL_SHOP_NAME"></p>
+                                    <p ng-bind="item.CATEGORY_NAME"></p>
                                 </td>
                                 <td>
-                                    <p ng-bind="item.STORAGE_NAME" class="overflow-handle"></p>
+                                    <p ng-bind="item.BRAND_NAME"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OFFER_MODEL_NAME" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OFFER_NAME"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PRICE"></p>
                                 </td>
                                 <td>
                                     <p ng-bind="item.STAFF_NAME"></p>
@@ -135,16 +152,13 @@
                                     <p ng-bind="item.STAFF_ID"></p>
                                 </td>
                                 <td>
-                                    <p ng-bind="item.ZD_TIME"></p>
+                                    <p ng-bind="item.STORAGE_NAME"></p>
                                 </td>
                                 <td>
-                                    <p ng-bind="item.RK_TIME"></p>
+                                    <p ng-bind="item.RETAIL_SHOP_NAME"></p>
                                 </td>
                                 <td>
-                                    <p ng-bind="item.IN_NUM"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.STATUS_NAME"></p>
+                                    <p ng-bind="item.OFFER_QTY"></p>
                                 </td>
                             </tr>
                         </tbody>
