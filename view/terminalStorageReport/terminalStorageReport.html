@@ -111,9 +111,9 @@
                                 <th width="10%">商品名称</th>
                                 <th width="8%">采购单价</th>
                                 <th width="8%">操作人</th>
-                                <th width="8%">操作人工号</th>
+                                <th width="12%">操作人工号</th>
                                 <th>仓库</th>
-                                <th width="14%">入库门店</th>
+                                <th width="12%">入库门店</th>
                                 <th width="8%">入库数量</th>
                             </tr>
                         </thead>
@@ -143,7 +143,7 @@
                                     <p ng-bind="item.OFFER_NAME"></p>
                                 </td>
                                 <td>
-                                    <p ng-bind="item.PRICE"></p>
+                                    <p ng-bind="item.PRICE | currency:'¥'"></p>
                                 </td>
                                 <td>
                                     <p ng-bind="item.STAFF_NAME"></p>
