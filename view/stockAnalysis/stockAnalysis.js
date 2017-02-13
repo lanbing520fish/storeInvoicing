@@ -382,6 +382,11 @@ angular
                         {
                             name: '库存周转天数',
                             type: 'line',
+                            label: {
+                                normal: {
+                                    show: true
+                                }
+                            },
                             yAxisIndex: 1,
                             symbol: 'circle',
                             data: $scope.turndays

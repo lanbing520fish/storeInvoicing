@@ -106,11 +106,11 @@
 
 .step-item.current .step-icon,
 .step-item.current .step-line {
-    background-color: #a870e0;
+    background-color: #6d90e3;
 }
 
 .step-item.current .step-title {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .step-content {
@@ -199,7 +199,7 @@
 
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
@@ -272,7 +272,7 @@
 }
 
 .btn-set .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit {
@@ -280,7 +280,7 @@
     padding: 0 6px;
     background-color: #eddbff;
     border-color: #ceaaf2;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 12px;
 }
 
@@ -288,17 +288,17 @@
 .btn-edit.focus {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit:hover {
     border-color: #c899f7;
     background-color: #e0c2ff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-edit .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .btn-disabled {
@@ -356,7 +356,7 @@
     line-height: 22px;
 }
 .color-violet{
-    color: #a870e0;
+    color: #6d90e3;
 }
 .color-grey{
     color: #ddd;
@@ -389,7 +389,7 @@
     height: 38px;
     line-height: 38px;
     margin-left: 8px;
-    color: #a870e0
+    color: #6d90e3
 }
 .customer-right{
     float: right;
@@ -461,7 +461,7 @@
 }
 .sum{
     font-size: 16px;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 /*弹窗内tab切*/
@@ -524,9 +524,9 @@
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
     border: 1px solid #c7c7c7;
     padding: 0px;
-    border-top: 3px solid #a870e0;
+    border-top: 3px solid #6d90e3;
     border-bottom: 1px solid #fff;
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .queries-box {
@@ -561,8 +561,8 @@
     width: 80px;
     height: 25px;
     padding: 0;
-    background-color: #a870e0;
-    border-color: #a870e0;
+    background-color: #6d90e3;
+    border-color: #6d90e3;
     border-radius: 15px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -632,11 +632,11 @@
 }
 
 .checked-query:hover {
-    border-color: #a870e0;
+    border-color: #6d90e3;
 }
 
 .checked-query:hover .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .queries-category {
@@ -819,6 +819,6 @@
 .remark_input{
     width: 100%;
     height: 28px !important;
-    border: 1px solid #a870e0;
+    border: 1px solid #6d90e3;
 }
 /*收银*/

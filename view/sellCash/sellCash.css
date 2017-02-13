@@ -18,8 +18,8 @@
     width: 80px;
     height: 25px;
     padding: 0;
-    background-color: #a870e0;
-    border-color: #a870e0;
+    background-color: #6d90e3;
+    border-color: #6d90e3;
     border-radius: 15px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -108,11 +108,11 @@
 }
 
 .checked-query:hover {
-    border-color: #a870e0;
+    border-color: #6d90e3;
 }
 
 .checked-query:hover .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 
 .queries-category {
@@ -251,7 +251,7 @@
     color: #333;
 }
 .btn-set .iconfont {
-    color: #a870e0;
+    color: #6d90e3;
 }
 .mb5{
 	margin-bottom: 5px;
@@ -260,7 +260,7 @@
 	margin-bottom: 8px;
 }
 .purple-color{
-	color:#a870e0;
+	color:#6d90e3;
 }
 .font14{
 	font-size:14px;
@@ -270,7 +270,7 @@
 }
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
@@ -286,14 +286,14 @@
     line-height: 29px;
 }
 .tabover{
-	width:100%;	
+	width:100%;
 }
 .tabover td{
-	width:100%;	
+	width:100%;
 	border-bottom: 1px solid #d5d4dc;
 }
 .tabover tr:last-child td{
-	border-bottom: none; 
+	border-bottom: none;
 }
 .tabover tr:nth-of-type(2n){
 	background: #faf7fc;

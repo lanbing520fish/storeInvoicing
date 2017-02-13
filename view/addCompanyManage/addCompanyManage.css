@@ -7,7 +7,7 @@
 }
 .purchase-infomation {
     padding: 5px 5px 10px;
-    background-color: #fff;   
+    background-color: #fff;
     min-height:400px;
     position:relative;
 }
@@ -46,7 +46,7 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     line-height: 25px;
-    color: #a870e0;
+    color: #6d90e3;
     font-size: 12px;
     text-align: center;
 }
@@ -112,7 +112,7 @@
 
 .result-table table th {
     padding: 5px !important;
-    background-color: #a870e0;
+    background-color: #6d90e3;
     border-bottom-width: 1px !important;
     color: #fff;
     font-weight: 800;
@@ -221,7 +221,7 @@
     cursor: pointer;
 }
 .city-item.current {
-    background-color: #a870e0;
+    background-color: #6d90e3;
     color: #fff;
     border-radius: 5px;
 }
@@ -245,7 +245,7 @@
 .result-table .grey-table th{
     background: #ddd;
     border:1px solid #c9c9c9;
-    color:#333;  
+    color:#333;
 }
 .result-table .grey-table tr:nth-of-type(2n){
     background: #fff;
