@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>终端入库明细报表</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="terminalStorageDetailReport.css">
+</head>
+
+<body ng-app="inventoryModule">
+    <!-- DOM结构开始 -->
+    <div class="inventory top-line wavy-line" ng-controller="conditionQuery">
+        <!-- 条件查询 -->
+        <div class="alarm-query fn-clear">
+            <p class="alarm-query-title fn-left">搜
+                <br/>索</p>
+            <div class="condition-query-box fn-right">
+                <form name="conditionQueryForm" class="form-inline" role="form">
+                    <div class="row mb10">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">商品品牌：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-change="brandChanged(brandCd)" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in brandsList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">商品型号：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="modelCd" ng-options="model.modelCd as model.modelName for model in modelsList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">操作人：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="staffId" ng-options="staff.staffId as staff.staffName for staff in staffsList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">仓库名称：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="storageId" ng-options="storage.storageId as storage.storageName for storage in storagesList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">入库时间：</label>
+                                <div class="datepicker-input fn-left">
+                                    <input type="text" id="createStartDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createStartDt" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" show-button-bar='false' />
+                                    <span class="icon_time" ng-click="startOpen()">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                                <div class="datepicker-text fn-left">至</div>
+                                <div class="datepicker-input fn-left">
+                                    <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" show-button-bar='false' />
+                                    <span class="icon_time" ng-click="endOpen()">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <button type="submit" ng-click="queryFormSubmit()" class="btn btn-sm btn-stat-query fn-right"><i class="iconfont">&#xe600;</i> 查询
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 结果列表 -->
+        <div class="inventory-charts fn-clear">
+            <div class="charts-box">
+                <div class="result-table" ng-cloak>
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="60">序号</th>
+                                <th>商品品牌</th>
+                                <th>商品型号</th>
+                                <th>商品名称</th>
+                                <th>串码</th>
+                                <th>采购单价</th>
+                                <th width="80">入库时间</th>
+                                <th>入库门店</th>
+                                <th>仓库</th>
+                                <th>操作人</th>
+                                <th>操作人工号</th>
+                                <th>单据号</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in qryStockStatisticData">
+                                <td>
+                                    <p ng-bind="item.ROW_ID"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.BRAND_NAME" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OFFER_MODEL_NAME" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OFFER_NAME" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.INST_CODE" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PRICE"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.CREATE_DT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.RETAIL_SHOP_NAME" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.STORAGE_NAME" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.STAFF_NAME" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.STAFF_ID" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SI_ORDER_ID" class="overflow-handle"></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
+                        没有数据
+                    </p>
+                </div>
+                <div ng-controller="paginationCtrl" class="text-center page">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number" ng-cloak ng-bind="totalNum || 0"></span>条记录，当前显示第<span class="number" ng-cloak ng-bind="currentPage || 0"></span>页</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/angular-locale_zh-cn.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/mock.js"></script>
+    <script src="../../resources/js/moment.js"></script>
+    <script src="terminalStorageDetailReport.js"></script>
+</body>
+
+</html>

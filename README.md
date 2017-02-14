@@ -81,10 +81,10 @@
 
 * **报表**
     * 终端入库订单报表 **terminalOrderReport**
-    * 销售明细报表
+    * 销售明细报表 **salesDetailReport**
     * 终端入库统计报表 **terminalStorageReport**
-    * 毛利分析报表
-    * 终端入库明细报表
+    * 毛利分析报表 **grossProfitAnalysis**
+    * 终端入库明细报表 **terminalStorageDetailReport**
     * 库存统计报表
     * 销售统计报表
     * 库存明细报表 
