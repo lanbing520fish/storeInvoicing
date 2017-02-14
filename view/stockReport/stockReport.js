@@ -10,13 +10,32 @@ angular
             },
             httpMethod = {};
 
-        // 商品品牌获取接口
-        httpMethod.loadAllBrand = function() {
+        // 商品类别获取接口
+        httpMethod.loadAllCategory = function() {
             var defer = $q.defer();
             $http({
-                url: httpConfig.siteUrl + '/chain/report/q/loadAllBrand',
+                url: httpConfig.siteUrl + '/chain/report/q/loadAllCategory',
                 method: 'POST',
                 headers: httpConfig.requestHeader
+            }).success(function(data, header, config, status) {
+                if (status !== 200) {
+                    // 跳转403页面
+                }
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                defer.reject(data);
+            });
+            return defer.promise;
+        };
+
+        // 商品品牌获取接口
+        httpMethod.loadBrand = function(param) {
+            var defer = $q.defer();
+            $http({
+                url: httpConfig.siteUrl + '/chain/config/report/q/loadBrand',
+                method: 'POST',
+                headers: httpConfig.requestHeader,
+                data: 'param=' + JSON.stringify(param)
             }).success(function(data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
@@ -47,48 +66,31 @@ angular
             return defer.promise;
         };
 
-
-        // 操作人获取接口
-        httpMethod.qryStaffs = function() {
-            var defer = $q.defer();
-            $http({
-                url: httpConfig.siteUrl + '/chain/report/q/qryStaffs',
-                method: 'POST',
-                headers: httpConfig.requestHeader
-            }).success(function(data, header, config, status) {
-                if (status !== 200) {
-                    // 跳转403页面
-                }
-                defer.resolve(data);
-            }).error(function(data, status, headers, config) {
-                defer.reject(data);
-            });
-            return defer.promise;
-        };
-
-        // 仓库获取接口
-        httpMethod.qryStorages = function() {
-            var defer = $q.defer();
-            $http({
-                url: httpConfig.siteUrl + '/chain/report/q/qryStorages',
-                method: 'POST',
-                headers: httpConfig.requestHeader
-            }).success(function(data, header, config, status) {
-                if (status !== 200) {
-                    // 跳转403页面
-                }
-                defer.resolve(data);
-            }).error(function(data, status, headers, config) {
-                defer.reject(data);
-            });
-            return defer.promise;
-        };
-
         // 条件查询
-        httpMethod.qryTerminalInCalData = function(param) {
+        //合计
+        httpMethod.qryStockOfferNumTotal = function(param) {
             var defer = $q.defer();
             $http({
-                url: httpConfig.siteUrl + '/chain/report/q/qryTerminalInCalData',
+                url: httpConfig.siteUrl + '/chain/report/q/qryStockOfferNumTotal',
+                method: 'POST',
+                headers: httpConfig.requestHeader,
+                data: 'param=' + JSON.stringify(param)
+            }).success(function(data, header, config, status) {
+                if (status !== 200) {
+                    // 跳转403页面
+                }
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                defer.reject(data);
+            });
+            return defer.promise;
+        };
+
+        //列表
+        httpMethod.qryStockOfferStatistic = function(param) {
+            var defer = $q.defer();
+            $http({
+                url: httpConfig.siteUrl + '/chain/report/q/qryStockOfferStatistic',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + JSON.stringify(param)
@@ -104,8 +106,21 @@ angular
         };
 
         if (httpConfig.isMock) {
+            // 商品类别模拟数据
+            Mock.mock(httpConfig.siteUrl + '/chain/report/q/loadAllCategory', {
+                'rsphead': 's',
+                'success': true, //是否成功
+                'code': null,
+                'msg': null, //失败信息
+                'data|5': [{
+                    'categoryCd': '@id',
+                    'categoryName': '@cword(6)'
+                }],
+                'errors': null
+            });
+
             // 商品品牌模拟数据
-            Mock.mock(httpConfig.siteUrl + '/chain/report/q/loadAllBrand', {
+            Mock.mock(httpConfig.siteUrl + '/chain/config/report/q/loadBrand', {
                 'rsphead': 's',
                 'success': true, //是否成功
                 'code': null,
@@ -130,34 +145,9 @@ angular
                 'errors': null
             });
 
-            // 操作人模拟数据
-            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryStaffs', {
-                'rsphead': 's',
-                'success': true, //是否成功
-                'code': null,
-                'msg': null, //失败信息
-                'data|5': [{
-                    'staffId': '@id',
-                    'staffName': '@name'
-                }],
-                'errors': null
-            });
 
-            // 仓库模拟数据
-            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryStorages', {
-                'rsphead': 's',
-                'success': true, //是否成功
-                'code': null,
-                'msg': null, //失败信息
-                'data|5': [{
-                    'storageId': '@id',
-                    'storageName': '@cword(8)'
-                }],
-                'errors': null
-            });
-
-            // 终端库存及库存周转分析
-            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryTerminalInCalData', {
+            // 库存统计列表
+            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryStockOfferStatistic', {
                 'rsphead': 's',
                 'success': true, //是否成功
                 'code': null,
@@ -165,20 +155,27 @@ angular
                 'data': {
                     'total|1-100': 10,
                     'list|10': [{
-                        'ROW_ID|1-100': 1,
-                        'BRAND_NAME': '@cword(6)',
-                        'OFFER_MODEL_NAME':'@cword(6)',
-                        'OFFER_NAME': '@cword(6)',
-                        'INST_CODE': '@word',
-                        'PRICE|100-1000': 100,
-                        'CREATE_DT':'@date',
-                        'RETAIL_SHOP_NAME': '@cword(6)',
-                        'STORAGE_NAME': '@cword(8)',
-                        'STAFF_NAME': '@name',
-                        'STAFF_ID': '@id',
-                        'SI_ORDER_ID': '@id'
+                        'basicInfo':{
+                            'categoryName': '@cword(6)',
+                            'brandName': '@cword(6)',
+                            'modelName': '@cword(6)',
+                            'offerName': '@cword(6)'
+                        },
+                        'price|100-1000': 100,
+                        'offerNum':1000,
+                        'storageName':'@cword(8)'
                     }]
                 },
+                'errors': null
+            });
+
+            // 库存统计合计
+            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryStockOfferNumTotal', {
+                'rsphead': 's',
+                'success': true, //是否成功
+                'code': null,
+                'msg': null, //失败信息
+                'data|1000-5000': 1000,
                 'errors': null
             });
         }
@@ -186,10 +183,27 @@ angular
         return httpMethod;
     }])
     .controller('conditionQuery', ['$scope', '$timeout', '$log', 'httpMethod', function($scope, $timeout, $log, httpMethod) {
-        //获取所有品牌
-        httpMethod.loadAllBrand().then(function(rsp) {
-            $scope.brandsList = rsp.data;
+        //获取所有类别
+        httpMethod.loadAllCategory().then(function(rsp) {
+            $scope.categorysList = rsp.data;
         });
+
+        //监听类别改变获取相应品牌
+        $scope.categoryChanged = function(val){
+            if(val === null){
+                $scope.brandsList = [];
+                $scope.modelsList = [];
+                $scope.brandCd = '';
+                $scope.modelCd = '';
+                return;
+            }
+
+            httpMethod.loadBrand({
+                categoryCd: $scope.categoryCd
+            }).then(function(rsp) {
+                $scope.brandsList = rsp.data;
+            });
+        }
 
         //监听品牌改变获取相应型号
         $scope.brandChanged = function(val){
@@ -200,56 +214,12 @@ angular
             }
 
             httpMethod.loadModel({
+                categoryCd: $scope.categoryCd,
                 brandId: $scope.brandCd
             }).then(function(rsp) {
                 $scope.modelsList = rsp.data;
             });
         }
-
-        httpMethod.qryStaffs().then(function(rsp) {
-            $scope.staffsList = rsp.data;
-        });
-
-        httpMethod.qryStorages().then(function(rsp) {
-            $scope.storagesList = rsp.data;
-        });
-
-        $scope.conditionQueryForm = {
-            createStartDt: '', //制单日期开始
-            createEndDt: '' //制单日期结束
-        };
-        // 时间控件
-        $scope.startDateOptions = {
-            formatYear: 'yy',
-            maxDate: $scope.conditionQueryForm.createEndDt,
-            startingDay: 1,
-            showWeeks: false
-        };
-        $scope.endDateOptions = {
-            formatYear: 'yy',
-            minDate: $scope.conditionQueryForm.createStartDt,
-            // maxDate: new Date(),
-            startingDay: 1,
-            showWeeks: false
-        };
-        $scope.$watch('conditionQueryForm.createStartDt', function(newValue) {
-            $scope.endDateOptions.minDate = newValue;
-        });
-        $scope.$watch('conditionQueryForm.createEndDt', function(newValue) {
-            $scope.startDateOptions.maxDate = newValue;
-        });
-        $scope.startOpen = function() {
-            $timeout(function() {
-                $scope.startPopupOpened = true;
-            });
-        };
-        $scope.endOpen = function() {
-            $timeout(function() {
-                $scope.endPopupOpened = true;
-            });
-        };
-        $scope.startPopupOpened = false;
-        $scope.endPopupOpened = false;
 
         //分页
         $scope.requirePaging = true; // 是否需要分页
@@ -260,17 +230,29 @@ angular
         // 确定查询
         $scope.queryFormSubmit = function(currentPage) {
             var param = {
+                categoryCd: $scope.categoryCd || '',
                 brandCd: $scope.brandCd || '',
                 modelCd: $scope.modelCd || '',
-                staffId: $scope.staffId || '',
-                storageId: $scope.storageId || '',
-                st_time: $scope.conditionQueryForm.createStartDt ? moment($scope.conditionQueryForm.createStartDt).format('YYYY-MM-DD') : '', //开始时间
-                ed_time: $scope.conditionQueryForm.createEndDt ? moment($scope.conditionQueryForm.createEndDt).format('YYYY-MM-DD') : '', //结束时间
                 curPage: currentPage || 1,
                 pageSize: 10
             };
-            httpMethod.qryTerminalInCalData(param).then(function(rsp) {
-                $scope.qryStockStatisticData = rsp.data.list;
+
+            var paramTotal = {
+                brandCd: $scope.brandCd || '',
+                modelCd: $scope.modelCd || '',
+                curPage: currentPage || 1,
+                pageSize: 10
+            }
+
+            httpMethod.qryStockOfferNumTotal(param).then(function(rsp) {
+                $scope.qryStockOfferNumTotal = rsp.data;
+                $log.log('获取查询合计接口响应成功.');
+            }, function() {
+                $log.log('获取查询合计接口响应失败.');
+            });
+
+            httpMethod.qryStockOfferStatistic(param).then(function(rsp) {
+                $scope.qryStockOfferStatisticData = rsp.data.list;
                 $scope.totalNum = rsp.data.total;
                 $log.log('获取查询数据接口响应成功.');
             }, function() {
