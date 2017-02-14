@@ -244,13 +244,6 @@ angular
                 pageSize: 10
             }
 
-            httpMethod.qryStockOfferNumTotal(param).then(function(rsp) {
-                $scope.qryStockOfferNumTotal = rsp.data;
-                $log.log('获取查询合计接口响应成功.');
-            }, function() {
-                $log.log('获取查询合计接口响应失败.');
-            });
-
             httpMethod.qryStockOfferStatistic(param).then(function(rsp) {
                 $scope.qryStockOfferStatisticData = rsp.data.list;
                 $scope.totalNum = rsp.data.total;
@@ -258,6 +251,15 @@ angular
             }, function() {
                 $log.log('获取查询数据接口响应失败.');
             });
+
+            if(!currentPage){
+                httpMethod.qryStockOfferNumTotal(param).then(function(rsp) {
+                    $scope.qryStockOfferNumTotal = rsp.data;
+                    $log.log('获取查询合计接口响应成功.');
+                }, function() {
+                    $log.log('获取查询合计接口响应失败.');
+                });
+            }
         }
 
         $scope.$on('pageChange', function(event, data) {
