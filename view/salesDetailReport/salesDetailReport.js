@@ -102,16 +102,115 @@ angular
                 'data': {
                     'total|1-100': 10,
                     'list|10': [{
-                        'STORAGE_NAME': '@cword(8)',
-                        'STAFF_ID': '@id',
-                        'SI_ORDER_ID': '@id',
-                        'ROW_ID': '',
-                        'RK_TIME': '@date("yyyy-MM-dd")',
-                        'STAFF_NAME': '@name',
-                        'RETAIL_SHOP_NAME': '@cword(10)',
-                        'STATUS_NAME': '已完成',
-                        'IN_NUM|1000-2000': 1000,
-                        'ZD_TIME': '@date("yyyy-MM-dd")'
+                        'shopName': null,
+                        'basicInfo': {
+                            'offerId': 100000009138,
+                            'productId': null,
+                            'offerCode': '112905109139',
+                            'offerName': '魅族PLUS6',
+                            'categoryCd': 1,
+                            'categoryName': '手机',
+                            'brandCd': 1,
+                            'brandName': '魅族',
+                            'modelCd': 100002905,
+                            'modelName': '魅蓝A型',
+                            'offerConfig': '吊打一切',
+                            'manageType': '100000',
+                            'manageTypeName': null,
+                            'ticketUse': 'T',
+                            'bizmanId': 74273,
+                            'statusCd': '1001',
+                            'statusName': null,
+                            'remarks': null,
+                            'offerQty': 0,
+                            'offerMembers': null,
+                            'price': null,
+                            'priceLess': null,
+                            'qtyInstCode': null,
+                            'unitCd': '1',
+                            'operators': null,
+                            'priceRetail': {
+                                'priceRetailId': 1000000000009142,
+                                'offerId': 100000009138,
+                                'retailPrice': 4000,
+                                'retailPriceLess': 2500,
+                                'version': '2017-01-06 00:00:00',
+                                'bizmanId': null
+                            },
+                            'bizmanName': null,
+                            'product': null,
+                            'source': null,
+                            'sourceName': null,
+                            'unifyOfferId': null,
+                            'bizman': {
+                                'bizmanId': 74273,
+                                'bizmanName': '迪信通',
+                                'manageStaff': null,
+                                'linkNbr': null,
+                                'email': null,
+                                'identifyType': null,
+                                'identifyName': null,
+                                'identifyNum': null,
+                                'remarks': null,
+                                'retailShopName': null,
+                                'bizmanCode': null,
+                                'operatorsNbr': null,
+                                'areaId': null,
+                                'statusCd': null,
+                                'staffName': null,
+                                'parentBizman': null,
+                                'regionName': null,
+                                'operatorsId': null,
+                                'operatorsName': null,
+                                'oldBizmanName': null,
+                                'commonRegionId': null
+                            },
+                            'instCodes': null,
+                            'instCode': null,
+                            'lastPage': 0,
+                            'storageId': null,
+                            'retailShopName': null,
+                            'retailShopId': null,
+                            'sincd': 0,
+                            'rsLst': null
+                        },
+                        'offerName': '魅族PLUS6',
+                        'manageType': null,
+                        'instCode': 'plus6123',
+                        'offerQty': 0,
+                        'orderType|+1': ['1', '2', '3'],
+                        'supplierName': null,
+                        'costPrice': 55.0,
+                        'salePrice': 4000.0,
+                        'amount': null,
+                        'saleCost': null,
+                        'staffName': '@cname',
+                        'r2s': null,
+                        'purchaseDate': '@date("yyyy-MM-dd")',
+                        'purchaseDateStr': null,
+                        'saleDate': '@date("yyyy-MM-dd")',
+                        'retailDtChar': null,
+                        'saleDateStr': null,
+                        'remark': null,
+                        'phoneNumber': null,
+                        'state': null,
+                        'stateName': null,
+                        'inStorageDay': 0,
+                        'profit': null,
+                        'retailOrderId': '12017020973100000010690',
+                        'bizmanId': null,
+                        'bizmanName': null,
+                        'ticketCode': null,
+                        'ticketAmount': 0.0,
+                        'sellTypeName': null,
+                        'retailShopId': null,
+                        'custName': '阿斯蒂芬',
+                        'custPhone': '18729912342',
+                        'payMentNumber': null,
+                        'zhiDanStaffName': 'jxc01',
+                        'totalAmount': null,
+                        'totalSaleCost': null,
+                        'totalProfit': null
                     }]
                 },
                 'errors': null
@@ -120,6 +219,21 @@ angular
 
         return httpMethod;
     }])
+    .filter('saleTypeFilter', function() {
+        return function(stateValue) {
+            switch (stateValue) {
+                case '1':
+                    return '零售销售';
+                    break;
+                case '2':
+                    return '零售退货';
+                    break;
+                case '3':
+                    return '零售换货';
+                    break;
+            }
+        }
+    })
     .controller('conditionQuery', ['$scope', '$timeout', '$log', 'httpMethod', function($scope, $timeout, $log, httpMethod) {
         httpMethod.loadBrand().then(function(rsp) {
             $scope.allBrandList = rsp.data;
