@@ -88,3 +88,6 @@
     * 库存统计报表 **stockReport**
     * 销售统计报表 **salesReport**
     * 库存明细报表 **stockDetailReport**
+
+    * 店员管理 **salesmanManage**
+    * 新增店员 **addNewSalesman**
