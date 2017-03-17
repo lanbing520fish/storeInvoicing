@@ -2,46 +2,6 @@ angular
     .module('salesmanManageModule', ['ui.bootstrap'])
     .run(['$rootScope', '$log', 'httpMethod', function($rootScope, $log, httpMethod) {
         $rootScope.staffId='';
-        var param ={
-            staffId : _.get($rootScope, 'staffId')
-        }
-        httpMethod.qryPostRole(param).then(function(rsp) {
-            $log.log('调用获取角色接口成功.');
-            if (rsp.success) {
-                $rootScope.roleId = rsp.data.POST_ROLE_LEVEL;
-
-                if($rootScope.roleId === 12 || $rootScope.roleId === 13){
-                    var id = window.frameElement && window.frameElement.id || '',
-                        obj = parent.$('#' + id).attr('data');
-                    $rootScope.storeManList = obj ? JSON.parse(obj) : {};
-
-                    $rootScope.storeManList ={
-                        CHANNEL_ID:'',
-                        REGION_NAME:'南京',
-                        CHANNEL_NAME:'面装至机',
-                        CHANNEL_NBR:'350000198204097569'
-                    }
-                }else if($rootScope.roleId === 51){
-                    var param ={
-                        staffId : _.get($rootScope, 'staffId')
-                    }
-                    httpMethod.qryStaffInfo(param).then(function(rsp) {
-                        $log.log('调用获取门店信息接口成功.');
-                        if (rsp.success) {
-                            $rootScope.storeManList = rsp.data;
-                        } else {
-                            swal("OMG", rsp.msg || "调用获取门店信息接口失败!", "error");
-                        }
-                    }, function() {
-                        $log.log('调用获取门店信息接口失败.');
-                    });  
-                }  
-            } else {
-                swal("OMG", rsp.msg || "调用获取角色接口失败!", "error");
-            }
-        }, function() {
-            $log.log('调用获取角色接口失败.');
-        });      
     }])
 
     .factory('httpMethod', ['$http', '$q', function ($http, $q) {
@@ -118,6 +78,7 @@ angular
                 url: httpConfig.siteUrl + '/chain/power/u/batchDeleteAccount',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
+                data: 'param=' + JSON.stringify(param)
             }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
@@ -136,6 +97,7 @@ angular
                 url: httpConfig.siteUrl + '/chain/power/u/batchStartAccount',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
+                data: 'param=' + JSON.stringify(param)
             }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
@@ -154,6 +116,7 @@ angular
                 url: httpConfig.siteUrl + '/chain/power/u/batchStopAccount',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
+                data: 'param=' + JSON.stringify(param)
             }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
@@ -302,14 +265,15 @@ angular
         $scope.totalSize = 0; // 总条数
         $scope.maxSize = 5; // 最大展示页数
 
-        $scope.orderQuery = function(curPage) {
+        $scope.orderQuery = function(curPage) { 
             !curPage && $scope.$broadcast('pageChange');
             var param = {
                 curPage: $scope.curPage, // 当前页
                 pageSize: $scope.rowNumPerPage, // 每页展示行数, //每页条数
-                channelId: _.get($rootScope, 'storeManList.CHANNEL_ID'),
+                channelId: _.get($rootScope, 'storeManList.CHANNEL_ID')
             };
             httpMethod.qryStaffInShop(param).then(function(rsp) {
+                $log.log(param)
                 $log.log('调用查询门店接口成功.');
                 if (rsp.success) {
                     $scope.storeResultList = rsp.data.list;
@@ -321,20 +285,66 @@ angular
                 $log.log('调用查询门店接口失败.');
             });
         }; 
-        $scope.orderQuery($scope.curPage); 
+
+        var param ={
+            staffId : _.get($rootScope, 'staffId')
+        } 
+        httpMethod.qryPostRole(param).then(function(rsp) {
+            $log.log('调用获取角色接口成功.');
+            if (rsp.success) {
+
+                $rootScope.roleId = rsp.data.POST_ROLE_LEVEL;
+
+                if($rootScope.roleId === 12 || $rootScope.roleId === 13){
+                    var id = window.frameElement && window.frameElement.id || '',
+                        obj = parent.$('#' + id).attr('data');
+                    $rootScope.storeManList = obj ? JSON.parse(obj) : {};
+                    $rootScope.storeManList = {
+                        CHANNEL_ID:11122,
+                        REGION_NAME:'南京',
+                        CHANNEL_NAME:'面装至机',
+                        CHANNEL_NBR:'350000198204097569'
+                    }
+                    $scope.orderQuery($scope.curPage);
+                    
+                }else if($rootScope.roleId === 51){
+                    var param ={
+                        staffId : _.get($rootScope, 'staffId')
+                    }
+                    httpMethod.qryStaffInfo(param).then(function(rsp) {
+                        $log.log('调用获取门店信息接口成功.');
+                        if (rsp.success) {
+                            $rootScope.storeManList = rsp.data;
+                        } else {
+                            swal("OMG", rsp.msg || "调用获取门店信息接口失败!", "error");
+                        }
+                    }, function() {
+                        $log.log('调用获取门店信息接口失败.');
+                    }); 
+                    $scope.orderQuery($scope.curPage); 
+                }  
+            } else {
+                swal("OMG", rsp.msg || "调用获取角色接口失败!", "error");
+            }
+        }, function() {
+            $log.log('调用获取角色接口失败.');
+        }); 
+        
+         
+    }])
+
+    // 查询结果控制器
+    .controller('salemanSetupCtrl', ['$scope', '$rootScope', 'httpMethod', '$timeout', '$log', function ($scope, $rootScope, httpMethod, $timeout, $log) {
         // 修改
         $scope.editStoreman = function (item) {
             $scope.$emit('openDetailAccountsModal', item);
         };
         // 新建
-        $scope.addStoreman = function (title) {
+        $scope.addStoreman = function () {
             $rootScope.storeInfoList = $rootScope.storeManList;
-            // parent.angular.element(parent.$('#tabs')).scope().addTab('修改店员', '/storeInvoicing/view/addNewSalesman/addNewSalesman.html', 'storeInfoList', JSON.stringify(item));
+            // parent.angular.element(parent.$('#tabs')).scope().addTab('修改店员', '/storeInvoicing/view/addNewSalesman/addNewSalesman.html', 'storeInfoList', JSON.stringify($rootScope.storeInfoList));
         };   
-    }])
 
-    // 查询结果控制器
-    .controller('salemanSetupCtrl', ['$scope', '$rootScope', 'httpMethod', '$timeout', '$log', function ($scope, $rootScope, httpMethod, $timeout, $log) {
         $scope.checkedAdminInfo = [];
         $scope.checkAll = function(chk) {
             if (chk) {

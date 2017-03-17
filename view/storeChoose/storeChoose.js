@@ -324,7 +324,7 @@ angular
         // 店员配置
         $scope.salesmanSetup = function(index) {
             $rootScope.storeManList = $scope.storeResultList[index];
-            // parent.angular.element(parent.$('#tabs')).scope().addTab('店员配置', '/storeInvoicing/view/salesmanManage/salesmanManage.html', 'storeManList', JSON.stringify(item));
+            // parent.angular.element(parent.$('#tabs')).scope().addTab('店员配置', '/storeInvoicing/view/salesmanManage/salesmanManage.html', 'storeManList', JSON.stringify($rootScope.storeManList));
         };
         
     }])
