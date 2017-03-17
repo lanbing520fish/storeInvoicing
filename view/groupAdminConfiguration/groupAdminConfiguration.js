@@ -69,7 +69,6 @@ angular
 
         // 批量启用
         httpMethod.batchStartAccount = function(param) {
-            debugger
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/power/u/batchStartAccount',
