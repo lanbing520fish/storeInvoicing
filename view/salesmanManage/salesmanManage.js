@@ -23,7 +23,7 @@ angular
                     }
                 }else if($rootScope.roleId === 51){
                     var param ={
-                        staffId : 'staffId'
+                        staffId : _.get($rootScope, 'staffId')
                     }
                     httpMethod.qryStaffInfo(param).then(function(rsp) {
                         $log.log('调用获取门店信息接口成功.');
@@ -61,7 +61,7 @@ angular
                 url: httpConfig.siteUrl + '/chain/power/q/qryPostRole',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: $.param(param)
+                data: 'param=' + JSON.stringify(param)
             }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
@@ -80,7 +80,7 @@ angular
                 url: httpConfig.siteUrl + '/chain/power/q/qryStaffInfo',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: $.param(param)
+                data: 'param=' + JSON.stringify(param)
             }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
@@ -99,7 +99,7 @@ angular
                 url: httpConfig.siteUrl + '/chain/power/q/qryStaffInShop',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
-                data: $.param(param)
+                data: 'param=' + JSON.stringify(param)
             }).success(function (data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面

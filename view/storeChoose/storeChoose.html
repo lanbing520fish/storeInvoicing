@@ -25,10 +25,10 @@
                                 <div class="form-group">
                                     <label class="control-label">门店所属城市：</label>
                                     <div class="select-box">
-                                    <select class="form-control" ng-init="conditionQueryForm.type = areaList[0].COMMON_REGION_ID"
-                                            ng-model="conditionQueryForm.type" ng-options="item.COMMON_REGION_ID as item.REGION_NAME for item in areaList">
+                                    <select ng-model="conditionQueryForm.COMMON_REGION_ID" class="form-control" ng-options="item.COMMON_REGION_ID as item.REGION_NAME for item in areaList" ng-show="roleId === 12">
                                         <option value="">全部</option>
                                     </select>
+                                    <input type="text" class="form-control" ng-model="area.regionName" ng-show="roleId === 13">
                                 </div>
                                 </div>                                
                             </div>
