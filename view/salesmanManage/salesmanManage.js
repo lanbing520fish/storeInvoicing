@@ -363,7 +363,7 @@ angular
         var getAttributeSerial = function(attr, list) {
             var arr = [];
             _.map(list, function(item) {
-                item.[attr] && arr.push(item.[attr]);
+                item[attr] && arr.push(item[attr]);
             });
             return arr.join(',');
         };
