@@ -1,7 +1,25 @@
 angular
     .module('addStoreManageModule', ['ui.bootstrap'])
     .run(['$rootScope', function($rootScope) {
-        $rootScope.checkAdminInfo = {};
+        $rootScope.checkAdminInfo = {
+            'STAFF_ID': null, // 员工ID
+            'STAFF_CODE': '', // 集团工号
+            'PARTY_ID': null,
+            'COMMON_REGION_ID': '', // 地区ID
+            'STAFF_NAME': '', // 员工名称
+            'SALES_CODE': '', // 员工编码
+            'CHANNEL_ID': null, // 所属渠道ID
+            'CHANNEL_NBR': null, // 所属渠道编码
+            'CHANNEL_NAME': '', // 所属渠道
+            'CHANNEL_CLASS': '',
+            'OPERATORS_ID': '', // 所属经营主体ID
+            'OPERATORS_NBR': '', // 所属经营主体编码
+            'OPERATORS_NAME': '', // 所属经营主体
+            'REGION_NAME': '', // 地区
+            'REGION_CODE': '',
+            'UP_REGION_ID': '',
+            'AREA_LEVEL': ''
+        };
     }])
     .factory('httpMethod', ['$http', '$q', function($http, $q) {
         var httpConfig = {
@@ -113,28 +131,9 @@ angular
         return httpMethod;
     }])
     .controller('purchaseQueryCtrl', ['$scope', '$rootScope', '$log', '$timeout', 'httpMethod', function($scope, $rootScope, $log, $timeout, httpMethod) {
-        $scope.checkAdminInfo = {
-            'STAFF_ID': null, // 员工ID
-            'STAFF_CODE': '', // 集团工号
-            'PARTY_ID': null,
-            'COMMON_REGION_ID': '', // 地区ID
-            'STAFF_NAME': '', // 员工名称
-            'SALES_CODE': '', // 员工编码
-            'CHANNEL_ID': null, // 所属渠道ID
-            'CHANNEL_NBR': null, // 所属渠道编码
-            'CHANNEL_NAME': '', // 所属渠道
-            'CHANNEL_CLASS': '',
-            'OPERATORS_ID': '', // 所属经营主体ID
-            'OPERATORS_NBR': '', // 所属经营主体编码
-            'OPERATORS_NAME': '', // 所属经营主体
-            'REGION_NAME': '', // 地区
-            'REGION_CODE': '',
-            'UP_REGION_ID': '',
-            'AREA_LEVEL': ''
-        };
         // 选择经营主体
         $scope.openStoreQueryType = function() {
-            $scope.$emit('openStoreQueryTypeModal', $scope.checkAdminInfo);
+            $scope.$emit('openStoreQueryTypeModal', $rootScope.checkAdminInfo);
         };
 
         $scope.account = '';
@@ -144,7 +143,7 @@ angular
         $scope.remarks = '';
 
         $scope.insertAdmin = function() {
-            if (!$scope.checkAdminInfo.STAFF_ID) {
+            if (!$rootScope.checkAdminInfo.STAFF_ID) {
                 swal({
                     title: '操作提醒',
                     text: '请选择员工信息',
@@ -201,7 +200,7 @@ angular
 
             var param = {
                 'adminType': 'jituan',
-                'staffId': $scope.checkAdminInfo.STAFF_ID,
+                'staffId': $rootScope.checkAdminInfo.STAFF_ID,
                 'account': $scope.account,
                 'password': $scope.password,
                 'phone': $scope.phone,
@@ -217,7 +216,7 @@ angular
                         confirmButtonText: '确定'
                     }, function() {
                         $timeout(function() {
-                            parent.angular.element(parent.$('#tabs')).scope().removeTab();
+                            // parent.angular.element(parent.$('#tabs')).scope().removeTab();
                         });
                     });
                 } else {

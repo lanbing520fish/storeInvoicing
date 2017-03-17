@@ -16,7 +16,8 @@ angular
             $http({
                 url: httpConfig.siteUrl + '/chain/power/q/qryUserStatus',
                 method: 'POST',
-                headers: httpConfig.requestHeader
+                headers: httpConfig.requestHeader,
+                data: 'param = {}'
             }).success(function(data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
