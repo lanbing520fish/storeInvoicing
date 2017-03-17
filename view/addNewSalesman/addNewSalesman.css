@@ -50,7 +50,7 @@
     margin-top: 10px;
 }
 .form-group input.checkbox{
-	vertical-align: middle;
+	vertical-align: text-top;
 }
 .form-group .checkboxlabel{
 	margin:0 60px 0 3px;
@@ -62,6 +62,9 @@
 }
 .form-group{
 	padding-left:110px;
+}
+.rolelist{
+    display: inline-block;
 }
 /* 弹出框 */
 .model-header {
