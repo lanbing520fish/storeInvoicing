@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>门店选择</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="storeChoose.css">
+</head>
+
+<body ng-app="storeChooseModule">
+    <div class="salesmanManage top-line wavy-line" ng-controller="allQueryCtrl">  
+        <div ng-controller="conditionQueryCtrl">
+            <!-- 条件查询 -->
+            <div class="condition-query fn-clear">
+                <p class="condition-query-title fn-left">搜
+                    <br/>索</p>
+                <div class="condition-query-box fn-right">
+                    <form name="conditionQueryForm" class="form-inline" role="form">
+                        <div class="row mb10">
+                            <div class="col-xs-4" ng-controller="cityCheckCtrl">
+                                <div class="form-group">
+                                    <label class="control-label">门店所属城市：</label>
+                                    <div class="select-box">
+                                    <select class="form-control" ng-init="conditionQueryForm.type = areaList[0].COMMON_REGION_ID"
+                                            ng-model="conditionQueryForm.type" ng-options="item.COMMON_REGION_ID as item.REGION_NAME for item in areaList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                                </div>                                
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">门店对应渠道名称：</label>
+                                    <input type="text" class="form-control" ng-model="conditionQueryForm.channelName">
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">对应渠道编码：</label>
+                                    <input type="text" class="form-control" ng-model="conditionQueryForm.channelNbr">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">所属经营主体名称：</label>
+                                    <input type="text" class="form-control" ng-model="conditionQueryForm.operatorsName">
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">所属经营主体编码：</label>
+                                    <input type="text" class="form-control" ng-model="conditionQueryForm.operatorsNbr">
+                                </div>
+                            </div>
+                            <div class="col-xs-4 text-right">
+                                <div class="form-group btn-search">
+                                    <button type="submit" class="btn btn-sm btn-query" ng-click="orderQuery(curPage)"><i class="iconfont">&#xe600;</i> 查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 结果列表 -->
+            <div class="result-list" ng-controller="salemanSetupCtrl">
+                <div class="result-head">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="model-header">
+                                <img class="model-img" src="../../resources/images/icon-salesman.png">
+                                <p class="model-title">店员管理</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-table">
+                    <div class="result-table">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="11%">门店编码</th>
+                                    <th width="11%">门店名称</th>
+                                    <th width="11%">对应渠道</th>
+                                    <th width="11%">对应渠道编码</th>
+                                    <th>所属经营主体</th>
+                                    <th width="11%">所属地方</th>
+                                    <th width="9%">状态</th>
+                                    <th width="12%">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in storeResultList">
+                                    <td>
+                                        <p ng-bind="item.CHANNEL_ID"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.CHANNEL_NAME"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.CHANNEL_NAME"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.CHANNEL_NBR"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.OPERATORS_NAME"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.REGION_NAME"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-bind="item.STATUS_NAME"></p>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-xs btn-edit" ng-click="salesmanSetup($index)"><i class="iconfont">&#xe643;</i> 店员配置
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length">
+                            没有数据
+                        </p>
+                    </div>
+                    <div ng-controller="paginationCtrl" class="text-center page">
+                        <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="curPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                        <div class="page-num">共<span class="number" ng-bind="totalNum || 0"></span>条记录，当前显示第<span class="number" ng-bind="curPage || 0"></span>页</div>
+                    </div>
+                </div>
+            </div> 
+        </div>     
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/mock.js"></script>
+    <script src="storeChoose.js"></script>
+</body>
+
+</html>
