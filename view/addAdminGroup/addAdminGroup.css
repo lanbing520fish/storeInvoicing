@@ -7,7 +7,7 @@
 }
 .addAdmin-infomation {
     padding: 1px 0px 10px 0px;
-    background-color: #fff;   
+    background-color: #fff;
     min-height:400px;
     position:relative;
 }
@@ -232,7 +232,7 @@
 .result-table .grey-table th{
     background: #ddd;
     border:1px solid #c9c9c9;
-    color:#333;  
+    color:#333;
 }
 .result-table .grey-table tr:nth-of-type(2n){
     background: #fff;
@@ -296,10 +296,10 @@
     padding-left: 25px;
 }
 .ownershop-msg li{
+    display: block;
     line-height: 20px;
 }
 .ownershop-msg li div{
-    float: left;
     display: inline-block;
     width: 100px;
 }

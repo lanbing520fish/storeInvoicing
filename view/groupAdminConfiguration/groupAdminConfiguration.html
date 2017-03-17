@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="groupAdminConfiguration.css">
 </head>
 
-<body ng-app="checkModule">
+<body ng-app="checkModule" ng-controller="addAdjustInModalCtrl as $ctrl">
     <!-- DOM结构开始 -->
-    <div class="check top-line wavy-line" ng-controller="addAdjustInModalCtrl as $ctrl">
+    <div class="check top-line wavy-line" ng-controller="conditionQuery">
         <!-- 条件查询 -->
-        <div class="condition-query fn-clear" ng-controller="conditionQuery">
+        <div class="condition-query fn-clear">
             <p class="condition-query-title fn-left">搜
                 <br/>索</p>
             <div class="condition-query-box fn-right">
@@ -24,19 +24,19 @@
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">员工名称：</label>
-                                <input type="text" class="form-control" placeholder="请输入员工名称">
+                                <input ng-model="conditionQueryForm.staffName" type="text" class="form-control" placeholder="请输入员工名称">
                             </div>
                         </div>
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">员工编码：</label>
-                                <input type="text" class="form-control" placeholder="请输入员工编码">
+                                <input ng-model="conditionQueryForm.staffCode" type="text" class="form-control" placeholder="请输入员工编码">
                             </div>
                         </div>
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">登陆账号：</label>
-                                <input type="text" class="form-control" placeholder="请输入登陆账号">
+                                <input ng-model="conditionQueryForm.account" type="text" class="form-control" placeholder="请输入登陆账号">
                             </div>
                         </div>
                     </div>
@@ -44,20 +44,20 @@
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">所属渠道名称：</label>
-                                <input type="text" class="form-control" placeholder="请输入所属渠道名称">
+                                <input ng-model="conditionQueryForm.channelName" type="text" class="form-control" placeholder="请输入所属渠道名称">
                             </div>
                         </div>
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">所属渠道编码：</label>
-                                <input type="text" class="form-control" placeholder="请输入所属渠道编码">
+                                <input ng-model="conditionQueryForm.channelId" type="text" class="form-control" placeholder="请输入所属渠道编码">
                             </div>
                         </div>
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">状态：</label>
                                 <div class="select-box">
-                                    <select class="form-control">
+                                    <select ng-model="conditionQueryForm.statusCd" class="form-control" ng-options="item.STATUS_CD as item.STATUS_NAME for item in userStatusList">
                                         <option value="">全部</option>
                                     </select>
                                 </div>
@@ -67,7 +67,7 @@
                     <div class="row">
                         <div class="col-xs-12 text-right">
                             <div class="form-group btn-search">
-                                <button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                                <button ng-click="orderQuery()" type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
             </div>
         </div>
         <!-- 结果列表 -->
-        <div class="result-list" ng-controller="resultCtrl">
+        <div class="result-list">
             <div class="result-head">
                 <div class="row">
                     <div class="col-xs-4">
@@ -85,13 +85,13 @@
                         </div>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <button class="btn btn-xs btn-set"><i class="iconfont">
+                        <button ng-click="addNewAccount()" class="btn btn-xs btn-set"><i class="iconfont">
                         &#xe60e;</i> 新增系统管理员</button>
-                        <button class="btn btn-xs btn-set"><i class="iconfont">
+                        <button ng-click="batchDeleteAccount()" class="btn btn-xs btn-set"><i class="iconfont">
                         &#xe610;</i> 批量删除</button>
-                        <button class="btn btn-xs btn-set"><i class="iconfont">
+                        <button ng-click="batchStartAccount()" class="btn btn-xs btn-set"><i class="iconfont">
                         &#xe613;</i> 批量启用</button>
-                        <button class="btn btn-xs btn-set"><i class="iconfont">
+                        <button ng-click="batchStopAccount()" class="btn btn-xs btn-set"><i class="iconfont">
                         &#xe612;</i> 批量停用</button>
                     </div>
                 </div>
@@ -100,7 +100,9 @@
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
-                            <th width="6%"><input type="checkbox"></th>
+                            <th width="5%">
+                                <input type="checkbox" ng-click="checkAll(isCheckedAll)" ng-model="isCheckedAll">
+                            </th>
                             <th width="8%">姓名</th>
                             <th width="10%">登录账号</th>
                             <th width="11%">捆绑手机</th>
@@ -108,78 +110,43 @@
                             <th width="12%">管理员角色</th>
                             <th width="9%">状态</th>
                             <th width="10%">更新时间</th>
-                            <th width="10%">备注</th>
-                            <th>操作</th>
+                            <th>备注</th>
+                            <th width="14%">操作</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>                                                                     
+                        <tr ng-repeat="item in adminInfosList" ng-cloak>
                             <td>
-                                <p><input type="checkbox"></p>
+                                <input type="checkbox" name="checkbox{{$index}}" ng-checked="isCheckedAll" ng-click="check(item, isChecked)" ng-model="isChecked">
                             </td>
                             <td>
-                                <p>张三</p>
+                                <p ng-bind="item.STAFF_NAME"></p>
                             </td>
                             <td>
-                                <p>zhangsan</p>
+                                <p ng-bind="item.SYSTEM_USER_CODE"></p>
                             </td>
                             <td>
-                                <p>18917867786</p>
+                                <p ng-bind="item.MOBILE_TEL"></p>
                             </td>
                             <td>
-                                <p>中国电信集团</p>
+                                <p ng-bind="item.CHANNEL_NAME"></p>
                             </td>
                             <td>
-                                <p>集团级管理员</p>
+                                <p ng-bind="item.POST_ROLE_NAME"></p>
                             </td>
                             <td>
-                                <p>正常</p>
+                                <p ng-bind="item.STATUS_NAME"></p>
                             </td>
                             <td>
-                                <p>2017-03-08</p>
+                                <p ng-bind="item.UPDATE_TIME"></p>
                             </td>
                             <td>
-                                <p>--</p>
+                                <p ng-bind="item.REMARKS" class="overflow-handle" title="{{item.REMARKS}}"></p>
                             </td>
                             <td>
-                                <button class="btn btn-xs btn-edit" ng-click="detailAccounts()"><i class="iconfont">&#xe60d;</i> 修改
+                                <button ng-click="detailAccounts(item)" class="btn btn-xs btn-edit"><i class="iconfont">&#xe60d;</i> 修改
                                 </button>
-                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>                                                                     
-                            <td>
-                                <p><input type="checkbox"></p>
-                            </td>
-                            <td>
-                                <p>张三</p>
-                            </td>
-                            <td>
-                                <p>zhangsan</p>
-                            </td>
-                            <td>
-                                <p>18917867786</p>
-                            </td>
-                            <td>
-                                <p>中国电信集团</p>
-                            </td>
-                            <td>
-                                <p>集团级管理员</p>
-                            </td>
-                            <td>
-                                <p>停用</p>
-                            </td>
-                            <td>
-                                <p>2017-03-08</p>
-                            </td>
-                            <td>
-                                <p>--</p>
-                            </td>
-                            <td>
-                                <button class="btn btn-xs btn-edit" ng-click="detailAccounts()"><i class="iconfont">&#xe60d;</i> 修改
-                                </button>
-                                <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
+                                <button ng-click="batchDeleteAccount(item)" class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除
                                 </button>
                             </td>
                         </tr>
@@ -189,7 +156,7 @@
                     没有数据
                 </p>
             </div>
-            <div ng-controller="paginationCtrl" class="text-center page">
+            <div ng-controller="paginationCtrl" class="text-center page" ng-cloak>
                 <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
                 <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
             </div>
@@ -208,7 +175,7 @@
                                 <p>系统管理员类型：</p>
                             </div>
                             <div class="col-xs-9">
-                                <p class="admin-type">集团级系统管理员</p>
+                                <p ng-bind="$ctrl.items.POST_ROLE_NAME" class="admin-type"></p>
                             </div>
                         </div>
                         <div class="row lh30">
@@ -216,7 +183,7 @@
                                 <p>员工：</p>
                             </div>
                             <div class="col-xs-9">
-                                <p class="bold">张三</p>
+                                <p ng-bind="$ctrl.items.STAFF_NAME" class="bold"></p>
                             </div>
                         </div>
                         <div class="row lh30">
@@ -224,7 +191,7 @@
                                 <p>系统账号：</p>
                             </div>
                             <div class="col-xs-9">
-                                <p class="bold">zhangshan</p>
+                                <p ng-bind="$ctrl.items.SYSTEM_USER_CODE" class="bold"></p>
                             </div>
                         </div>
                         <div class="row lh30">
@@ -232,7 +199,7 @@
                                 <p class="bold">所属经营主体：</p>
                             </div>
                             <div class="col-xs-9">
-                                <p>XXXXXXXXXX</p>
+                                <p ng-bind="$ctrl.items.OPERATORS_NAME"></p>
                             </div>
                         </div>
                         <div class="row lh30">
@@ -240,7 +207,7 @@
                                 <p class="bold">所属渠道：</p>
                             </div>
                             <div class="col-xs-9">
-                                <p>XXXXXXXXXX</p>
+                                <p ng-bind="$ctrl.items.CHANNEL_NAME"></p>
                             </div>
                         </div>
                         <div class="row lh30">
@@ -248,7 +215,9 @@
                                 <p>登陆密码：</p>
                             </div>
                             <div class="col-xs-9">
-                                <div class="form-group-deploy"><input type="text" class="form-control"></div>
+                                <div class="form-group-deploy">
+                                    <input ng-model="$ctrl.password" type="text" class="form-control">
+                                </div>
                             </div>
                         </div>
                         <div class="row lh30">
@@ -256,7 +225,9 @@
                                 <p>捆绑手机：</p>
                             </div>
                             <div class="col-xs-9">
-                                <div class="form-group-deploy"><input type="text" class="form-control"></div>
+                                <div class="form-group-deploy">
+                                    <input ng-model="$ctrl.telephone" type="text" class="form-control">
+                                </div>
                             </div>
                         </div>
                         <div class="row lh30">
@@ -264,7 +235,9 @@
                                 <p>备注：</p>
                             </div>
                             <div class="col-xs-9">
-                                <div class="form-group-deploy"><textarea name="" id=""></textarea></div>
+                                <div class="form-group-deploy">
+                                    <textarea ng-model="$ctrl.remark"></textarea>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -286,6 +259,7 @@
     <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
     <script src="../../resources/js/lodash.js"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/mock.js"></script>
     <script src="groupAdminConfiguration.js"></script>
 </body>
 
