@@ -167,7 +167,7 @@ angular
     .controller('purchaseQueryCtrl', ['$scope', '$rootScope', '$log', '$timeout', 'httpMethod', function($scope, $rootScope, $log, $timeout, httpMethod) {
         // 选择经营主体
         $scope.openStoreQueryType = function() {
-            if (!$rootScope.area) {
+            if (!$rootScope.area.COMMON_REGION_ID) {
                 swal({
                     title: '操作提醒',
                     text: '请先选择管理省份',
