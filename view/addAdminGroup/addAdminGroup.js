@@ -259,7 +259,7 @@ angular
             $ctrl.animationsEnabled = !$ctrl.animationsEnabled;
         };
     })
-    .controller('storeQueryTypeModalCtrl', function($uibModalInstance, $scope, $rootScope, items, httpMethod) {
+    .controller('storeQueryTypeModalCtrl', function($uibModalInstance, $scope, $rootScope, items, httpMethod,$log) {
         var $ctrl = this;
         $ctrl.staffName = '';
         $ctrl.salesCode = '';

@@ -6,6 +6,26 @@ angular
         var id = window.frameElement && window.frameElement.id || '',
             obj = parent.$('#' + id).attr('data');
         $rootScope.storeInfoList = obj ? JSON.parse(obj) : {};
+
+        $rootScope.checkAdminInfo = {
+            'STAFF_ID': null, // 员工ID
+            'STAFF_CODE': '', // 集团工号
+            'PARTY_ID': null,
+            'COMMON_REGION_ID': '', // 地区ID
+            'STAFF_NAME': '', // 员工名称
+            'SALES_CODE': '', // 员工编码
+            'CHANNEL_ID': null, // 所属渠道ID
+            'CHANNEL_NBR': null, // 所属渠道编码
+            'CHANNEL_NAME': '', // 所属渠道
+            'CHANNEL_CLASS': '',
+            'CHANNEL_ID': $rootScope.storeInfoList.CHANNEL_ID, // 所属渠道ID
+            'CHANNEL_NBR': $rootScope.storeInfoList.CHANNEL_NBR, // 所属渠道编码
+            'CHANNEL_NAME': $rootScope.storeInfoList.CHANNEL_NAME, // 所属渠道
+            'REGION_NAME': '', // 地区
+            'REGION_CODE': '',
+            'UP_REGION_ID': '',
+            'AREA_LEVEL': ''
+        };
         $rootScope.storeInfoList ={
             CHANNEL_NAME:'于务产月志切',
             CHANNEL_NBR:'350000198204097569',
@@ -24,10 +44,10 @@ angular
             httpMethod = {};
 
         // 条件查询接口
-        httpMethod.qryTerminalInCalData = function(param) {
+        httpMethod.qryStaffFromCrmLte = function(param) {
             var defer = $q.defer();
             $http({
-                url: httpConfig.siteUrl + '/chain/power/q/qryTerminalInCalData',
+                url: httpConfig.siteUrl + '/chain/power/q/qryStaffFromCrmLte',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + JSON.stringify(param)
@@ -81,7 +101,7 @@ angular
 
         if (httpConfig.isMock) {
             // 条件查询接口
-            Mock.mock(httpConfig.siteUrl + '/chain/power/q/qryTerminalInCalData', {
+            Mock.mock(httpConfig.siteUrl + '/chain/power/q/qryStaffFromCrmLte', {
                 'rsphead': 's',
                 'success': true, //是否成功
                 'code': null,
@@ -163,7 +183,7 @@ angular
         return httpMethod;
     }])   
     .controller('addNewInfoCtrl', ['$scope', '$rootScope', '$log', '$timeout', 'httpMethod', function($scope, $rootScope, $log, $timeout, httpMethod) {
-        $scope.check = function(isChecked) {
+        $scope.checkfor = function(isChecked) {
             $rootScope.isChecked = !isChecked;
         };
         httpMethod.qryStaffRoles().then(function(rsp) {
@@ -177,25 +197,6 @@ angular
             $log.log('调用店员的各种角色接口失败.');
         });
 
-        $scope.checkAdminInfo = {
-            'STAFF_ID': null, // 员工ID
-            'STAFF_CODE': '', // 集团工号
-            'PARTY_ID': null,
-            'COMMON_REGION_ID': '', // 地区ID
-            'STAFF_NAME': '', // 员工名称
-            'SALES_CODE': '', // 员工编码
-            'CHANNEL_ID': $rootScope.storeInfoList.CHANNEL_ID, // 所属渠道ID
-            'CHANNEL_NBR': $rootScope.storeInfoList.CHANNEL_NBR, // 所属渠道编码
-            'CHANNEL_NAME': $rootScope.storeInfoList.CHANNEL_NAME, // 所属渠道
-            'CHANNEL_CLASS': '',
-            'OPERATORS_ID': '', // 所属经营主体ID
-            'OPERATORS_NBR': '', // 所属经营主体编码
-            'OPERATORS_NAME': '', // 所属经营主体
-            'REGION_NAME': '', // 地区
-            'REGION_CODE': '',
-            'UP_REGION_ID': '',
-            'AREA_LEVEL': ''
-        };
         // 选择员工
         $scope.chooseSalesman = function() {
             $scope.$emit('openStoreQueryTypeModal', $scope.checkAdminInfo);
@@ -210,7 +211,6 @@ angular
         $scope.postRoleLevel = '';
 
         $scope.insertAdmin = function() {
-            debugger
             if ($rootScope.isChecked){                
                 if (!$scope.staffName.trim()) {
                     swal({
@@ -285,7 +285,7 @@ angular
                         showConfirmButton: false
                     });
                     return;
-                }
+                } 
                 if (!$scope.postRoleLevel.trim()) {
                     swal({
                         title: '操作提醒',
@@ -294,7 +294,8 @@ angular
                         showConfirmButton: false
                     });
                     return;
-                }
+                };
+               
                 var param = {
                     'adminType': 'jituan',
                     'staffId': $scope.checkAdminInfo.STAFF_ID,
@@ -367,8 +368,6 @@ angular
         $ctrl.staffName = '';
         $ctrl.salesCode = '';
         $ctrl.staffCode = '';
-        $ctrl.channnelName = '';
-        $ctrl.channelNbr = '';
         $ctrl.operatorsName = '';
         $ctrl.operatorsNbr = '';
 
@@ -389,13 +388,13 @@ angular
                 'staffName': $ctrl.staffName,
                 'salesCode': $ctrl.salesCode,
                 'staffCode': $ctrl.staffCode,
-                'channnelName': $ctrl.channnelName,
-                'channelNbr': $ctrl.channelNbr,
+                'channnelName': $rootScope.storeInfoList.CHANNEL_NAME,
+                'channelNbr': $rootScope.storeInfoList.CHANNEL_NBR,
                 'operatorsName': $ctrl.operatorsName,
                 'operatorsNbr': $ctrl.operatorsNbr
             };
 
-            httpMethod.qryTerminalInCalData(param).then(function(rsp) {
+            httpMethod.qryStaffFromCrmLte(param).then(function(rsp) {
                 if (rsp.success) {
                     $ctrl.resourceList = rsp.data.list;
                     $ctrl.totalNum = rsp.data.total;
