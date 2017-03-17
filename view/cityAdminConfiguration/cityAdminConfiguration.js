@@ -233,7 +233,7 @@ angular
                     'list|10': [{
                         'OPERATORS_NBR': 'J32010233931',
                         'OPERATORS_ID': 2400157,
-                        'POST_ROLE_NAME': '省级管理员',
+                        'POST_ROLE_NAME': '市级管理员',
                         'REMARKS': 'sjadmin09/sjadmin09',
                         'CHANNEL_ID': 106468336,
                         'UPDATE_TIME': '@date("yyyy-MM-dd")',
@@ -241,7 +241,7 @@ angular
                         'COMMON_REGION_ID': 8320102,
                         'OPERATORS_NAME': '网盈（南京市玄武区金正通讯经营部）',
                         'POST_ROLE_LEVEL': 12,
-                        'REGION_NAME': '@province',
+                        'REGION_NAME': '@city',
                         'STAFF_ID': 4585440,
                         'SYSTEM_USER_ID': 4585440,
                         'SYSTEM_USER_CODE': 'sjadmin09',
@@ -250,7 +250,9 @@ angular
                         'STATUS_CD': '1000',
                         'STAFF_NAME': '@cname',
                         'POST_ROLE_ID': 82000000,
-                        'STATUS_NAME|1': ['正常', '停用']
+                        'STATUS_NAME|1': ['正常', '停用'],
+                        'PROVINCE_COMMON_REGION_ID': '',
+                        'REMARK': '备注信息1',
                     }],
                     'firstPage': 1,
                     'prePage': 0,
