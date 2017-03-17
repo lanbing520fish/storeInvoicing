@@ -134,8 +134,8 @@ angular
                 'code': null,
                 'msg': null, //失败信息
                 'data': {
-                    'COMMON_REGION_ID': '@id',
-                    'REGION_NAME': '@province'
+                    'commonRegionId': '@id',
+                    'regionName': '@province'
                 },
                 'errors': null
             });
@@ -190,7 +190,7 @@ angular
         httpMethod.qryProvinceRegion(param).then(function(rsp) {
             $log.log('获取员工归属的省级区域信息成功.');
             if (rsp.success) {
-                $rootScope.COMMON_REGION_ID = rsp.data.COMMON_REGION_ID;
+                $rootScope.commonRegionId = rsp.data.commonRegionId;
             } else {
                 swal("OMG", rsp.msg || "获取员工归属的省级区域信息失败!", "error");
             }
@@ -201,7 +201,7 @@ angular
     // 获取城市
     .controller('cityCheckCtrl', ['$scope','$rootScope', '$log', 'httpMethod', function($scope, $rootScope, $log, httpMethod) {
         var param = {
-            commonRegionId: _.get($rootScope, 'COMMON_REGION_ID')
+            commonRegionId: _.get($rootScope, 'commonRegionId')
         };
         httpMethod.qryRegion(param).then(function(rsp) {
             $log.log('获取城市信息成功.');

@@ -63,6 +63,9 @@
 .form-group{
 	padding-left:110px;
 }
+.rolelist{
+    display: inline-block;
+}
 /* 弹出框 */
 .model-header {
     height: 25px;

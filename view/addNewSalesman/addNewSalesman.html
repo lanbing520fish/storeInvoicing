@@ -20,10 +20,9 @@
 	                    <div class="col-xs-9">
 	                        <div class="form-group">
 	                            <label class="control-label">员工：</label>
-
 	                            <input type="text" class="form-control" ng-model="checkAdminInfo.STAFF_NAME" type="text" class="form-control" placeholder="请选择员工" disabled ng-show="isChecked === false">
 
-                                <input type="text" class="form-control" ng-model="STAFF_NAME" type="text" class="form-control" ng-show="isChecked === true">
+                                <input type="text" class="form-control" ng-model="staffName" type="text" class="form-control" ng-show="isChecked === true">
 	                        </div>
 	                    </div>
 	                    <div class="col-xs-3">  
@@ -33,7 +32,7 @@
 	                <div class="row mb10">
 	                	<div class="col-xs-5">
 	                        <div class="form-group">
-			                	<input type="checkbox" class="checkbox" ng-model="isChecked">
+			                	<input type="checkbox" class="checkbox" ng-click="check(isChecked)">
 								<span class="checkboxlabel">不需要使用系统</span>
 							</div>
 						</div>
@@ -71,12 +70,10 @@
 		                	<div class="col-xs-9">
 		                        <div class="form-group">
 		                        	<span class="roleman">店员角色：</span>
-				                	<input type="radio" name="role" class="checkbox" ng-model="postRoleLevel" value="店员">
-									<span class="checkboxlabel">店员</span>
-									<input type="radio" name="role" class="checkbox" ng-model="postRoleLevel" value="库管员">
-									<span class="checkboxlabel">库管员</span>
-									<input type="radio" name="role" class="checkbox" ng-model="postRoleLevel" value="收银员">
-									<span class="checkboxlabel">收银员</span>
+                                    <div ng-repeat="item in storeManRoleList" class="rolelist">
+    				                	<input type="radio" name="role" class="checkbox" ng-model="postRoleLevel" ng-value="item.VALUE">
+    									<span class="checkboxlabel" ng-bind="item.TEXT"></span>
+                                    </div>
 								</div>
 							</div>
 		                </div>
@@ -86,7 +83,7 @@
 		                	<div class="col-xs-9">
 		                        <div class="form-group">
 		                        	<span class="roleman">店员角色：</span>
-				                	<input type="radio" class="checkbox" ng-model="postRoleLevel" value="销售员">
+				                	<input type="radio" class="checkbox" checked="checked"/>
 									<span class="checkboxlabel">销售员</span>
 								</div>
 							</div>
