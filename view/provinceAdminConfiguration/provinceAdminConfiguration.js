@@ -1,5 +1,8 @@
 angular
     .module('checkModule', ['ui.bootstrap'])
+    .run(['$rootScope', function($rootScope){
+        $rootScope.STAFF_ID = '';
+    }])
     .factory('httpMethod', ['$http', '$q', function($http, $q) {
         var httpConfig = {
                 'siteUrl': 'http://192.168.16.84:8088',
