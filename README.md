@@ -88,6 +88,13 @@
     * 库存统计报表 **stockReport**
     * 销售统计报表 **salesReport**
     * 库存明细报表 **stockDetailReport**
-
+    
+* **管理员配置**
+    * 集团系统管理员配置 **groupAdminConfiguration**
+    * 集团系统新增管理员 **addAdminGroup**
+    * 省级系统管理员配置 **provinceAdminConfiguration**
+    * 省级系统新增管理员 **addAdminProvince**
+    * 市级系统管理员配置 **cityAdminConfiguration**
+    * 市级系统新增管理员 **addAdminCity**
     * 店员管理 **salesmanManage**
     * 新增店员 **addNewSalesman**
