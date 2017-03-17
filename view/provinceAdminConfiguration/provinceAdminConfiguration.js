@@ -16,7 +16,8 @@ angular
             $http({
                 url: httpConfig.siteUrl + '/chain/power/q/qryUserStatus',
                 method: 'POST',
-                headers: httpConfig.requestHeader
+                headers: httpConfig.requestHeader,
+                data: 'param = {}'
             }).success(function(data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
@@ -324,7 +325,7 @@ angular
         $scope.check = function(val, chk) {
             var valueOfIndex = '';
             $scope.checkedAdminInfo.length && _.map($scope.checkedAdminInfo, function(item, index) {
-                if (item.offerId === val.offerId) {
+                if (item.STAFF_ID === val.STAFF_ID) {
                     valueOfIndex = index;
                 }
             });
@@ -334,7 +335,7 @@ angular
         var getAttributeSerial = function(attr, list) {
             var arr = [];
             _.map(list, function(item) {
-                item.attr && arr.push(item.attr);
+                item[attr] && arr.push(item[attr]);
             });
             return arr.join(',');
         };
@@ -394,6 +395,7 @@ angular
                             confirmButtonText: '确定'
                         }, function() {
                             $timeout(function() {
+                                $scope.checkedAdminInfo = [];
                                 $scope.orderQuery();
                             });
                         });
@@ -432,6 +434,7 @@ angular
                         confirmButtonText: '确定'
                     }, function() {
                         $timeout(function() {
+                            $scope.checkedAdminInfo = [];
                             $scope.orderQuery();
                         });
                     });
@@ -469,6 +472,7 @@ angular
                         confirmButtonText: '确定'
                     }, function() {
                         $timeout(function() {
+                            $scope.checkedAdminInfo = [];
                             $scope.orderQuery();
                         });
                     });

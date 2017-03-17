@@ -34,13 +34,13 @@
                         <div class="col-xs-6 col-md-offset-3" ng-controller="cityCheckCtrl">
                             <div class="form-staff-group">
                                 <label class="control-label">管理省份：</label>
-                                <input type="text" class="form-control" ng-model="checkedAreaName" placeholder="请选择省份" disabled>
+                                <input type="text" class="form-control" disabled ng-model="area.REGION_NAME">
                                 <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
                                 <div class="city-check-box" ng-cloak ng-show="visible">
                                     <uib-tabset active="key">
                                         <uib-tab index="1" heading="省份">
                                             <div class="city-content">
-                                                <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('province', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
+                                                <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity(item, $index)">{{item.REGION_NAME}}</li>
                                             </div>
                                         </uib-tab>
                                     </uib-tabset>
@@ -53,7 +53,7 @@
                         <div class="col-xs-6 col-md-offset-3">
                             <div class="form-staff-group">
                                 <label class="control-label">员工：</label>
-                                <input type="text" class="form-control" placeholder="请选择员工" disabled>
+                                <input ng-model="checkAdminInfo.STAFF_NAME" type="text" class="form-control" placeholder="请选择员工" disabled>
                                 <button type="submit" class="btn btn-sm btn-searching" ng-click="openStoreQueryType()"><i class="iconfont">&#xe600;</i></button>
                                 <div class="ownership">
                                     <div class="triangle_border_left">
@@ -62,8 +62,10 @@
                                     <div class="ownership-title"><img src="../../resources/images/staff-img.png" alt="">员工归属信息：</div>
                                     <div class="ownershop-msg">
                                         <ul>
-                                            <li><div>所属经营主体：</div>望月路全网通门店</li>
-                                            <li><div>所属渠道：</div>中国电信集团</li>
+                                            <li>
+                                                <div>所属经营主体：</div><span ng-bind="checkAdminInfo.OPERATORS_NAME"></span></li>
+                                            <li>
+                                                <div>所属渠道：</div><span ng-bind="checkAdminInfo.CHANNEL_NAME"></span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -74,7 +76,7 @@
                         <div class="col-xs-6 col-md-offset-3">
                             <div class="form-staff-group">
                                 <label class="control-label">系统账号：</label>
-                                <input type="text" class="form-control">
+                                <input ng-model="account" type="text" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -82,7 +84,7 @@
                         <div class="col-xs-6 col-md-offset-3">
                             <div class="form-staff-group">
                                 <label class="control-label">登录密码：</label>
-                                <input type="text" class="form-control">
+                                <input ng-model="password" type="password" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -90,7 +92,7 @@
                         <div class="col-xs-6 col-md-offset-3">
                             <div class="form-staff-group">
                                 <label class="control-label">确认密码：</label>
-                                <input type="text" class="form-control">
+                                <input ng-model="repassword" type="password" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -98,7 +100,7 @@
                         <div class="col-xs-6 col-md-offset-3">
                             <div class="form-staff-group">
                                 <label class="control-label">捆绑手机：</label>
-                                <input type="text" class="form-control">
+                                <input ng-model="phone" type="text" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -106,13 +108,13 @@
                         <div class="col-xs-6 col-md-offset-3">
                             <div class="form-staff-group">
                                 <label class="control-label">备注：</label>
-                                <textarea col="" id="remarks" class="form-control edit-txt" ng-model="modifiedQueryType.remarks"></textarea>
+                                <textarea ng-model="remarks" id="remarks" class="form-control edit-txt"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="text-center btns">
-                    <button class="btn btn-submit">确认</button>
+                    <button ng-click="insertAdmin()" class="btn btn-submit">确认</button>
                     <button class="btn btn-cancel">取消</button>
                 </div>
             </form>
@@ -130,38 +132,22 @@
                 <div class="condition-query-box fn-right">
                     <form name="conditionQueryForm" class="form-inline" role="form">
                         <div class="row mb10">
-                            <div class="col-xs-4" ng-controller="cpmCityCheckCtrl">
+                            <div class="col-xs-4">
                                 <div class="form-staff-group">
                                     <label class="control-label">地区：</label>
-                                    <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
-                                    <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
-                                    <div class="city-check-box" ng-cloak ng-show="visible">
-                                        <uib-tabset active="key">
-                                            <uib-tab index="1" heading="省份">
-                                                <div class="city-content">
-                                                    <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('province', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
-                                                </div>
-                                            </uib-tab>
-                                            <uib-tab index="2" heading="城市">
-                                                <div class="city-content">
-                                                    <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys[provinceIndex].children" ng-click="handleSelectCity('city', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
-                                                </div>
-                                            </uib-tab>
-                                        </uib-tabset>
-                                    </div>
+                                    <input type="text" class="form-control" disabled ng-model="area.REGION_NAME">
                                 </div>
-                                <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
                             </div>
                             <div class="col-xs-4">
                                 <div class="form-staff-group">
                                     <label class="control-label">员工名称：</label>
-                                    <input type="text" class="form-control" placeholder="请输入员工名称">
+                                    <input ng-model="$ctrl.staffName" type="text" class="form-control" placeholder="请输入员工名称">
                                 </div>
                             </div>
                             <div class="col-xs-4">
                                 <div class="form-staff-group">
                                     <label class="control-label">员工编码：</label>
-                                    <input type="text" class="form-control" placeholder="请输入员工编码">
+                                    <input ng-model="$ctrl.salesCode" type="text" class="form-control" placeholder="请输入员工编码">
                                 </div>
                             </div>
                         </div>
@@ -169,19 +155,19 @@
                             <div class="col-xs-4">
                                 <div class="form-staff-group">
                                     <label class="control-label">集团工号：</label>
-                                    <input type="text" class="form-control" placeholder="请输入集团工号">
+                                    <input ng-model="$ctrl.staffCode" type="text" class="form-control" placeholder="请输入集团工号">
                                 </div>
                             </div>
                             <div class="col-xs-4">
                                 <div class="form-staff-group">
                                     <label class="control-label">所属渠道名称：</label>
-                                    <input type="text" class="form-control" placeholder="请输入所属渠道名称">
+                                    <input ng-model="$ctrl.channnelName" type="text" class="form-control" placeholder="请输入所属渠道名称">
                                 </div>
                             </div>
                             <div class="col-xs-4">
                                 <div class="form-staff-group">
                                     <label class="control-label">所属渠道编码：</label>
-                                    <input type="text" class="form-control" placeholder="请输入所属渠道编码">
+                                    <input ng-model="$ctrl.channelNbr" type="text" class="form-control" placeholder="请输入所属渠道编码">
                                 </div>
                             </div>
                         </div>
@@ -189,18 +175,18 @@
                             <div class="col-xs-4">
                                 <div class="form-staff-group">
                                     <label class="control-label">所属经营主体名称：</label>
-                                    <input type="text" class="form-control" placeholder="请输入经营主体名称">
+                                    <input ng-model="$ctrl.operatorsName" type="text" class="form-control" placeholder="请输入经营主体名称">
                                 </div>
                             </div>
                             <div class="col-xs-4">
                                 <div class="form-staff-group">
                                     <label class="control-label">所属经营主体编码：</label>
-                                    <input type="text" class="form-control" placeholder="请输入经营主体编码">
+                                    <input ng-model="$ctrl.operatorsNbr" type="text" class="form-control" placeholder="请输入经营主体编码">
                                 </div>
                             </div>
                             <div class="col-xs-4 text-right">
                                 <div class="form-staff-group btn-search">
-                                    <button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                                    <button  ng-click="$ctrl.keywordQuery()" type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
                                 </div>
                             </div>
                         </div>
@@ -221,7 +207,7 @@
                 <div class="result-table">
                     <table class="table table-hover table-bordered grey-table">
                         <thead>
-                            <tr>                        
+                            <tr>
                                 <th width="6%">选择</th>
                                 <th width="10%">员工名称</th>
                                 <th width="8%">员工编码</th>
@@ -230,77 +216,48 @@
                                 <th width="10%">所属渠道编码</th>
                                 <th width="12%">所属经营主体</th>
                                 <th width="15%">所属经营主体编码</th>
-                                <th width="8%">地区</th>
+                                <th width="14%">地区</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="item in $ctrl.resourceList">
                                 <td>
-                                    <input type="radio" name="staff">
+                                    <input type="radio" name="radio" ng-click="$ctrl.check(item)">
                                 </td>
                                 <td>
-                                    <p>张三</p>
+                                    <p ng-bind="item.STAFF_NAME"></p>
                                 </td>
                                 <td>
-                                    <p>XXXX</p>
+                                    <p ng-bind="item.SALES_CODE"></p>
                                 </td>
                                 <td>
-                                    <p>XXXX</p>
+                                    <p ng-bind="item.STAFF_CODE"></p>
                                 </td>
                                 <td>
-                                    <p class="overflow-handle">中国电信集团</p>
+                                    <p ng-bind="item.CHANNEL_NAME" class="overflow-handle"></p>
                                 </td>
                                 <td>
-                                    <p>XXXX</p>
+                                    <p ng-bind="item.CHANNEL_NBR"></p>
                                 </td>
                                 <td>
-                                    <p>中国电信集团</p>
+                                    <p ng-bind="item.OPERATORS_NAME"></p>
                                 </td>
                                 <td>
-                                    <p>XXXX</p>
+                                    <p ng-bind="item.OPERATORS_NBR"></p>
                                 </td>
                                 <td>
-                                    <p>南京</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="radio" name="staff">
-                                </td>
-                                <td>
-                                    <p>张三</p>
-                                </td>
-                                <td>
-                                    <p>XXXX</p>
-                                </td>
-                                <td>
-                                    <p>XXXX</p>
-                                </td>
-                                <td>
-                                    <p class="overflow-handle">中国电信集团</p>
-                                </td>
-                                <td>
-                                    <p>XXXX</p>
-                                </td>
-                                <td>
-                                    <p>中国电信集团</p>
-                                </td>
-                                <td>
-                                    <p>XXXX</p>
-                                </td>
-                                <td>
-                                    <p>南京</p>
+                                    <p ng-bind="item.REGION_NAME"></p>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length" ng-cloak>
+                    <p class="no-data" ng-if="$ctrl.resourceList && !$ctrl.resourceList.length" ng-cloak>
                         没有数据
                     </p>
                 </div>
-                <div ng-controller="paginationCtrl" class="text-center page">
-                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
-                    <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                <div class="text-center page">
+                    <ul uib-pagination total-items="$ctrl.totalNum" items-per-page="$ctrl.rowNumPerPage" ng-model="$ctrl.currentPage" max-size="$ctrl.maxSize" ng-change="$ctrl.pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number" ng-bind="$ctrl.totalNum"></span>条记录，当前显示第<span class="number" ng-bind="$ctrl.currentPage"></span>页</div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -319,6 +276,7 @@
     <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
     <script src="../../resources/js/lodash.js"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/mock.js"></script>
     <script src="addAdminProvince.js"></script>
 </body>
 
