@@ -210,7 +210,7 @@ angular
                         'REMARK': '@cword(8)',
                         'VERSION': '@date'
                     }],
-                    'total|10': 10
+                    'total|100': 10
                 },
                 'errors': null
             }); 
@@ -260,13 +260,13 @@ angular
 
     .controller('allQueryCtrl', ['$scope','$rootScope', '$log', 'httpMethod', function($scope, $rootScope, $log, httpMethod) {
         // 查询结果分页信息
-        $scope.curPage = 1; // 当前页
+        $scope.currentPage = 1; // 当前页
         $scope.rowNumPerPage = 10; // 每页显示行数
         $scope.totalSize = 0; // 总条数
         $scope.maxSize = 5; // 最大展示页数
 
-        $scope.orderQuery = function(curPage) { 
-            !curPage && $scope.$broadcast('pageChange');
+        $scope.orderQuery = function(currentPage) { 
+            !currentPage && $scope.$broadcast('pageChange');
             var param = {
                 curPage: $scope.curPage, // 当前页
                 pageSize: $scope.rowNumPerPage, // 每页展示行数, //每页条数
@@ -277,6 +277,7 @@ angular
                 $log.log('调用查询门店接口成功.');
                 if (rsp.success) {
                     $scope.storeResultList = rsp.data.list;
+                    debugger
                     $scope.totalNum = rsp.data.total;
                 } else {
                     swal("OMG", rsp.msg || "调用查询门店接口失败!", "error");

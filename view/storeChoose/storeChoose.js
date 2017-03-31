@@ -193,7 +193,7 @@ angular
                         'STATUS_CD': '@id',
                         'STATUS_NAME': '@cword(4)', 
                     }],
-                    'total|10': 10
+                    'total|100': 10
                 },
                 'errors': null
             });   

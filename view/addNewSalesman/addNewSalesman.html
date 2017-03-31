@@ -165,7 +165,7 @@
                             </div>
                             <div class="col-xs-8">
                                 <div class="form-group text-right">
-                                    <button type="submit" class="btn btn-sm btn-query" ng-click="$ctrl.keywordQuery()"><i class="iconfont">&#xe600;</i> 查询</button>
+                                    <button type="submit" class="btn btn-sm btn-query" ng-click="keywordQuery()"><i class="iconfont">&#xe600;</i> 查询</button>
                                 </div>
                             </div>
                         </div>
@@ -236,8 +236,8 @@
                 </div>
             </div>
             <div ng-controller="paginationCtrl" class="text-center page">
-                <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
-                <div class="page-num">共<span class="number" ng-bind="totalNum || 0"></span>条记录，当前显示第<span class="number" ng-bind="currentPage || 0"></span>页</div>
+                <ul uib-pagination total-items="$ctrl.totalNum" items-per-page="$ctrl.rowNumPerPage" ng-model="$ctrl.currentPage" max-size="$ctrl.maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                <div class="page-num">共<span class="number" ng-bind="$ctrl.totalNum || 0"></span>条记录，当前显示第<span class="number" ng-bind="$ctrl.currentPage || 0"></span>页</div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-submit" type="button" ng-disabled="isDisabled" ng-click="$ctrl.ok()">确定</button>
