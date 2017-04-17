@@ -381,7 +381,7 @@ angular
         };
 
         //关键字查询
-        $ctrl.keywordQuery = function() {
+        $scope.keywordQuery = function() {
             var param = {
                 'curPage': $ctrl.currentPage, //当前页,
                 'pageSize': $ctrl.rowNumPerPage, //每页条数,
@@ -395,6 +395,7 @@ angular
             };
 
             httpMethod.qryStaffFromCrmLte(param).then(function(rsp) {
+                
                 if (rsp.success) {
                     $ctrl.resourceList = rsp.data.list;
                     $ctrl.totalNum = rsp.data.total;

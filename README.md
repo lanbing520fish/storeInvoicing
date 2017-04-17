@@ -98,3 +98,10 @@
     * 市级系统新增管理员 **addAdminCity**
     * 店员管理 **salesmanManage**
     * 新增店员 **addNewSalesman**
+
+* **报表**
+    * 省市级进销存报表 **invoicingStatements**
+    * 省市级销量及自注册报表 **salesAndRegistrationList**
+    * 省市级库存周转报表 **inventoryTurnoverReport**
+    * 门店级库存周转报表 **storeInvoicingStatements**
+    * 入退库明细报表 **inAndOutDetailStatements**
