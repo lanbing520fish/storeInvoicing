@@ -1,7 +1,6 @@
 angular
     .module('invoicingStatementsModule', ['ui.bootstrap'])
-    .controller('conditionQuery', ['$scope', '$rootScope', '$log', '$timeout', function($scope, $rootScope, $log, $timeout) {
-        
+    .controller('conditionQuery', ['$scope', '$rootScope', '$log', '$timeout', function($scope, $rootScope, $log, $timeout) {       
         $scope.conditionQueryForm = {
             createStartDt: '', //制单日期开始
             createEndDt: '' //制单日期结束

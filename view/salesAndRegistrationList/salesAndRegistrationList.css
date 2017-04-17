@@ -39,9 +39,11 @@ body{
 
 .datepicker-input {
     position: relative;
-    width: 45%;
+    width: 40%;
 }
-
+.form-group .form-control.lose-width{
+    width: calc(100% - 50px) !important;
+}
 .datepicker-text {
     width: 10%;
     height: 25px;
@@ -57,10 +59,16 @@ body{
     cursor: pointer;
 }
 
-.form-group .reduce-width {
-    width: calc(100% - 90px) !important;
+.form-group .form-control.reduce-width {
+    width: calc(100% - 40px) !important;
 }
-
+.mrl15{
+   position: absolute;
+   right:0;
+}
+.rgt{
+    right:60px;
+}
 .result-list {
     padding: 5px 5px 20px;
 }

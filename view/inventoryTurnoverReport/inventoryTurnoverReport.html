@@ -21,27 +21,25 @@
             <div class="condition-query-box fn-right">
                 <form name="conditionQueryForm" class="form-inline" role="form">
                     <div class="row mb10">
-                        <div class="col-xs-3" ng-controller="cityCheckCtrl">
+                        <div class="col-xs-3">
                             <div class="form-group">
-                                <label class="control-label">所在地区：</label>
-                                <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
-                                <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
-                                <div class="city-check-box" ng-cloak ng-show="visible">
-                                    <uib-tabset active="key">
-                                        <uib-tab index="1" heading="省份">
-                                            <div class="city-content">
-                                                <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('province', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
-                                            </div>
-                                        </uib-tab>
-                                        <uib-tab index="2" heading="城市">
-                                            <div class="city-content">
-                                                <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys[provinceIndex].children" ng-click="handleSelectCity('city', $index, item.areaId, item.areaName)">{{item.areaName}}</li>
-                                            </div>
-                                        </uib-tab>
-                                    </uib-tabset>
+                                <label class="control-label">省级：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
+                                        <option value="">全部</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">市级：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-xs-3">
                             <div class="form-group">
@@ -63,14 +61,14 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">品牌名：</label>
                                 <input type="text" class="form-control">
                             </div>
                         </div>  
-                    </div>
-                    <div class="row">
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">机型名：</label>
@@ -88,15 +86,13 @@
                                 </div>
                                 <div class="datepicker-text fn-left">至</div>
                                 <div class="datepicker-input fn-left">
-                                    <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" show-button-bar='false' />
-                                    <span class="icon_time" ng-click="endOpen()">
+                                    <input type="text" id="createEndDt" class="form-control modify-input lose-width" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" show-button-bar='false' />
+                                    <span class="icon_time rgt" ng-click="endOpen()">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
                                 </div>
+                                <button type="submit" class="btn btn-sm btn-query mrl15"><i class="iconfont">&#xe600;</i> 查询</button>
                             </div>
-                        </div>
-                        <div class="col-xs-3 text-right">
-                            <button type="submit" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
                         </div>
                     </div>
                 </form>

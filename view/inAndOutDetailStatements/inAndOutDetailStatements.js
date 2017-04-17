@@ -1,6 +1,6 @@
 angular
-    .module('salesAndRegistrationListModule', ['ui.bootstrap'])
-    .controller('conditionQuery', ['$scope', '$rootScope', '$log', '$timeout', function($scope, $rootScope, $log, $timeout) { 
+    .module('inventoryTurnoverReportModule', ['ui.bootstrap'])
+    .controller('conditionQuery', ['$scope', '$rootScope', '$log', '$timeout', function($scope, $rootScope, $log, $timeout) {  
         $scope.conditionQueryForm = {
             createStartDt: '', //制单日期开始
             createEndDt: '' //制单日期结束
@@ -37,8 +37,16 @@ angular
         };
         $scope.startPopupOpened = false;
         $scope.endPopupOpened = false;
+
+
+        $scope.isHidden = true; // 更多查询条件列表是否隐藏
+
+        // 切换展示
+        $scope.toggle = function(name) {
+            $scope.isHidden = !$scope.isHidden;         
+        }
     }])
-    
+   
     
     // 分页控制器
     .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {

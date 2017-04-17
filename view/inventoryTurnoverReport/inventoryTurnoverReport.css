@@ -39,7 +39,7 @@ body{
 
 .datepicker-input {
     position: relative;
-    width: 45%;
+    width: 40%;
 }
 
 .datepicker-text {
@@ -60,7 +60,16 @@ body{
 .form-group .reduce-width {
     width: calc(100% - 90px) !important;
 }
-
+.form-group .form-control.lose-width {
+    width: calc(100% - 40px) !important;
+}
+.mrl15{
+   position: absolute;
+   right:0;
+}
+.rgt{
+    right:50px;
+}
 .result-list {
     padding: 5px 5px 20px;
 }
