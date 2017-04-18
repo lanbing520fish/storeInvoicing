@@ -105,3 +105,8 @@
     * 省市级库存周转报表 **inventoryTurnoverReport**
     * 门店级库存周转报表 **storeInvoicingStatements**
     * 入退库明细报表 **inAndOutDetailStatements**
+
+    
+    * 串码级明细报表-库存明细报表 **stringCodeInventoryDetailedReports**
+    * 代理商级报表-进销存报表 **agentLevelSalesStockReport**
+
