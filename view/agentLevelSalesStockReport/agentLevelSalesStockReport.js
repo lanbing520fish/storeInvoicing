@@ -617,9 +617,9 @@ angular
             httpMethod.qryInOutStockDetail(param).then(function(rsp) {
                 $scope.qryInOutStockDetailList = rsp.data.list;
                 $scope.totalNum = rsp.data.totalSize;
-                $log.log('获取查询数据接口响应成功.');
+                $log.log('调用条件查询接口成功.');
             }, function() {
-                $log.log('获取查询数据接口响应失败.');
+                $log.log('调用条件查询接口失败.');
             });
         }
 
