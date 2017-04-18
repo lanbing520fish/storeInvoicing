@@ -66,18 +66,17 @@
     * 登录页 **index**
 
 * **集中收银**
-    * 集中收银 **concentratedCharge** 
-    * 订单计费 **orderCharge** 
-    * 订单退费 **orderRefund** 
+    * 集中收银 **concentratedCharge**
+    * 订单计费 **orderCharge**
+    * 订单退费 **orderRefund**
 
 * **价格管理**
-    * 零售调价 **retailPriceAdjustment** 
-    * 新零售调价单 **addRetailPriceAdjustment** 
-
-    * 合约甩单 **contractOrder** 
-    * 终端预购 **terminalAppointment** 
+    * 零售调价 **retailPriceAdjustment**
+    * 新零售调价单 **addRetailPriceAdjustment**
+    * 合约甩单 **contractOrder**
+    * 终端预购 **terminalAppointment**
     * 串码查询 **codeQuery**
-    * 已售终端领取 **terminalSaledReceive** 
+    * 已售终端领取 **terminalSaledReceive**
 
 * **报表**
     * 终端入库订单报表 **terminalOrderReport**
