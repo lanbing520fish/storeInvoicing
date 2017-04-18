@@ -2,6 +2,12 @@ angular
     .module('inventoryModule', ['ui.bootstrap'])
     .run(['$rootScope', function ($rootScope) {
         $rootScope.ismoreConditions = false; //更多查询条件
+
+        $rootScope.ismoreConditions = false; //更多查询条件
+        var id = window.frameElement && window.frameElement.id || '',
+                obj = parent.$('#' + id).attr('data');
+        $rootScope.queryForm = obj ? JSON.parse(obj) : {}; // 页面传入的信息
+
     }])
     .factory('httpConfig', [function(){
         httpConfig = {
@@ -151,10 +157,10 @@ angular
         };
 
         // 条件查询接口
-        httpMethod.qryInOutStockDetail = function(param) {
+        httpMethod.qryDianCodeDetail = function(param) {
             var defer = $q.defer();
             $http({
-                url: httpConfig.siteUrl + '/chain/report/q/qryInOutStockDetail',
+                url: httpConfig.siteUrl + '/chain/report/q/qryDianCodeDetail',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + encodeURI(JSON.stringify(param))
@@ -324,7 +330,7 @@ angular
             });
 
             // 条件查询接口
-            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryInOutStockDetail', {
+            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryDianCodeDetail', {
                 'rsphead':'s',
                 'success':true,
                 'code':null,
@@ -334,36 +340,29 @@ angular
                     'totalSize|1-100': 10,
                     'curPage|1-100': 10,
                     'list|10': [{
-                        'SUP_OPERATOR_NAME': '@cword(6)', //上级经营主体
-                        'SUP_OPERATOR_NBR': '@id', //上级经营主体编码
-                        'OPERATOR_NAME': '@cword(6)', //经营主体
-                        'OPERATOR_NBR': '@id', //经营主体编码
-                        'CHANNEL_NAME': '@cword(6)',  //渠道单元
-                        'CHANNEL_NBR': '@id', //渠道单元编码
-                        'PROVINCE_NAME': '@province', //省
-                        'CITY_NAME': '@city', //市
-                        'CHANNEL_TYPE': '@cword(6)', //渠道类型
-                        'IN_STOCK_COUNT|1-10000': 1000, //入库量
-                        'IN_STOCK_AMOUNT|1-100000': 10000, //入库价值
-                        'OUT_STOCK_COUNT|1-10000': 1000, //退库量
-                        'OUT_STOCK_AMOUNT|1-100000': 10000, //退库价值
-                        'ALL_SALE_COUNT|1-100000' : 10000, //总销量
-                        'CONTRACT_SALE_COUNT|1-100000': 10000, //其中合约销量
-                        'TERMINAL_SALE_COUNT|1-100000': 10000, //其中裸机销量
-                        'ALLOT_IN_COUNT|1-100000': 1000, //调拨出库量
-                        'ALLOT_IN_AMOUNT|1-100000': 1000, //调拨出库价值
-                        'ALLOT_OUT_COUNT|1-100000': 1000, //调拨入库量
-                        'ALLOT_OUT_AMOUNT|1-100000': 1000, //调拨入库价值
-                        'SALE_OUT_COUNT|1-100000': 1000, //退货量
-                        'SALE_OUT_AMOUNT|1-100000': 1000, //退货价值
-                        'NOW_STOCK_COUNT|1-100000': 1000, //库存量
-                        'NOW_STOCK_AMOUNT|1-100000': 1000, //库存价值
-                        'ALL_SALE_AMOUNT|1-100000': 1000, //收银总金额
-                        'CONTRACT_SALE_AMOUNT|1-100000': 1000, //其中合约收银金额
-                        'TERMINAL_SALE_AMOUNT|1-100000': 1000, //其中裸机收银金额
-                        'IN_STOCK_SALE_AMOUNT|1-100000': 1000, //入库后的销量
-                        'RESALE_DIGESTIBILITY|1-100': 50, //零售消化率
-                        'SALE_REGISTRATIONS|1-100000': 1000 //销售后的注册量
+                        'SHOP_NAME': '@cword(6)', //  门店
+                        'CHANNEL_NAME': '@cword(6)', //  渠道单元
+                        'CHANNEL_TYPE': '@cword(6)', //  渠道单元类型
+                        'CHANNEL_NBR': '@id', //  渠道单元编码
+                        'INST_CODE': '@id', //  串码
+                        'BRAN_NAME': '@cword(6)', //  品牌
+                        'MODEL_NAME': '@word(6)', //  型号
+                        'OFFER_NAME': '@cword(6)', //  名称
+                        'COLOR': '@cword(6)', //  颜色
+                        'RAM_ROM': '@cword(6)', //  RAM&ROM
+                        'IN_STOCK_TIME': '@date', //  入库时间
+                        'SALE_TIME': '@time', //销售时间
+                        'TURNOVER_DAYS|1-100': 1, //  周转天数
+                        'PROCURE_AMOUNT|1-10000': 1000, //  采购价
+                        'SALE_PRICE|1-10000': 1000, //  销售单价
+                        'PROFIT|1-10000': 1000, //  毛利
+                        'SALE_TYPE': '@cword(6)', //  销售方式
+                        'SALES_MAN': '@cname', //  销售员
+                        'REGISTER_STATUS': '@cword(6)', //  自注册状态
+                        'ISNO_PROVINCE_REGISTER|1': ['是','否'], //  是否本省注册
+                        'NEW_REGISTER_PHONE_TYPE': '@cword(4)', //  首次注册手机号码类型
+                        'CRM_PHONENUMBER_TYPE': '@cword(6)', //  CRM捆绑号码类型
+                        'ISNO_REGISTER_CRM_PHONENUMBER|1': ['是','否'], //  注册手机号码与CRM捆绑号码是否一致
                     }],
                 }
             });
@@ -373,6 +372,23 @@ angular
         return httpMethod;
     }])
     .controller('conditionQuery', ['$scope', '$rootScope', '$timeout', '$log', 'httpMethod', function($scope, $rootScope, $timeout, $log, httpMethod) {
+
+        $rootScope.queryForm = $.extend(true, {
+            provinceId: '',//省份ID
+            cityId: '',//城市ID
+            brandCd: '', //品牌ID
+            modelCd: '', //机型
+            brandName: '', //品牌名
+            modelName: '', //机型名
+            st_time: '', //选择的入库日期开始时间
+            ed_time: '', //选择的入库日期结束时间
+            channelTypeId: '', //渠道类型
+            hallLevelId: '', //自由厅级别
+            boutiqueStarId: '', //专营厅星级
+            channelName: '', //渠道单元名称
+            channeNbr: '', //渠道单元编码
+            instCode: '' //串码
+        }, $rootScope.queryFormList);
 
         $scope.checkedAreaName = '';
         $scope.isDisabled = true;
@@ -408,19 +424,22 @@ angular
 
         };
 
+        $rootScope.queryForm
+
         httpMethod.qryCurrentUserProvinceAndCity(user_param).then(function(rsp) {
             $rootScope.userList = rsp.data;
             if($rootScope.userList.PROVINCE_COMMONREGION_TEXT){
                 $scope.provinceName = $rootScope.userList.PROVINCE_COMMONREGION_TEXT;
                 $scope.checkedAreaName = $scope.provinceName;
+                $rootScope.queryForm.provinceId = $rootScope.userList.PROVINCE_COMMONREGION_VALUE;
                 $scope.key = 2;
                 $scope.isshowprovinceName = false;
                 if($rootScope.userList.CITY_COMMONREGION_TEXT){
                     $scope.cityName = $rootScope.userList.CITY_COMMONREGION_TEXT;
                     $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName;
+                    $rootScope.queryForm.cityId = $rootScope.userList.CITY_COMMONREGION_VALUE;
                     $scope.isshowcityName = false;
                 }else{
-                    $rootScope.queryForm.provinceId = $rootScope.userList.PROVINCE_COMMONREGION_VALUE;
                     $scope.queryCity();
                 };
             }else{
@@ -437,25 +456,6 @@ angular
             $log.log('调用查询当前登录用户的省级和市级区域ID接口成功.');
         }, function() {
             $log.log('调用查询当前登录用户的省级和市级区域ID接口失败.');
-        });
-
-        $rootScope.queryForm = ({
-            provinceId: '',//省份ID
-            cityId: '',//城市ID
-            brandCd : '', //品牌ID
-            brandName: '', //品牌名
-            modelName: '', //机型名
-            modelCd: '', //机型
-            channelTypeId: '', //渠道类型
-            hallLevelId: '', //自由厅级别
-            boutiqueStarId: '', //专营厅星级
-            channelNbr: '', //渠道单元编码
-            channelName: '', //渠道单元名称
-            storageName: '', //仓库名称
-            operatorNbr: '', //经营主体编码
-            operatorName: '', //经营主体名称
-            st_time: '', //选择的入库日期开始时间
-            ed_time: '' //选择的入库日期结束时间
         });
 
         //更多查询条件
@@ -593,9 +593,9 @@ angular
         // 条件查询
         $scope.queryFormSubmit = function(currentPage) {
             var param = {
-                curPage: currentPage || 1,
-                pageSize: 10,
-                totalSize: $scope.totalNum || 0,
+                curPage: currentPage || $scope.currentPage,
+                pageSize: $scope.rowNumPerPage,
+                totalSize: $scope.totalNum,
                 provinceId: $rootScope.queryForm.provinceId ? $rootScope.queryForm.provinceId : '',
                 cityId: $rootScope.queryForm.cityId ? $rootScope.queryForm.cityId : '',
                 brandCd: $rootScope.queryForm.brandCd ? $rootScope.queryForm.brandCd : '',
@@ -605,16 +605,14 @@ angular
                 channelTypeId: $rootScope.queryForm.channelTypeId ? $rootScope.queryForm.channelTypeId : '',
                 hallLevelId: $rootScope.queryForm.hallLevelId ? $rootScope.queryForm.hallLevelId : '',
                 boutiqueStarId: $rootScope.queryForm.boutiqueStarId ? $rootScope.queryForm.boutiqueStarId : '',
-                channelNbr: $rootScope.queryForm.channelNbr ? $rootScope.queryForm.channelNbr : '',
+                channeNbr: $rootScope.queryForm.channelNbr ? $rootScope.queryForm.channelNbr : '',
                 channelName: $rootScope.queryForm.channelName ? $rootScope.queryForm.channelName : '',
-                storageName: $rootScope.queryForm.storageName ? $rootScope.queryForm.storageName : '',
-                operatorNbr: $rootScope.queryForm.operatorNbr ? $rootScope.queryForm.operatorNbr : '',
-                operatorName: $rootScope.queryForm.operatorName ? $rootScope.queryForm.operatorName : '',
+                instCode: $rootScope.queryForm.instCode ? $rootScope.queryForm.instCode : '',
                 st_time: $rootScope.queryForm.st_time ? moment($rootScope.queryForm.st_time).format('YYYY-MM-DD HH:mm:ss') : '',
                 ed_time: $rootScope.queryForm.ed_time ? moment($rootScope.queryForm.ed_time).format('YYYY-MM-DD HH:mm:ss') : '',
             };
-            httpMethod.qryInOutStockDetail(param).then(function(rsp) {
-                $scope.qryInOutStockDetailList = rsp.data.list;
+            httpMethod.qryDianCodeDetail(param).then(function(rsp) {
+                $scope.qryDianCodeDetailList = rsp.data.list;
                 $scope.totalNum = rsp.data.totalSize;
                 $log.log('获取查询数据接口响应成功.');
             }, function() {
@@ -623,15 +621,18 @@ angular
         }
 
         $scope.$on('pageChange', function(event, data) {
-            $rootScope.queryFormSubmit(data);
+            $scope.queryFormSubmit(data);
         })
     }])
     // 查询结果控制器
     .controller('QueryResultCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', 'httpConfig', function($scope, $rootScope, $log, httpMethod, httpConfig) {
 
         //导出
-        $scope.exportQryInOutStockDetail = function() {
+        $scope.exportQryInOutStockDetail = function(currentPage) {
             var param = {
+                curPage: currentPage || $scope.currentPage,
+                pageSize: $scope.rowNumPerPage,
+                totalSize: $scope.totalNum,
                 provinceId: _.get($rootScope, 'queryForm.provinceId'),
                 cityId: _.get($rootScope, 'queryForm.cityId'),
                 brandCd: _.get($rootScope, 'queryForm.brandCd'),
@@ -641,15 +642,14 @@ angular
                 channelTypeId: _.get($rootScope, 'queryForm.channelTypeId'),
                 hallLevelId: _.get($rootScope, 'queryForm.hallLevelId'),
                 boutiqueStarId: _.get($rootScope, 'queryForm.boutiqueStarId'),
-                channelNbr: _.get($rootScope, 'queryForm.channelNbr'),
+                channeNbr: _.get($rootScope, 'queryForm.channeNbr'),
                 channelName: _.get($rootScope, 'queryForm.channelName'),
-                storageName: _.get($rootScope, 'queryForm.storageName'),
-                operatorNbr: _.get($rootScope, 'queryForm.operatorNbr'),
-                operatorName: _.get($rootScope, 'queryForm.operatorName'),
+                instCode: _.get($rootScope, 'queryForm.instCode'),
                 st_time: _.get($rootScope, 'queryForm.st_time'),
                 ed_time: _.get($rootScope, 'queryForm.ed_time'),
             };
-            window.open(httpConfig.siteUrl + '/chain/report/q/exportQryInOutStockDetail?param=' + encodeURI(JSON.stringify(param)));
+            // 导出接口暂缺，接口待调整
+            window.open(httpConfig.siteUrl + '/chain/report/q/exportQryDianCodeDetail?param=' + encodeURI(JSON.stringify(param)));
         }
     }])
     // 分页控制器
