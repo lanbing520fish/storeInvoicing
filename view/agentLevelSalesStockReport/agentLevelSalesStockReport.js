@@ -413,14 +413,15 @@ angular
             if($rootScope.userList.PROVINCE_COMMONREGION_TEXT){
                 $scope.provinceName = $rootScope.userList.PROVINCE_COMMONREGION_TEXT;
                 $scope.checkedAreaName = $scope.provinceName;
+                $rootScope.queryForm.provinceId = $rootScope.userList.PROVINCE_COMMONREGION_VALUE;
                 $scope.key = 2;
                 $scope.isshowprovinceName = false;
                 if($rootScope.userList.CITY_COMMONREGION_TEXT){
                     $scope.cityName = $rootScope.userList.CITY_COMMONREGION_TEXT;
                     $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName;
+                    $rootScope.queryForm.cityId = $rootScope.userList.CITY_COMMONREGION_VALUE;
                     $scope.isshowcityName = false;
                 }else{
-                    $rootScope.queryForm.provinceId = $rootScope.userList.PROVINCE_COMMONREGION_VALUE;
                     $scope.queryCity();
                 };
             }else{
@@ -593,8 +594,8 @@ angular
         // 条件查询
         $scope.queryFormSubmit = function(currentPage) {
             var param = {
-                curPage: currentPage || 1,
-                pageSize: 10,
+                curPage: $scope.currentPage || 1,
+                pageSize: $scope.rowNumPerPage,
                 totalSize: $scope.totalNum || 0,
                 provinceId: $rootScope.queryForm.provinceId ? $rootScope.queryForm.provinceId : '',
                 cityId: $rootScope.queryForm.cityId ? $rootScope.queryForm.cityId : '',
@@ -623,15 +624,17 @@ angular
         }
 
         $scope.$on('pageChange', function(event, data) {
-            $rootScope.queryFormSubmit(data);
+            $scope.queryFormSubmit(data);
         })
     }])
     // 查询结果控制器
     .controller('QueryResultCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', 'httpConfig', function($scope, $rootScope, $log, httpMethod, httpConfig) {
-
         //导出
-        $scope.exportQryInOutStockDetail = function() {
+        $scope.exportQryInOutStockDetail = function(currentPage) {
             var param = {
+                curPage: $scope.currentPage || 1,
+                pageSize: $scope.rowNumPerPage,
+                totalSize: $scope.totalNum || 0,
                 provinceId: _.get($rootScope, 'queryForm.provinceId'),
                 cityId: _.get($rootScope, 'queryForm.cityId'),
                 brandCd: _.get($rootScope, 'queryForm.brandCd'),

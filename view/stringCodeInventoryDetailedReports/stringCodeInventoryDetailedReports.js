@@ -260,10 +260,9 @@ angular
 
         // 条件查询
         $scope.queryFormSubmit = function(currentPage) {
-
             var param={
-                curPage: 1,
-                pageSize: 10,
+                curPage: $scope.currentPage || 1,
+                pageSize: $scope.rowNumPerPage,
                 brandCd: $scope.queryForm.brandCd ? $scope.queryForm.brandCd : '',
                 modelCd: $scope.queryForm.modelCd ? $scope.queryForm.modelCd : '',
                 brandName: $scope.queryForm.brandName ? $scope.queryForm.brandName : '',
@@ -293,6 +292,8 @@ angular
         //导出
         $scope.exportInstCodeLevelStockReport = function() {
             var param = {
+                curPage: $scope.currentPage || 1,
+                pageSize: $scope.rowNumPerPage,
                 curPage: _.get($rootScope, 'queryForm.curPage'),
                 pageSize: _.get($rootScope, 'queryForm.pageSize'),
                 brandCd: _.get($rootScope, 'queryForm.brandCd'),
