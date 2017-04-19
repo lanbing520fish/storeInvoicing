@@ -21,27 +21,36 @@
             <div class="condition-query-box fn-right">
                 <form name="conditionQueryForm" class="form-inline" role="form">
                     <div class="row mb10">
-                        <div class="col-xs-3" ng-controller="cityCheckCtrl">
-                            <div class="form-group">
-                                <label class="control-label">所在地区：</label>
-                                <input type="text" class="form-control reduce-width" ng-model="checkedAreaName">
-                                <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
-                                <div class="city-check-box" ng-cloak ng-show="visible">
+                        <div class="col-xs-3">
+                            <div class="form-group" ng-controller="cityCheckCtrl">
+                                <label class="control-label">省市：</label>
+                                <input type="text" class="form-control" ng-model="checkedAreaName" disabled>
+                                <button ng-click="cityCheck()" type="submit" ng-show="isshowcityName" class="btn btn-sm btn-location" ng-cloak><i
+                                    class="iconfont">&#xe6cb;</i></button>
+                                <div class="city-check-box" ng-show="visible" ng-cloak>
                                     <uib-tabset active="key">
-                                        <uib-tab index="1" heading="省份">
+                                        <uib-tab index="1" heading="省份" ng-show="isshowprovinceName">
                                             <div class="city-content">
-                                                <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in provinces" ng-click="handleSelectCity('province', $index, item.commonRegionId, item.commonRegionName)">{{item.commonRegionName}}</li>
+                                                <li class="city-item" ng-class="{current: $index === provinceIndex}"
+                                                    ng-repeat="item in qryProvinceList"
+                                                    ng-click="handleSelectCity('province', $index, item.commonRegionId, item.commonRegionName)">
+                                                    {{item.commonRegionName}}
+                                                </li>
                                             </div>
                                         </uib-tab>
-                                        <uib-tab index="2" heading="城市">
+                                        <uib-tab index="2" heading="城市" ng-show="isshowcityName">
                                             <div class="city-content">
-                                                <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('city', $index, item.commonRegionId, item.commonRegionName)">{{item.commonRegionName}}</li>
+                                                <li class="city-item" ng-class="{current: $index === cityIndex}"
+                                                    ng-repeat="item in qryCityList"
+                                                    ng-click="handleSelectCity('city', $index, item.commonRegionId, item.commonRegionName)">
+                                                    {{item.commonRegionName}}
+                                                </li>
                                             </div>
                                         </uib-tab>
                                     </uib-tabset>
                                 </div>
+                                <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
                             </div>
-                            <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
                         </div>
                         <div class="col-xs-3">
                             <div class="form-group">

@@ -516,7 +516,7 @@ angular
             $scope.conditionQueryForm.brandCd = newValue; 
 
             var param = {
-                'brandId' : _.get($scope, 'conditionQueryForm.brandCd')
+                'brandId' : newValue
             }
             //机型选择值获取接口
             httpMethod.loadModel(param).then(function(rsp) {
@@ -569,7 +569,6 @@ angular
                 curPage: curPage || $scope.curPage, // 当前页
                 pageSize: $scope.rowNumPerPage // 每页展示行数
             } 
-            debugger
             httpMethod.qryShopInStockNoBizman(param).then(function(rsp) {
                 if (rsp.success) {
                     $scope.resultList = rsp.data.list;
@@ -579,7 +578,7 @@ angular
         }
         //已勾选查询
         $scope.orderQueryChecked = function(curPage) {
-            !curPage && $scope.$broadcast('pageChange'); 
+            !curPage && $scope.$broadcast('pageChangeChecked'); 
             var param = {
                 provinceId : _.get($rootScope, 'provinceId'),
                 cityId: _.get($rootScope, 'cityId'),
@@ -641,56 +640,74 @@ angular
             window.open(httpConfig.siteUrl + '/chain/report/q/exportShopInStockShowBizman?param=' + JSON.stringify(param));
         }
     }])
+
+    .controller('resultCtrl', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
+        // 未勾选查看详情
+        $scope.checkDetail = function () {
+            // parent.angular.element(parent.$('#tabs')).scope().addTab('入退库明细报表', '/storeInvoicing/view/inAndOutDetailStatements/inAndOutDetailStatements.html', 'storeInfoList', JSON.stringify($scope.resultList.CHANNEL_NBR;));
+        };   
+        // 已勾选查看详情
+        $scope.checkDetailchecked = function () {
+            // parent.angular.element(parent.$('#tabs')).scope().addTab('入退库明细报表', '/storeInvoicing/view/inAndOutDetailStatements/inAndOutDetailStatements.html', 'storeInfoList', JSON.stringify($scope.resultListChecked.CHANNEL_NBR));
+        };   
+    }])
+
     // 城市
     .controller('cityCheckCtrl', ['$scope', '$rootScope', 'httpMethod',function($scope, $rootScope, httpMethod) { 
-        $scope.provincesAndCities = {
-            PROVINCE_COMMONREGION_VALUE: '',
-            PROVINCE_COMMONREGION_TEXT: '',
-            CITY_COMMONREGION_VALUE:'',
-            CITY_COMMONREGION_TEXT:''
-        }
-        // 查询当前登录用户的省级和市级区域ID
-        httpMethod.qryCurrentUserProvinceAndCity().then(function(rsp) {
-            if (rsp.success) {
-                $scope.provincesAndCities = rsp.data;             
-                if($scope.provincesAndCities.PROVINCE_COMMONREGION_VALUE === ''){
-                    httpMethod.qryProvince().then(function(rsp) {
-                        if (rsp.success) {
-                            $scope.provinces = rsp.data;
-                        };   
-                    });   
-                }else{
-                    $scope.provinces = [{
-                        'commonRegionId' : $scope.provincesAndCities.PROVINCE_COMMONREGION_VALUE,
-                        'commonRegionName' : $scope.provincesAndCities.PROVINCE_COMMONREGION_TEXT
-                    }]
-                }
-                if($scope.provincesAndCities.CITY_COMMONREGION_VALUE === ''){
-                    var param = {
-                        'provinceId': _.get($scope, 'provinces.commonRegionId')
-                    }
-                    httpMethod.qryCity(param).then(function(rsp) {
-                        if (rsp.success) {
-                            $scope.citys = rsp.data;
-                        };
-                    }); 
-                        
-                }else{ 
-                    $scope.citys = [{
-                        'commonRegionId' : $scope.provincesAndCities.CITY_COMMONREGION_VALUE,
-                        'commonRegionName' : $scope.provincesAndCities.CITY_COMMONREGION_TEXT
-                    }]
-                }
-            };
-        });  
-
+        $scope.checkedAreaName = '';
+        $scope.isDisabled = true;
+        
         $scope.visible = false;
         $scope.key = 1;
         $scope.provinceIndex = '';
         $scope.cityIndex = '';
+        $scope.areaId = '';
+
         $scope.provinceName = '';
         $scope.cityName = '';
-        $scope.checkedAreaName = '';
+
+        $scope.isshowprovinceName = true;
+        $scope.isshowcityName = true;
+
+        var user_param = {}
+
+        $scope.queryCity = function() {
+            // 市级选择值获取接口
+            $scope.$watch('queryForm.provinceId', function (newValue) {
+                var city_param = {
+                    provinceId : newValue
+                };
+                httpMethod.qryCity(city_param).then(function(rsp) {
+                    $rootScope.qryCityList = rsp.data;
+                });
+            });
+
+        };
+        httpMethod.qryCurrentUserProvinceAndCity(user_param).then(function(rsp) { 
+            $rootScope.userList = rsp.data;
+            if($rootScope.userList.PROVINCE_COMMONREGION_TEXT){
+                $scope.provinceName = $rootScope.userList.PROVINCE_COMMONREGION_TEXT;
+                $scope.checkedAreaName = $scope.provinceName;
+                $rootScope.provinceId = $rootScope.userList.PROVINCE_COMMONREGION_VALUE;
+                $scope.key = 2;
+                $scope.isshowprovinceName = false;
+                if($rootScope.userList.CITY_COMMONREGION_TEXT){
+                    $scope.cityName = $rootScope.userList.CITY_COMMONREGION_TEXT;
+                    $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName;
+                    $rootScope.cityId = $rootScope.userList.CITY_COMMONREGION_VALUE;
+                    $scope.isshowcityName = false;
+                }else{
+                    $scope.queryCity();
+                };
+            }else{
+                // 查询省份
+                var pro_param = {}
+                httpMethod.qryProvince(pro_param).then(function(rsp) {
+                    $rootScope.qryProvinceList = rsp.data;  
+                });
+                $scope.queryCity();
+            };   
+        });
 
         $scope.cityCheck = function() {
             $scope.visible = !$scope.visible;
@@ -704,20 +721,18 @@ angular
                 case 'province':
                     $scope.key = 2;
                     $scope.provinceIndex = index;
-                    $rootScope.provinceId = areaId;
                     $scope.provinceName = areaName;
-                    me.handleSubmitBtn(level);
+                    $rootScope.provinceId = areaId;
                     break;
                 case 'city':
                     $scope.cityIndex = index;
-                    $rootScope.cityId = areaId;
                     $scope.cityName = areaName;
+                    $rootScope.cityId = areaId;
                     me.handleSubmitBtn(level);
                     break;
             }
         };
         $scope.handleSubmitBtn = function(level) {
-            var me = this;
             switch (level) {
                 case 'province':
                     $scope.checkedAreaName = $scope.provinceName;
@@ -727,7 +742,7 @@ angular
                     $scope.visible = false;
                     break;
             }
-        }       
+        };
     }])
     // 分页控制器
     .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
@@ -744,5 +759,20 @@ angular
             $scope.orderQuery($scope.curPage);
             $log.log('Page changed to: ' + $scope.curPage);
         };
-    }]);
-    
+    }])
+    // 分页控制器
+    .controller('paginationCheckedCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
+        $scope.$on('pageChangeChecked', function() {
+            $scope.curPage = 1;
+        });
+
+        $scope.maxSize = 10;
+        $scope.setPage = function(pageNo) {
+            $scope.curPage = pageNo;
+        };
+
+        $scope.pageChanged = function() {
+            $scope.orderQuery($scope.curPage);
+            $log.log('Page changed to: ' + $scope.curPage);
+        };
+    }]);    
