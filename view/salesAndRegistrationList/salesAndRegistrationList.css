@@ -201,4 +201,6 @@ body{
 .zhezhao{
    height:100%; width:100%; position:fixed; top:0; left:0; z-index:98;
 }
-
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th{
+    vertical-align: middle;
+}

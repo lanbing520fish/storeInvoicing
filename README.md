@@ -99,11 +99,11 @@
     * 新增店员 **addNewSalesman**
 
 * **报表**
-    * 省市级进销存报表 **invoicingStatements**
-    * 省市级销量及自注册报表 **salesAndRegistrationList**
-    * 省市级库存周转报表 **inventoryTurnoverReport**
-    * 门店级库存周转报表 **storeInvoicingStatements**
-    * 入退库明细报表 **inAndOutDetailStatements**
+    * 01 省市级进销存报表 **invoicingStatements**
+    * 02 省市级销量及自注册报表 **salesAndRegistrationList**
+    * 03 省市级库存周转报表 **inventoryTurnoverReport**
+    * 04 门店级库存周转报表 **storeInvoicingStatements**
+    * 09 入退库明细报表 **inAndOutDetailStatements**
 
     
     * 05 门店级报表-销量及自注册报表 **storeLevelSalesRegistrationReport**

@@ -1,18 +1,10 @@
 /*  author:nieyalan */ 
 angular
     .module('inventoryTurnoverReportModule', ['ui.bootstrap'])
-    .run(['$rootScope', function($rootScope) {     
+    .run(['$rootScope', function($rootScope) {        
         var id = window.frameElement && window.frameElement.id || '',
             obj = parent.$('#' + id).attr('data');
-
-        $rootScope.conditionQueryForm = obj ? JSON.parse(obj) : {};
-        debugger
-        $rootScope.conditionQueryForm = {
-            brandCd:'98204097569',
-            modelCd:'350000198204097569',
-            brandName:'道具卡上电脑',
-            modelName:'家居裤大锁'
-        }
+        $rootScope.channelNbr = obj ? JSON.parse(obj) : ''; 
     }])
     .factory('httpMethod', ['$http', '$q', function($http, $q) {
         var httpConfig = {
@@ -210,12 +202,12 @@ angular
                 'success': true, //是否成功
                 'code': null,
                 'msg': null, //失败信息
-                'data': {
-                    'PROVINCE_COMMONREGION_VALUE': '@id'||'',
+                'data|1': [{
+                    'PROVINCE_COMMONREGION_VALUE': '@id',
                     'PROVINCE_COMMONREGION_TEXT': '@province',
-                    'CITY_COMMONREGION_VALUE':'@id'||'',
-                    'CITY_COMMONREGION_TEXT':'@city',
-                },
+                    'CITY_COMMONREGION_VALUE': '@id',
+                    'CITY_COMMONREGION_TEXT': '@city'
+                }],
                 'errors': null
             });
 
@@ -320,7 +312,7 @@ angular
                         'MODEL_NAME': '@cword(3)',//型号
                         'OFFER_NAME': '@cword(3)',//名称
                         'COLOR': '@color',//颜色
-                        'RAM&ROM': '@cword(4)',//RAM&ROM
+                        'RAM_ROM': '@cword(4)',//RAM_ROM
                         'STORAGE_NAME': '@cword(3)',//仓库
                         'OPERATOR_NAME': '@cword(3)',//经营主体
                         'OPERATOR_CODE': '@id',//经营主体编码
@@ -347,9 +339,9 @@ angular
         return httpMethod;
     }])
     .controller('conditionResult', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
-        $rootScope.conditionQueryForm = {
+        $scope.conditionQueryForm = {
             createStartDt: '', //制单日期开始
-            createEndDt: '' //制单日期结束
+            createEndDt: '', //制单日期结束
         };
         // 时间控件
         $scope.startDateOptions = {
@@ -383,6 +375,10 @@ angular
         };
         $scope.startPopupOpened = false;
         $scope.endPopupOpened = false;
+        $scope.isHidden = false;
+        $scope.toggle = function(){
+             $scope.isHidden = !$scope.isHidden;
+        }
         $scope.conditionQueryForm.brandCd = '';
         //品牌选择值获取接口
         httpMethod.loadBrand().then(function(rsp) {
@@ -391,10 +387,10 @@ angular
             };
         });    
         $scope.$watch('conditionQueryForm.brandCd', function(newValue) {
-            $rootScope.conditionQueryForm.brandCd = newValue; 
+            $scope.conditionQueryForm.brandCd = newValue; 
 
             var param = {
-                'brandId' : _.get($rootScope, 'conditionQueryForm.brandCd')
+                'brandId' : newValue
             }
             //机型选择值获取接口
             httpMethod.loadModel(param).then(function(rsp) {
@@ -428,21 +424,24 @@ angular
         $scope.rowNumPerPage = 10; // 每页显示行数
         $scope.totalNum = 0; // 总条数
         $scope.maxSize = 5; // 最大展示页数
-
         $scope.orderQuery = function(curPage) {
             !curPage && $scope.$broadcast('pageChange');
             var params = {
-                provinceId : _.get($rootScope, 'provinceId'),
-                cityId: _.get($rootScope, 'cityId'),
-                brandCd: _.get($rootScope, 'conditionQueryForm.brandCd'),
-                modelCd: _.get($rootScope, 'conditionQueryForm.modelCd'),
-                brandName: _.get($rootScope, 'conditionQueryForm.brandName'),
-                modelName: _.get($rootScope, 'conditionQueryForm.modelName'),
-                st_time: _.get($rootScope, 'conditionQueryForm.createStartDt'),
-                ed_time: _.get($rootScope, 'conditionQueryForm.createEndDt'),
-                channelTypeId: _.get($rootScope, 'conditionQueryForm.channelTypeId'),
-                hallLevelId: _.get($rootScope, 'conditionQueryForm.hallLevelId'),
-                boutiqueStarId: _.get($rootScope, 'conditionQueryForm.boutiqueStarId'),
+                provinceId : _.get($scope, 'provinceId'),
+                cityId: _.get($scope, 'cityId'),
+                brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
+                modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
+                brandName: _.get($scope, 'conditionQueryForm.brandName'),
+                modelName: _.get($scope, 'conditionQueryForm.modelName'),
+                storageName: _.get($scope, 'conditionQueryForm.storageName'),
+                st_time: _.get($scope, 'conditionQueryForm.createStartDt'),
+                ed_time: _.get($scope, 'conditionQueryForm.createEndDt'),
+                channelTypeId: _.get($scope, 'conditionQueryForm.channelTypeId'),
+                hallLevelId: _.get($scope, 'conditionQueryForm.hallLevelId'),
+                boutiqueStarId: _.get($scope, 'conditionQueryForm.boutiqueStarId'),
+                channelName: _.get($scope, 'conditionQueryForm.channelName'),
+                channelNbr: _.get($rootScope, 'channelNbr'),
+                instCode: _.get($scope, 'conditionQueryForm.instCode'),
                 curPage: curPage || $scope.curPage, // 当前页
                 pageSize: $scope.rowNumPerPage // 每页展示行数
             } 
@@ -457,75 +456,85 @@ angular
 
         // 导出
         $scope.exportInOutStockDetail = function() {
-            var param = {
-                provinceId : _.get($rootScope, 'provinceId'),
-                cityId: _.get($rootScope, 'cityId'),
-                brandCd: _.get($rootScope, 'conditionQueryForm.brandCd'),
-                modelCd: _.get($rootScope, 'conditionQueryForm.modelCd'),
-                brandName: _.get($rootScope, 'conditionQueryForm.brandName'),
-                modelName: _.get($rootScope, 'conditionQueryForm.modelName'),
-                st_time: _.get($rootScope, 'conditionQueryForm.createStartDt'),
-                ed_time: _.get($rootScope, 'conditionQueryForm.createEndDt'),
-                channelTypeId: _.get($rootScope, 'conditionQueryForm.channelTypeId'),
-                hallLevelId: _.get($rootScope, 'conditionQueryForm.hallLevelId'),
-                boutiqueStarId: _.get($rootScope, 'conditionQueryForm.boutiqueStarId'),
+            var params = {
+                provinceId : _.get($scope, 'provinceId'),
+                cityId: _.get($scope, 'cityId'),
+                brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
+                modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
+                brandName: _.get($scope, 'conditionQueryForm.brandName'),
+                modelName: _.get($scope, 'conditionQueryForm.modelName'),
+                storageName: _.get($scope, 'conditionQueryForm.storageName'),
+                st_time: _.get($scope, 'conditionQueryForm.createStartDt'),
+                ed_time: _.get($scope, 'conditionQueryForm.createEndDt'),
+                channelTypeId: _.get($scope, 'conditionQueryForm.channelTypeId'),
+                hallLevelId: _.get($scope, 'conditionQueryForm.hallLevelId'),
+                boutiqueStarId: _.get($scope, 'conditionQueryForm.boutiqueStarId'),
+                channelName: _.get($scope, 'conditionQueryForm.channelName'),
+                channelNbr: _.get($rootScope, 'channelNbr'),
+                instCode: _.get($scope, 'conditionQueryForm.instCode'),
                 curPage: curPage || $scope.curPage, // 当前页
                 pageSize: $scope.rowNumPerPage // 每页展示行数
-            };
-
+            } 
+            
             window.open(httpConfig.siteUrl + '/chain/report/q/exportInOutStockDetail?param=' + JSON.stringify(param));
         }
     }])
     // 城市
     .controller('cityCheckCtrl', ['$scope', '$rootScope', 'httpMethod',function($scope, $rootScope, httpMethod) { 
-        $scope.provincesAndCities = {
-            PROVINCE_COMMONREGION_VALUE: '',
-            PROVINCE_COMMONREGION_TEXT: '',
-            CITY_COMMONREGION_VALUE:'',
-            CITY_COMMONREGION_TEXT:''
-        }
-        // 查询当前登录用户的省级和市级区域ID
-        httpMethod.qryCurrentUserProvinceAndCity().then(function(rsp) {
-            if (rsp.success) {
-                $scope.provincesAndCities = rsp.data;             
-                if($scope.provincesAndCities.PROVINCE_COMMONREGION_VALUE === ''){
-                    httpMethod.qryProvince().then(function(rsp) {
-                        if (rsp.success) {
-                            $scope.provinces = rsp.data;
-                        };   
-                    });   
-                }else{
-                    $scope.provinces = [{
-                        'commonRegionId' : $scope.provincesAndCities.PROVINCE_COMMONREGION_VALUE,
-                        'commonRegionName' : $scope.provincesAndCities.PROVINCE_COMMONREGION_TEXT
-                    }]
-                }
-                if($scope.provincesAndCities.CITY_COMMONREGION_VALUE === ''){
-                    var param = {
-                        'provinceId': _.get($scope, 'provinces.commonRegionId')
-                    }
-                    httpMethod.qryCity(param).then(function(rsp) {
-                        if (rsp.success) {
-                            $scope.citys = rsp.data;
-                        };
-                    }); 
-                        
-                }else{ 
-                    $scope.citys = [{
-                        'commonRegionId' : $scope.provincesAndCities.CITY_COMMONREGION_VALUE,
-                        'commonRegionName' : $scope.provincesAndCities.CITY_COMMONREGION_TEXT
-                    }]
-                }
-            };
-        });  
-
+        $scope.checkedAreaName = '';
+        $scope.isDisabled = true;
+        
         $scope.visible = false;
         $scope.key = 1;
         $scope.provinceIndex = '';
         $scope.cityIndex = '';
+        $scope.areaId = '';
+
         $scope.provinceName = '';
         $scope.cityName = '';
-        $scope.checkedAreaName = '';
+
+        $scope.isshowprovinceName = true;
+        $scope.isshowcityName = true;
+
+        var user_param = {}
+
+        $scope.queryCity = function() {
+            // 市级选择值获取接口
+            $scope.$watch('queryForm.provinceId', function (newValue) {
+                var city_param = {
+                    provinceId : newValue
+                };
+                httpMethod.qryCity(city_param).then(function(rsp) {
+                    $rootScope.qryCityList = rsp.data;
+                });
+            });
+
+        };
+        httpMethod.qryCurrentUserProvinceAndCity(user_param).then(function(rsp) { 
+            $rootScope.userList = rsp.data;
+            if($rootScope.userList.PROVINCE_COMMONREGION_TEXT){
+                $scope.provinceName = $rootScope.userList.PROVINCE_COMMONREGION_TEXT;
+                $scope.checkedAreaName = $scope.provinceName;
+                $rootScope.provinceId = $rootScope.userList.PROVINCE_COMMONREGION_VALUE;
+                $scope.key = 2;
+                $scope.isshowprovinceName = false;
+                if($rootScope.userList.CITY_COMMONREGION_TEXT){
+                    $scope.cityName = $rootScope.userList.CITY_COMMONREGION_TEXT;
+                    $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName;
+                    $rootScope.cityId = $rootScope.userList.CITY_COMMONREGION_VALUE;
+                    $scope.isshowcityName = false;
+                }else{
+                    $scope.queryCity();
+                };
+            }else{
+                // 查询省份
+                var pro_param = {}
+                httpMethod.qryProvince(pro_param).then(function(rsp) {
+                    $rootScope.qryProvinceList = rsp.data;  
+                });
+                $scope.queryCity();
+            };   
+        });
 
         $scope.cityCheck = function() {
             $scope.visible = !$scope.visible;
@@ -539,20 +548,18 @@ angular
                 case 'province':
                     $scope.key = 2;
                     $scope.provinceIndex = index;
-                    $rootScope.provinceId = areaId;
                     $scope.provinceName = areaName;
-                    me.handleSubmitBtn(level);
+                    $rootScope.provinceId = areaId;
                     break;
                 case 'city':
                     $scope.cityIndex = index;
-                    $rootScope.cityId = areaId;
                     $scope.cityName = areaName;
+                    $rootScope.cityId = areaId;
                     me.handleSubmitBtn(level);
                     break;
             }
         };
         $scope.handleSubmitBtn = function(level) {
-            var me = this;
             switch (level) {
                 case 'province':
                     $scope.checkedAreaName = $scope.provinceName;
@@ -562,7 +569,7 @@ angular
                     $scope.visible = false;
                     break;
             }
-        }       
+        };
     }])
     // 分页控制器
     .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
