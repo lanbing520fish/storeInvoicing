@@ -13,159 +13,157 @@
 
 <body ng-app="inventoryTurnoverReportModule">
     <!-- DOM结构开始 -->
-    <div class="check top-line wavy-line">
+    <div class="check top-line wavy-line" ng-controller="conditionResult">
         <!-- 条件查询 -->
-        <div ng-controller="conditionQuery">
-            <div class="condition-query fn-clear">
-                <p class="condition-query-title fn-left">搜
-                    <br/>索</p>
-                <div class="condition-query-box fn-right">
-                    <form name="conditionQueryForm" class="form-inline" role="form">
-                        <div class="row mb10">
-                            <div class="col-xs-3" ng-controller="cityCheckCtrl">
-                                <div class="form-group">
-                                    <label class="control-label">所在地区：</label>
-                                    <input type="text" class="form-control" ng-model="checkedAreaName">
-                                    <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
-                                    <div class="city-check-box" ng-cloak ng-show="visible">
-                                        <uib-tabset active="key">
-                                            <uib-tab index="1" heading="省份">
-                                                <div class="city-content">
-                                                    <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in provinces" ng-click="handleSelectCity('province', $index, item.commonRegionId, item.commonRegionName)">{{item.commonRegionName}}</li>
-                                                </div>
-                                            </uib-tab>
-                                            <uib-tab index="2" heading="城市">
-                                                <div class="city-content">
-                                                    <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('city', $index, item.commonRegionId, item.commonRegionName)">{{item.commonRegionName}}</li>
-                                                </div>
-                                            </uib-tab>
-                                        </uib-tabset>
-                                    </div>
-                                </div>
-                                <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label">品牌：</label>
-                                    <div class="select-box">
-                                        <select class="form-control" ng-model="conditionQueryForm.brandCd" ng-options="item.brandCd as item.brandName for item in allBrandList">
-                                            <option value="">全部</option>
-                                        </select>
-                                    </div>
+        <div class="condition-query fn-clear">
+            <p class="condition-query-title fn-left">搜
+                <br/>索</p>
+            <div class="condition-query-box fn-right">
+                <form name="conditionQueryForm" class="form-inline" role="form">
+                    <div class="row mb10">
+                        <div class="col-xs-3" ng-controller="cityCheckCtrl">
+                            <div class="form-group">
+                                <label class="control-label">所在地区：</label>
+                                <input type="text" class="form-control" ng-model="checkedAreaName">
+                                <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
+                                <div class="city-check-box" ng-cloak ng-show="visible">
+                                    <uib-tabset active="key">
+                                        <uib-tab index="1" heading="省份">
+                                            <div class="city-content">
+                                                <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in provinces" ng-click="handleSelectCity('province', $index, item.commonRegionId, item.commonRegionName)">{{item.commonRegionName}}</li>
+                                            </div>
+                                        </uib-tab>
+                                        <uib-tab index="2" heading="城市">
+                                            <div class="city-content">
+                                                <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('city', $index, item.commonRegionId, item.commonRegionName)">{{item.commonRegionName}}</li>
+                                            </div>
+                                        </uib-tab>
+                                    </uib-tabset>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label">机型：</label>
-                                    <div class="select-box">
-                                        <select class="form-control" ng-model="conditionQueryForm.modelCd" ng-options="model.modelCd as model.modelName for model in allModelList">
-                                            <option value="">全部</option>
-                                        </select>
-                                    </div>
-                                </div> 
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label">品牌名：</label>
-                                    <input type="text" class="form-control" ng-model="conditionQueryForm.brandName">
-                                </div>
-                            </div>  
+                            <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label">机型名：</label>
-                                    <input type="text" class="form-control" ng-model="conditionQueryForm.modelName">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">品牌：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="conditionQueryForm.brandCd" ng-options="item.brandCd as item.brandName for item in allBrandList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">机型：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="conditionQueryForm.modelCd" ng-options="model.modelCd as model.modelName for model in allModelList">
+                                        <option value="">全部</option>
+                                    </select>
                                 </div>
                             </div> 
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label">仓库名：</label>
-                                    <input type="text" class="form-control" ng-model="conditionQueryForm.storageName">
-                                </div>
-                            </div> 
-                            <div class="col-xs-3">
-                                <button type="submit" class="btn btn-sm btn-query querybtn" ng-click="orderQuery(curPage)"><i class="iconfont">&#xe600;</i> 查询</button>
-                                <a class="btn-queries" ng-click="toggle('isHidden')">更多查询条件</a>
-                            </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="moreCondition" ng-show="isHidden">
-                <div class="row mb10">
-                    <div class="col-xs-3">
-                        <div class="form-group">
-                            <label class="control-label">渠道类型：</label>
-                            <div class="select-box">
-                                <select class="form-control" ng-model="conditionQueryForm.channelTypeId" ng-options="item.channelTypeId as item.channelTypeName for item in channelTypeList">
-                                    <option value="">全部</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-3">
-                        <div class="form-group">
-                            <label class="control-label">自有厅级别：</label>
-                            <div class="select-box">
-                                <select class="form-control" ng-model="conditionQueryForm.hallLevelId" ng-options="item.hallLevelId as item.hallLevelName for item in myHallList">
-                                    <option value="">全部</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            <label class="control-label">统计日期：</label>
-                            <div class="datepicker-input fn-left">
-                                <input type="text" id="createStartDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createStartDt" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" show-button-bar='false' />
-                                <span class="icon_time" ng-click="startOpen()">
-                                    <i class="glyphicon glyphicon-calendar"></i>
-                                </span>
-                            </div>
-                            <div class="datepicker-text fn-left">至</div>
-                            <div class="datepicker-input fn-left">
-                                <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" show-button-bar='false' />
-                                <span class="icon_time" ng-click="endOpen()">
-                                    <i class="glyphicon glyphicon-calendar"></i>
-                                </span>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">品牌名：</label>
+                                <input type="text" class="form-control" ng-model="conditionQueryForm.brandName">
                             </div>
                         </div>  
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-3">
-                        <div class="form-group">
-                            <label class="control-label">专营店星级：</label>
-                            <div class="select-box">
-                                <select class="form-control" ng-model="boutiqueStarId" ng-options="item.boutiqueStarId as item.boutiqueStarName for item in boutiqueStarList">
-                                    <option value="">全部</option>
-                                </select>
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">机型名：</label>
+                                <input type="text" class="form-control" ng-model="conditionQueryForm.modelName">
+                            </div>
+                        </div> 
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">仓库名：</label>
+                                <input type="text" class="form-control" ng-model="conditionQueryForm.storageName">
                             </div>
                         </div>
-                    </div> 
-                    <div class="col-xs-3">
-                        <div class="form-group">
-                            <label class="control-label">渠道单元名称：</label>
-                            <input type="text" class="form-control" ng-bind="conditionQueryForm.channelName">
+                        <div class="col-xs-3"></div> 
+                        <div class="col-xs-3">
+                            <button type="submit" class="btn btn-sm btn-query querybtn" ng-click="orderQuery(curPage)"><i class="iconfont">&#xe600;</i> 查询</button>
+                            <a class="btn-queries" ng-click="toggle('isHidden')">更多查询条件</a>
                         </div>
-                    </div> 
-                    <div class="col-xs-3">
-                        <div class="form-group">
-                            <label class="control-label">渠道单元编码：</label>
-                            <input type="text" class="form-control" ng-bind="conditionQueryForm.channelNbr">
-                        </div>
-                    </div> 
-                    <div class="col-xs-3">
-                        <div class="form-group">
-                            <label class="control-label">串码：</label>
-                            <input type="text" class="form-control" ng-bind="conditionQueryForm.instCode">
-                        </div>
-                    </div>   
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
-        
+        <div class="moreCondition" ng-show="isHidden">
+            <div class="row mb10">
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <label class="control-label">渠道类型：</label>
+                        <div class="select-box">
+                            <select class="form-control" ng-model="conditionQueryForm.channelTypeId" ng-options="item.channelTypeId as item.channelTypeName for item in channelTypeList">
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <label class="control-label">自有厅级别：</label>
+                        <div class="select-box">
+                            <select class="form-control" ng-model="conditionQueryForm.hallLevelId" ng-options="item.hallLevelId as item.hallLevelName for item in myHallList">
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label class="control-label">统计日期：</label>
+                        <div class="datepicker-input fn-left">
+                            <input type="text" id="createStartDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createStartDt" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" show-button-bar='false' />
+                            <span class="icon_time" ng-click="startOpen()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </span>
+                        </div>
+                        <div class="datepicker-text fn-left">至</div>
+                        <div class="datepicker-input fn-left">
+                            <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" show-button-bar='false' />
+                            <span class="icon_time" ng-click="endOpen()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </span>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <label class="control-label">专营店星级：</label>
+                        <div class="select-box">
+                            <select class="form-control" ng-model="boutiqueStarId" ng-options="item.boutiqueStarId as item.boutiqueStarName for item in boutiqueStarList">
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <label class="control-label">渠道单元名称：</label>
+                        <input type="text" class="form-control" ng-bind="conditionQueryForm.channelName">
+                    </div>
+                </div> 
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <label class="control-label">渠道单元编码：</label>
+                        <input type="text" class="form-control" ng-bind="conditionQueryForm.channelNbr">
+                    </div>
+                </div> 
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <label class="control-label">串码：</label>
+                        <input type="text" class="form-control" ng-bind="conditionQueryForm.instCode">
+                    </div>
+                </div>   
+            </div>
+        </div>
         <!-- 结果列表 -->
         <div class="result-list">
             <div class="result-head">
@@ -221,10 +219,10 @@
                                 <p ng-bind="item.OFFER_NAME"></p>
                             </td>
                             <td>
-                                <p ng-bind="item.COLOR">-</p>
+                                <p ng-bind="item.COLOR"></p>
                             </td>
                             <td>
-                                <p ng-bind="item.RAM&ROM">-</p>
+                                <p ng-bind="item.RAM&ROM"></p>
                             </td>
                             <td >
                                 <p class="overflow-handle" title="{{item.STORAGE_NAME}}" ng-bind="item.STORAGE_NAME"></p>

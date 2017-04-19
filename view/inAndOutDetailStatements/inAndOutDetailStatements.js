@@ -1,18 +1,18 @@
 /*  author:nieyalan */ 
 angular
     .module('inventoryTurnoverReportModule', ['ui.bootstrap'])
-    .run(['$rootScope',  function($rootScope) {     
+    .run(['$rootScope', function($rootScope) {     
         var id = window.frameElement && window.frameElement.id || '',
             obj = parent.$('#' + id).attr('data');
 
-        $scope.conditionQueryForm = obj ? JSON.parse(obj) : {};
-
-        // $rootScope.storeInfoList ={
-        //     CHANNEL_NAME:'于务产月志切',
-        //     CHANNEL_NBR:'350000198204097569',
-        //     COMMON_REGION_ID:'123456',
-        //     CHANNEL_ID:'54321'
-        // }
+        $rootScope.conditionQueryForm = obj ? JSON.parse(obj) : {};
+        debugger
+        $rootScope.conditionQueryForm = {
+            brandCd:'98204097569',
+            modelCd:'350000198204097569',
+            brandName:'道具卡上电脑',
+            modelName:'家居裤大锁'
+        }
     }])
     .factory('httpMethod', ['$http', '$q', function($http, $q) {
         var httpConfig = {
@@ -167,10 +167,10 @@ angular
         };
 
         //条件查询
-        httpMethod.qryProvinceCityInStock = function(param) {
+        httpMethod.qryInOutStockDetail = function(param) {
             var defer = $q.defer();
             $http({
-                url: httpConfig.siteUrl + '/chain/report/q/qryProvinceCityInStock',
+                url: httpConfig.siteUrl + '/chain/report/q/qryInOutStockDetail',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + JSON.stringify(param)
@@ -186,7 +186,7 @@ angular
         };
 
         //导出
-        httpMethod.exportProvinceCityInStock = function(param) {
+        httpMethod.exportInOutStockDetail = function(param) {
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/report/q/exportProvinceCityInStock',
@@ -307,7 +307,7 @@ angular
             });
 
             // 条件查询
-            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryProvinceCityInStock', {
+            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryInOutStockDetail', {
                 'rsphead': 's',
                 'success': true, //是否成功
                 'code': null,
@@ -315,27 +315,27 @@ angular
                 'data': {
                     'total|1-100': 50,
                     'list|10': [{ 
-                        'INST_CODE': '@province',//串码
-                        'BRAN_NAME':'@city',//品牌
-                        'MODEL_NAME|1-1000': 100,//型号
-                        'OFFER_NAME|1-1000': 100,//名称
-                        'COLOR|1-1000': 100,//颜色
-                        'RAM&ROM|1-1000': 100,//RAM&ROM
-                        'STORAGE_NAME|1-1000': 100,//仓库
-                        'OPERATOR_NAME|1-1000': 100,//经营主体
-                        'OPERATOR_CODE|1-1000': 100,//经营主体编码
-                        'CHANNEL_NAME|1-1000': 100,//渠道单元名称
-                        'CHANNEL_NBR|1-1000': 100,//渠道单元编码
-                        'SHOP_TYPE|1-1000': 100,//门店类型
-                        'IN_STOCK_TIME|1-1000': 100,//入库时间
-                        'OPERATION_TYPE|1-1000': 100,//操作类型
+                        'INST_CODE': '@id',//串码
+                        'BRAN_NAME':'@cword(3)',//品牌
+                        'MODEL_NAME': '@cword(3)',//型号
+                        'OFFER_NAME': '@cword(3)',//名称
+                        'COLOR': '@color',//颜色
+                        'RAM&ROM': '@cword(4)',//RAM&ROM
+                        'STORAGE_NAME': '@cword(3)',//仓库
+                        'OPERATOR_NAME': '@cword(3)',//经营主体
+                        'OPERATOR_CODE': '@id',//经营主体编码
+                        'CHANNEL_NAME': '@cword(3)',//渠道单元名称
+                        'CHANNEL_NBR': '@id',//渠道单元编码
+                        'SHOP_TYPE': '@cword(3)',//门店类型
+                        'IN_STOCK_TIME': '@datetime',//入库时间
+                        'OPERATION_TYPE': '@cword(3)',//操作类型
                     }]
                 },
                 'errors': null
             });
 
             // 导出
-            Mock.mock(httpConfig.siteUrl + '/chain/report/q/exportProvinceCityInStock', {
+            Mock.mock(httpConfig.siteUrl + '/chain/report/q/exportInOutStockDetail', {
                 'rsphead': 's',
                 'success': true, //是否成功
                 'code': null,
@@ -347,7 +347,7 @@ angular
         return httpMethod;
     }])
     .controller('conditionResult', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
-        $scope.conditionQueryForm = {
+        $rootScope.conditionQueryForm = {
             createStartDt: '', //制单日期开始
             createEndDt: '' //制单日期结束
         };
@@ -391,10 +391,10 @@ angular
             };
         });    
         $scope.$watch('conditionQueryForm.brandCd', function(newValue) {
-            $scope.conditionQueryForm.brandCd = newValue; 
+            $rootScope.conditionQueryForm.brandCd = newValue; 
 
             var param = {
-                'brandId' : _.get($scope, 'conditionQueryForm.brandCd')
+                'brandId' : _.get($rootScope, 'conditionQueryForm.brandCd')
             }
             //机型选择值获取接口
             httpMethod.loadModel(param).then(function(rsp) {
@@ -434,20 +434,20 @@ angular
             var params = {
                 provinceId : _.get($rootScope, 'provinceId'),
                 cityId: _.get($rootScope, 'cityId'),
-                brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
-                modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
-                brandName: _.get($scope, 'conditionQueryForm.brandName'),
-                modelName: _.get($scope, 'conditionQueryForm.modelName'),
-                st_time: _.get($scope, 'conditionQueryForm.createStartDt'),
-                ed_time: _.get($scope, 'conditionQueryForm.createEndDt'),
-                channelTypeId: _.get($scope, 'conditionQueryForm.channelTypeId'),
-                hallLevelId: _.get($scope, 'conditionQueryForm.hallLevelId'),
-                boutiqueStarId: _.get($scope, 'conditionQueryForm.boutiqueStarId'),
+                brandCd: _.get($rootScope, 'conditionQueryForm.brandCd'),
+                modelCd: _.get($rootScope, 'conditionQueryForm.modelCd'),
+                brandName: _.get($rootScope, 'conditionQueryForm.brandName'),
+                modelName: _.get($rootScope, 'conditionQueryForm.modelName'),
+                st_time: _.get($rootScope, 'conditionQueryForm.createStartDt'),
+                ed_time: _.get($rootScope, 'conditionQueryForm.createEndDt'),
+                channelTypeId: _.get($rootScope, 'conditionQueryForm.channelTypeId'),
+                hallLevelId: _.get($rootScope, 'conditionQueryForm.hallLevelId'),
+                boutiqueStarId: _.get($rootScope, 'conditionQueryForm.boutiqueStarId'),
                 curPage: curPage || $scope.curPage, // 当前页
                 pageSize: $scope.rowNumPerPage // 每页展示行数
             } 
-            //专营店星级选项选择值获取接口
-            httpMethod.qryProvinceCityInStock(params).then(function(rsp) {
+            
+            httpMethod.qryInOutStockDetail(params).then(function(rsp) {
                 if (rsp.success) {
                     $scope.resultList = rsp.data.list;
                     $scope.totalNum = rsp.data.total;
@@ -456,24 +456,24 @@ angular
         }
 
         // 导出
-        $scope.exportProvinceCityInStock = function() {
+        $scope.exportInOutStockDetail = function() {
             var param = {
                 provinceId : _.get($rootScope, 'provinceId'),
                 cityId: _.get($rootScope, 'cityId'),
-                brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
-                modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
-                brandName: _.get($scope, 'conditionQueryForm.brandName'),
-                modelName: _.get($scope, 'conditionQueryForm.modelName'),
-                st_time: _.get($scope, 'conditionQueryForm.createStartDt'),
-                ed_time: _.get($scope, 'conditionQueryForm.createEndDt'),
-                channelTypeId: _.get($scope, 'conditionQueryForm.channelTypeId'),
-                hallLevelId: _.get($scope, 'conditionQueryForm.hallLevelId'),
-                boutiqueStarId: _.get($scope, 'conditionQueryForm.boutiqueStarId'),
+                brandCd: _.get($rootScope, 'conditionQueryForm.brandCd'),
+                modelCd: _.get($rootScope, 'conditionQueryForm.modelCd'),
+                brandName: _.get($rootScope, 'conditionQueryForm.brandName'),
+                modelName: _.get($rootScope, 'conditionQueryForm.modelName'),
+                st_time: _.get($rootScope, 'conditionQueryForm.createStartDt'),
+                ed_time: _.get($rootScope, 'conditionQueryForm.createEndDt'),
+                channelTypeId: _.get($rootScope, 'conditionQueryForm.channelTypeId'),
+                hallLevelId: _.get($rootScope, 'conditionQueryForm.hallLevelId'),
+                boutiqueStarId: _.get($rootScope, 'conditionQueryForm.boutiqueStarId'),
                 curPage: curPage || $scope.curPage, // 当前页
                 pageSize: $scope.rowNumPerPage // 每页展示行数
             };
 
-            window.open(httpConfig.siteUrl + '/chain/report/q/exportProvinceCityInStock?param=' + JSON.stringify(param));
+            window.open(httpConfig.siteUrl + '/chain/report/q/exportInOutStockDetail?param=' + JSON.stringify(param));
         }
     }])
     // 城市
