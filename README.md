@@ -99,16 +99,17 @@
     * 新增店员 **addNewSalesman**
 
 * **报表**
-    * 01 省市级进销存报表 **invoicingStatements**
-    * 02 省市级销量及自注册报表 **salesAndRegistrationList**
-    * 03 省市级库存周转报表 **inventoryTurnoverReport**
-    * 04 门店级库存周转报表 **storeInvoicingStatements**
-    * 09 入退库明细报表 **inAndOutDetailStatements**
+    * 省市级进销存报表 **invoicingStatements**
+    * 省市级销量及自注册报表 **salesAndRegistrationList**
+    * 省市级库存周转报表 **inventoryTurnoverReport**
+    * 门店级库存周转报表 **storeInvoicingStatements**
+    * 入退库明细报表 **inAndOutDetailStatements**
+    * 串码级明细报表-库存明细报表 **stringCodeInventoryDetailedReports**
+    * 代理商级报表-进销存报表 **agentLevelSalesStockReport**
+    * 门店级报表#库存周转报表 **inventoryTurnoverReportForStore**
+    * 分品牌机型报表#进销存报表 **agentLevelSalesStockReportForBrand**
+    * 门店级报表-销量及自注册报表 **storeLevelSalesRegistrationReport**
+    * 分品牌机型报表-库存周转报表 **brandModelStatementsInventoryTurnoverReport**
+    * 串码级明细报表-销量明细报表 **stringCodeInventorySalesDetailedReports**
 
-    
-    * 05 门店级报表-销量及自注册报表 **storeLevelSalesRegistrationReport**
-    * 08 分品牌机型报表-库存周转报表 **brandModelStatementsInventoryTurnoverReport**
-    * 10 串码级明细报表-销量明细报表 **stringCodeInventorySalesDetailedReports**
-    * 11 串码级明细报表-库存明细报表 **stringCodeInventoryDetailedReports**
-    * 12 代理商级报表-进销存报表 **agentLevelSalesStockReport**
 

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>分品牌机型报表#进销存报表</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="agentLevelSalesStockReportForBrand.css">
+</head>
+
+<body ng-app="inventoryModule">
+    <!-- DOM结构开始 -->
+    <div class="inventory top-line wavy-line" ng-controller="conditionQuery">
+        <!-- 条件查询 -->
+        <form name="conditionQueryForm" class="form-inline" role="form">
+            <!-- 1：所有选择框都应该有“全部”这个选项，当选择全部后，传递给后台的该字段应为空字符串或者不传该字段 -->
+            <div class="alarm-query fn-clear">
+                <p class="alarm-query-title fn-left">搜
+                    <br/>索</p>
+                <div class="condition-query-box fn-right">
+                    <div class="row mb10">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">品牌：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="queryForm.brandCd" ng-options="item.brandCd as item.brandName for item in loadBrandList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">机型：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="queryForm.modelCd" ng-options="item.modelCd as item.modelName for item in loadModelList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">品牌名：</label>
+                                <input type="text" class="form-control" ng-model="queryForm.brandName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">机型名：</label>
+                                <input type="text" class="form-control" ng-model="queryForm.modelName">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">统计日期：</label>
+                                <div class="datepicker-input fn-left">
+                                    <input type="text" id="st_time" class="form-control modify-input" uib-datepicker-popup="{{format}}" readonly ng-model="queryForm.st_time" is-open="startPopupOpened" min-date="minStartDate" max-date="maxStartDate" datepicker-options="startDateOptions" show-button-bar='false' />
+                                    <span class="icon_time" ng-click="startOpen()">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                </div>
+                                <div class="datepicker-text fn-left">至</div>
+                                <div class="datepicker-input fn-left">
+                                    <input type="text" id="ed_time" class="form-control modify-input" uib-datepicker-popup="{{format}}" readonly ng-model="queryForm.ed_time" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" show-button-bar='false' />
+                                    <span class="icon_time" ng-click="endOpen()">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 text-right">
+                            <button type="submit" ng-click="queryFormSubmit()" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- 结果列表 -->
+        <div class="inventory-charts fn-clear" ng-controller="QueryResultCtrl">
+            <div class="charts-box">
+                <div class="result-head">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="model-header">
+                                <img class="model-img" src="../../resources/images/icon-tablelist-blue.png">
+                                <p class="model-title">进销存报表</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <button class="btn btn-xs btn-set" ng-click="exportSaleDetail()"><i class="iconfont">
+                            &#xe627;</i> 导出</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-table" ng-cloak>
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="60">序号</th>
+                                <th width="120">品牌</th>
+                                <th width="120">型号</th>
+                                <th width="120">名称</th>
+                                <th width="120">入库量</th>
+                                <th width="120">入库价值</th>
+                                <th width="120">退库量</th>
+                                <th width="120">退库价值</th>
+                                <th width="120">总销量</th>
+                                <th width="120">其中合约销量</th>
+                                <th width="120">其中裸机销量</th>
+                                <th width="120">调拨出库量</th>
+                                <th width="120">调拨出库价值</th>
+                                <th width="120">调拨入库量</th>
+                                <th width="120">调拨入库价值</th>
+                                <th width="120">退货量</th>
+                                <th width="120">退货价值</th>
+                                <th width="120">库存量</th>
+                                <th width="120">库存价值</th>
+                                <th width="120">收银总金额</th>
+                                <th width="120">其中合约收银金额</th>
+                                <th width="120">其中裸机收银金额</th>
+                                <th width="120">入库后的销量</th>
+                                <th width="120">其中合约销量</th>
+                                <th width="120">其中裸机销量</th>
+                                <th width="120">零售消化率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in qrySaleDetailList">
+                                <td>
+                                    <p ng-bind="$index + 1"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.BRAN_NAME"  class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.MODEL_NAME"  class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OFFER_NAME"  class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.IN_STOCK_COUNT"  class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.IN_STOCK_AMOUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OUT_STOCK_COUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OUT_STOCK_AMOUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.ALL_SALE_COUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.CONTRACT_SALE_COUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.TERMINAL_SALE_COUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.ALLOT_IN_COUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.ALLOT_IN_AMOUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.ALLOT_OUT_COUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.ALLOT_OUT_AMOUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SALE_OUT_COUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SALE_OUT_AMOUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.NOW_STOCK_COUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.NOW_STOCK_AMOUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.ALL_SALE_AMOUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.CONTRACT_SALE_AMOUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.TERMINAL_SALE_AMOUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.IN_STOCK_SALE_AMOUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.IN_STOCK_CONTRACT_SALE_COUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.IN_STOCK_TERMINAL_SALE_COUNT" class="overflow-handle"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.RESALE_DIGESTIBILITY" class="overflow-handle"></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="no-data" ng-if="qrySaleDetailList && !qrySaleDetailList.length">
+                        没有数据
+                    </p>
+                </div>
+                <div ng-controller="paginationCtrl" class="text-center page">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number" ng-cloak ng-bind="totalNum || 0"></span>条记录，当前显示第<span class="number" ng-cloak ng-bind="currentPage || 0"></span>页</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/angular-locale_zh-cn.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/mock.js"></script>
+    <script src="../../resources/js/moment.js"></script>
+    <script src="agentLevelSalesStockReportForBrand.js"></script>
+</body>
+
+</html>
