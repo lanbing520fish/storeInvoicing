@@ -1,12 +1,10 @@
 angular
     .module('inventoryModule', ['ui.bootstrap'])
     .run(['$rootScope', function ($rootScope) {
-
         $rootScope.ismoreConditions = false; //更多查询条件
         var id = window.frameElement && window.frameElement.id || '',
                 obj = parent.$('#' + id).attr('data');
-        $rootScope.queryFormList = obj ? JSON.parse(obj) : {}; // 页面传入的信息
-
+        $rootScope.channelNbr = obj ? JSON.parse(obj) : ''; // 页面传入的信息
     }])
     .factory('httpConfig', [function(){
         httpConfig = {
@@ -207,17 +205,17 @@ angular
 
         var user_param = {}
 
-        $scope.queryForm = $.extend(true, {
+        $scope.queryForm = {
             brandCd: '', //品牌选择值
             modelCd: '', //型号选择值
             brandName: '', //品牌输入框值
             modelName: '', //机型输入框值
             retailShopName: '', //门店名
-            channelNbr: '', //门店对应渠道单元编码
+            channelNbr: $rootScope.channelNbr, //门店对应渠道单元编码
             operatorsNbr: '', //门店对应经营主体编码
             channelName: '', //渠道单元名称
             instCode: '', //串码
-        }, $rootScope.queryFormList);
+        };
 
         //更多查询条件
         $scope.moreConditions = function(){
