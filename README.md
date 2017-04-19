@@ -106,8 +106,9 @@
     * 入退库明细报表 **inAndOutDetailStatements**
 
     
-    * 串码级明细报表-库存明细报表 **stringCodeInventoryDetailedReports**
-    * 代理商级报表-进销存报表 **agentLevelSalesStockReport**
-    * 分品牌机型报表-库存周转报表 **brandModelStatementsInventoryTurnoverReport**
-    * 串码级明细报表-销量明细报表 **stringCodeInventorySalesDetailedReports**
+    * 05 门店级报表-销量及自注册报表 **storeLevelSalesRegistrationReport**
+    * 08 分品牌机型报表-库存周转报表 **brandModelStatementsInventoryTurnoverReport**
+    * 10 串码级明细报表-销量明细报表 **stringCodeInventorySalesDetailedReports**
+    * 11 串码级明细报表-库存明细报表 **stringCodeInventoryDetailedReports**
+    * 12 代理商级报表-进销存报表 **agentLevelSalesStockReport**
 

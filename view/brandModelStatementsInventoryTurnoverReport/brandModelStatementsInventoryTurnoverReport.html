@@ -85,7 +85,7 @@
                         </div>
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <button type="submit" ng-click="queryFormSubmit()" class="btn btn-sm btn-stat-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                                <button type="submit" ng-click="queryFormSubmit()" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
                             </div>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                         <tbody>
                             <tr ng-repeat="item in qryBrandModelLevelStockReportList">
                                 <td>
-                                    <p ng-bind="item.INDEX_NUM"></p>
+                                    <p ng-bind="$index + 1"></p>
                                 </td>
                                 <td>
                                     <p ng-bind="item.BRAND_NAME"></p>
