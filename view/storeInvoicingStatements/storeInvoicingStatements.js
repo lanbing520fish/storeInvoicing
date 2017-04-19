@@ -569,7 +569,6 @@ angular
                 curPage: curPage || $scope.curPage, // 当前页
                 pageSize: $scope.rowNumPerPage // 每页展示行数
             } 
-            debugger
             httpMethod.qryShopInStockNoBizman(param).then(function(rsp) {
                 if (rsp.success) {
                     $scope.resultList = rsp.data.list;
@@ -641,6 +640,18 @@ angular
             window.open(httpConfig.siteUrl + '/chain/report/q/exportShopInStockShowBizman?param=' + JSON.stringify(param));
         }
     }])
+
+    .controller('resultCtrl', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
+        // 未勾选查看详情
+        $scope.checkDetail = function () {
+            // parent.angular.element(parent.$('#tabs')).scope().addTab('入退库明细报表', '/storeInvoicing/view/inAndOutDetailStatements/inAndOutDetailStatements.html', 'storeInfoList', JSON.stringify($scope.resultList;));
+        };   
+        // 已勾选查看详情
+        $scope.checkDetailchecked = function () {
+            // parent.angular.element(parent.$('#tabs')).scope().addTab('入退库明细报表', '/storeInvoicing/view/inAndOutDetailStatements/inAndOutDetailStatements.html', 'storeInfoList', JSON.stringify($scope.resultListChecked));
+        };   
+    }])
+
     // 城市
     .controller('cityCheckCtrl', ['$scope', '$rootScope', 'httpMethod',function($scope, $rootScope, httpMethod) { 
         $scope.provincesAndCities = {
