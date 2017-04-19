@@ -26,7 +26,7 @@ body{
 .condition-query-title {
     width: 20px;
     height: 50px;
-    margin: 5px 0 5px 8px;
+    margin: 25px 0 5px 8px;
     line-height: 25px;
     color: #333;
     font-size: 14px;
@@ -39,7 +39,7 @@ body{
 
 .datepicker-input {
     position: relative;
-    width: 40%;
+    width: 45%;
 }
 .form-group .form-control.lose-width{
     width: calc(100% - 50px) !important;
@@ -114,79 +114,6 @@ body{
     color: #333;
     font-size: 14px;
     font-weight: bold;
-}
-
-.btn-set {
-    margin-left: 2px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: #fff;
-    border-color: #c899f7;
-    color: #333;
-    font-size: 12px;
-}
-
-.btn-set:focus,
-.btn-set.focus {
-    background-color: #f7f7f7;
-    border-color: #c899f7;
-    color: #333;
-}
-
-.btn-set:hover {
-    background-color: #f7f7f7;
-    border-color: #c899f7;
-    color: #333;
-}
-
-.btn-set .iconfont {
-    color: #6d90e3;
-}
-
-.btn-edit {
-    margin-left: 2px;
-    padding: 0 6px;
-    background-color: #eddbff;
-    border-color: #ceaaf2;
-    color: #6d90e3;
-    font-size: 12px;
-}
-
-.btn-edit:focus,
-.btn-edit.focus {
-    border-color: #c899f7;
-    background-color: #e0c2ff;
-    color: #6d90e3;
-}
-.btn-edit:hover {
-    border-color: #c899f7;
-    background-color: #e0c2ff;
-    color: #6d90e3;
-}
-.btn-edit .iconfont {
-    color: #6d90e3;
-}
-.btn-disabled {
-    margin-left: 2px;
-    padding: 0 6px;
-    background-color: #dcdcdc;
-    border-color: #dcdcdc;
-    color: #bbb;
-    font-size: 12px;
-}
-.btn-disabled:focus,
-.btn-disabled.focus {
-    background-color: #dcdcdc;
-    border-color: #dcdcdc;
-    color: #bbb;
-}
-.btn-disabled:hover {
-    background-color: #dcdcdc;
-    border-color: #dcdcdc;
-    color: #bbb;
-}
-.btn-disabled .iconfont {
-    color: #bbb;
 }
 .form-group{
     padding-left:110px;
