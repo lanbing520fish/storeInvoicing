@@ -1,4 +1,7 @@
+/*  author:nieyalan */ 
 angular
+    .module('inventoryTurnoverReportModule', ['ui.bootstrap'])
+    angular
     .module('inventoryTurnoverReportModule', ['ui.bootstrap'])
     .factory('httpMethod', ['$http', '$q', function($http, $q) {
         var httpConfig = {
@@ -341,17 +344,66 @@ angular
                     'list|10': [{        
                         'PROVINCE_NAME': '@province',
                         'CITY_NAME':'@city',
-                        'CHANNEL_NAME|1-1000': 100,//渠道单元
+                        'CHANNEL_NAME': '@cword(4)',//渠道单元
                         'SON_BIZMAN_COUNT|1-1000': 100,//下属店中商数量
-                        'CHANNEL_NBR|1-1000': 100,//渠道单元编码
-                        'BEGIN_COOPERATION_TIME|1-1000': 100,//初始合作时间
-                        'TOWN_COUNTRY_BIAOZHI|1-1000': 100,//城乡标识
-                        'CHANNEL_TYPE|1-1000': 100,//渠道类型
-                        'HALL_LEVEL_TYPE|1-1000': 100,//自有厅级别
-                        'BOUTIQUE_SHOP_LEVEL|1-1000': 100,//专营店级别
-                        'DIAN_SHOP_TYPE|1-1000': 100,//销售点卖场类型
-                        'BUSINESS_LEVEL|1-1000': 100,//商圈级别
-                        'BOUTIQUE_SHOP_TYPE|1-1000': 100,//专营门店类别
+                        'CHANNEL_NBR': '@id',//渠道单元编码
+                        'BEGIN_COOPERATION_TIME': '@datetime',//初始合作时间
+                        'TOWN_COUNTRY_BIAOZHI': '@cword(4)',//城乡标识
+                        'CHANNEL_TYPE': '@cword(4)',//渠道类型
+                        'HALL_LEVEL_TYPE|1-10': 2,//自有厅级别
+                        'BOUTIQUE_SHOP_LEVEL|1-10': 3,//专营店级别
+                        'DIAN_SHOP_TYPE': '@cword(4)',//销售点卖场类型
+                        'BUSINESS_LEVEL|1-10': 5,//商圈级别
+                        'BOUTIQUE_SHOP_TYPE': '@cword(4)',//专营门店类别
+                        'IN_STOCK_COUNT|1-1000': 100,//入库量
+                        'IN_STOCK_AMOUNT|1-1000': 100,//入库价值
+                        'OUT_STOCK_COUNT|1-1000': 100,//退库量
+                        'OUT_STOCK_AMOUNT|1-1000': 100,//退库价值
+                        'ALL_SALE_COUNT|1-1000': 100,//销量
+                        'CONTRACT_SALE_COUNT|1-1000': 100,//其中合约销量
+                        'TERMINAL_SALE_COUNT|1-1000': 100,//其中裸机销量
+                        'ALLOT_IN_COUNT|1-1000': 100,//调拨出库量
+                        'ALLOT_IN_AMOUNT|1-1000': 100,//调拨出库价值
+                        'ALLOT_OUT_COUNT|1-1000': 100,//调拨入库量
+                        'ALLOT_OUT_AMOUNT|1-1000': 100,//调拨入库价值
+                        'SALE_OUT_COUNT|1-1000': 100,//退货量
+                        'SALE_OUT_AMOUNT|1-1000': 100,//退货价值
+                        'NOW_STOCK_COUNT|1-1000': 100,//库存量
+                        'NOW_STOCK_AMOUNT|1-1000': 100,//库存价值
+                        'ALL_SALE_AMOUNT|1-1000': 100,//收银总金额
+                        'CONTRACT_SALE_AMOUNT|1-1000': 100,//其中合约收银金额
+                        'TERMINAL_SALE_AMOUNT|1-1000': 100,//其中裸机收银金额
+                        'INSTOCK_SALEAMOUNT|1-1000': 100,//入库后的销量
+                        'INSTOCKCONTRACT_SALECOUNT|1-1000': 100,//其中合约销量
+                        'INSTOCK_TERMINAL_SALECOUNT|1-1000': 100,//其中裸机销量
+                        'RESALE_DIGESTIBILITY|1-100': 10,//零售消化率
+                        'SALE_REGISTRATIONS|1-1000': 100,//销售后的注册量
+                        'SALE_REGISTRATIONS_SELF|1-1000': 100,//销售后的注册量（本省）
+                        'SALE_REGISTRATIONS_OTHER|1-1000': 100,//销售后的注册量（外省）
+                        'INSOTKC_RANKING|1-1000': 100,//入库量排名
+                    }]
+                },
+                'errors': null
+            });
+            // 勾选条件查询
+            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryShopInStockShowBizman', {
+                'rsphead': 's',
+                'success': true, //是否成功
+                'code': null,
+                'msg': null, //失败信息
+                'data': {
+                    'total|1-100': 50,
+                    'list|10': [{ 
+                        'PROVINCE_NAME': '@province',
+                        'CITY_NAME':'@city',
+                        'RETAIL_SHOP_NAME': '@cword(4)',//门店名称
+                        'RETAIL_SHOP_TYPE': '@cword(4)',//门店类型
+                        'CHANNEL_NBR': '@id',//渠道单元编码
+                        'BEGIN_COOPERATION_TIME': '@cword(4)',//仓库
+                        'PARENT_CHANNEL_NAME': '@cword(4)',//归属渠道单元
+                        'PARENT_CHANNEL_NBR': '@id',//归属渠道单元编码
+                        'PARENT_OPERATOR_NAME': '@cword(4)',//归属经营主体
+                        'PARENT_OPERATOR_NBR': '@id',//归属经营主体编码
                         'IN_STOCK_COUNT|1-1000': 100,//入库量
                         'IN_STOCK_AMOUNT|1-1000': 100,//入库价值
                         'OUT_STOCK_COUNT|1-1000': 100,//退库量
@@ -382,46 +434,6 @@ angular
                 },
                 'errors': null
             });
-            // 勾选条件查询
-            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryShopInStockShowBizman', {
-                'rsphead': 's',
-                'success': true, //是否成功
-                'code': null,
-                'msg': null, //失败信息
-                'data': {
-                    'total|1-100': 50,
-                    'list|10': [{ 
-                        'PROVINCE_NAME': '@province',
-                        'CITY_NAME':'@city',
-                        'IN_STOCK_COUNT|1-1000': 100,//入库量
-                        'IN_STOCK_AMOUNT|1-1000': 100,//入库价值
-                        'OUT_STOCK_COUNT|1-1000': 100,//退库量
-                        'OUT_STOCK_AMOUNT|1-1000': 100,//退库价值
-                        'ALL_SALE_COUNT|1-1000': 100,//总销量
-                        'CONTRACT_SALE_COUNT|1-1000': 100,//其中合约销量
-                        'TERMINAL_SALE_COUNT|1-1000': 100,//其中裸机销量
-                        'ALLOT_IN_COUNT|1-1000': 100,//调拨入库量
-                        'ALLOT_IN_AMOUNT|1-1000': 100,//调拨入库价值
-                        'ALLOT_OUT_COUNT|1-1000': 100,//调拨出库量
-                        'ALLOT_OUT_AMOUNT|1-1000': 100,//调拨出库价值
-                        'SALE_OUT_COUNT|1-1000': 100,//退货量
-                        'SALE_OUT_AMOUNT|1-1000': 100,//退货价值
-                        'NOW_STOCK_COUNT|1-1000': 100,//库存量
-                        'NOW_STOCK_AMOUNT|1-1000': 100,//库存价值
-                        'ALL_SALE_AMOUNT|1-1000': 100,//收银总金额
-                        'CONTRACT_SALE_AMOUNT|1-1000': 100,//其中合约收银金额
-                        'TERMINAL_SALE_AMOUNT|1-1000': 100,//其中裸机收银金额
-                        'INSTOCK_SALEAMOUNT|1-1000': 100,//入库后的销量
-                        'INSTOCK_CONTRACT_SALECOUNT|1-1000': 100,//其中合约销量
-                        'INSTOCK_TERMINAL_SALECOUNT|1-1000': 100,//其中裸机销量
-                        'RESALE_DIGESTIBILITY|1-1000': 100,//零售消化率
-                        'SALE_REGISTRATIONS|1-1000': 100,//销售后的注册量
-                        'SALE_REGISTRATIONS_SELF|1-1000': 100,//销售后的注册量（本省）
-                        'SALE_REGISTRATIONS_OTHER|1-1000': 100,//销售后的注册量（外省）
-                    }]
-                },
-                'errors': null
-            });
             // 不勾选导出
             Mock.mock(httpConfig.siteUrl + '/chain/report/q/exportShopInStockNoBizman', {
                 'rsphead': 's',
@@ -443,7 +455,8 @@ angular
         }
         return httpMethod;
     }])
-    .controller('conditionQuery', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
+   
+    .controller('conditionResult', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
         $scope.conditionQueryForm = {
             createStartDt: '', //制单日期开始
             createEndDt: '' //制单日期结束
@@ -481,6 +494,18 @@ angular
         $scope.startPopupOpened = false;
         $scope.endPopupOpened = false;
         $scope.conditionQueryForm.brandCd = '';
+
+        $scope.isHidden = false; // 更多查询条件列表是否隐藏
+
+        // 切换展示
+        $scope.toggle = function() {
+            $scope.isHidden = !$scope.isHidden;         
+        } 
+
+        $rootScope.checked = false;
+        $scope.backfn=function(){
+            $rootScope.checked = !$rootScope.checked;
+        }
         //品牌选择值获取接口
         httpMethod.loadBrand().then(function(rsp) {
             if (rsp.success) {
@@ -519,20 +544,19 @@ angular
                 $scope.boutiqueStarList = rsp.data;
             };
         });
-        
-    }])
-    .controller('conditionResult', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
+    
         // 查询结果分页信息
         $scope.curPage = 1; // 当前页
         $scope.rowNumPerPage = 10; // 每页显示行数
         $scope.totalNum = 0; // 总条数
         $scope.maxSize = 5; // 最大展示页数
 
-        $scope.orderQuery = function(curPage) {
-            !curPage && $scope.$broadcast('pageChange');
-            var params = {
-                provinceId : _.get($scope, 'provinceId'),
-                cityId: _.get($scope, 'cityId'),
+        //未勾选查询
+        $scope.orderQuery = function(curPage) { 
+            !curPage && $scope.$broadcast('pageChange');  
+            var param = {
+                provinceId : _.get($rootScope, 'provinceId'),
+                cityId: _.get($rootScope, 'cityId'),
                 brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
                 modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
                 brandName: _.get($scope, 'conditionQueryForm.brandName'),
@@ -545,20 +569,20 @@ angular
                 curPage: curPage || $scope.curPage, // 当前页
                 pageSize: $scope.rowNumPerPage // 每页展示行数
             } 
-            //专营店星级选项选择值获取接口
-            httpMethod.qryProvinceCityInStock(params).then(function(rsp) {
+            debugger
+            httpMethod.qryShopInStockNoBizman(param).then(function(rsp) {
                 if (rsp.success) {
                     $scope.resultList = rsp.data.list;
                     $scope.totalNum = rsp.data.total;
                 };
             });     
         }
-
-        // 导出
-        $scope.exportProvinceCityInStock = function() {
+        //已勾选查询
+        $scope.orderQueryChecked = function(curPage) {
+            !curPage && $scope.$broadcast('pageChange'); 
             var param = {
-                provinceId : _.get($scope, 'provinceId'),
-                cityId: _.get($scope, 'cityId'),
+                provinceId : _.get($rootScope, 'provinceId'),
+                cityId: _.get($rootScope, 'cityId'),
                 brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
                 modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
                 brandName: _.get($scope, 'conditionQueryForm.brandName'),
@@ -570,9 +594,51 @@ angular
                 boutiqueStarId: _.get($scope, 'conditionQueryForm.boutiqueStarId'),
                 curPage: curPage || $scope.curPage, // 当前页
                 pageSize: $scope.rowNumPerPage // 每页展示行数
-            };
-
-            window.open(httpConfig.siteUrl + '/chain/report/q/exportProvinceCityInStock?param=' + JSON.stringify(param));
+            }   
+            httpMethod.qryShopInStockShowBizman(param).then(function(rsp) {
+                if (rsp.success) {
+                    $scope.resultListChecked = rsp.data.list;
+                    $scope.totalNumChecked = rsp.data.total;
+                };
+            });     
+        }
+        // 未勾选导出
+        $scope.exportShopInStockNoBizman = function(curPage) {
+            var param = {
+                provinceId : _.get($rootScope, 'provinceId'),
+                cityId: _.get($rootScope, 'cityId'),
+                brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
+                modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
+                brandName: _.get($scope, 'conditionQueryForm.brandName'),
+                modelName: _.get($scope, 'conditionQueryForm.modelName'),
+                st_time: _.get($scope, 'conditionQueryForm.createStartDt'),
+                ed_time: _.get($scope, 'conditionQueryForm.createEndDt'),
+                channelTypeId: _.get($scope, 'conditionQueryForm.channelTypeId'),
+                hallLevelId: _.get($scope, 'conditionQueryForm.hallLevelId'),
+                boutiqueStarId: _.get($scope, 'conditionQueryForm.boutiqueStarId'),
+                curPage: curPage || $scope.curPage, // 当前页
+                pageSize: $scope.rowNumPerPage // 每页展示行数
+            } 
+            window.open(httpConfig.siteUrl + '/chain/report/q/exportShopInStockNoBizman?param=' + JSON.stringify(param));
+        }
+        // 已勾选导出
+        $scope.exportShopInStockShowBizman = function(curPage) {
+            var param = {
+                provinceId : _.get($rootScope, 'provinceId'),
+                cityId: _.get($rootScope, 'cityId'),
+                brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
+                modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
+                brandName: _.get($scope, 'conditionQueryForm.brandName'),
+                modelName: _.get($scope, 'conditionQueryForm.modelName'),
+                st_time: _.get($scope, 'conditionQueryForm.createStartDt'),
+                ed_time: _.get($scope, 'conditionQueryForm.createEndDt'),
+                channelTypeId: _.get($scope, 'conditionQueryForm.channelTypeId'),
+                hallLevelId: _.get($scope, 'conditionQueryForm.hallLevelId'),
+                boutiqueStarId: _.get($scope, 'conditionQueryForm.boutiqueStarId'),
+                curPage: curPage || $scope.curPage, // 当前页
+                pageSize: $scope.rowNumPerPage // 每页展示行数
+            } 
+            window.open(httpConfig.siteUrl + '/chain/report/q/exportShopInStockShowBizman?param=' + JSON.stringify(param));
         }
     }])
     // 城市
@@ -601,7 +667,7 @@ angular
                 }
                 if($scope.provincesAndCities.CITY_COMMONREGION_VALUE === ''){
                     var param = {
-                        'provinceId': _.get($scope, 'provinceId')
+                        'provinceId': _.get($scope, 'provinces.commonRegionId')
                     }
                     httpMethod.qryCity(param).then(function(rsp) {
                         if (rsp.success) {
@@ -622,7 +688,6 @@ angular
         $scope.key = 1;
         $scope.provinceIndex = '';
         $scope.cityIndex = '';
-        $scope.areaId = '';
         $scope.provinceName = '';
         $scope.cityName = '';
         $scope.checkedAreaName = '';
@@ -639,11 +704,13 @@ angular
                 case 'province':
                     $scope.key = 2;
                     $scope.provinceIndex = index;
+                    $rootScope.provinceId = areaId;
                     $scope.provinceName = areaName;
+                    me.handleSubmitBtn(level);
                     break;
                 case 'city':
                     $scope.cityIndex = index;
-                    $scope.areaId = areaId;
+                    $rootScope.cityId = areaId;
                     $scope.cityName = areaName;
                     me.handleSubmitBtn(level);
                     break;
@@ -678,3 +745,4 @@ angular
             $log.log('Page changed to: ' + $scope.curPage);
         };
     }]);
+    

@@ -1,3 +1,4 @@
+/*  author:nieyalan */ 
 angular
     .module('salesAndRegistrationListModule', ['ui.bootstrap'])
     .factory('httpMethod', ['$http', '$q', function($http, $q) {
@@ -520,7 +521,6 @@ angular
         $scope.key = 1;
         $scope.provinceIndex = '';
         $scope.cityIndex = '';
-        $scope.areaId = '';
         $scope.provinceName = '';
         $scope.cityName = '';
         $scope.checkedAreaName = '';
@@ -537,11 +537,13 @@ angular
                 case 'province':
                     $scope.key = 2;
                     $scope.provinceIndex = index;
+                    $scope.provinceId = areaId;
                     $scope.provinceName = areaName;
+                    me.handleSubmitBtn(level);
                     break;
                 case 'city':
                     $scope.cityIndex = index;
-                    $scope.areaId = areaId;
+                    $scope.cityId = areaId;
                     $scope.cityName = areaName;
                     me.handleSubmitBtn(level);
                     break;

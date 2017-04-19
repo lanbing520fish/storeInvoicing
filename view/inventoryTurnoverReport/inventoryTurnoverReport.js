@@ -1,3 +1,4 @@
+/*  author:nieyalan */ 
 angular
     .module('inventoryTurnoverReportModule', ['ui.bootstrap'])
     .factory('httpMethod', ['$http', '$q', function($http, $q) {
@@ -243,7 +244,8 @@ angular
         }
         return httpMethod;
     }])
-    .controller('conditionQuery', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
+    
+    .controller('conditionResult', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
         $scope.conditionQueryForm = {
             createStartDt: '', //制单日期开始
             createEndDt: '' //制单日期结束
@@ -300,9 +302,7 @@ angular
                 };
             });  
         });
-        
-    }])
-    .controller('conditionResult', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
+
         // 查询结果分页信息
         $scope.curPage = 1; // 当前页
         $scope.rowNumPerPage = 10; // 每页显示行数
@@ -312,8 +312,8 @@ angular
         $scope.orderQuery = function(curPage) {
             !curPage && $scope.$broadcast('pageChange');
             var params = {
-                provinceId : _.get($scope, 'provinceId'),
-                cityId: _.get($scope, 'cityId'),
+                provinceId : _.get($rootScope, 'provinceId'),
+                cityId: _.get($rootScope, 'cityId'),
                 brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
                 modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
                 brandName: _.get($scope, 'conditionQueryForm.brandName'),
@@ -334,9 +334,9 @@ angular
 
         // 导出
         $scope.exportProvinceCityInStock = function() {
-            var param = {
-                provinceId : _.get($scope, 'provinceId'),
-                cityId: _.get($scope, 'cityId'),
+            var params = {
+                provinceId : _.get($rootScope, 'provinceId'),
+                cityId: _.get($rootScope, 'cityId'),
                 brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
                 modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
                 brandName: _.get($scope, 'conditionQueryForm.brandName'),
@@ -351,7 +351,7 @@ angular
                 pageSize: $scope.rowNumPerPage // 每页展示行数
             };
 
-            window.open(httpConfig.siteUrl + '/chain/report/q/exportProvinceCitySale?param=' + JSON.stringify(param));
+            window.open(httpConfig.siteUrl + '/chain/report/q/exportProvinceCitySale?params=' + JSON.stringify(params));
         }
     }])
     // 城市
@@ -380,7 +380,7 @@ angular
                 }
                 if($scope.provincesAndCities.CITY_COMMONREGION_VALUE === ''){
                     var param = {
-                        'provinceId': _.get($scope, 'provinceId')
+                        'provinceId': _.get($scope, 'provinces.commonRegionId')
                     }
                     httpMethod.qryCity(param).then(function(rsp) {
                         if (rsp.success) {
@@ -401,7 +401,6 @@ angular
         $scope.key = 1;
         $scope.provinceIndex = '';
         $scope.cityIndex = '';
-        $scope.areaId = '';
         $scope.provinceName = '';
         $scope.cityName = '';
         $scope.checkedAreaName = '';
@@ -418,11 +417,13 @@ angular
                 case 'province':
                     $scope.key = 2;
                     $scope.provinceIndex = index;
+                    $rootScope.provinceId = areaId;
                     $scope.provinceName = areaName;
+                    me.handleSubmitBtn(level);
                     break;
                 case 'city':
                     $scope.cityIndex = index;
-                    $scope.areaId = areaId;
+                    $rootScope.cityId = areaId;
                     $scope.cityName = areaName;
                     me.handleSubmitBtn(level);
                     break;
