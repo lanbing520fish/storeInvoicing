@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>门店级报表-销量及自注册报表</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="storeLevelSalesRegistrationReport.css">
+</head>
+
+<body ng-app="inventoryModule">
+    <!-- DOM结构开始 -->
+    <div class="inventory top-line wavy-line" ng-controller="conditionQuery">
+        <!-- 条件查询 -->
+        <form name="conditionQueryForm" class="form-inline" role="form">
+            <!-- 1：所有选择框都应该有“全部”这个选项，当选择全部后，传递给后台的该字段应为空字符串或者不传该字段 -->
+            <div class="alarm-query fn-clear">
+                <p class="alarm-query-title fn-left">搜
+                    <br/>索</p>
+                <div class="condition-query-box fn-right">
+                    <div class="row mb10">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">省市：</label>
+                                <input type="text" class="form-control" ng-model="checkedAreaName" disabled>
+                                <button ng-click="cityCheck()" type="submit" ng-show="isshowcityName" class="btn btn-sm btn-location" ng-cloak><i
+                                    class="iconfont">&#xe6cb;</i></button>
+                                <div class="city-check-box" ng-show="visible" ng-cloak>
+                                    <uib-tabset active="key">
+                                        <uib-tab index="1" heading="省份" ng-show="isshowprovinceName">
+                                            <div class="city-content">
+                                                <li class="city-item" ng-class="{current: $index === provinceIndex}"
+                                                    ng-repeat="item in qryProvinceList"
+                                                    ng-click="handleSelectCity('province', $index, item.commonRegionId, item.commonRegionName)">
+                                                    {{item.commonRegionName}}
+                                                </li>
+                                            </div>
+                                        </uib-tab>
+                                        <uib-tab index="2" heading="城市" ng-show="isshowcityName">
+                                            <div class="city-content">
+                                                <li class="city-item" ng-class="{current: $index === cityIndex}"
+                                                    ng-repeat="item in qryCityList"
+                                                    ng-click="handleSelectCity('city', $index, item.commonRegionId, item.commonRegionName)">
+                                                    {{item.commonRegionName}}
+                                                </li>
+                                            </div>
+                                        </uib-tab>
+                                    </uib-tabset>
+                                </div>
+                                <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">品牌：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="queryForm.brandCd" ng-options="item.brandCd as item.brandName for item in loadBrandList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">机型：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="queryForm.modelCd" ng-options="storage.modelCd as storage.modelName for storage in loadModelList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">渠道类型：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="queryForm.channelTypeId" ng-options="storage.channelTypeId as storage.channelTypeName for storage in loadChannelTypeList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">品牌名：</label>
+                                <input type="text" class="form-control" ng-model="queryForm.brandName">
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <label class="control-label">机型名：</label>
+                                <input type="text" class="form-control" ng-model="queryForm.modelName">
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="checkbox"><input id="showshop" type="checkbox" ng-model="showshop" ng-click="isshowshop()"><label for="showshop">显示店中商信息</label></div>
+                            <button type="submit" class="btn btn-sm btn-query querybtn btn-stat-query" ng-click="queryFormSubmit()"><i class="iconfont">&#xe600;</i> 查询</button>
+                            <a ng-class="{'btn-queries': ismoreConditions, 'btn-queries-open': !ismoreConditions}" ng-click="moreConditions()" ng-cloak>更多查询条件</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="purchase-infomation fn-clear" ng-show="ismoreConditions" ng-cloak>
+                <div class="condition-query-box fn-right">
+                    <div class="row mb10">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">自有厅级别：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="queryForm.hallLevelId" ng-options="brand.hallLevelId as brand.hallLevelName for brand in loadMyHallList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">专营店星级：</label>
+                                <div class="select-box">
+                                    <select class="form-control" ng-model="queryForm.boutiqueStarId" ng-options="item.boutiqueStarId as item.boutiqueStarName for item in loadBoutiqueStarList">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">统计日期：</label>
+                                <div class="datepicker-input fn-left">
+                                    <input type="text" id="st_time" class="form-control modify-input"
+                                           uib-datepicker-popup="{{format}}" readonly
+                                           ng-model="queryForm.st_time"
+                                           is-open="startPopupOpened" min-date="minStartDate"
+                                           max-date="maxStartDate" datepicker-options="startDateOptions"
+                                           show-button-bar='false'/>
+                                        <span class="icon_time" ng-click="startOpen()">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                </div>
+                                <div class="datepicker-text fn-left">至</div>
+                                <div class="datepicker-input fn-left">
+                                    <input type="text" id="ed_time" class="form-control modify-input"
+                                           uib-datepicker-popup="{{format}}" readonly
+                                           ng-model="queryForm.ed_time" is-open="endPopupOpened"
+                                           min-date="minEndDate" max-date="maxEndDate"
+                                           datepicker-options="endDateOptions" show-button-bar='false'/>
+                                        <span class="icon_time" ng-click="endOpen()">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">渠道单元名称：</label>
+                                <input type="text" class="form-control" ng-model="queryForm.channelName">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">渠道单元编码：</label>
+                                <input type="text" class="form-control" ng-model="queryForm.channelNbr">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>    
+        <!-- 结果列表 -->
+        <div class="inventory-charts fn-clear" ng-controller="QueryResultCtrl">
+            <div class="charts-box">
+                <div class="result-head">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="model-header">
+                                <img class="model-img" src="../../resources/images/icon-tablelist-blue.png">
+                                <p class="model-title">销量及自注册报表</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <button class="btn btn-xs btn-set" ng-click="exportQryInOutStockDetail()"><i class="iconfont">
+                            &#xe627;</i> 导出</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-table" ng-cloak>
+                    <!-- 不显示店中商信息 -->
+                    <table class="table table-striped table-hover table-bordered" ng-if="!showshop">
+                        <thead>
+                            <tr>
+                                <th width="80" rowspan="2">序号</th>
+                                <th width="120" rowspan="2">省</th>
+                                <th width="120" rowspan="2">市</th>
+                                <th width="120" rowspan="2">渠道单元</th>
+                                <th width="120" rowspan="2">下属店中商数量</th>
+                                <th width="150" rowspan="2">渠道单元编码</th>
+                                <th width="120" rowspan="2">初始合作时间</th>
+                                <th width="120" rowspan="2">城乡标识</th>
+                                <th width="120" rowspan="2">渠道类型</th>
+                                <th width="120" rowspan="2">自有厅级别</th>
+                                <th width="120" rowspan="2">专营店级别</th>
+                                <th width="120" rowspan="2">销售点卖场类型</th>
+                                <th width="120" rowspan="2">商圈级别</th>
+                                <th width="120" rowspan="2">专营门店类别</th>
+                                <th width="240" colspan="3">精品销售系统销量</th>
+                                <th width="240" colspan="3">精品销售系统销量且自注册注册量</th>
+                                <th width="200" rowspan="2">其中：注册为新入网用户的终端量</th>
+                                <th width="200" rowspan="2">其中：注册为存量用户的终端量</th>
+                                <th width="80" rowspan="2">拉新率</th>
+                                <th width="240" colspan="3">精品销售系统销量且在本省注册量</th>
+                                <th width="240" colspan="3">精品销售系统销量且在外省注册量</th>
+                                <th width="80" rowspan="2">销量排名</th>
+                                <th width="120" rowspan="2">相应清单查看</th>
+                            </tr>
+                            <tr>
+                                <th width="80">总销量</th>
+                                <th width="80">合约销量</th>
+                                <th width="80">裸机销量</th>
+                                <th width="80">总销量</th>
+                                <th width="80">合约销量</th>
+                                <th width="80">裸机销量</th>
+                                <th width="80">总销量</th>
+                                <th width="80">合约销量</th>
+                                <th width="80">裸机销量</th>
+                                <th width="80">总销量</th>
+                                <th width="80">合约销量</th>
+                                <th width="80">裸机销量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in qryShopSaleCountNoBizmanList">
+                                <td>
+                                    <p ng-bind="$index + 1"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PROVINCE_NAME"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.CITY_NAME"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.CHANNEL_NAME"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SON_BIZMAN_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.CHANNEL_NBR"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.BEGIN_COOPERATION_TIME"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.TOWN_COUNTRY_BIAOZHI"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.CHANNEL_TYPE"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.HALL_LEVEL_TYPE"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.BOUTIQUE_SHOP_LEVEL"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.DIAN_SHOP_TYPE"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.BUSINESS_LEVEL"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.BOUTIQUE_SHOP_TYPE"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.ALL_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.CONTRACT_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.TERMINAL_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SELF_ALL_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SELF_CONTRACT_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SELF_TERMINAL_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.STOCK_USER_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.NEWINTER_USER_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.NEW_RATE"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PROVINCE_ALL_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PROVINCE_CONTRACT_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PROVINCE_TERMINAL_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OTHER_ALL_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OTHER_CONTRACT_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OTHER_TERMINAL_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SALE_RANKING"></p>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-edit" ng-click="clickView($index)"><i class="iconfont">&#xe60b;</i> 点击查看</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 显示店中商信息 -->
+                    <table class="table table-striped table-hover table-bordered" ng-if="showshop">
+                        <thead>
+                            <tr>
+                                <th width="80" rowspan="2">序号</th>
+                                <th width="120" rowspan="2">省</th>
+                                <th width="120" rowspan="2">市</th>
+                                <th width="120" rowspan="2">门店名称</th>
+                                <th width="120" rowspan="2">门店类型</th>
+                                <th width="150" rowspan="2">渠道单元编码</th>
+                                <th width="150" rowspan="2">归属渠道单元</th>
+                                <th width="150" rowspan="2">归属渠道单元编码</th>
+                                <th width="150" rowspan="2">归属经营主体</th>
+                                <th width="150" rowspan="2">归属经营主体编码</th>
+                                <th width="240" colspan="3">精品销售系统销量</th>
+                                <th width="240" colspan="3">精品销售系统销量且自注册注册量</th>
+                                <th width="200" rowspan="2">其中：注册为新入网用户的终端量</th>
+                                <th width="200" rowspan="2">其中：注册为存量用户的终端量</th>
+                                <th width="80" rowspan="2">拉新率</th>
+                                <th width="240" colspan="3">精品销售系统销量且在本省注册量</th>
+                                <th width="240" colspan="3">精品销售系统销量且在外省注册量</th>
+                                <th width="80" rowspan="2">销量排名</th>
+                            </tr>
+                            <tr>
+                                <th width="80">总销量</th>
+                                <th width="80">合约销量</th>
+                                <th width="80">裸机销量</th>
+                                <th width="80">总销量</th>
+                                <th width="80">合约销量</th>
+                                <th width="80">裸机销量</th>
+                                <th width="80">总销量</th>
+                                <th width="80">合约销量</th>
+                                <th width="80">裸机销量</th>
+                                <th width="80">总销量</th>
+                                <th width="80">合约销量</th>
+                                <th width="80">裸机销量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in qryShopSaleCountShowBizmanList">
+                                <td>
+                                    <p ng-bind="$index + 1"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PROVINCE_NAME"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.CITY_NAME"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.RETAIL_SHOP_NAME"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.RETAIL_SHOP_TYPE"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.CHANNEL_NBR"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PARENT_CHANNEL_NAME"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PARENT_CHANNEL_NBR"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PARENT_OPERATOR_NAME"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PARENT_OPERATOR_NBR"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.ALL_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.CONTRACT_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.TERMINAL_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SELF_ALL_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SELF_CONTRACT_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SELF_TERMINAL_SALE_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.STOCK_USER_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.NEWINTER_USER_COUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.NEW_RATE"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PROVINCE_ALL_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PROVINCE_CONTRACT_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.PROVINCE_TERMINAL_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OTHER_ALL_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OTHER_CONTRACT_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.OTHER_TERMINAL_SALECOUNT"></p>
+                                </td>
+                                <td>
+                                    <p ng-bind="item.SALE_RANKING"></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-controller="paginationCtrl" class="text-center page">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number" ng-cloak ng-bind="totalNum || 0"></span>条记录，当前显示第<span class="number" ng-cloak ng-bind="currentPage || 0"></span>页</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/angular-locale_zh-cn.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/mock.js"></script>
+    <script src="../../resources/js/moment.js"></script>
+    <script src="storeLevelSalesRegistrationReport.js"></script>
+</body>
+
+</html>
