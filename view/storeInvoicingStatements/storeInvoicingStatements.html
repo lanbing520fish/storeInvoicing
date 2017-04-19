@@ -22,31 +22,33 @@
                 <div class="condition-query-box fn-right">
                     <form name="conditionQueryForm" class="form-inline" role="form">
                         <div class="row mb10">
-                            <div class="col-xs-3">
+                            <div class="col-xs-3" ng-controller="cityCheckCtrl">
                                 <div class="form-group">
-                                    <label class="control-label">省级：</label>
-                                    <div class="select-box">
-                                        <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
-                                            <option value="">全部</option>
-                                        </select>
+                                    <label class="control-label">所在地区：</label>
+                                    <input type="text" class="form-control" ng-model="checkedAreaName">
+                                    <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
+                                    <div class="city-check-box" ng-cloak ng-show="visible">
+                                        <uib-tabset active="key">
+                                            <uib-tab index="1" heading="省份">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in provinces" ng-click="handleSelectCity('province', $index, item.commonRegionId, item.commonRegionName)">{{item.commonRegionName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                            <uib-tab index="2" heading="城市">
+                                                <div class="city-content">
+                                                    <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('city', $index, item.commonRegionId, item.commonRegionName)">{{item.commonRegionName}}</li>
+                                                </div>
+                                            </uib-tab>
+                                        </uib-tabset>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label">市级：</label>
-                                    <div class="select-box">
-                                        <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
-                                            <option value="">全部</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label class="control-label">品牌：</label>
                                     <div class="select-box">
-                                        <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
+                                        <select class="form-control" ng-model="conditionQueryForm.brandCd" ng-options="item.brandCd as item.brandName for item in allBrandList">
                                             <option value="">全部</option>
                                         </select>
                                     </div>
@@ -56,34 +58,34 @@
                                 <div class="form-group">
                                     <label class="control-label">机型：</label>
                                     <div class="select-box">
-                                        <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
+                                        <select class="form-control" ng-model="conditionQueryForm.modelCd" ng-options="model.modelCd as model.modelName for model in allModelList">
                                             <option value="">全部</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> 
                             </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label">品牌名：</label>
+                                    <input type="text" class="form-control" ng-model="conditionQueryForm.brandName">
+                                </div>
+                            </div>  
                         </div>
                         <div class="row">
                             <div class="col-xs-3">
                                 <div class="form-group">
-                                    <label class="control-label">渠道类型：</label>
-                                    <div class="select-box">
-                                        <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
-                                            <option value="">全部</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>  
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label">品牌名：</label>
-                                    <input type="text" class="form-control">
+                                    <label class="control-label">机型名：</label>
+                                    <input type="text" class="form-control" ng-model="conditionQueryForm.modelName">
                                 </div>
                             </div> 
                             <div class="col-xs-3">
                                 <div class="form-group">
-                                    <label class="control-label">机型名：</label>
-                                    <input type="text" class="form-control">
+                                    <label class="control-label">渠道类型：</label>
+                                    <div class="select-box">
+                                        <select class="form-control" ng-model="conditionQueryForm.channelTypeId" ng-options="item.channelTypeId as item.channelTypeName for item in channelTypeList">
+                                            <option value="">全部</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div> 
                             <div class="col-xs-3">
@@ -101,22 +103,22 @@
                         <div class="form-group">
                             <label class="control-label">自有厅级别：</label>
                             <div class="select-box">
-                                <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
+                                <select class="form-control" ng-model="conditionQueryForm.hallLevelId" ng-options="item.hallLevelId as item.hallLevelName for item in myHallList">
                                     <option value="">全部</option>
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     <div class="col-xs-3">
                         <div class="form-group">
                             <label class="control-label">专营店星级：</label>
                             <div class="select-box">
-                                <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
+                                <select class="form-control" ng-model="boutiqueStarId" ng-options="item.boutiqueStarId as item.boutiqueStarName for item in boutiqueStarList">
                                     <option value="">全部</option>
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div>    
                     <div class="col-xs-6">
                         <div class="form-group">
                             <label class="control-label">统计日期：</label>
@@ -140,13 +142,13 @@
                     <div class="col-xs-3">
                         <div class="form-group">
                             <label class="control-label">渠道单元名称：</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" ng-bind="conditionQueryForm.channelName">
                         </div>
                     </div> 
                     <div class="col-xs-3">
                         <div class="form-group">
                             <label class="control-label">渠道单元编码：</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" ng-bind="conditionQueryForm.channelNbr">
                         </div>
                     </div> 
                 </div>
@@ -164,7 +166,9 @@
                         </div>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <button class="btn btn-xs btn-set"><i class="iconfont">
+                        <button class="btn btn-xs btn-set" ng-click="" ng-show="!checked"><i class="iconfont">
+                        &#xe627;</i> 导出</button>
+                        <button class="btn btn-xs btn-set" ng-click="" ng-show="checked"><i class="iconfont">
                         &#xe627;</i> 导出</button>
                     </div>
                 </div>
