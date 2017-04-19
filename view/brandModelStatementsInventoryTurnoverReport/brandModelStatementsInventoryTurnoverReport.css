@@ -111,11 +111,11 @@
     cursor: pointer;
 }
 
-.btn-query {
-    position: absolute;
-    top: -1px;
-    right: 15px;
-}
+// .btn-query {
+//     position: absolute;
+//     top: -1px;
+//     right: 15px;
+// }
 
 .result-list {
     padding: 5px 5px 20px;
@@ -168,6 +168,34 @@
     color: #333;
     font-size: 14px;
     font-weight: bold;
+}
+
+
+
+.btn-disabled {
+    margin-left: 2px;
+    padding: 0 6px;
+    background-color: #dcdcdc;
+    border-color: #dcdcdc;
+    color: #bbb;
+    font-size: 12px;
+}
+
+.btn-disabled:focus,
+.btn-disabled.focus {
+    background-color: #dcdcdc;
+    border-color: #dcdcdc;
+    color: #bbb;
+}
+
+.btn-disabled:hover {
+    background-color: #dcdcdc;
+    border-color: #dcdcdc;
+    color: #bbb;
+}
+
+.btn-disabled .iconfont {
+    color: #bbb;
 }
 
 /*bootstrap表格颜色*/
@@ -564,26 +592,11 @@
 .condition-query-box {
     width: calc(100% - 40px);
 }
-.btn-queries {
-    display: inline-block;
-    height: 25px;
-    margin-left: -20px;
-    line-height: 25px;
-    padding-right: 16px;
-    background: url(../../resources/images/select_bg-blue.png) no-repeat right center;
-    color: #333;
-    cursor: pointer;
+
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th {
+    vertical-align: middle;
 }
-.btn-queries-open {
-    display: inline-block;
-    height: 25px;
-    margin-left: -20px;
-    line-height: 25px;
-    padding-right: 16px;
-    background: url(../../resources/images/select_bg-blue-up.png) no-repeat right center;
-    color: #333;
-    cursor: pointer;
-}
+
 .select-box {
     width: 100%;
     height: 25px;
@@ -596,4 +609,34 @@
     padding: 10px 5px 10px;
     background-color: #f8f8f8;
     border-bottom: 1px dashed #d2d2d2;
+}
+
+.checkbox {
+    position: absolute;
+    left: -10px;
+    top: 6px;
+}
+.checkbox input[type="checkbox"] {
+    vertical-align: text-top;
+    margin: 1px 4px 0 0;
+}
+.querybtn {
+    margin-left: 32%;
+}
+.btn-queries, .btn-queries-open {
+    position: absolute;
+    right: 15px;
+    display: inline-block;
+    height: 25px;
+    margin-left: -20px;
+    line-height: 25px;
+    padding-right: 16px;
+    color: #333;
+    cursor: pointer;
+}
+.btn-queries{
+    background: url(../../resources/images/select_bg-blue.png) no-repeat right center;
+}
+ .btn-queries-open{
+    background: url(../../resources/images/select_bg-blue-up.png) no-repeat right center;
 }

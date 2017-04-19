@@ -150,11 +150,30 @@ angular
             return defer.promise;
         };
 
-        // 条件查询接口
-        httpMethod.qryInOutStockDetail = function(param) {
+        // 条件查询接口(不显示店中商信息)
+        httpMethod.qryShopSaleCountNoBizman = function(param) {
             var defer = $q.defer();
             $http({
-                url: httpConfig.siteUrl + '/chain/report/q/qryInOutStockDetail',
+                url: httpConfig.siteUrl + '/chain/report/q/qryShopSaleCountNoBizman',
+                method: 'POST',
+                headers: httpConfig.requestHeader,
+                data: 'param=' + encodeURI(JSON.stringify(param))
+            }).success(function(data, header, config, status) {
+                if (status !== 200) {
+                    // 跳转403页面
+                }
+                defer.resolve(data);
+            }).error(function(data, status, headers, config) {
+                defer.reject(data);
+            });
+            return defer.promise;
+        };
+
+        // 条件查询接口(显示店中商信息)
+        httpMethod.qryShopSaleCountShowBizman = function(param) {
+            var defer = $q.defer();
+            $http({
+                url: httpConfig.siteUrl + '/chain/report/q/qryShopSaleCountShowBizman',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + encodeURI(JSON.stringify(param))
@@ -323,8 +342,8 @@ angular
                 "errors":null
             });
 
-            // 条件查询接口
-            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryInOutStockDetail', {
+            // 条件查询接口(不显示店中商信息)
+            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryShopSaleCountNoBizman', {
                 'rsphead':'s',
                 'success':true,
                 'code':null,
@@ -332,38 +351,77 @@ angular
                 "errors":null,
                 'data':{
                     'totalSize|1-100': 10,
-                    'curPage|1-100': 10,
+                    'currentPage|1-100': 10,
                     'list|10': [{
-                        'SUP_OPERATOR_NAME': '@cword(6)', //上级经营主体
-                        'SUP_OPERATOR_NBR': '@id', //上级经营主体编码
-                        'OPERATOR_NAME': '@cword(6)', //经营主体
-                        'OPERATOR_NBR': '@id', //经营主体编码
-                        'CHANNEL_NAME': '@cword(6)',  //渠道单元
-                        'CHANNEL_NBR': '@id', //渠道单元编码
                         'PROVINCE_NAME': '@province', //省
                         'CITY_NAME': '@city', //市
+                        'CHANNEL_NAME': '@cword(6)', //渠道单元
+                        'SON_BIZMAN_COUNT|1-10000': 1000, //下属店中商数量
+                        'CHANNEL_NBR': '@id', //渠道单元编码
+                        'BEGIN_COOPERATION_TIME': '@date', //初始合作时间
+                        'TOWN_COUNTRY_BIAOZHI': '@cword(6)', //城乡标识
                         'CHANNEL_TYPE': '@cword(6)', //渠道类型
-                        'IN_STOCK_COUNT|1-10000': 1000, //入库量
-                        'IN_STOCK_AMOUNT|1-100000': 10000, //入库价值
-                        'OUT_STOCK_COUNT|1-10000': 1000, //退库量
-                        'OUT_STOCK_AMOUNT|1-100000': 10000, //退库价值
-                        'ALL_SALE_COUNT|1-100000' : 10000, //总销量
-                        'CONTRACT_SALE_COUNT|1-100000': 10000, //其中合约销量
-                        'TERMINAL_SALE_COUNT|1-100000': 10000, //其中裸机销量
-                        'ALLOT_IN_COUNT|1-100000': 1000, //调拨出库量
-                        'ALLOT_IN_AMOUNT|1-100000': 1000, //调拨出库价值
-                        'ALLOT_OUT_COUNT|1-100000': 1000, //调拨入库量
-                        'ALLOT_OUT_AMOUNT|1-100000': 1000, //调拨入库价值
-                        'SALE_OUT_COUNT|1-100000': 1000, //退货量
-                        'SALE_OUT_AMOUNT|1-100000': 1000, //退货价值
-                        'NOW_STOCK_COUNT|1-100000': 1000, //库存量
-                        'NOW_STOCK_AMOUNT|1-100000': 1000, //库存价值
-                        'ALL_SALE_AMOUNT|1-100000': 1000, //收银总金额
-                        'CONTRACT_SALE_AMOUNT|1-100000': 1000, //其中合约收银金额
-                        'TERMINAL_SALE_AMOUNT|1-100000': 1000, //其中裸机收银金额
-                        'IN_STOCK_SALE_AMOUNT|1-100000': 1000, //入库后的销量
-                        'RESALE_DIGESTIBILITY|1-100': 50, //零售消化率
-                        'SALE_REGISTRATIONS|1-100000': 1000 //销售后的注册量
+                        'HALL_LEVEL_TYPE': '@cword(6)', //自有厅级别
+                        'BOUTIQUE_SHOP_LEVEL': '@cword(6)', //专营店级别
+                        'DIAN_SHOP_TYPE': '@cword(4)', //销售点卖场类型
+                        'BUSINESS_LEVEL': '@cword(4)', //商圈级别
+                        'BOUTIQUE_SHOP_TYPE': '@cword(6)', //专营门店类别
+                        'ALL_SALE_COUNT|1-10000': 1000, //精品销售系统销量--总销量
+                        'CONTRACT_SALE_COUNT|1-10000': 1000, //精品销售系统销量--合约销量
+                        'TERMINAL_SALE_COUNT|1-10000': 1000, //精品销售系统销量--裸机销量
+                        'SELF_ALL_SALE_COUNT|1-10000': 1000, //精品销售系统销量且自注册注册量--总销量
+                        'SELF_CONTRACT_SALE_COUNT|1-10000': 1000, //精品销售系统销量且自注册注册量--合约销量
+                        'SELF_TERMINAL_SALE_COUNT|1-10000': 1000, //精品销售系统销量且自注册注册量--裸机销量
+                        'STOCK_USER_COUNT|1-10000': 1000, //其中：注册为存量用户的终端
+                        'NEWINTER_USER_COUNT|1-10000': 1000, //其中：注册为新入网用户的终端
+                        'NEW_RATE|1-10000': 1000, //拉新率
+                        'PROVINCE_ALL_SALECOUNT|1-10000': 1000, //精品销售系统销量且在本省注册量--总销量
+                        'PROVINCE_CONTRACT_SALECOUNT|1-10000': 1000, //精品销售系统销量且在本省注册量--其中合约销量
+                        'PROVINCE_TERMINAL_SALECOUNT|1-10000': 1000, //精品销售系统销量且在本省注册量--其中裸机销量
+                        'OTHER_ALL_SALECOUNT|1-10000': 1000, //精品销售系统销量且在外省注册量--总销量
+                        'OTHER_CONTRACT_SALECOUNT|1-10000': 1000, //精品销售系统销量且在外省注册量--合约销量
+                        'OTHER_TERMINAL_SALECOUNT|1-10000': 1000, //精品销售系统销量且在外省注册量--裸机销量相应清单查看（按钮）点击跳转至串码级明细报表_销量明细报表，传入门店ID：retailshopId
+                        'SALE_RANKING|1-100': 1 //销售排名
+                    }],
+                }
+            });
+
+            // 条件查询接口(显示店中商信息)
+            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryShopSaleCountShowBizman', {
+                'rsphead':'s',
+                'success':true,
+                'code':null,
+                'msg':null,
+                "errors":null,
+                'data':{
+                    'totalSize|1-100': 10,
+                    'currentPage|1-100': 10,
+                    'list|10': [{
+                        'PROVINCE_NAME':'@province', //省
+                        'CITY_NAME':'@city', //市
+                        'RETAIL_SHOP_NAME':'@cword(6)', //门店名称
+                        'RETAIL_SHOP_TYPE':'@cword(6)', //门店类型
+                        'CHANNEL_NBR':'@id', //渠道单元编码
+                        'PARENT_CHANNEL_NAME':'@cword(6)', //归属渠道单元
+                        'PARENT_CHANNEL_NBR' :'@id', //归属渠道单元编码
+                        'PARENT_OPERATOR_NAME':'@cword(6)', //归属经营主体
+                        'PARENT_OPERATOR_NBR':'@id', //归属经营主体编码
+                        'ALL_SALE_COUNT|1-10000' :1000, //精品销售系统销量--总销量
+                        'CONTRACT_SALE_COUNT|1-10000' :1000, //精品销售系统销量--合约销量
+                        'TERMINAL_SALE_COUNT|1-10000' :1000, //精品销售系统销量--裸机销量
+                        'SELF_ALL_SALE_COUNT|1-10000' :1000, //精品销售系统销量且自注册注册量--总销量
+                        'SELF_CONTRACT_SALE_COUNT|1-10000' :1000, //精品销售系统销量且自注册注册量--合约销量
+                        'SELF_TERMINAL_SALE_COUNT|1-10000' :1000, //精品销售系统销量且自注册注册量--裸机销量
+                        'STOCK_USER_COUNT':'@cword(6)', //其中：注册为存量用户的终端
+                        'NEWINTER_USER_COUNT':'@cword(6)', //其中：注册为新入网用户的终端
+                        'NEW_RATE|1-100': 10, //拉新率
+                        'PROVINCE_ALL_SALECOUNT|1-10000' :1000, //精品销售系统销量且在本省注册量--总销量
+                        'PROVINCE_CONTRACT_SALECOUNT|1-10000' :1000, //精品销售系统销量且在本省注册量--其中合约销量
+                        'PROVINCE_TERMINAL_SALECOUNT|1-10000' :1000, //精品销售系统销量且在本省注册量--其中裸机销量
+                        'OTHER_ALL_SALECOUNT|1-10000' :1000, //精品销售系统销量且在外省注册量--总销量
+                        'OTHER_CONTRACT_SALECOUNT|1-10000' :1000, //精品销售系统销量且在外省注册量--合约销量
+                        'OTHER_TERMINAL_SALECOUNT|1-10000' :1000, //精品销售系统销量且在外省注册量--裸机销量
+                        'SALE_RANKING|1-100': 10, //销量排名
                     }],
                 }
             });
@@ -448,13 +506,10 @@ angular
             modelName: '', //机型名
             modelCd: '', //机型
             channelTypeId: '', //渠道类型
-            hallLevelId: '', //自由厅级别
+            hallLevelId: '', //自有厅级别
             boutiqueStarId: '', //专营厅星级
             channelNbr: '', //渠道单元编码
             channelName: '', //渠道单元名称
-            storageName: '', //仓库名称
-            operatorNbr: '', //经营主体编码
-            operatorName: '', //经营主体名称
             st_time: '', //选择的入库日期开始时间
             ed_time: '' //选择的入库日期结束时间
         });
@@ -591,12 +646,17 @@ angular
         $scope.rowNumPerPage = 10; // 每页显示行数
         $scope.totalNum = 0; // 总条数
 
+        $rootScope.showshop = false;
+
+        $scope.isshowshop = function(){
+            $rootScope.showshop = !$rootScope.showshop;
+        }
+
         // 条件查询
         $scope.queryFormSubmit = function(currentPage) {
             var param = {
                 curPage: $scope.currentPage || 1,
                 pageSize: $scope.rowNumPerPage,
-                totalSize: $scope.totalNum || 0,
                 provinceId: $rootScope.queryForm.provinceId ? $rootScope.queryForm.provinceId : '',
                 cityId: $rootScope.queryForm.cityId ? $rootScope.queryForm.cityId : '',
                 brandCd: $rootScope.queryForm.brandCd ? $rootScope.queryForm.brandCd : '',
@@ -608,19 +668,28 @@ angular
                 boutiqueStarId: $rootScope.queryForm.boutiqueStarId ? $rootScope.queryForm.boutiqueStarId : '',
                 channelNbr: $rootScope.queryForm.channelNbr ? $rootScope.queryForm.channelNbr : '',
                 channelName: $rootScope.queryForm.channelName ? $rootScope.queryForm.channelName : '',
-                storageName: $rootScope.queryForm.storageName ? $rootScope.queryForm.storageName : '',
-                operatorNbr: $rootScope.queryForm.operatorNbr ? $rootScope.queryForm.operatorNbr : '',
-                operatorName: $rootScope.queryForm.operatorName ? $rootScope.queryForm.operatorName : '',
                 st_time: $rootScope.queryForm.st_time ? moment($rootScope.queryForm.st_time).format('YYYY-MM-DD HH:mm:ss') : '',
                 ed_time: $rootScope.queryForm.ed_time ? moment($rootScope.queryForm.ed_time).format('YYYY-MM-DD HH:mm:ss') : '',
             };
-            httpMethod.qryInOutStockDetail(param).then(function(rsp) {
-                $scope.qryInOutStockDetailList = rsp.data.list;
-                $scope.totalNum = rsp.data.totalSize;
-                $log.log('调用条件查询接口成功.');
-            }, function() {
-                $log.log('调用条件查询接口失败.');
-            });
+
+            if($rootScope.showshop){
+                httpMethod.qryShopSaleCountShowBizman(param).then(function(rsp) {
+                    $rootScope.qryShopSaleCountShowBizmanList = rsp.data.list;
+                    $scope.totalNum = rsp.data.totalSize;
+                    $log.log('调用条件查询接口(显示店中商信息)成功.');
+                }, function() {
+                    $log.log('调用条件查询接口(显示店中商信息)失败.');
+                });
+            }else{
+                httpMethod.qryShopSaleCountNoBizman(param).then(function(rsp) {
+                    $rootScope.qryShopSaleCountNoBizmanList = rsp.data.list;
+                    $scope.totalNum = rsp.data.totalSize;
+                    $log.log('调用条件查询接口(不显示店中商信息)成功.');
+                }, function() {
+                    $log.log('调用条件查询接口(不显示店中商信息)失败.');
+                });
+            };
+
         }
 
         $scope.$on('pageChange', function(event, data) {
@@ -629,12 +698,18 @@ angular
     }])
     // 查询结果控制器
     .controller('QueryResultCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', 'httpConfig', function($scope, $rootScope, $log, httpMethod, httpConfig) {
+
+        // 点击查看
+        $scope.clickView = function (index) {
+            $rootScope.clickView = $rootScope.qryShopSaleCountNoBizmanList[index].CHANNEL_NBR;
+            parent.angular.element(parent.$('#tabs')).scope().addTab('销售明细报表', '../stringCodeInventorySalesDetailedReports/stringCodeInventorySalesDetailedReports.html', 'modifySys', JSON.stringify($rootScope.clickView));
+        }
+
         //导出
         $scope.exportQryInOutStockDetail = function(currentPage) {
             var param = {
                 curPage: $scope.currentPage || 1,
                 pageSize: $scope.rowNumPerPage,
-                totalSize: $scope.totalNum || 0,
                 provinceId: _.get($rootScope, 'queryForm.provinceId'),
                 cityId: _.get($rootScope, 'queryForm.cityId'),
                 brandCd: _.get($rootScope, 'queryForm.brandCd'),
@@ -646,13 +721,15 @@ angular
                 boutiqueStarId: _.get($rootScope, 'queryForm.boutiqueStarId'),
                 channelNbr: _.get($rootScope, 'queryForm.channelNbr'),
                 channelName: _.get($rootScope, 'queryForm.channelName'),
-                storageName: _.get($rootScope, 'queryForm.storageName'),
-                operatorNbr: _.get($rootScope, 'queryForm.operatorNbr'),
-                operatorName: _.get($rootScope, 'queryForm.operatorName'),
                 st_time: _.get($rootScope, 'queryForm.st_time'),
                 ed_time: _.get($rootScope, 'queryForm.ed_time'),
             };
-            window.open(httpConfig.siteUrl + '/chain/report/q/exportQryInOutStockDetail?param=' + encodeURI(JSON.stringify(param)));
+            if($rootScope.showshop){
+                window.open(httpConfig.siteUrl + '/chain/report/q/exportShopSaleCountShowBizman?param=' + encodeURI(JSON.stringify(param)));
+            }else{
+                window.open(httpConfig.siteUrl + '/chain/report/q/exportShopSaleCountNoBizman?param=' + encodeURI(JSON.stringify(param)));
+            }
+            
         }
     }])
     // 分页控制器

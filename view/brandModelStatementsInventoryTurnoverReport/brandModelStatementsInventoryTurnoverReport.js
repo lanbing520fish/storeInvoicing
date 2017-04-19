@@ -1,10 +1,7 @@
 angular
     .module('inventoryModule', ['ui.bootstrap'])
     .run(['$rootScope', function ($rootScope) {
-        $rootScope.ismoreConditions = false; //更多查询条件
-        var id = window.frameElement && window.frameElement.id || '',
-                obj = parent.$('#' + id).attr('data');
-        $rootScope.channelNbr = obj ? JSON.parse(obj) : ''; // 页面传入的信息
+
     }])
     .factory('httpConfig', [function(){
         httpConfig = {
@@ -17,6 +14,7 @@ angular
         return httpConfig;
     }])
     .factory('httpMethod', ['$http', '$q', 'httpConfig', function($http, $q, httpConfig) {
+        
         var httpMethod = {};
 
         // 品牌选择值获取接口
@@ -58,29 +56,10 @@ angular
         };
 
         // 条件查询接口
-        httpMethod.qryInstCodeLevelStockReport = function(param) {
+        httpMethod.qryBrandModelLevelStockReport = function(param) {
             var defer = $q.defer();
             $http({
-                url: httpConfig.siteUrl + '/chain/report/q/qryInstCodeLevelStockReport',
-                method: 'POST',
-                headers: httpConfig.requestHeader,
-                data: 'param=' + encodeURI(JSON.stringify(param))
-            }).success(function(data, header, config, status) {
-                if (status !== 200) {
-                    // 跳转403页面
-                }
-                defer.resolve(data);
-            }).error(function(data, status, headers, config) {
-                defer.reject(data);
-            });
-            return defer.promise;
-        };
-
-        // 条件导出接口
-        httpMethod.exportInstCodeLevelStockReport = function(param) {
-            var defer = $q.defer();
-            $http({
-                url: httpConfig.siteUrl + '/chain/report/q/exportInstCodeLevelStockReport',
+                url: httpConfig.siteUrl + '/chain/report/q/qryBrandModelLevelStockReport',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + encodeURI(JSON.stringify(param))
@@ -145,7 +124,7 @@ angular
             });
 
             // 条件查询接口
-            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryInstCodeLevelStockReport', {
+            Mock.mock(httpConfig.siteUrl + '/chain/report/q/qryBrandModelLevelStockReport', {
                 'rsphead':'s',
                 'success':true,
                 'code':null,
@@ -155,78 +134,38 @@ angular
                     'total|1-100': 10,
                     'pageNum|1-100': 10,
                     'list|10': [{
-                        'INDEX_NUM|1-100': 1, //序号
-                        'INST_CODE': '@id', //串码
-                        'BRAND_NAME': '@cword(6)', //品牌
-                        'MODEL_NAME': '@word(6)', //型号
-                        'OFFER_NAME': '@cword(6)', //名称
-                        'OFFER_COLOR': '@cword(6)', //颜色
-                        'RAM_ROM': '@cword(6)', //RAM&ROM
-                        'STORAGE_NAME': '@cword(6)', //仓库
-                        'CHANNEL_NAME': '@cword(6)', //渠道单元
-                        'CHANNEL_TYPE': '@cword(6)', //渠道单元类型
-                        'CHANNEL_NBR': '@id', //渠道单元编码
-                        'OPERATORS_NAME': '@cword(6)', //经营主体全称
-                        'OPERATORS_NBR': '@id', //经营主体编码
-                        'IN_TIME': '@time', //入库时间
-                        'IN_STOCK_DAY': '@date', //在库时间（天）
-                        'IN_AMOUNT|1-10000': 1000, //采购单价
-                        'ZZC_FLAG|1': ['是', '否'], //是否自注册
-                        'ZZC_MYPROVINCE_FLAG|1': ['是', '否'], //是否本省注册
+                        'INDEX_NUM|1': [1,2,3,4,5,6,7,8,9,10], // 序号
+                        'BRAND_NAME':' @cword(6)', // 品牌
+                        'MODEL_NAME': '@word(6)', // 型号
+                        'OFFER_NAME': '@cword(6)', // 名称
+                        'NOW_STOCK_COUNT|1-1000': 1, // 库存量
+                        'NOW_STOCK_AMOUNT|1-1000': 1, // 库存价值
+                        'STOCK_ZZC_NUM|1-1000': 1, // 库存中自注册注册量
+                        'STOCK_ZZC_MYPROVINCE_NUM|1-1000': 1, // 其中本省注册量
+                        'STOCK_ZZC_OTHERPROVINCE_NUM|1-1000': 1, // 其中外省注册量
+                        'IN_STORAGE_DAY_30|1-1000': 1, // 在库时间0-30
+                        'IN_STORAGE_DAY_60|1-1000': 1, // 在库时间30-60
+                        'IN_STORAGE_DAY_90|1-1000': 1, // 在库时间60-90
+                        'IN_STORAGE_DAY_91|1-1000': 1, // 在库时间91天以上
+                        'STOCK_ZZTS|1-1000': 1, // 库存周转天数
                     }],
                 }
             });
-
-            // 条件导出接口
-            Mock.mock(httpConfig.siteUrl + '/chain/report/q/exportInstCodeLevelStockReport', {
-                }
-            );
 
         }
 
         return httpMethod;
     }])
-    .controller('conditionQuery', ['$scope', '$rootScope', '$timeout', '$log', 'httpMethod', function($scope, $rootScope, $timeout, $log, httpMethod) {
+    .controller('conditionQuery', ['$scope', '$rootScope', '$timeout', '$log', 'httpMethod', function($scope, $rootScope, $timeout, $log, httpMethod) {      
 
-        $scope.checkedAreaName = '';
-        $scope.isDisabled = true;
-        
-        $scope.visible = false;
-        $scope.key = 1;
-        $scope.provinceIndex = '';
-        $scope.cityIndex = '';
-        $scope.areaId = '';
-
-        $scope.provinceName = '';
-        $scope.cityName = '';
-
-        $scope.isshowprovinceName = true;
-        $scope.isshowcityName = true;
-
-        var user_param = {}
-
-        $scope.queryForm = {
-            brandCd: '', //品牌选择值
-            modelCd: '', //型号选择值
-            brandName: '', //品牌输入框值
-            modelName: '', //机型输入框值
-            retailShopName: '', //门店名
-            channelNbr: $rootScope.channelNbr, //门店对应渠道单元编码
-            operatorsNbr: '', //门店对应经营主体编码
-            channelName: '', //渠道单元名称
-            instCode: '', //串码
-        };
-
-        //更多查询条件
-        $scope.moreConditions = function(){
-            $rootScope.ismoreConditions = !$rootScope.ismoreConditions;
-        };
-
-        $scope.clHide = function() {
-            $scope.visible = false;
-        };
-
-        $scope.isForbid = true;
+        $rootScope.queryForm = {
+            brandCd: '',
+            modelCd: '',
+            brandName: '',
+            modelName: '',
+            st_time: '',
+            ed_time: ''
+        }
 
         // 品牌选择值获取接口
         var brand_param = {}
@@ -250,6 +189,39 @@ angular
             });
         });
 
+        // 时间控件
+        $scope.startDateOptions = {
+            formatYear: 'yy',
+            maxDate: $rootScope.queryForm.ed_time,
+            startingDay: 1,
+            showWeeks: false
+        };
+        $scope.endDateOptions = {
+            formatYear: 'yy',
+            minDate: $rootScope.queryForm.st_time,
+            // maxDate: new Date(),
+            startingDay: 1,
+            showWeeks: false
+        };
+        $scope.$watch('queryForm.st_time', function(newValue) {
+            $scope.endDateOptions.minDate = newValue;
+        });
+        $scope.$watch('queryForm.ed_time', function(newValue) {
+            $scope.startDateOptions.maxDate = newValue;
+        });
+        $scope.startOpen = function() {
+            $timeout(function() {
+                $scope.startPopupOpened = true;
+            });
+        };
+        $scope.endOpen = function() {
+            $timeout(function() {
+                $scope.endPopupOpened = true;
+            });
+        };
+        $scope.startPopupOpened = false;
+        $scope.endPopupOpened = false;
+
         //分页
         $scope.requirePaging = true; // 是否需要分页
         $scope.currentPage = 1; // 当前页
@@ -258,21 +230,19 @@ angular
 
         // 条件查询
         $scope.queryFormSubmit = function(currentPage) {
+
             var param={
-                curPage: $scope.currentPage || 1,
+                curPage: currentPage || $scope.currentPage,
                 pageSize: $scope.rowNumPerPage,
-                brandCd: $scope.queryForm.brandCd ? $scope.queryForm.brandCd : '',
-                modelCd: $scope.queryForm.modelCd ? $scope.queryForm.modelCd : '',
-                brandName: $scope.queryForm.brandName ? $scope.queryForm.brandName : '',
-                modelName: $scope.queryForm.modelName ? $scope.queryForm.modelName : '',
-                retailShopName: $scope.queryForm.retailShopName ? $scope.queryForm.retailShopName : '',
-                channelNbr:  $scope.queryForm.channelNbr ? $scope.queryForm.channelNbr : '',
-                operatorsNbr: $scope.queryForm.operatorsNbr ? $scope.queryForm.operatorsNbr : '',
-                channelName: $scope.queryForm.channelName ? $scope.queryForm.channelName : '',
-                instCode: $scope.queryForm.instCode ? $scope.queryForm.instCode : '',
+                brandCd: $rootScope.queryForm.brandCd ? $rootScope.queryForm.brandCd : '',
+                modelCd: $rootScope.queryForm.modelCd ? $rootScope.queryForm.modelCd : '',
+                brandName: $rootScope.queryForm.brandName ? $rootScope.queryForm.brandName : '',
+                modelName: $rootScope.queryForm.modelName ? $rootScope.queryForm.modelName : '',
+                st_time: $rootScope.queryForm.st_time ? moment($rootScope.queryForm.st_time).format('YYYY-MM-DD HH:mm:ss') : '',
+                ed_time: $rootScope.queryForm.ed_time ? moment($rootScope.queryForm.ed_time).format('YYYY-MM-DD HH:mm:ss') : '',
             };
-            httpMethod.qryInstCodeLevelStockReport(param).then(function(rsp) {
-                $scope.qryInstCodeLevelStockReportList = rsp.data.list;
+            httpMethod.qryBrandModelLevelStockReport(param).then(function(rsp) {
+                $scope.qryBrandModelLevelStockReportList = rsp.data.list;
                 $scope.totalNum = rsp.data.total;
                 $log.log('调用条件查询接口成功.');
             }, function() {
@@ -288,23 +258,19 @@ angular
     .controller('QueryResultCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', 'httpConfig', function($scope, $rootScope, $log, httpMethod, httpConfig) {
 
         //导出
-        $scope.exportInstCodeLevelStockReport = function() {
+        $scope.exportBrandModelLevelStockReport = function(currentPage) {
             var param = {
-                curPage: $scope.currentPage || 1,
+                curPage: currentPage || $scope.currentPage,
                 pageSize: $scope.rowNumPerPage,
-                curPage: _.get($rootScope, 'queryForm.curPage'),
-                pageSize: _.get($rootScope, 'queryForm.pageSize'),
                 brandCd: _.get($rootScope, 'queryForm.brandCd'),
                 modelCd: _.get($rootScope, 'queryForm.modelCd'),
                 brandName: _.get($rootScope, 'queryForm.brandName'),
                 modelName: _.get($rootScope, 'queryForm.modelName'),
-                retailShopName: _.get($rootScope, 'queryForm.retailShopName'),
-                channelNbr: _.get($rootScope, 'queryForm.channelNbr'),
-                operatorsNbr: _.get($rootScope, 'queryForm.operatorsNbr'),
-                channelName: _.get($rootScope, 'queryForm.channelName'),
-                instCode: _.get($rootScope, 'queryForm.instCode'),
+                st_time: _.get($rootScope, 'queryForm.st_time'),
+                ed_time: _.get($rootScope, 'queryForm.ed_time'),
             };
-            window.open(httpConfig.siteUrl + '/chain/report/q/exportInstCodeLevelStockReport?param=' + encodeURI(JSON.stringify(param)));
+            // 导出接口暂缺，接口待调整
+            window.open(httpConfig.siteUrl + '/chain/report/q/exportBrandModelLevelStockReport?param=' + encodeURI(JSON.stringify(param)));
         }
     }])
     // 分页控制器

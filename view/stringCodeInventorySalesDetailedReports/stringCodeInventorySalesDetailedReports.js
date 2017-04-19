@@ -2,12 +2,9 @@ angular
     .module('inventoryModule', ['ui.bootstrap'])
     .run(['$rootScope', function ($rootScope) {
         $rootScope.ismoreConditions = false; //更多查询条件
-
-        $rootScope.ismoreConditions = false; //更多查询条件
         var id = window.frameElement && window.frameElement.id || '',
                 obj = parent.$('#' + id).attr('data');
-        $rootScope.queryForm = obj ? JSON.parse(obj) : {}; // 页面传入的信息
-
+        $rootScope.CHANNEL_NBR = obj ? JSON.parse(obj) : ''; // 页面传入的信息
     }])
     .factory('httpConfig', [function(){
         httpConfig = {
@@ -373,7 +370,7 @@ angular
     }])
     .controller('conditionQuery', ['$scope', '$rootScope', '$timeout', '$log', 'httpMethod', function($scope, $rootScope, $timeout, $log, httpMethod) {
 
-        $rootScope.queryForm = $.extend(true, {
+        $rootScope.queryForm = {
             provinceId: '',//省份ID
             cityId: '',//城市ID
             brandCd: '', //品牌ID
@@ -386,9 +383,9 @@ angular
             hallLevelId: '', //自由厅级别
             boutiqueStarId: '', //专营厅星级
             channelName: '', //渠道单元名称
-            channeNbr: '', //渠道单元编码
+            channelNbr: $rootScope.CHANNEL_NBR, //渠道单元编码
             instCode: '' //串码
-        }, $rootScope.queryFormList);
+        };
 
         $scope.checkedAreaName = '';
         $scope.isDisabled = true;
@@ -423,8 +420,6 @@ angular
             });
 
         };
-
-        $rootScope.queryForm
 
         httpMethod.qryCurrentUserProvinceAndCity(user_param).then(function(rsp) {
             $rootScope.userList = rsp.data;
@@ -614,9 +609,9 @@ angular
             httpMethod.qryDianCodeDetail(param).then(function(rsp) {
                 $scope.qryDianCodeDetailList = rsp.data.list;
                 $scope.totalNum = rsp.data.totalSize;
-                $log.log('获取查询数据接口响应成功.');
+                $log.log('调用条件查询接口成功.');
             }, function() {
-                $log.log('获取查询数据接口响应失败.');
+                $log.log('调用条件查询接口失败.');
             });
         }
 
