@@ -13,39 +13,41 @@
 
 <body ng-app="inventoryTurnoverReportModule">
     <!-- DOM结构开始 -->
-    <div class="check top-line wavy-line">
+    <div class="check top-line wavy-line" ng-controller="conditionResult">
         <!-- 条件查询 -->
-        <div class="condition-query fn-clear" ng-controller="conditionQuery">
+        <div class="condition-query fn-clear">
             <p class="condition-query-title fn-left">搜
                 <br/>索</p>
             <div class="condition-query-box fn-right">
                 <form name="conditionQueryForm" class="form-inline" role="form">
                     <div class="row mb10">
-                        <div class="col-xs-3">
+                        <div class="col-xs-3" ng-controller="cityCheckCtrl">
                             <div class="form-group">
-                                <label class="control-label">省级：</label>
-                                <div class="select-box">
-                                    <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
-                                        <option value="">全部</option>
-                                    </select>
+                                <label class="control-label">所在地区：</label>
+                                <input type="text" class="form-control" ng-model="checkedAreaName">
+                                <button ng-click="cityCheck()" type="submit" class="btn btn-sm btn-location"><i class="iconfont">&#xe6cb;</i></button>
+                                <div class="city-check-box" ng-cloak ng-show="visible">
+                                    <uib-tabset active="key">
+                                        <uib-tab index="1" heading="省份">
+                                            <div class="city-content">
+                                                <li class="city-item" ng-class="{current: $index === provinceIndex}" ng-repeat="item in provinces" ng-click="handleSelectCity('province', $index, item.commonRegionId, item.commonRegionName)">{{item.commonRegionName}}</li>
+                                            </div>
+                                        </uib-tab>
+                                        <uib-tab index="2" heading="城市">
+                                            <div class="city-content">
+                                                <li class="city-item" ng-class="{current: $index === cityIndex}" ng-repeat="item in citys" ng-click="handleSelectCity('city', $index, item.commonRegionId, item.commonRegionName)">{{item.commonRegionName}}</li>
+                                            </div>
+                                        </uib-tab>
+                                    </uib-tabset>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xs-3">
-                            <div class="form-group">
-                                <label class="control-label">市级：</label>
-                                <div class="select-box">
-                                    <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
-                                        <option value="">全部</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <div class="zhezhao" ng-click="clHide()" ng-show="visible" ng-cloak></div>
                         </div>
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">品牌：</label>
                                 <div class="select-box">
-                                    <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
+                                    <select class="form-control" ng-model="conditionQueryForm.brandCd" ng-options="item.brandCd as item.brandName for item in allBrandList">
                                         <option value="">全部</option>
                                     </select>
                                 </div>
@@ -55,24 +57,24 @@
                             <div class="form-group">
                                 <label class="control-label">机型：</label>
                                 <div class="select-box">
-                                    <select class="form-control" ng-model="brandCd" ng-options="brand.brandCd as brand.brandName for brand in allBrandList">
+                                    <select class="form-control" ng-model="conditionQueryForm.modelCd" ng-options="model.modelCd as model.modelName for model in allModelList">
                                         <option value="">全部</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">品牌名：</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="conditionQueryForm.brandName">
                             </div>
                         </div>  
+                    </div>
+                    <div class="row"> 
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">机型名：</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="conditionQueryForm.modelName">
                             </div>
                         </div> 
                         <div class="col-xs-6">
@@ -86,13 +88,15 @@
                                 </div>
                                 <div class="datepicker-text fn-left">至</div>
                                 <div class="datepicker-input fn-left">
-                                    <input type="text" id="createEndDt" class="form-control modify-input lose-width" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" show-button-bar='false' />
-                                    <span class="icon_time rgt" ng-click="endOpen()">
+                                    <input type="text" id="createEndDt" class="form-control modify-input" uib-datepicker-popup readonly ng-model="conditionQueryForm.createEndDt" is-open="endPopupOpened" min-date="minEndDate" max-date="maxEndDate" datepicker-options="endDateOptions" show-button-bar='false' />
+                                    <span class="icon_time" ng-click="endOpen()">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
                                 </div>
-                                <button type="submit" class="btn btn-sm btn-query mrl15"><i class="iconfont">&#xe600;</i> 查询</button>
-                            </div>
+                            </div>                           
+                        </div>
+                        <div class="col-xs-3 text-right">
+                            <button type="submit" class="btn btn-sm btn-query" ng-click="orderQuery(curPage)"><i class="iconfont">&#xe600;</i> 查询</button>  
                         </div>
                     </div>
                 </form>
@@ -137,56 +141,56 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr ng-repeat="item in resultList">
                             <td>
-                                <p>1</p>
+                                <p ng-bind="$index+1"></p>
                             </td>
                             <td>
-                                <p>内蒙古</p>
+                                <p class="overflow-handle" title="{{item.PROVINCE_NAME}}" ng-bind="item.PROVINCE_NAME"></p>
                             </td>
                             <td>
-                                <p class="overflow-handle" title="">赤峰市</p>
+                                <p class="overflow-handle" title="{{item.CITY_NAME}}" ng-bind="item.CITY_NAME"></p>
                             </td>
                             <td>
-                                <p>2000</p>
+                                <p ng-bind="item.NOW_STOCK_COUNT"></p>
                             </td>
                             <td>
-                                <p>5</p>
+                                <p ng-bind="item.NOW_STOCK_AMOUNT"></p>
                             </td>
                             <td>
-                                <p>1000</p>
+                                <p ng-bind="item.NOW_STOCK_REGISTER"></p>
                             </td>
                             <td>
-                                <p>5</p>
+                                <p ng-bind="item.PROVINCE_REGISTER"></p>
                             </td>
                             <td>
-                                <p>1</p>
+                                <p ng-bind="item.OTHER_REGISTER"></p>
                             </td>
                             <td>
-                                <p>4</p>
+                                <p ng-bind="item.INSTOCK_ONE"></p>
                             </td>
                             <td>
-                                <p>5</p>
+                                <p ng-bind="item.INSTOCK_TWO"></p>
                             </td>
                             <td>
-                                <p>1000</p>
+                                <p ng-bind="item.INSTOCK_THREE"></p>
                             </td>
                             <td>
-                                <p>1000</p>
+                                <p ng-bind="item.INSTOCK_FOUR"></p>
                             </td>
                             <td>
-                                <p>5</p>
+                                <p ng-bind="item.TURNOVER_DAYS"></p>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <p class="no-data" ng-if="queryTypeResultList && !queryTypeResultList.length" ng-cloak>
+                <p class="no-data" ng-if="resultList && !resultList.length" ng-cloak>
                     没有数据
                 </p>
             </div>
             <div ng-controller="paginationCtrl" class="text-center page">
-                <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
-                <div class="page-num">共<span class="number">10</span>条记录，当前显示第<span class="number">1</span>页</div>
+                <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="curPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                <div class="page-num">共<span class="number" ng-bind="totalNum"></span>条记录，当前显示第<span class="number" ng-bind="curPage"></span>页</div>
             </div>
         </div>
     </div>
@@ -200,6 +204,7 @@
     <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
     <script src="../../resources/js/lodash.js"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/mock.js"></script>
     <script src="inventoryTurnoverReport.js"></script>
 </body>
 
