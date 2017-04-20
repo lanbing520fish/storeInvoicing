@@ -340,7 +340,7 @@ angular
         }
         return httpMethod;
     }])
-    .controller('conditionQuery', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
+    .controller('conditionResult', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
         $scope.conditionQueryForm = {
             createStartDt: '', //制单日期开始
             createEndDt: '' //制单日期结束
@@ -416,9 +416,6 @@ angular
                 $scope.boutiqueStarList = rsp.data;
             };
         });
-        
-    }])
-    .controller('conditionResult', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
         // 查询结果分页信息
         $scope.curPage = 1; // 当前页
         $scope.rowNumPerPage = 10; // 每页显示行数

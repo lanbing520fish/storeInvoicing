@@ -429,7 +429,7 @@ angular
         $scope.totalNum = 0; // 总条数
         $scope.maxSize = 5; // 最大展示页数
 
-        $scope.orderQuery = function(curPage) { 
+        $scope.orderQuery = function(curPage) {
             !curPage && $scope.$broadcast('pageChange');
             var params = {
                 provinceId : _.get($rootScope, 'provinceId'),
