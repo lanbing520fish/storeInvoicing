@@ -30,7 +30,7 @@
                                         <uib-tab index="1" heading="省份" ng-show="isshowprovinceName">
                                             <div class="city-content">
                                                 <li class="city-item" ng-class="{current: $index === provinceIndex}"
-                                                    ng-repeat="item in qryProvinceList"
+                                                    ng-repeat="item in provinces"
                                                     ng-click="handleSelectCity('province', $index, item.commonRegionId, item.commonRegionName)">
                                                     {{item.commonRegionName}}
                                                 </li>
@@ -39,7 +39,7 @@
                                         <uib-tab index="2" heading="城市" ng-show="isshowcityName">
                                             <div class="city-content">
                                                 <li class="city-item" ng-class="{current: $index === cityIndex}"
-                                                    ng-repeat="item in qryCityList"
+                                                    ng-repeat="item in citys"
                                                     ng-click="handleSelectCity('city', $index, item.commonRegionId, item.commonRegionName)">
                                                     {{item.commonRegionName}}
                                                 </li>

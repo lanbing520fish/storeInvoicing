@@ -146,12 +146,12 @@ angular
                 'success': true, //是否成功
                 'code': null,
                 'msg': null, //失败信息
-                'data': {
-                    'PROVINCE_COMMONREGION_VALUE': '@id'||'',
-                    'PROVINCE_COMMONREGION_TEXT': '@province',
-                    'CITY_COMMONREGION_VALUE':'@id'||'',
-                    'CITY_COMMONREGION_TEXT':'@city',
-                },
+                'data|2': [{
+                    // 'PROVINCE_COMMONREGION_VALUE': '@id'||'',
+                    // 'PROVINCE_COMMONREGION_TEXT': '@province',
+                    // 'CITY_COMMONREGION_VALUE':'@id'||'',
+                    // 'CITY_COMMONREGION_TEXT':'@city'
+                }],
                 'errors': null
             });
 
@@ -355,61 +355,55 @@ angular
         }
     }])
     // 城市
-    .controller('cityCheckCtrl', ['$scope', '$rootScope', 'httpMethod',function($scope, $rootScope, httpMethod) { 
-        $scope.checkedAreaName = '';
-        $scope.isDisabled = true;
-        
+    .controller('cityCheckCtrl', ['$scope', '$rootScope', 'httpMethod',function($scope, $rootScope, httpMethod) {   
+        $scope.isshowprovinceName = true;
+        $scope.isshowcityName = true;
         $scope.visible = false;
         $scope.key = 1;
         $scope.provinceIndex = '';
         $scope.cityIndex = '';
-        $scope.areaId = '';
-
         $scope.provinceName = '';
         $scope.cityName = '';
+        $scope.checkedAreaName = '';
 
-        $scope.isshowprovinceName = true;
-        $scope.isshowcityName = true;
-
-        var user_param = {}
-
-        $scope.queryCity = function() {
-            // 市级选择值获取接口
-            $scope.$watch('queryForm.provinceId', function (newValue) {
-                var city_param = {
-                    provinceId : newValue
-                };
-                httpMethod.qryCity(city_param).then(function(rsp) {
-                    $rootScope.qryCityList = rsp.data;
-                });
-            });
-
-        };
-        httpMethod.qryCurrentUserProvinceAndCity(user_param).then(function(rsp) { 
-            $rootScope.userList = rsp.data;
-            if($rootScope.userList.PROVINCE_COMMONREGION_TEXT){
-                $scope.provinceName = $rootScope.userList.PROVINCE_COMMONREGION_TEXT;
-                $scope.checkedAreaName = $scope.provinceName;
-                $rootScope.provinceId = $rootScope.userList.PROVINCE_COMMONREGION_VALUE;
-                $scope.key = 2;
-                $scope.isshowprovinceName = false;
-                if($rootScope.userList.CITY_COMMONREGION_TEXT){
-                    $scope.cityName = $rootScope.userList.CITY_COMMONREGION_TEXT;
-                    $scope.checkedAreaName = $scope.provinceName + ' ' + $scope.cityName;
-                    $rootScope.cityId = $rootScope.userList.CITY_COMMONREGION_VALUE;
-                    $scope.isshowcityName = false;
+        // 查询当前登录用户的省级和市级区域ID
+        httpMethod.qryCurrentUserProvinceAndCity().then(function(rsp) {
+            if (rsp.success) {
+                $scope.provincesAndCities = rsp.data[0];  
+                if(!$scope.provincesAndCities.PROVINCE_COMMONREGION_VALUE){
+                    httpMethod.qryProvince().then(function(rsp) { 
+                        if (rsp.success) {
+                            $scope.provinces = rsp.data;
+                        };   
+                    }); 
                 }else{
-                    $scope.queryCity();
-                };
-            }else{
-                // 查询省份
-                var pro_param = {}
-                httpMethod.qryProvince(pro_param).then(function(rsp) {
-                    $rootScope.qryProvinceList = rsp.data;  
-                });
-                $scope.queryCity();
-            };   
-        });
+                    $scope.isshowprovinceName =false;
+                    $scope.key = 2;
+                    $rootScope.provinceId = $scope.provincesAndCities.PROVINCE_COMMONREGION_VALUE;
+                    $scope.checkedAreaName = $scope.provinceName = $scope.provincesAndCities.PROVINCE_COMMONREGION_TEXT;
+                }
+                if(!$scope.provincesAndCities.CITY_COMMONREGION_VALUE){              
+                    $rootScope.$watch('provinceId', function(newValue) {
+                        if($rootScope.provinceId){
+                            var param = {
+                                provinceId: newValue
+                            }
+                            httpMethod.qryCity(param).then(function(rsp) {
+                                if (rsp.success) {
+                                    $scope.citys = rsp.data;
+                                };
+                            }); 
+                        }else{
+                            $scope.citys=[];
+                        } 
+                    })   
+                }else{ 
+                    $scope.isshowcityName =false;
+                    $rootScope.cityId = $scope.provincesAndCities.CITY_COMMONREGION_VALUE;
+                    $scope.checkedAreaName = $scope.provincesAndCities.PROVINCE_COMMONREGION_TEXT + ' ' +$scope.provincesAndCities.CITY_COMMONREGION_TEXT;
+                }
+            };
+        });  
 
         $scope.cityCheck = function() {
             $scope.visible = !$scope.visible;
@@ -423,18 +417,20 @@ angular
                 case 'province':
                     $scope.key = 2;
                     $scope.provinceIndex = index;
-                    $scope.provinceName = areaName;
                     $rootScope.provinceId = areaId;
+                    $scope.provinceName = areaName;
+                    me.handleSubmitBtn(level);
                     break;
                 case 'city':
                     $scope.cityIndex = index;
-                    $scope.cityName = areaName;
                     $rootScope.cityId = areaId;
+                    $scope.cityName = areaName;
                     me.handleSubmitBtn(level);
                     break;
             }
         };
         $scope.handleSubmitBtn = function(level) {
+            var me = this;
             switch (level) {
                 case 'province':
                     $scope.checkedAreaName = $scope.provinceName;
@@ -444,7 +440,7 @@ angular
                     $scope.visible = false;
                     break;
             }
-        };
+        }       
     }])
     // 分页控制器
     .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {
