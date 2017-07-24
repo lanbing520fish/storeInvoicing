@@ -1,5 +1,5 @@
 angular
-    .module('inventoryModule', ['ui.bootstrap'])
+    .module('inventoryModule', ['ui.bootstrap', 'ui.grid', 'ui.grid.resizeColumns', 'ui.grid.emptyBaseLayer'])
     .factory('httpMethod', ['$http', '$q', function($http, $q) {
         var httpConfig = {
                 'siteUrl': 'http://192.168.16.84:8088',
@@ -164,19 +164,186 @@ angular
                 'msg': null, //失败信息
                 'data': {
                     'total|1-100': 10,
-                    'list|10': [{
-                        'ROW_ID|1-100': 1,
-                        'BRAND_NAME': '@cword(6)',
-                        'OFFER_MODEL_NAME':'@cword(6)',
-                        'OFFER_NAME': '@cword(6)',
-                        'INST_CODE': '@word',
-                        'PRICE|100-1000': 100,
-                        'CREATE_DT':'@date',
-                        'RETAIL_SHOP_NAME': '@cword(6)',
-                        'STORAGE_NAME': '@cword(8)',
-                        'STAFF_NAME': '@name',
-                        'STAFF_ID': '@id',
-                        'SI_ORDER_ID': '@id'
+                    'list': [{
+                        "ROW_ID": 1,
+                        "PROCUREIN_TYPE": "行货",
+                        "IN_STOCK_TIMES": 1,
+                        "BRAND_NAME": "vivo",
+                        "OFFER_MODEL_NAME": "VIV-vivo X9",
+                        "INST_CODE": "A100005A378948",
+                        "PRICE": 3798,
+                        "STAFF_NAME": "王银",
+                        "CATEGORY_NAME": "手机",
+                        "OFFER_NAME": "vivo vivo X9 金色",
+                        "STORAGE_NAME": "解放东街营业厅-主仓库",
+                        "CREATE_DT": "2017-07-04",
+                        "UPRETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "SI_ORDER_ID": "1000000042626635",
+                        "RETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "STAFF_ID": 64010150562,
+                        "OPERATORS_NAME": "中国电信股份有限公司银川分公司"
+                    }, {
+                        "ROW_ID": 2,
+                        "PROCUREIN_TYPE": "行货",
+                        "IN_STOCK_TIMES": 1,
+                        "BRAND_NAME": "vivo",
+                        "OFFER_MODEL_NAME": "VIV-vivo Y66",
+                        "INST_CODE": "A000006EE6CFBE",
+                        "PRICE": 1098,
+                        "STAFF_NAME": "王银",
+                        "CATEGORY_NAME": "手机",
+                        "OFFER_NAME": "vivo vivo Y66 金色",
+                        "STORAGE_NAME": "中国电信解放东街营业厅（世纪恒天）第一仓库",
+                        "CREATE_DT": "2017-07-02",
+                        "UPRETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "SI_ORDER_ID": "1000000042110987",
+                        "RETAIL_SHOP_NAME": "中国电信解放东街营业厅（世纪恒天）",
+                        "STAFF_ID": 64010150562,
+                        "OPERATORS_NAME": "宁夏世纪恒天通讯有限公司"
+                    }, {
+                        "ROW_ID": 3,
+                        "PROCUREIN_TYPE": "行货",
+                        "IN_STOCK_TIMES": 1,
+                        "BRAND_NAME": "苹果",
+                        "OFFER_MODEL_NAME": "ACM-A7Plus",
+                        "INST_CODE": "355835083460105",
+                        "PRICE": 7799,
+                        "STAFF_NAME": "王银",
+                        "CATEGORY_NAME": "手机",
+                        "OFFER_NAME": "苹果 iPhone 7 Plus 32G金",
+                        "STORAGE_NAME": "解放东街营业厅-主仓库",
+                        "CREATE_DT": "2017-07-01",
+                        "UPRETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "SI_ORDER_ID": "1000000041651905",
+                        "RETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "STAFF_ID": 64010150562,
+                        "OPERATORS_NAME": "中国电信股份有限公司银川分公司"
+                    }, {
+                        "ROW_ID": 4,
+                        "PROCUREIN_TYPE": "行货",
+                        "IN_STOCK_TIMES": 1,
+                        "BRAND_NAME": "苹果",
+                        "OFFER_MODEL_NAME": "ACM-A7",
+                        "INST_CODE": "355826085427218",
+                        "PRICE": 5388,
+                        "STAFF_NAME": "王银",
+                        "CATEGORY_NAME": "手机",
+                        "OFFER_NAME": "苹果 iPhone 7 32G黑",
+                        "STORAGE_NAME": "解放东街营业厅-主仓库",
+                        "CREATE_DT": "2017-06-30",
+                        "UPRETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "SI_ORDER_ID": "1000000041279348",
+                        "RETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "STAFF_ID": 64010150562,
+                        "OPERATORS_NAME": "中国电信股份有限公司银川分公司"
+                    }, {
+                        "ROW_ID": 5,
+                        "PROCUREIN_TYPE": "行货",
+                        "IN_STOCK_TIMES": 1,
+                        "BRAND_NAME": "三星",
+                        "OFFER_MODEL_NAME": "SCH-SM G9500",
+                        "INST_CODE": "354765081180226",
+                        "PRICE": 6188,
+                        "STAFF_NAME": "王银",
+                        "CATEGORY_NAME": "手机",
+                        "OFFER_NAME": "三星 SM-G9500 烟晶灰",
+                        "STORAGE_NAME": "解放东街营业厅-主仓库",
+                        "CREATE_DT": "2017-06-30",
+                        "UPRETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "SI_ORDER_ID": "1000000041277668",
+                        "RETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "STAFF_ID": 64010150562,
+                        "OPERATORS_NAME": "中国电信股份有限公司银川分公司"
+                    }, {
+                        "ROW_ID": 6,
+                        "PROCUREIN_TYPE": "行货",
+                        "IN_STOCK_TIMES": 1,
+                        "BRAND_NAME": "三星",
+                        "OFFER_MODEL_NAME": "SCH-SM G9550",
+                        "INST_CODE": "354732081816910",
+                        "PRICE": 6088,
+                        "STAFF_NAME": "王银",
+                        "CATEGORY_NAME": "手机",
+                        "OFFER_NAME": "三星 SM-G9550 烟晶灰",
+                        "STORAGE_NAME": "解放东街营业厅-主仓库",
+                        "CREATE_DT": "2017-06-30",
+                        "UPRETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "SI_ORDER_ID": "1000000041273564",
+                        "RETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "STAFF_ID": 64010150562,
+                        "OPERATORS_NAME": "中国电信股份有限公司银川分公司"
+                    }, {
+                        "ROW_ID": 7,
+                        "PROCUREIN_TYPE": "行货",
+                        "IN_STOCK_TIMES": 1,
+                        "BRAND_NAME": "三星",
+                        "OFFER_MODEL_NAME": "SCH-SM G9500",
+                        "INST_CODE": "354765081879884",
+                        "PRICE": 5388,
+                        "STAFF_NAME": "王银",
+                        "CATEGORY_NAME": "手机",
+                        "OFFER_NAME": "三星 SM-G9500 烟晶灰",
+                        "STORAGE_NAME": "解放东街营业厅-主仓库",
+                        "CREATE_DT": "2017-06-30",
+                        "UPRETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "SI_ORDER_ID": "1000000041272873",
+                        "RETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "STAFF_ID": 64010150562,
+                        "OPERATORS_NAME": "中国电信股份有限公司银川分公司"
+                    }, {
+                        "ROW_ID": 8,
+                        "PROCUREIN_TYPE": "行货",
+                        "IN_STOCK_TIMES": 1,
+                        "BRAND_NAME": "三星",
+                        "OFFER_MODEL_NAME": "SCH-SM J3119S",
+                        "INST_CODE": "358067080281766",
+                        "PRICE": 999,
+                        "STAFF_NAME": "王银",
+                        "CATEGORY_NAME": "手机",
+                        "OFFER_NAME": "三星 SM-J3119S 流沙金",
+                        "STORAGE_NAME": "解放东街营业厅-主仓库",
+                        "CREATE_DT": "2017-06-30",
+                        "UPRETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "SI_ORDER_ID": "1000000041235996",
+                        "RETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "STAFF_ID": 64010150562,
+                        "OPERATORS_NAME": "中国电信股份有限公司银川分公司"
+                    }, {
+                        "ROW_ID": 9,
+                        "PROCUREIN_TYPE": "行货",
+                        "IN_STOCK_TIMES": 1,
+                        "BRAND_NAME": "三星",
+                        "OFFER_MODEL_NAME": "SCH-SM J3119S",
+                        "INST_CODE": "358067080281139",
+                        "PRICE": 850,
+                        "STAFF_NAME": "王银",
+                        "CATEGORY_NAME": "手机",
+                        "OFFER_NAME": "三星 SM-J3119S 流沙金",
+                        "STORAGE_NAME": "中国电信解放东街营业厅（世纪恒天）第一仓库",
+                        "CREATE_DT": "2017-06-30",
+                        "UPRETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "SI_ORDER_ID": "1000000041198968",
+                        "RETAIL_SHOP_NAME": "中国电信解放东街营业厅（世纪恒天）",
+                        "STAFF_ID": 64010150562,
+                        "OPERATORS_NAME": "宁夏世纪恒天通讯有限公司"
+                    }, {
+                        "ROW_ID": 10,
+                        "PROCUREIN_TYPE": "行货",
+                        "IN_STOCK_TIMES": 1,
+                        "BRAND_NAME": "苹果",
+                        "OFFER_MODEL_NAME": "ACM-A7",
+                        "INST_CODE": "355833085430085",
+                        "PRICE": 5388,
+                        "STAFF_NAME": "王银",
+                        "CATEGORY_NAME": "手机",
+                        "OFFER_NAME": "苹果 iPhone 7 32G玫瑰金",
+                        "STORAGE_NAME": "解放东街营业厅-主仓库",
+                        "CREATE_DT": "2017-06-30",
+                        "UPRETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "SI_ORDER_ID": "1000000041198697",
+                        "RETAIL_SHOP_NAME": "中国电信解放东街营业厅",
+                        "STAFF_ID": 64010150562,
+                        "OPERATORS_NAME": "中国电信股份有限公司银川分公司"
                     }]
                 },
                 'errors': null
@@ -192,8 +359,8 @@ angular
         });
 
         //监听品牌改变获取相应型号
-        $scope.brandChanged = function(val){
-            if(val === null){
+        $scope.brandChanged = function(val) {
+            if (val === null) {
                 $scope.modelsList = [];
                 $scope.modelCd = '';
                 return;
@@ -257,6 +424,26 @@ angular
         $scope.rowNumPerPage = 10; // 每页显示行数
         $scope.totalNum = 0; // 总条数
 
+        //ui.gird
+        $scope.gridOptions = {
+            enableSorting: false,
+            enableColumnMenus: false,
+            columnDefs: [
+                { field: 'ROW_ID', displayName: '序号', width: '50' },
+                { field: 'BRAND_NAME', displayName: '商品品牌', width: '66' },
+                { field: 'OFFER_MODEL_NAME', displayName: '商品型号', width: '120' },
+                { field: 'OFFER_NAME', displayName: '商品名称', width: '160' },
+                { field: 'INST_CODE', displayName: '串码', width: '126' },
+                { field: 'PRICE', displayName: '采购单价', width: '60' },
+                { field: 'CREATE_DT', displayName: '入库时间', width: '80' },
+                { field: 'RETAIL_SHOP_NAME', displayName: '入库门店', width: '160', cellTooltip: true },
+                { field: 'STORAGE_NAME', displayName: '仓库', width: '160', cellTooltip: true },
+                { field: 'STAFF_NAME', displayName: '操作人', width: '60' },
+                { field: 'STAFF_ID', displayName: '操作人工号', width: '96' },
+                { field: 'SI_ORDER_ID', displayName: '单据号', width: '126' },
+            ]
+        };
+
         // 确定查询
         $scope.queryFormSubmit = function(currentPage) {
             var param = {
@@ -270,6 +457,7 @@ angular
                 pageSize: 10
             };
             httpMethod.qryTerminalInCalData(param).then(function(rsp) {
+                $scope.gridOptions.data = rsp.data.list; //ui.gird data
                 $scope.qryStockStatisticData = rsp.data.list;
                 $scope.totalNum = rsp.data.total;
                 $log.log('获取查询数据接口响应成功.');

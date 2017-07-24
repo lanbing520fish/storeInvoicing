@@ -14,7 +14,7 @@ angular
         return httpConfig;
     }])
     .factory('httpMethod', ['$http', '$q', 'httpConfig', function($http, $q, httpConfig) {
-        
+
         var httpMethod = {};
 
         // 省份选择值获取接口
@@ -434,7 +434,7 @@ angular
 
         $scope.checkedAreaName = '';
         $scope.isDisabled = true;
-        
+
         $scope.visible = false;
         $scope.key = 1;
         $scope.provinceIndex = '';
@@ -597,7 +597,7 @@ angular
         }, function() {
             $log.log('调用自有厅级别选择值获取接口失败.');
         });
-        
+
         // 专营店星级选项选择值获取接口
         var loadBoutiqueStar_param = {}
         httpMethod.loadBoutiqueStar(loadBoutiqueStar_param).then(function(rsp) {
@@ -655,7 +655,7 @@ angular
         // 条件查询
         $scope.queryFormSubmit = function(currentPage) {
             var param = {
-                curPage: $scope.currentPage || 1,
+                curPage: currentPage || 1,
                 pageSize: $scope.rowNumPerPage,
                 provinceId: $rootScope.queryForm.provinceId ? $rootScope.queryForm.provinceId : '',
                 cityId: $rootScope.queryForm.cityId ? $rootScope.queryForm.cityId : '',
@@ -729,7 +729,7 @@ angular
             }else{
                 window.open(httpConfig.siteUrl + '/chain/report/q/exportShopSaleCountNoBizman?param=' + encodeURI(JSON.stringify(param)));
             }
-            
+
         }
     }])
     // 分页控制器
