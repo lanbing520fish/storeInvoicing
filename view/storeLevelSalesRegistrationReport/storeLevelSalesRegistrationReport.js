@@ -452,7 +452,7 @@ angular
         $scope.queryCity = function() {
 
             // 市级选择值获取接口
-            $scope.$watch('queryForm.provinceId', function (newValue) {
+            $rootScope.$watch('$rootScope.provinceId', function (newValue) {
                 var city_param = {
                     provinceId : newValue
                 };

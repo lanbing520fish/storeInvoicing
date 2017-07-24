@@ -13,7 +13,7 @@
     <!-- DOM结构开始 -->
     <div class="check top-line wavy-line" ng-controller="conditionResult">
         <!-- 条件查询 -->
-        <div class="condition-query fn-clear" ng-controller="conditionQuery">
+        <div class="condition-query fn-clear">
             <p class="condition-query-title fn-left">搜
                 <br/>索</p>
             <div class="condition-query-box fn-right">
@@ -30,7 +30,7 @@
                                         <uib-tab index="1" heading="省份" ng-show="isshowprovinceName">
                                             <div class="city-content">
                                                 <li class="city-item" ng-class="{current: $index === provinceIndex}"
-                                                    ng-repeat="item in qryProvinceList"
+                                                    ng-repeat="item in provinces"
                                                     ng-click="handleSelectCity('province', $index, item.commonRegionId, item.commonRegionName)">
                                                     {{item.commonRegionName}}
                                                 </li>
@@ -39,7 +39,7 @@
                                         <uib-tab index="2" heading="城市" ng-show="isshowcityName">
                                             <div class="city-content">
                                                 <li class="city-item" ng-class="{current: $index === cityIndex}"
-                                                    ng-repeat="item in qryCityList"
+                                                    ng-repeat="item in citys"
                                                     ng-click="handleSelectCity('city', $index, item.commonRegionId, item.commonRegionName)">
                                                     {{item.commonRegionName}}
                                                 </li>
@@ -108,7 +108,7 @@
                             <div class="form-group">
                                 <label class="control-label">专营店星级：</label>
                                 <div class="select-box">
-                                    <select class="form-control" ng-model="boutiqueStarId" ng-options="item.boutiqueStarId as item.boutiqueStarName for item in boutiqueStarList">
+                                    <select class="form-control" ng-model="conditionQueryForm.boutiqueStarId" ng-options="item.boutiqueStarId as item.boutiqueStarName for item in boutiqueStarList">
                                         <option value="">全部</option>
                                     </select>
                                 </div>
@@ -119,7 +119,7 @@
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">仓库名：</label>
-                                <input type="text" class="form-control" ng-bind="conditionQueryForm.storageName">
+                                <input type="text" class="form-control" ng-model="conditionQueryForm.storageName">
                             </div>
                         </div> 
                         <div class="col-xs-6">
