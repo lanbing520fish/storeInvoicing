@@ -6,6 +6,7 @@
     <title>终端入库明细报表</title>
     <link rel="stylesheet" href="../../resources/css/sweetalert.css">
     <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">
     <link rel="stylesheet" href="../../resources/css/reset.css">
     <link rel="stylesheet" href="../../resources/css/common.css">
     <link rel="stylesheet" href="terminalStorageDetailReport.css">
@@ -95,69 +96,7 @@
         <!-- 结果列表 -->
         <div class="inventory-charts fn-clear">
             <div class="charts-box">
-                <div class="result-table" ng-cloak>
-                    <table class="table table-striped table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th width="60">序号</th>
-                                <th>商品品牌</th>
-                                <th>商品型号</th>
-                                <th>商品名称</th>
-                                <th>串码</th>
-                                <th>采购单价</th>
-                                <th width="80">入库时间</th>
-                                <th>入库门店</th>
-                                <th>仓库</th>
-                                <th>操作人</th>
-                                <th>操作人工号</th>
-                                <th>单据号</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="item in qryStockStatisticData">
-                                <td>
-                                    <p ng-bind="item.ROW_ID"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.BRAND_NAME" class="overflow-handle"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.OFFER_MODEL_NAME" class="overflow-handle"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.OFFER_NAME" class="overflow-handle"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.INST_CODE" class="overflow-handle"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.PRICE"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.CREATE_DT"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.RETAIL_SHOP_NAME" class="overflow-handle"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.STORAGE_NAME" class="overflow-handle"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.STAFF_NAME" class="overflow-handle"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.STAFF_ID" class="overflow-handle"></p>
-                                </td>
-                                <td>
-                                    <p ng-bind="item.SI_ORDER_ID" class="overflow-handle"></p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p class="no-data" ng-if="qryStockStatisticData && !qryStockStatisticData.length">
-                        没有数据
-                    </p>
-                </div>
+                <div ui-grid="gridOptions" class="grid" ui-grid-resize-columns ui-grid-empty-base-layer></div>
                 <div ng-controller="paginationCtrl" class="text-center page">
                     <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
                     <div class="page-num">共<span class="number" ng-cloak ng-bind="totalNum || 0"></span>条记录，当前显示第<span class="number" ng-cloak ng-bind="currentPage || 0"></span>页</div>
@@ -178,6 +117,7 @@
     <script src="../../resources/js/sweetalert.min.js"></script>
     <script src="../../resources/js/mock.js"></script>
     <script src="../../resources/js/moment.js"></script>
+    <script src="http://ui-grid.info/release/ui-grid.js"></script>
     <script src="terminalStorageDetailReport.js"></script>
 </body>
 

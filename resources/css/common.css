@@ -574,3 +574,20 @@ body {
 .zhezhao{
    height:100%; width:100%; position:fixed; top:0; left:0; z-index:98;
 }
+
+
+/* ui.gird */
+.grid {
+    margin-bottom: 10px;
+}
+.ui-grid-header-viewport {
+    background-color: #6d90e3;
+    color: #fff;
+}
+.ui-grid-cell-contents {
+    line-height: 22px;
+    text-align: center;
+}
+.ui-grid-invisible {
+    display: none;
+}
