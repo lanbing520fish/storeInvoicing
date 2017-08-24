@@ -112,4 +112,6 @@
     * 分品牌机型报表-库存周转报表 **brandModelStatementsInventoryTurnoverReport**
     * 串码级明细报表-销量明细报表 **stringCodeInventorySalesDetailedReports**
 
-
+* **登录**
+    * 登录 **loginIndex**
+    * 重置密码 **resetPassword**
