@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="loginIndex.css">
+</head>
+<body>
+	<div class="header">
+		<img src="../../resources/images/logo-back.png" class="dianxin-logo">
+	</div>
+	<div class="content">
+		<div class="cnt">
+			<div class="fn-login">
+				<p class="user">
+					<img src="../../resources/images/man.png">用户登录
+				</p>
+				<div class="lg zh-lg" ng-controller="loginCtrl">
+					<p class="top"><span class="wrds">帐号登录</span>
+						<span class="line"></span>
+					</p>
+					<form id="loginUserForm" name="loginUserForm" novalidate>
+						<div class="lig"><i class="iconfont">&#xe631;</i><input type="text" name="mobileNum" placeholder="手机号" ng-model="mobileNum" ng-focus="setFocusItem('mobileNum')" ng-focus-validate required>
+							<p class="err ng-hide" ng-show="loginUserForm.mobileNum.$invalid && loginUserForm.mobileNum.$focused">
+	                            <span class="ico-tip-info iconfont">&#xe646;</sapn>请输入手机号
+	                        </p>
+						</div>
+						<div class="lig"><i class="iconfont">&#xe630;</i><input type="password" name="userPwd" ng-model="userPwd"  ng-focus="setFocusItem('userPwd')" placeholder="密码" ng-focus-validate required>
+							<p class="err ng-hide" ng-show="loginUserForm.userPwd.$invalid && loginUserForm.userPwd.$focused">
+	                            <span class="ico-tip-info iconfont">&#xe646;</span>
+	                            <span>请输入密码</span>
+	                        </p>
+						</div>
+						<div class="lig yzm"><i class="iconfont">&#xe77a;</i><input type="text" placeholder="手机验证码" name="checkNum" ng-model="checkNum" ng-focus="setFocusItem('checkNum')" ng-focus-validate required>
+							<p class="err ng-hide" ng-show="loginUserForm.checkNum.$invalid && loginUserForm.checkNum.$focused">
+	                            <span class="ico-tip-info iconfont">&#xe646;</span>
+	                            <span>请输入手机验证码</span>
+	                        </p>
+						</div><input ng-class="{'disabled': isGetcode}" ng-disabled="isGetcode" type="button" class="telyzm " ng-click="getVerifyCode()" ng-model="phoneVerifyText" ng-value="phoneVerifyText" />
+					</form>
+					<div class="btns">
+						<button class="login" ng-disabled="loginUserForm.$invalid" ng-click="submitUserForm()">登录</button>
+						<button class="reseting" ng-click="resetPwd()">重置</button>
+					</div>
+					<a href="#" class="modify">修改密码</a>
+					<a href="#" class="forget">忘记密码？</a>
+				</div>				
+			</div>
+		</div>
+	</div>
+	<div class="footer">版权所有 @  2016  中国电信集团公司</div>
+    <script src="../../resources/js/require.js" data-main="entry"></script>
+</body>
+</html>

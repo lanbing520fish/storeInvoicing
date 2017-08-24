@@ -1,0 +1,213 @@
+$(document).ready(function(){
+	$('.zh-lg .change').click(function(){
+		$(this).parents('.zh-lg').hide();
+		$('.tel-lg').show();
+	})
+	$('.tel-lg .change').click(function(){
+		$(this).parents('.tel-lg').hide();
+		$('.zh-lg').show();
+	})
+	var wait=60; 
+	function time(o) { 
+		if (wait == 0) { 
+			o.removeAttribute("disabled"); 
+			o.value="重新获取验证码"; 
+			wait = 60; 
+		} else { 
+			o.setAttribute("disabled", true); 
+			o.value="重新发送(" + wait + ")"; 
+			wait--; 
+			setTimeout(function() { 
+				time(o) 
+				}, 
+			1000) 
+		} 
+	} 
+	$("#getpwd").click(function(){
+		//错误信息清空
+		clearErrorMessage();
+		//校验码清空
+	    var mobileNum = $.trim($("#mobileNum").val());
+	    if("" == mobileNum){
+	    	showErrorMessage("手机号不能为空");
+	    	return false;
+	    }
+	    if(mobileNum.length != 11){
+	    	showErrorMessage("手机号格式有误，请重新输入");
+	    	return false;
+	    }
+	    clearErrorMessage();
+		var param={
+				"mobileNum":mobileNum
+		};
+	    //调用短信接口
+		var targetUrl = ctx + "/getCheckSum.action"; 
+		$.ajax({
+	    	type: "post",
+	    	data: param,
+	   	  	url: targetUrl,
+	   	  	timeout: 5000,
+	   	  	dataType: "json",  
+	   	 	async: false,//同步
+		    success: function(data, textStatus){
+		    	 if(data.success == true){
+		    		 time(this);
+		    	 }else{
+		    		 showErrorMessage(data.msg);
+		    	 }
+			}
+		});
+		
+	}) 
+});
+
+function changeCode(){
+	//刷新
+    $('#kaptchaImage').hide().attr('src', ctx +'/img/p/createImg.action?' + Math.floor(Math.random()*100) ).fadeIn();  
+	event.cancelBubble=true;  
+}
+if(window.location != top.location){
+	top.location.href=window.location;	
+}
+function submitLogin(){
+	$(".err").hide();
+	if($.trim($("#userId").val()) == "" || $.trim($("#userId").val()) == "账号/手机号/工号"){
+		showErrorMessage("用户名不能为空");
+		$("#userId").focus();
+		changeCode();
+	    return false;
+	}else if($.trim($("#userPwd").val()) == "" || $.trim($("#userPwd").val()) == "密码"){
+		$("#userPwd").focus();
+		showErrorMessage("密码不能为空");
+		changeCode();
+	    return false;
+	}else if($.trim($("#verifyCode").val()) =="" || $.trim($("#verifyCode").val()) == "校验码"){
+		showErrorMessage("验证码不能为空");
+		$("#verifyCode").focus();
+		changeCode();
+	    return false;
+	}else if($.trim($("#verifyCode").val()).length< 4){
+		showErrorMessage("请输入四位验证码");
+		$("#verifyCode").focus();
+		changeCode();
+	    return false;
+	}
+	/***
+	 * 修改跨站脚本安全漏洞
+	 */
+	var reg = /^[0-9a-zA-Z_]+$/;
+	var userIdParam = $("#userId").val();
+	if(!reg.test(userIdParam)){
+		showErrorMessage("登录账户只能输入字母或者数字");
+		$("#userId").focus();
+		changeCode();
+	    return false;
+	}
+	var userPwdParam = $("#userPwd").val();
+	if(!reg.test(userPwdParam)){
+		showErrorMessage("登录密码只能输入字母或者数字");
+		$("#userPwd").focus();
+		changeCode();
+	    return false;
+	}
+	var verifyCodeParam = $("#verifyCode").val();
+	if(!reg.test(verifyCodeParam)){
+		showErrorMessage("验证码只能输入字母或者数字");
+		$("#verifyCode").focus();
+		changeCode();
+	    return false;
+	}
+	var param = {
+			"userId":$("#userId").val(),
+			"userPwd":$.trim($("#userPwd").val()),
+			"verifyCode":$("#verifyCode").val()
+	};
+	var rtnData = commonQueryFromBackstage(ctx+"/submit.action",JSON.stringify(param));
+	if(rtnData.success){
+		window.location.href = "index.html";
+		return false;
+	}else{
+		showErrorMessage(rtnData.msg);
+		changeCode();
+		return false;
+	}
+}
+
+function showErrorMessage(message){
+	$(".err").show();
+	$(".err").text(message);
+}
+
+function clearErrorMessage(){
+	$(".err").hide();
+	$(".err").text();
+}
+
+function cancleLogin(){
+	$("#loginForm")[0].reset();
+	$("#errorMessageDiv").hide();
+	return false;
+}
+
+function mobileSubmitLogin(){
+	$(".err").hide();
+	var mobileNum = $.trim($("#mobileNum").val());
+	var checkNum = $.trim($("#checkNum").val());
+	if(mobileNum == "" || mobileNum == "手机号"){
+		showErrorMessage("手机号不能为空，请输入");
+		$("#mobileNum").focus();
+	    return false;
+	}else if(mobileNum.length != 11){
+		showErrorMessage("手机号格式有误，请重新输入");
+		$("#mobileNum").focus();
+	    return false;
+	}else if(checkNum == "" || checkNum == "校验码"){
+		$("#checkNum").focus();
+		showErrorMessage("校验码不能为空");
+	    return false;
+	}else if(checkNum.length != 6){
+		$("#checkNum").focus();
+		showErrorMessage("校验码6位，请重新输入");
+	    return false;
+	}
+	/**
+	 * 解决跨站脚本漏洞
+	 */
+	var reg = /^[0-9a-zA-Z]+$/;
+	if(!reg.test(checkNum)){
+		showErrorMessage("校验码只能输入字母或者数字");
+		$("#checkNum").focus();
+	    return false;
+	}
+	 //校验码验证
+	var param = {
+			"mobileNum":mobileNum,
+			"checkNum":checkNum
+	};
+	var targetUrl = ctx + "/checkCheckSum.action"; 
+	$.ajax({
+    	type: "post",
+    	data: param,
+   	  	url: targetUrl,
+   	  	timeout: 5000,
+   	  	dataType: "json",  
+   	 	async: false,
+	    success: function(data, textStatus){
+	    	//校验结果  0:无信息       1：错误    2：正确
+	    	 var checkFlag = data.data;
+	    	 if(data.success == true && checkFlag == 2){
+    		 	//隐藏域
+    			$("#submitMobileNum").val(mobileNum);
+    			$("#submitCheckNum").val(checkNum);
+    			$("#mobileLoginForm").submit();
+    			return true;
+	    	 }else if(checkFlag == 0){
+	    		 showErrorMessage("校验码过期,请重新获取");
+	    		 return false;
+	    	 }else if(checkFlag == 1){
+	    		 showErrorMessage("校验码错误，请重新输入");
+	    		 return false;
+	    	 }
+		}
+	});
+}
