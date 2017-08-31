@@ -291,6 +291,7 @@ input[type="button"] {
     background-color: #cdcdcd;
     color: #fff;
     cursor: default;
+    font-size: 12px;
 }
 
 

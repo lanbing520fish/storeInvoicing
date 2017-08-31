@@ -101,14 +101,14 @@ define(['angular', 'jquery', 'httpConfig', 'sweetalert', 'lodash', 'angular-md5'
                             text: '验证码发送成功！',
                             type: 'success'
                         }, function() {
-                            $scope.phoneVerifyClass = true;
+                            $scope.isGetcode = true;
                             timer = $interval(function(){
                                 $scope.phoneVerifyText = count + '秒后重新发送';  
                                 count--;
                                 if(count == -1){
                                     $interval.cancel(timer);
                                     $scope.phoneVerifyText = '获取验证码';
-                                    $scope.phoneVerifyClass = false;
+                                    $scope.isGetcode = false;
                                 }
                             },1000);
                         });

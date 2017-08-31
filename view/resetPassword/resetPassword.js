@@ -73,7 +73,7 @@ define(['angular', 'jquery', 'httpConfig', 'sweetalert', 'lodash', 'angular-md5'
             }
         }
     })
-    .controller('resultCtrl', ['$scope', '$rootScope', 'httpMethod', '$log', function($scope, $rootScope, httpMethod, $log) {
+    .controller('resultCtrl', ['$scope', '$rootScope', 'httpMethod', '$interval', '$log', function($scope, $rootScope, httpMethod, $interval, $log) {
         $scope.phoneVerifyText = '获取验证码';
     
         var phoneNub = /^(((13[0-9]{1})|(15[0-9]{1})|17[0-9]{1}|(18[0-9]{1}))+\d{8})$/; //手机号码正则
@@ -100,6 +100,24 @@ define(['angular', 'jquery', 'httpConfig', 'sweetalert', 'lodash', 'angular-md5'
         };
         // 获取手机验证码
         $scope.getVerifyCode = function(){
+
+            swal({
+                        title: '提示!',
+                        text: '验证码发送成功！',
+                        type: 'success'
+                    }, function() {
+                        $scope.isGetcode = true;
+                        timer = $interval(function(){
+                            $scope.phoneVerifyText = count + '秒后重新发送';  
+                            count--;
+                            if(count == -1){
+                                $interval.cancel(timer);
+                                $scope.phoneVerifyText = '获取验证码';
+                                $scope.isGetcode = false;
+                            }
+                        },6000);
+                    });
+
             var timer, count = 3;
             if($scope.isGetcode === true) return;
             var param = {
