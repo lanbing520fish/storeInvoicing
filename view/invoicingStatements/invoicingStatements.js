@@ -1,6 +1,6 @@
-/*  author:nieyalan */ 
+/*  author:nieyalan */
 angular
-    .module('invoicingStatementsModule', ['ui.bootstrap'])
+    .module('invoicingStatementsModule', ['ui.bootstrap', 'directive.btn.query'])
     .factory('httpMethod', ['$http', '$q', function($http, $q) {
         var httpConfig = {
             'siteUrl': 'http://192.168.16.84:8088',
@@ -27,7 +27,7 @@ angular
                 defer.reject(data);
             });
             return defer.promise;
-        }; 
+        };
 
         // 省份选择值获取接口
         httpMethod.qryProvince = function() {
@@ -301,7 +301,7 @@ angular
                 'msg': null, //失败信息
                 'data': {
                     'total|1-100': 50,
-                    'list|10': [{ 
+                    'list|10': [{
                         'PROVINCE_NAME': '@province',
                         'CITY_NAME':'@city',
                         'IN_STOCK_COUNT|1-1000': 100,//入库量
@@ -346,7 +346,7 @@ angular
         }
         return httpMethod;
     }])
-    .controller('conditionResult', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {       
+    .controller('conditionResult', ['$scope', '$rootScope', 'httpMethod', '$log', '$timeout', function($scope, $rootScope, httpMethod, $log, $timeout) {
         $scope.conditionQueryForm = {
             createStartDt: '', //制单日期开始
             createEndDt: '' //制单日期结束
@@ -387,11 +387,11 @@ angular
         //品牌选择值获取接口
         httpMethod.loadBrand().then(function(rsp) {
             if (rsp.success) {
-                $scope.allBrandList = rsp.data;      
+                $scope.allBrandList = rsp.data;
             };
-        });    
+        });
         $scope.$watch('conditionQueryForm.brandCd', function(newValue) {
-            $scope.conditionQueryForm.brandCd = newValue; 
+            $scope.conditionQueryForm.brandCd = newValue;
 
             var param = {
                 'brandId' : newValue
@@ -401,21 +401,21 @@ angular
                 if (rsp.success) {
                     $scope.allModelList = rsp.data;
                 };
-            });  
+            });
         });
-                
+
         //渠道类型选择值获取接口
         httpMethod.loadChannelType().then(function(rsp) {
             if (rsp.success) {
                 $scope.channelTypeList = rsp.data;
             };
-        });    
+        });
         //自有厅级别选择值获取接口
         httpMethod.loadMyHall().then(function(rsp) {
             if (rsp.success) {
                 $scope.myHallList = rsp.data;
             };
-        }); 
+        });
         //专营店星级选项选择值获取接口
         httpMethod.loadBoutiqueStar().then(function(rsp) {
             if (rsp.success) {
@@ -429,10 +429,10 @@ angular
         $scope.totalNum = 0; // 总条数
         $scope.maxSize = 5; // 最大展示页数
 
-        $scope.orderQuery = function(curPage) {
+        $scope.orderQuery = function(curPage, cb) {
             !curPage && $scope.$broadcast('pageChange');
             var params = {
-                provinceId : _.get($rootScope, 'provinceId'),
+                provinceId: _.get($rootScope, 'provinceId'),
                 cityId: _.get($rootScope, 'cityId'),
                 brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
                 modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
@@ -445,19 +445,20 @@ angular
                 boutiqueStarId: _.get($scope, 'conditionQueryForm.boutiqueStarId'),
                 curPage: curPage || $scope.curPage, // 当前页
                 pageSize: $scope.rowNumPerPage // 每页展示行数
-            } 
+            }
             httpMethod.qryProvinceCityInStock(params).then(function(rsp) {
                 if (rsp.success) {
+                    cb && cb();
                     $scope.resultList = rsp.data.list;
                     $scope.totalNum = rsp.data.total;
                 };
-            });     
+            });
         }
 
         // 导出
         $scope.exportProvinceCityInStock = function() {
             var param = {
-                provinceId : _.get($rootScope, 'provinceId'),
+                provinceId: _.get($rootScope, 'provinceId'),
                 cityId: _.get($rootScope, 'cityId'),
                 brandCd: _.get($scope, 'conditionQueryForm.brandCd'),
                 modelCd: _.get($scope, 'conditionQueryForm.modelCd'),
@@ -476,7 +477,7 @@ angular
         }
     }])
     // 城市
-    .controller('cityCheckCtrl', ['$scope', '$rootScope', 'httpMethod',function($scope, $rootScope, httpMethod) {   
+    .controller('cityCheckCtrl', ['$scope', '$rootScope', 'httpMethod', function($scope, $rootScope, httpMethod) {
         $scope.isshowprovinceName = true;
         $scope.isshowcityName = true;
         $scope.visible = false;
@@ -490,22 +491,22 @@ angular
         // 查询当前登录用户的省级和市级区域ID
         httpMethod.qryCurrentUserProvinceAndCity().then(function(rsp) {
             if (rsp.success) {
-                $scope.provincesAndCities = rsp.data[0];  
-                if(!$scope.provincesAndCities.PROVINCE_COMMONREGION_VALUE){
-                    httpMethod.qryProvince().then(function(rsp) { 
+                $scope.provincesAndCities = rsp.data[0];
+                if (!$scope.provincesAndCities.PROVINCE_COMMONREGION_VALUE) {
+                    httpMethod.qryProvince().then(function(rsp) {
                         if (rsp.success) {
                             $scope.provinces = rsp.data;
-                        };   
-                    }); 
-                }else{
-                    $scope.isshowprovinceName =false;
+                        };
+                    });
+                } else {
+                    $scope.isshowprovinceName = false;
                     $scope.key = 2;
                     $rootScope.provinceId = $scope.provincesAndCities.PROVINCE_COMMONREGION_VALUE;
                     $scope.checkedAreaName = $scope.provinceName = $scope.provincesAndCities.PROVINCE_COMMONREGION_TEXT;
                 }
-                if(!$scope.provincesAndCities.CITY_COMMONREGION_VALUE){              
+                if (!$scope.provincesAndCities.CITY_COMMONREGION_VALUE) {
                     $rootScope.$watch('provinceId', function(newValue) {
-                        if($rootScope.provinceId){
+                        if ($rootScope.provinceId) {
                             var param = {
                                 provinceId: newValue
                             }
@@ -513,18 +514,18 @@ angular
                                 if (rsp.success) {
                                     $scope.citys = rsp.data;
                                 };
-                            }); 
-                        }else{
-                            $scope.citys=[];
-                        } 
-                    })   
-                }else{ 
-                    $scope.isshowcityName =false;
+                            });
+                        } else {
+                            $scope.citys = [];
+                        }
+                    })
+                } else {
+                    $scope.isshowcityName = false;
                     $rootScope.cityId = $scope.provincesAndCities.CITY_COMMONREGION_VALUE;
-                    $scope.checkedAreaName = $scope.provincesAndCities.PROVINCE_COMMONREGION_TEXT + ' ' +$scope.provincesAndCities.CITY_COMMONREGION_TEXT;
+                    $scope.checkedAreaName = $scope.provincesAndCities.PROVINCE_COMMONREGION_TEXT + ' ' + $scope.provincesAndCities.CITY_COMMONREGION_TEXT;
                 }
             };
-        });  
+        });
 
         $scope.cityCheck = function() {
             $scope.visible = !$scope.visible;
@@ -561,7 +562,7 @@ angular
                     $scope.visible = false;
                     break;
             }
-        }       
+        }
     }])
     // 分页控制器
     .controller('paginationCtrl', ['$scope', '$rootScope', '$log', function($scope, $rootScope, $log) {

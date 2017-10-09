@@ -70,22 +70,22 @@
                                         <option value="">全部</option>
                                     </select>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">品牌名：</label>
                                 <input type="text" class="form-control" ng-model="conditionQueryForm.brandName">
                             </div>
-                        </div>  
+                        </div>
                     </div>
-                    <div class="row mb10">                        
+                    <div class="row mb10">
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">机型名：</label>
                                 <input type="text" class="form-control" ng-model="conditionQueryForm.modelName">
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">渠道类型：</label>
@@ -95,7 +95,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">自有厅级别：</label>
@@ -105,7 +105,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">专营店星级：</label>
@@ -115,9 +115,9 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>    
+                        </div>
                     </div>
-                    <div class="row">     
+                    <div class="row">
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label class="control-label">统计日期：</label>
@@ -137,7 +137,7 @@
                             </div>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <button type="submit" class="btn btn-sm btn-query" ng-click="orderQuery(curPage)"><i class="iconfont">&#xe600;</i> 查询</button>
+                            <div btn-query class-name="btn btn-sm btn-query" order-query="orderQuery(curPage, cb)" ></div>
                         </div>
                     </div>
                 </form>
@@ -300,6 +300,7 @@
     <script src="../../resources/js/bootstrap.min.js"></script>
     <script src="../../resources/js/ui-bootstrap.js"></script>
     <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/directive-btn-query.js"></script>
     <script src="../../resources/js/lodash.js"></script>
     <script src="../../resources/js/sweetalert.min.js"></script>
     <script src="../../resources/js/mock.js"></script>
