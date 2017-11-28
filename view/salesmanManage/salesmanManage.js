@@ -1,128 +1,128 @@
 angular
     .module('salesmanManageModule', ['ui.bootstrap'])
     .run(['$rootScope', '$log', 'httpMethod', function($rootScope, $log, httpMethod) {
-        $rootScope.staffId='';
+        $rootScope.staffId = '';
     }])
 
-    .factory('httpMethod', ['$http', '$q', function ($http, $q) {
+    .factory('httpMethod', ['$http', '$q', function($http, $q) {
         var httpConfig = {
-            'siteUrl': 'http://127.0.0.1:28088',
-            'requestHeader': {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                'siteUrl': 'http://127.0.0.1:28088',
+                'requestHeader': {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+                'isMock': true // 是否开启测试数据
             },
-            'isMock': true // 是否开启测试数据
-        },
-        httpMethod = {};
+            httpMethod = {};
 
         // 根据staffId，获取角色信息
-        httpMethod.qryPostRole = function (param) {
+        httpMethod.qryPostRole = function(param) {
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/power/q/qryPostRole',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + JSON.stringify(param)
-            }).success(function (data, header, config, status) {
+            }).success(function(data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
                 }
                 defer.resolve(data);
-            }).error(function (data, status, headers, config) {
+            }).error(function(data, status, headers, config) {
                 defer.reject(data);
             });
             return defer.promise;
         };
 
         // 根据staffId，获取门店信息
-        httpMethod.qryStaffInfo = function (param) {
+        httpMethod.qryStaffInfo = function(param) {
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/power/q/qryStaffInfo',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + JSON.stringify(param)
-            }).success(function (data, header, config, status) {
+            }).success(function(data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
                 }
                 defer.resolve(data);
-            }).error(function (data, status, headers, config) {
+            }).error(function(data, status, headers, config) {
                 defer.reject(data);
             });
             return defer.promise;
         };
 
         // 店员管理（配置）查询接口
-        httpMethod.qryStaffInShop = function (param) {
+        httpMethod.qryStaffInShop = function(param) {
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/power/q/qryStaffInShop',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + JSON.stringify(param)
-            }).success(function (data, header, config, status) {
+            }).success(function(data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
                 }
                 defer.resolve(data);
-            }).error(function (data, status, headers, config) {
+            }).error(function(data, status, headers, config) {
                 defer.reject(data);
             });
             return defer.promise;
         };
 
         // 批量/单个删除动作接口
-        httpMethod.batchDeleteAccount = function (param) {
+        httpMethod.batchDeleteAccount = function(param) {
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/power/u/batchDeleteAccount',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + JSON.stringify(param)
-            }).success(function (data, header, config, status) {
+            }).success(function(data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
                 }
                 defer.resolve(data);
-            }).error(function (data, status, headers, config) {
+            }).error(function(data, status, headers, config) {
                 defer.reject(data);
             });
             return defer.promise;
         };
 
         // 批量启用接口
-        httpMethod.batchStartAccount = function (param) {
+        httpMethod.batchStartAccount = function(param) {
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/power/u/batchStartAccount',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + JSON.stringify(param)
-            }).success(function (data, header, config, status) {
+            }).success(function(data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
                 }
                 defer.resolve(data);
-            }).error(function (data, status, headers, config) {
+            }).error(function(data, status, headers, config) {
                 defer.reject(data);
             });
             return defer.promise;
         };
 
         // 批量停用接口
-        httpMethod.batchStopAccount = function (param) {
+        httpMethod.batchStopAccount = function(param) {
             var defer = $q.defer();
             $http({
                 url: httpConfig.siteUrl + '/chain/power/u/batchStopAccount',
                 method: 'POST',
                 headers: httpConfig.requestHeader,
                 data: 'param=' + JSON.stringify(param)
-            }).success(function (data, header, config, status) {
+            }).success(function(data, header, config, status) {
                 if (status !== 200) {
                     // 跳转403页面
                 }
                 defer.resolve(data);
-            }).error(function (data, status, headers, config) {
+            }).error(function(data, status, headers, config) {
                 defer.reject(data);
             });
             return defer.promise;
@@ -158,11 +158,11 @@ angular
                     'POST_ROLE_ID': '',
                     'NAME': '',
                     'POST_ROLE_LEVEL': 51
-                },{
+                }, {
                     'POST_ROLE_ID': '',
                     'NAME': '',
                     'POST_ROLE_LEVEL': 13
-                },{
+                }, {
                     'POST_ROLE_ID': '',
                     'NAME': '',
                     'POST_ROLE_LEVEL': 12
@@ -177,10 +177,10 @@ angular
                 'code': null,
                 'msg': null, //失败信息
                 'data': {
-                    'CHANNEL_ID':'@id',
-                    'REGION_NAME':'@city',
-                    'CHANNEL_NAME':'@cword(4)',
-                    'CHANNEL_NBR':'@id',
+                    'CHANNEL_ID': '@id',
+                    'REGION_NAME': '@city',
+                    'CHANNEL_NAME': '@cword(4)',
+                    'CHANNEL_NBR': '@id',
                     'COMMON_REGION_ID': '@id'
                 },
                 'errors': null
@@ -205,7 +205,7 @@ angular
                         'CHANNEL_ID': '@id',
                         'BIZMAN_ID': '@id',
                         'STAFF_ROLE': '@cword(4)',
-                        'STATUS_CD': '@id', 
+                        'STATUS_CD': '@id',
                         'STATUS_NAME': '@cword(4)',
                         'REMARK': '@cword(8)',
                         'VERSION': '@date'
@@ -213,7 +213,7 @@ angular
                     'total|100': 10
                 },
                 'errors': null
-            }); 
+            });
 
             // 批量删除
             Mock.mock(httpConfig.siteUrl + '/chain/power/u/batchDeleteAccount', {
@@ -243,7 +243,7 @@ angular
                 'msg': null, //失败信息
                 'data': null,
                 'errors': null
-            }); 
+            });
 
             // 店员信息修改
             Mock.mock(httpConfig.siteUrl + '/chain/power/u/updateSystemUserBaseInfo', {
@@ -258,14 +258,14 @@ angular
         return httpMethod;
     }])
 
-    .controller('allQueryCtrl', ['$scope','$rootScope', '$log', 'httpMethod', function($scope, $rootScope, $log, httpMethod) {
+    .controller('allQueryCtrl', ['$scope', '$rootScope', '$log', 'httpMethod', function($scope, $rootScope, $log, httpMethod) {
         // 查询结果分页信息
         $scope.currentPage = 1; // 当前页
         $scope.rowNumPerPage = 10; // 每页显示行数
         $scope.totalSize = 0; // 总条数
         $scope.maxSize = 5; // 最大展示页数
 
-        $scope.orderQuery = function(currentPage) { 
+        $scope.orderQuery = function(currentPage) {
             !currentPage && $scope.$broadcast('pageChange');
             var param = {
                 curPage: $scope.curPage, // 当前页
@@ -277,7 +277,6 @@ angular
                 $log.log('调用查询门店接口成功.');
                 if (rsp.success) {
                     $scope.storeResultList = rsp.data.list;
-                    debugger
                     $scope.totalNum = rsp.data.total;
                 } else {
                     swal("OMG", rsp.msg || "调用查询门店接口失败!", "error");
@@ -285,32 +284,32 @@ angular
             }, function() {
                 $log.log('调用查询门店接口失败.');
             });
-        }; 
+        };
 
-        var param ={
-            staffId : _.get($rootScope, 'staffId')
-        } 
+        var param = {
+            staffId: _.get($rootScope, 'staffId')
+        }
         httpMethod.qryPostRole(param).then(function(rsp) {
             $log.log('调用获取角色接口成功.');
             if (rsp.success) {
 
                 $rootScope.roleId = rsp.data.POST_ROLE_LEVEL;
 
-                if($rootScope.roleId === 12 || $rootScope.roleId === 13){
+                if ($rootScope.roleId === 12 || $rootScope.roleId === 13) {
                     var id = window.frameElement && window.frameElement.id || '',
                         obj = parent.$('#' + id).attr('data');
                     $rootScope.storeManList = obj ? JSON.parse(obj) : {};
                     $rootScope.storeManList = {
-                        CHANNEL_ID:11122,
-                        REGION_NAME:'南京',
-                        CHANNEL_NAME:'面装至机',
-                        CHANNEL_NBR:'350000198204097569'
+                        CHANNEL_ID: 11122,
+                        REGION_NAME: '南京',
+                        CHANNEL_NAME: '面装至机',
+                        CHANNEL_NBR: '350000198204097569'
                     }
                     $scope.orderQuery($scope.curPage);
-                    
-                }else if($rootScope.roleId === 51){
-                    var param ={
-                        staffId : _.get($rootScope, 'staffId')
+
+                } else if ($rootScope.roleId === 51) {
+                    var param = {
+                        staffId: _.get($rootScope, 'staffId')
                     }
                     httpMethod.qryStaffInfo(param).then(function(rsp) {
                         $log.log('调用获取门店信息接口成功.');
@@ -321,30 +320,30 @@ angular
                         }
                     }, function() {
                         $log.log('调用获取门店信息接口失败.');
-                    }); 
-                    $scope.orderQuery($scope.curPage); 
-                }  
+                    });
+                    $scope.orderQuery($scope.curPage);
+                }
             } else {
                 swal("OMG", rsp.msg || "调用获取角色接口失败!", "error");
             }
         }, function() {
             $log.log('调用获取角色接口失败.');
-        }); 
-        
-         
+        });
+
+
     }])
 
     // 查询结果控制器
-    .controller('salemanSetupCtrl', ['$scope', '$rootScope', 'httpMethod', '$timeout', '$log', function ($scope, $rootScope, httpMethod, $timeout, $log) {
+    .controller('salemanSetupCtrl', ['$scope', '$rootScope', 'httpMethod', '$timeout', '$log', function($scope, $rootScope, httpMethod, $timeout, $log) {
         // 修改
-        $scope.editStoreman = function (item) {
+        $scope.editStoreman = function(item) {
             $scope.$emit('openDetailAccountsModal', item);
         };
         // 新建
-        $scope.addStoreman = function () {
+        $scope.addStoreman = function() {
             $rootScope.storeInfoList = $rootScope.storeManList;
             // parent.angular.element(parent.$('#tabs')).scope().addTab('修改店员', '/storeInvoicing/view/addNewSalesman/addNewSalesman.html', 'storeInfoList', JSON.stringify($rootScope.storeInfoList));
-        };   
+        };
 
         $scope.checkedAdminInfo = [];
         $scope.checkAll = function(chk) {
@@ -429,7 +428,9 @@ angular
                             confirmButtonText: '确定'
                         }, function() {
                             $timeout(function() {
-                                $scope.checkedAdminInfo = [];
+                                // $scope.isCheckedAll = false;
+                                // $scope.isChecked = false;
+                                // $scope.checkedAdminInfo = [];
                                 $scope.orderQuery();
                             });
                         });
@@ -468,6 +469,8 @@ angular
                         confirmButtonText: '确定'
                     }, function() {
                         $timeout(function() {
+                            $scope.isCheckedAll = false;
+                            $scope.isChecked = false;
                             $scope.checkedAdminInfo = [];
                             $scope.orderQuery();
                         });
@@ -506,7 +509,9 @@ angular
                         confirmButtonText: '确定'
                     }, function() {
                         $timeout(function() {
-                            $scope.checkedAdminInfo = [];
+                            // $scope.isCheckedAll = false;
+                            // $scope.isChecked = false;
+                            // $scope.checkedAdminInfo = [];
                             $scope.orderQuery();
                         });
                     });
