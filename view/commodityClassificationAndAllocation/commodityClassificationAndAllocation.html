@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品分类配置</title>
+    <link rel="stylesheet" href="../../resources/css/sweetalert.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../resources/css/reset.css">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="commodityClassificationAndAllocation.css">
+</head>
+
+<body ng-app="inventoryModule">
+    <!-- DOM结构开始 -->
+    <div class="inventory top-line wavy-line" ng-controller="historyDetailModalCtrl as $ctrl">
+        <!-- 条件查询 -->
+        <form name="conditionQueryForm" class="form-inline" role="form">
+            <div class="alarm-query fn-clear" ng-controller="conditionQuery">
+                <p class="alarm-query-title fn-left">搜
+                    <br/>索</p>
+                <div class="condition-query-box fn-right">
+                    <div class="row mb10">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">商品大类：</label>
+                                <div class="select-box">
+                                    <select class="form-control">
+                                        <option value="">全部</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">分类名称：</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">分类编码：</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4 text-right">
+                            <button type="submit" ng-click="queryFormSubmit()" class="btn btn-sm btn-query"><i class="iconfont">&#xe600;</i> 查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- 结果列表 -->
+        <div class="inventory-charts fn-clear" ng-controller="QueryResultCtrl">
+            <div class="charts-box">
+                <div class="result-head">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="model-header">
+                                <img class="model-img" src="../../resources/images/icon-allocation.png">
+                                <p class="model-title">商品分类配置</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <button ng-click="serialDetail()" class="btn btn-xs btn-set"><i class="iconfont">
+                            &#xe60e;</i> 新增分类</button>
+                            <button class="btn btn-xs btn-set"><i class="iconfont">
+                            &#xe610;</i> 批量删除</button>
+                            <button class="btn btn-xs btn-set"><i class="iconfont">
+                            &#xe613;</i> 批量生效</button>
+                            <button class="btn btn-xs btn-set"><i class="iconfont">
+                            &#xe612;</i> 批量失效</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-table" ng-cloak>
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="8%"><input type="checkbox"></th>
+                                <th width="12%">分类编码</th>
+                                <th width="15%">分类名称</th>
+                                <th width="15%">所属大类</th>
+                                <th width="15%">状态</th>
+                                <th>描述</th>
+                                <th width="20%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p><input type="checkbox"></p>
+                                </td>
+                                <td>
+                                    <p>12001</p>
+                                </td>
+                                <td>
+                                    <p>手机壳</p>
+                                </td>
+                                <td>
+                                    <p>配件</p>
+                                </td>
+                                <td>
+                                    <p>有效</p>
+                                </td>
+                                <td>
+                                    <p></p>
+                                </td>
+                                <td>
+                                    <button ng-click="serialDetail()" class="btn btn-xs btn-edit"><i class="iconfont">&#xe60d;</i> 修改</button>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除</button>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe612;</i> 失效</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><input type="checkbox"></p>
+                                </td>
+                                <td>
+                                    <p>12001</p>
+                                </td>
+                                <td>
+                                    <p>手机壳</p>
+                                </td>
+                                <td>
+                                    <p>配件</p>
+                                </td>
+                                <td>
+                                    <p>有效</p>
+                                </td>
+                                <td>
+                                    <p></p>
+                                </td>
+                                <td>
+                                    <button ng-click="serialDetail()" class="btn btn-xs btn-edit"><i class="iconfont">&#xe60d;</i> 修改</button>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除</button>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe612;</i> 失效</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><input type="checkbox"></p>
+                                </td>
+                                <td>
+                                    <p>12001</p>
+                                </td>
+                                <td>
+                                    <p>手机壳</p>
+                                </td>
+                                <td>
+                                    <p>配件</p>
+                                </td>
+                                <td>
+                                    <p>有效</p>
+                                </td>
+                                <td>
+                                    <p></p>
+                                </td>
+                                <td>
+                                    <button ng-click="serialDetail()" class="btn btn-xs btn-edit"><i class="iconfont">&#xe60d;</i> 修改</button>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除</button>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe612;</i> 失效</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><input type="checkbox"></p>
+                                </td>
+                                <td>
+                                    <p>12001</p>
+                                </td>
+                                <td>
+                                    <p>手机壳</p>
+                                </td>
+                                <td>
+                                    <p>配件</p>
+                                </td>
+                                <td>
+                                    <p>有效</p>
+                                </td>
+                                <td>
+                                    <p></p>
+                                </td>
+                                <td>
+                                    <button ng-click="serialDetail()" class="btn btn-xs btn-edit"><i class="iconfont">&#xe60d;</i> 修改</button>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除</button>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe612;</i> 失效</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><input type="checkbox"></p>
+                                </td>
+                                <td>
+                                    <p>12001</p>
+                                </td>
+                                <td>
+                                    <p>手机壳</p>
+                                </td>
+                                <td>
+                                    <p>配件</p>
+                                </td>
+                                <td>
+                                    <p>有效</p>
+                                </td>
+                                <td>
+                                    <p></p>
+                                </td>
+                                <td>
+                                    <button ng-click="serialDetail()" class="btn btn-xs btn-edit"><i class="iconfont">&#xe60d;</i> 修改</button>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe610;</i> 删除</button>
+                                    <button class="btn btn-xs btn-edit"><i class="iconfont">&#xe612;</i> 失效</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="no-data" ng-if="qrySaleDetailList && !qrySaleDetailList.length">
+                        没有数据
+                    </p>
+                </div>
+                <div ng-controller="paginationCtrl" class="text-center page">
+                    <ul uib-pagination total-items="totalNum" items-per-page="rowNumPerPage" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="尾页" previous-text="<" next-text=">"></ul>
+                    <div class="page-num">共<span class="number" ng-cloak ng-bind="totalNum || 0"></span>条记录，当前显示第<span class="number" ng-cloak ng-bind="currentPage || 0"></span>页</div>
+                </div>
+            </div>
+            <script type="text/ng-template" id="addNewLine.html">
+                <div class="modal-header">
+                    <button type="button" class="close iconfont" ng-click="$ctrl.cancel()">&#xe611;</button>
+                    <h3 class="modal-title" id="serial-number-title"><img class="icon" src="../../resources/images/icon-addClassify.png">新增商品分类</h3>
+                </div>
+                <div class="history-detail-infomation">
+                    <div class="addClassify-box">
+                        <div class="row mb10">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">商品大类：</label>
+                                    <div class="select-box">
+                                        <select class="form-control">
+                                            <option value="">全部</option>
+                                        </select>
+                                    </div>
+                                    <i class="iconfont red-star">&#xe692;</i>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">分类名称：</label>
+                                    <input type="text" class="form-control" value="XXXX">
+                                    <i class="iconfont red-star">&#xe692;</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb10">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">显示序号：</label>
+                                    <input type="text" class="form-control" value="313113">
+                                    <i class="iconfont red-star">&#xe692;</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">分类描述：</label>
+                                    <textarea class="text-area" name="" id="">XXXXXXXXXXXXXXXX</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-cancel" type="button" ng-click="$ctrl.cancel()">关闭</button>
+                    <button class="btn btn-submit" type="button" ng-disabled="isDisabled" ng-click="$ctrl.ok()">确定</button>
+                </div>
+            </script>
+        </div>
+    </div>
+    <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-touch.min.js"></script>
+    <script src="../../resources/js/angular-animate.min.js"></script>
+    <script src="../../resources/js/angular-aria.min.js"></script>
+    <script src="../../resources/js/angular-locale_zh-cn.js"></script>
+    <script src="../../resources/js/jquery.min.js"></script>
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.js"></script>
+    <script src="../../resources/js/ui-bootstrap-tpls-2.1.3.js"></script>
+    <script src="../../resources/js/lodash.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../resources/js/mock.js"></script>
+    <script src="../../resources/js/moment.js"></script>
+    <script src="commodityClassificationAndAllocation.js"></script>
+</body>
+
+</html>
